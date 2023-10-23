@@ -1,0 +1,36 @@
+# Build artifacts
+build/
+dist/
+coverage/
+
+# Node.js development dependencies
+node_modules/
+
+# IDE/editor project files
+.idea/
+.vscode/
+
+# Testing frameworks
+jest/
+.nyc_output/
+
+# Type checking
+flow/
+.flowconfig
+
+# Prettier
+.prettierrc
+.prettierignore
+
+# ESLint
+.eslintrc
+.eslintignore
+
+# Editor preferences
+.editorconfig
+
+# Other
+.env
+.DS_Store
+*.log
+*.tmp
