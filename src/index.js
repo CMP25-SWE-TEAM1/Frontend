@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { StyledEngineProvider } from "@mui/material";
 
-
-const htmlElement = document.getElementById("htmlid");
 //For setting dark mode
+// const htmlElement = document.getElementById("htmlid");
 // document.documentElement.style.setProperty("--color-theme", "dark");
 // htmlElement.classList.add("dark");
 
@@ -14,11 +14,12 @@ const htmlElement = document.getElementById("htmlid");
 // document.documentElement.style.setProperty("--color-theme", "white");
 // htmlElement.classList.remove("dark");
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <StyledEngineProvider injectFirst>
+      <App />
+    </StyledEngineProvider>
   </React.StrictMode>
 );
 
