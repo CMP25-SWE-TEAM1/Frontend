@@ -1,6 +1,6 @@
 const Widgets = () => {
     return (
-      <div className="flex-1 text-center border-black border ">
+      <div className="flex-1 text-center  max-w-[400px]">
         Widgets
       </div>
     );

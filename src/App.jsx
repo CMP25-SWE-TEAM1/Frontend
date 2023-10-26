@@ -5,7 +5,7 @@ import Home from "./components/Home";
 
 const App = () => {
   return (
-    <div className="app flex ml-auto mr-auto h-[100vh] pl-10 pr-10">
+    <div className="app flex ml-auto mr-auto h-[100vh] justify-start">
       {true && <Sidebar />}
       {/* true will be replaced by authorization*/}
       <BrowserRouter>
@@ -14,11 +14,11 @@ const App = () => {
             <Route path="login"></Route>
           </Route>
           <Route path="/home" element={<Home />}></Route>
+          <Route path="*" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>
       {true && <Widgets />}
       {/* true will be replaced by authorization*/}
-
     </div>
   );
 };
