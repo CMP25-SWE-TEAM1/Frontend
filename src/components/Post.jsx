@@ -2,9 +2,10 @@ import React, { useState } from "react";
 
 import profilePicTest from "../assets/profilePicTest.JPG";
 
+import { Link } from "react-router-dom";
+
 import { Avatar } from "@mui/material";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -20,7 +21,15 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined";
 
-const Post = ({userName,userTag,date,replyCount,repostCount,likeCount,viewCount}) => {
+const Post = ({
+  userName,
+  userTag,
+  date,
+  replyCount,
+  repostCount,
+  likeCount,
+  viewCount,
+}) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null);
 
   const openMenu = Boolean(anchorPostMenu);
@@ -32,7 +41,30 @@ const Post = ({userName,userTag,date,replyCount,repostCount,likeCount,viewCount}
     setAnchorPostMenu(null);
   };
 
+  //"Thu Oct 26 2023 23:18:01 GMT+0200 (Eastern European Standard Time)" we need date in this format
+
   const htmlElement = document.getElementById("htmlid");
+
+  const time1 = Date.parse(date);
+  const time2 = new Date().getTime();
+
+  const differenceInMilliseconds = time2 - time1;
+
+  const differenceInSeconds = differenceInMilliseconds / 1000;
+  const differenceInMinutes = differenceInSeconds / 60;
+  const differenceInHours = differenceInMinutes / 60;
+
+  const intDifferenceInSeconds = Math.floor(differenceInSeconds);
+  const intDifferenceInMinutes = Math.floor(differenceInMinutes);
+  const intDifferenceInHours = Math.floor(differenceInHours);
+
+  const finalDate = intDifferenceInHours
+    ? intDifferenceInHours + "h"
+    : intDifferenceInMinutes
+    ? intDifferenceInMinutes + "m"
+    : intDifferenceInSeconds + "s";
+
+  //fix if houres more that 24
 
   return (
     <div className="h-fit border-gray-200 border dark:border-gray-600 border-r-0 border-l-0 p-3 flex">
@@ -47,21 +79,21 @@ const Post = ({userName,userTag,date,replyCount,repostCount,likeCount,viewCount}
         <div className="flex justify-between items-center post-header">
           <div className="flex items-center">
             <Link className="hover:underline" to="/mohamedsamir">
-              Mohamed Samir
+              {userName}
               <VerifiedIcon
                 className="pl-1 text-primary"
                 sx={{ fontSize: "22px" }}
               />
             </Link>
             <Link className="text-ternairy dark:text-secondary text-sm ml-1">
-              @MSamir245
+              @{userTag}
             </Link>
             <div className="h-[2px] w-[2px] m-1 bg-ternairy dark:bg-secondary rounded-full"></div>
             <Link
               className="text-ternairy dark:text-secondary text-sm"
               to="/postid"
             >
-              16h
+              {finalDate}
             </Link>
           </div>
           <div>
@@ -119,19 +151,19 @@ const Post = ({userName,userTag,date,replyCount,repostCount,likeCount,viewCount}
               <MenuItem onClick={handleMenuClose}>
                 <PersonAddAltIcon className="dark:text-white mr-3 text-base" />
                 <span className="dark:text-white text-[15px]">
-                  Follow @MSamir245
+                  Follow @{userTag}
                 </span>
               </MenuItem>
               <MenuItem onClick={handleMenuClose}>
                 <VolumeOffOutlinedIcon className="dark:text-white mr-3 text-base" />
                 <span className="dark:text-white text-[15px]">
-                  Mute @MSamir245
+                  Mute @{userTag}
                 </span>
               </MenuItem>
               <MenuItem onClick={handleMenuClose}>
                 <BlockOutlinedIcon className="dark:text-white mr-3 text-base" />
                 <span className="dark:text-white text-[15px]">
-                  Block @MSamir245
+                  Block @{userTag}
                 </span>
               </MenuItem>
               <MenuItem onClick={handleMenuClose}>
@@ -160,8 +192,11 @@ const Post = ({userName,userTag,date,replyCount,repostCount,likeCount,viewCount}
             <img src={profilePicTest} alt="" className="rounded-xl" />
           </Link>
         </div>
-        <div className="mt-3 flex dark:text-secondary text-ternairy justify-start">
-          <div className="  flex hover:text-primary items-center mr-[9%] -ml-2 cursor-pointer group  transition-colors duration-300" title="Reply">
+        <div className="mt-3 flex dark:text-secondary text-ternairy justify-between">
+          <div
+            className="  flex hover:text-primary items-center mr-[10%] -ml-2 cursor-pointer group  transition-colors duration-300"
+            title="Reply"
+          >
             <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100 ">
               <ChatBubbleOutlineOutlinedIcon
                 sx={{
@@ -171,9 +206,12 @@ const Post = ({userName,userTag,date,replyCount,repostCount,likeCount,viewCount}
               />
             </div>
 
-            <span className="text-sm">4.9K</span>
+            <span className="text-sm">{replyCount}</span>
           </div>
-          <div className="  flex hover:text-green-500 items-center mr-[9%] cursor-pointer group transition-colors duration-300" title="Repost">
+          <div
+            className="  flex hover:text-green-500 items-center mr-[10%] cursor-pointer group transition-colors duration-300"
+            title="Repost"
+          >
             <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100 ">
               <CachedOutlinedIcon
                 sx={{
@@ -183,9 +221,12 @@ const Post = ({userName,userTag,date,replyCount,repostCount,likeCount,viewCount}
               />
             </div>
 
-            <span className="text-sm">32K</span>
+            <span className="text-sm">{repostCount}</span>
           </div>
-          <div className="  flex hover:text-pink-600 items-center mr-[9%] cursor-pointer group transition-colors duration-300" title="Like">
+          <div
+            className="  flex hover:text-pink-600 items-center mr-[10%] cursor-pointer group transition-colors duration-300"
+            title="Like"
+          >
             <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100">
               <FavoriteBorderOutlinedIcon
                 sx={{
@@ -195,9 +236,12 @@ const Post = ({userName,userTag,date,replyCount,repostCount,likeCount,viewCount}
               />
             </div>
 
-            <span className="text-sm">86K</span>
+            <span className="text-sm">{likeCount}</span>
           </div>
-          <div className="  flex hover:text-primary items-center mr-[9%] cursor-pointer group transition-colors duration-300" title="Views">
+          <div
+            className="  flex hover:text-primary items-center mr-[10%] cursor-pointer group transition-colors duration-300"
+            title="Views"
+          >
             <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100 ">
               <QueryStatsOutlinedIcon
                 sx={{
@@ -207,9 +251,12 @@ const Post = ({userName,userTag,date,replyCount,repostCount,likeCount,viewCount}
               />
             </div>
 
-            <span className="text-sm">2M</span>
+            <span className="text-sm">{viewCount}</span>
           </div>
-          <div className="  flex hover:text-primary items-center cursor-pointer group transition-colors duration-300" title="Bookmark">
+          <div
+            className="flex hover:text-primary items-center cursor-pointer group transition-colors duration-300"
+            title="Bookmark"
+          >
             <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100">
               <BookmarkBorderOutlinedIcon
                 sx={{
@@ -219,7 +266,10 @@ const Post = ({userName,userTag,date,replyCount,repostCount,likeCount,viewCount}
               />
             </div>
           </div>
-          <div className="  flex hover:text-primary items-center cursor-pointer group transition-colors duration-300" title="Share">
+          <div
+            className="  flex hover:text-primary items-center cursor-pointer group transition-colors duration-300"
+            title="Share"
+          >
             <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100">
               <FileUploadOutlinedIcon
                 sx={{

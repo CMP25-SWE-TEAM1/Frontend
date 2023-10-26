@@ -1,6 +1,7 @@
 import HorizontalNavbar from "./HorizontalNavbar";
 import "../styles/home.css";
 import Post from "./Post";
+import PostsContainer from "./PostsContainer";
 
 const Home = () => {
   const homeNavLinks = [
@@ -20,8 +21,7 @@ const Home = () => {
           <HorizontalNavbar urls={homeNavLinks} originalUrl={"/home"} />
         </div>
       </div>
-
-      <Post />
+      <PostsContainer />
     </div>
   );
 };
