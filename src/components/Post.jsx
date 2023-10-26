@@ -20,7 +20,7 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined";
 
-const Post = () => {
+const Post = ({userName,userTag,date,replyCount,repostCount,likeCount,viewCount}) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null);
 
   const openMenu = Boolean(anchorPostMenu);
@@ -31,6 +31,8 @@ const Post = () => {
   const handleMenuClose = () => {
     setAnchorPostMenu(null);
   };
+
+  const htmlElement = document.getElementById("htmlid");
 
   return (
     <div className="h-fit border-gray-200 border dark:border-gray-600 border-r-0 border-l-0 p-3 flex">
@@ -51,9 +53,14 @@ const Post = () => {
                 sx={{ fontSize: "22px" }}
               />
             </Link>
-            <Link className="text-secondary text-sm ml-1">@MSamir245</Link>
-            <div className="h-[2px] w-[2px] m-1 bg-secondary rounded-full"></div>
-            <Link className="text-secondary text-sm" to="/postid">
+            <Link className="text-ternairy dark:text-secondary text-sm ml-1">
+              @MSamir245
+            </Link>
+            <div className="h-[2px] w-[2px] m-1 bg-ternairy dark:bg-secondary rounded-full"></div>
+            <Link
+              className="text-ternairy dark:text-secondary text-sm"
+              to="/postid"
+            >
               16h
             </Link>
           </div>
@@ -75,14 +82,25 @@ const Post = () => {
               MenuListProps={{
                 "aria-labelledby": "basic-button",
               }}
-              sx={{
-                "& .MuiMenu-paper": {
-                  backgroundColor: "black",
-                  borderRadius: "20px",
-                  boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #333435",
-                  border: "solid 1px #333435",
-                },
-              }}
+              sx={
+                htmlElement.classList.contains("dark")
+                  ? {
+                      "& .MuiMenu-paper": {
+                        background: "black",
+                        borderRadius: "20px",
+                        boxShadow:
+                          "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #333435",
+                        border: "solid 1px #333435",
+                      },
+                    }
+                  : {
+                      "& .MuiMenu-paper": {
+                        borderRadius: "20px",
+                        boxShadow:
+                          "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #767C86",
+                      },
+                    }
+              }
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "right",
@@ -93,28 +111,32 @@ const Post = () => {
               }}
             >
               <MenuItem onClick={handleMenuClose} className="flex items-center">
-                <SentimentVeryDissatisfiedIcon className="text-white mr-3 text-base shadow-card" />
-                <span className="text-white text-[15px]">
+                <SentimentVeryDissatisfiedIcon className="dark:text-white mr-3 text-base" />
+                <span className="dark:text-white text-[15px]">
                   Not interested in this post
                 </span>
               </MenuItem>
               <MenuItem onClick={handleMenuClose}>
-                <PersonAddAltIcon className="text-white mr-3 text-base" />
-                <span className="text-white text-[15px]">
+                <PersonAddAltIcon className="dark:text-white mr-3 text-base" />
+                <span className="dark:text-white text-[15px]">
                   Follow @MSamir245
                 </span>
               </MenuItem>
               <MenuItem onClick={handleMenuClose}>
-                <VolumeOffOutlinedIcon className="text-white mr-3 text-base" />
-                <span className="text-white text-[15px]">Mute @MSamir245</span>
+                <VolumeOffOutlinedIcon className="dark:text-white mr-3 text-base" />
+                <span className="dark:text-white text-[15px]">
+                  Mute @MSamir245
+                </span>
               </MenuItem>
               <MenuItem onClick={handleMenuClose}>
-                <BlockOutlinedIcon className="text-white mr-3 text-base" />
-                <span className="text-white text-[15px]">Block @MSamir245</span>
+                <BlockOutlinedIcon className="dark:text-white mr-3 text-base" />
+                <span className="dark:text-white text-[15px]">
+                  Block @MSamir245
+                </span>
               </MenuItem>
               <MenuItem onClick={handleMenuClose}>
-                <QueryStatsOutlinedIcon className="text-white mr-3 text-base" />
-                <span className="text-white text-[15px]">
+                <QueryStatsOutlinedIcon className="dark:text-white mr-3 text-base" />
+                <span className="dark:text-white text-[15px]">
                   View post engagements
                 </span>
               </MenuItem>
@@ -122,7 +144,7 @@ const Post = () => {
           </div>
         </div>
         <div className="post-text">
-          <div className="text-start text-gray-300 max-h-[100px] overflow-hidden">
+          <div className="text-start dark:text-gray-300 max-h-[100px] overflow-hidden">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi facere
             unde sed amet placeat. Odit consequatur eveniet quam vero, modi
             incidunt libero distinctio commodi quo, ab itaque dolor ipsam. Lorem
@@ -138,9 +160,9 @@ const Post = () => {
             <img src={profilePicTest} alt="" className="rounded-xl" />
           </Link>
         </div>
-        <div className="mt-3 flex text-secondary  justify-start">
-          <div className="  flex hover:text-primary items-center mr-[9%] -ml-2 cursor-pointer group  transition-colors duration-300">
-            <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center group-hover:bg-gray-900 ">
+        <div className="mt-3 flex dark:text-secondary text-ternairy justify-start">
+          <div className="  flex hover:text-primary items-center mr-[9%] -ml-2 cursor-pointer group  transition-colors duration-300" title="Reply">
+            <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100 ">
               <ChatBubbleOutlineOutlinedIcon
                 sx={{
                   width: 16,
@@ -151,8 +173,8 @@ const Post = () => {
 
             <span className="text-sm">4.9K</span>
           </div>
-          <div className="  flex hover:text-green-500 items-center mr-[9%] cursor-pointer group transition-colors duration-300">
-            <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center group-hover:bg-gray-900 ">
+          <div className="  flex hover:text-green-500 items-center mr-[9%] cursor-pointer group transition-colors duration-300" title="Repost">
+            <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100 ">
               <CachedOutlinedIcon
                 sx={{
                   width: 16,
@@ -163,8 +185,8 @@ const Post = () => {
 
             <span className="text-sm">32K</span>
           </div>
-          <div className="  flex hover:text-pink-600 items-center mr-[9%] cursor-pointer group transition-colors duration-300">
-            <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center group-hover:bg-gray-900">
+          <div className="  flex hover:text-pink-600 items-center mr-[9%] cursor-pointer group transition-colors duration-300" title="Like">
+            <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100">
               <FavoriteBorderOutlinedIcon
                 sx={{
                   width: 16,
@@ -175,8 +197,8 @@ const Post = () => {
 
             <span className="text-sm">86K</span>
           </div>
-          <div className="  flex hover:text-primary items-center mr-[9%] cursor-pointer group transition-colors duration-300">
-            <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center group-hover:bg-gray-900 ">
+          <div className="  flex hover:text-primary items-center mr-[9%] cursor-pointer group transition-colors duration-300" title="Views">
+            <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100 ">
               <QueryStatsOutlinedIcon
                 sx={{
                   width: 16,
@@ -187,8 +209,8 @@ const Post = () => {
 
             <span className="text-sm">2M</span>
           </div>
-          <div className="  flex hover:text-primary items-center cursor-pointer group transition-colors duration-300">
-            <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center group-hover:bg-gray-900 ">
+          <div className="  flex hover:text-primary items-center cursor-pointer group transition-colors duration-300" title="Bookmark">
+            <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100">
               <BookmarkBorderOutlinedIcon
                 sx={{
                   width: 16,
@@ -197,8 +219,8 @@ const Post = () => {
               />
             </div>
           </div>
-          <div className="  flex hover:text-primary items-center cursor-pointer group transition-colors duration-300">
-            <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center group-hover:bg-gray-900">
+          <div className="  flex hover:text-primary items-center cursor-pointer group transition-colors duration-300" title="Share">
+            <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100">
               <FileUploadOutlinedIcon
                 sx={{
                   width: 16,

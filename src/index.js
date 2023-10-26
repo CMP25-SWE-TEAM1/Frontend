@@ -5,10 +5,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { StyledEngineProvider } from "@mui/material";
 
-const htmlElement = document.getElementById("htmlid");
 //For setting dark mode
-document.documentElement.style.setProperty("--color-theme", "dark");
-htmlElement.classList.add("dark");
+// const htmlElement = document.getElementById("htmlid");
+// document.documentElement.style.setProperty("--color-theme", "dark");
+// htmlElement.classList.add("dark");
 
 //For setting light mode
 // document.documentElement.style.setProperty("--color-theme", "white");
