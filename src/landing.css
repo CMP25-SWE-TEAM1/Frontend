@@ -4,11 +4,29 @@
 
 @layer components {
 
-    .landing {
-        @apply dark:text-white text-black;
-        @apply flex flex-col w-full h-screen;
+    /* Color palette-dark */
+    .landing.dark {
+        --bg-color: #000000;
+        --main-color: #E7E9EA;
+        --second-color: #1d9bf0;
+        --second-color-alt: #1A8CD8;
+    }
 
+    /* Color palette-light */
+    .landing.light {
+        --bg-color: #ffffff;
+        --main-color: #000000;
+        --second-color: #1d9bf0;
+        --second-color-alt: #1A8CD8;
+    }
+
+    .landing {
+        /* @apply dark:text-white text-black; */
+        @apply flex flex-col w-full;
+
+        min-height: 100vh;
         box-sizing: border-box;
+        background-color: var(--bg-color);
     }
 
     .landing .content {
@@ -16,6 +34,10 @@
     }
 
     @media (max-width: 991px) {
+        .landing {
+            height: auto;
+        }
+
         .landing .content {
             flex-direction: column;
         }
@@ -31,7 +53,7 @@
 
     @media (max-width: 991px) {
         .landing .content .logo {
-            max-width: 200px;
+            max-width: 150px;
             margin-right: auto;
         }
     }
@@ -43,10 +65,12 @@
 
     .landing .content .info .t1 {
         @apply block text-6xl font-bold my-12;
+        color: var(--main-color);
     }
 
     .landing .content .info .t2 {
         @apply block;
+        color: var(--main-color);
         font-size: 32px;
         font-weight: bold;
         margin-bottom: 32px;
@@ -58,11 +82,12 @@
 
     .landing .content .info .panel .google-btn:hover {
         border-color: #d2e3fc;
-        background: rgba(66, 133, 244, .04);
+        background: #eef3ff;
     }
 
     .landing .content .info .panel .google-btn {
         @apply h-10 w-full flex justify-center items-center;
+        background-color: #ffffff;
         border: 1px solid #dadce0;
         border-radius: 20px;
         margin-bottom: 20px;
@@ -89,6 +114,7 @@
 
     .landing .content .info .panel .apple-btn {
         @apply h-10 w-full flex justify-center items-center;
+        background-color: #ffffff;
         border: 1px solid #dadce0;
         border-radius: 20px;
         font-size: 14px;
@@ -128,6 +154,7 @@
 
     .landing .content .info .panel .or {
         @apply block text-center;
+        color: var(--main-color);
         position: relative;
         margin-top: 5px;
         margin-bottom: 5px;
@@ -138,15 +165,15 @@
     }
 
     .landing .content .info .panel .create-acc:hover {
-        background-color: #1A8CD8;
+        background-color: var(--second-color-alt);
     }
 
     .landing .content .info .panel .create-acc {
         @apply h-10 w-full flex justify-center items-center;
         margin-bottom: 8px;
-        border: 1px solid rgb(29, 155, 240);
+        border: 1px solid var(--second-color);
         border-radius: 20px;
-        background-color: rgb(29, 155, 240);
+        background-color: var(--second-color);
         color: white;
         font-size: 15px;
         font-weight: 700;
@@ -158,6 +185,7 @@
 
     .landing .content .info .panel .rules {
         @apply block mb-5;
+        line-height: 1;
         font-size: 11px;
         font-weight: 400;
         /* Twitter is here :( */
@@ -166,7 +194,7 @@
     }
 
     .landing .content .info .panel .rules a {
-        color: rgb(29, 155, 240);
+        color: var(--second-color);
     }
 
     .landing .content .info .panel .rules a:hover {
@@ -175,6 +203,7 @@
 
     .landing .content .info .panel .acc-exist {
         @apply block mt-10 mb-5;
+        color: var(--main-color);
         font-size: 17px;
         font-weight: 700;
         /* Twitter is here :( */
@@ -182,8 +211,12 @@
 
     }
 
-    .landing .content .info .panel .login:hover {
+    .landing.light .content .info .panel .login:hover {
         background-color: #E8F5FD;
+    }
+
+    .landing.dark .content .info .panel .login:hover {
+        background-color: #031018;
     }
 
     .landing .content .info .panel .login {
