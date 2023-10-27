@@ -9,9 +9,9 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   return (
-    <div className="app flex ml-auto mr-auto h-[100vh] pl-10 pr-10">
+    <div className="app flex ml-auto mr-auto pl-10 pr-10">
       {loggedIn && <Sidebar />}
-      {/* true will be replaced by authorization*/}
+      {/* true will be replaced by authorization */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing />}>
@@ -21,7 +21,7 @@ const App = () => {
         </Routes>
       </BrowserRouter>
       {loggedIn && <Widgets />}
-      {/* true will be replaced by authorization*/}
+      {/* true will be replaced by authorization */}
     </div>
   );
 };
