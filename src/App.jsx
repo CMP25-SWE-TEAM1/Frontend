@@ -2,7 +2,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Widgets from "./components/Widgets";
 import Home from "./components/Home";
-import Landing from "./components/Landing";
+import Landing from "./components/landing-page/Landing";
 import { useState } from "react";
 
 const App = () => {

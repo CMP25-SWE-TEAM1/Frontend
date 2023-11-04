@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import "../landing.css";
+import "./landing.css";
 
 const Landing = () => {
   // Dark & Light mode
   const [mode, setMode] = useState("light");
 
-  const logoImgDark = require("../assets/imgs/logo-dark.jpg");
-  const logoImgLight = require("../assets/imgs/logo-light.jpg");
+  const logoImgDark = require("../../assets/imgs/logo-dark.jpg");
+  const logoImgLight = require("../../assets/imgs/logo-light.jpg");
 
   useEffect(() => {
     if (
