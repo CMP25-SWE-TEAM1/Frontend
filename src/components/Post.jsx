@@ -67,7 +67,10 @@ const Post = ({
   //fix if houres more that 24
 
   return (
-    <div className="h-fit border-gray-200 border dark:border-gray-600 border-r-0 border-l-0 p-3 flex">
+    <div
+      className="h-fit border-gray-200 border dark:border-gray-600 border-r-0 border-l-0 p-3 flex"
+      data-testid="postId"
+    >
       <div className=" h-60 w-10 mr-3">
         <Avatar
           alt="Remy Sharp"
