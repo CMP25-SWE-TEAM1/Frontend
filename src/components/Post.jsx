@@ -99,6 +99,7 @@ const Post = ({
           <div>
             <Button
               id="basic-button"
+              data-testid="menu-button"
               aria-controls={openMenu ? "basic-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={openMenu ? "true" : undefined}
@@ -254,7 +255,7 @@ const Post = ({
             <span className="text-sm">{viewCount}</span>
           </div>
           <div
-            className="flex hover:text-primary items-center cursor-pointer group transition-colors duration-300"
+            className={`flex hover:text-primary items-center cursor-pointer group transition-colors duration-300`}
             title="Bookmark"
           >
             <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100">

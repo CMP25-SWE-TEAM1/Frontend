@@ -1,6 +1,5 @@
 import HorizontalNavbar from "./HorizontalNavbar";
 import "../styles/home.css";
-import Post from "./Post";
 import PostsContainer from "./PostsContainer";
 
 const Home = () => {
