@@ -180,7 +180,10 @@ const Post = ({
           </div>
         </div>
         <div className="post-text">
-          <div className="text-start dark:text-gray-300 max-h-[100px] overflow-hidden">
+          <div
+            className="text-start dark:text-gray-300 max-h-[100px] overflow-hidden"
+            data-testid="post-text-id"
+          >
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi facere
             unde sed amet placeat. Odit consequatur eveniet quam vero, modi
             incidunt libero distinctio commodi quo, ab itaque dolor ipsam. Lorem

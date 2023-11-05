@@ -65,6 +65,9 @@ describe("Post", () => {
 
     const menuButton = screen.getByTestId("menu-button");
     expect(menuButton).toBeInTheDocument();
+
+    const postTest = screen.getByTestId("post-text-id");
+    expect(postTest).toBeInTheDocument();
   });
 
   test("Menu Renders Correctly", async () => {
