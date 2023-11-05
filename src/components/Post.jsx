@@ -68,7 +68,7 @@ const Post = ({
 
   return (
     <div
-      className="h-fit border-gray-200 border dark:border-gray-600 border-r-0 border-l-0 p-3 flex"
+      className="h-fit border-gray-200 border dark:border-gray-600 border-r-0 border-l-0 p-3 flex w-[100%]"
       data-testid="postId"
     >
       <div className=" h-60 w-10 mr-3">
@@ -78,7 +78,7 @@ const Post = ({
           sx={{ width: 40, height: 40 }}
         />
       </div>
-      <div className=" flex-1">
+      <div className=" flex-1 mr-2">
         <div className="flex justify-between items-center post-header">
           <div className="flex items-center">
             <Link className="hover:underline" to="/mohamedsamir">
@@ -199,9 +199,9 @@ const Post = ({
             <img src={profilePicTest} alt="" className="rounded-xl" />
           </Link>
         </div>
-        <div className="mt-3 flex dark:text-secondary text-ternairy justify-between">
+        <div className="mt-3 flex dark:text-secondary text-ternairy justify-between max-w-full">
           <div
-            className="  flex hover:text-primary items-center mr-[10%] -ml-2 cursor-pointer group  transition-colors duration-300"
+            className="flex hover:text-primary items-center -ml-2 cursor-pointer group  transition-colors duration-300"
             title="Reply"
           >
             <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100 ">
@@ -216,7 +216,7 @@ const Post = ({
             <span className="text-sm">{replyCount}</span>
           </div>
           <div
-            className="  flex hover:text-green-500 items-center mr-[10%] cursor-pointer group transition-colors duration-300"
+            className="  flex hover:text-green-500 items-center cursor-pointer group transition-colors duration-300"
             title="Repost"
           >
             <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100 ">
@@ -231,7 +231,7 @@ const Post = ({
             <span className="text-sm">{repostCount}</span>
           </div>
           <div
-            className="  flex hover:text-pink-600 items-center mr-[10%] cursor-pointer group transition-colors duration-300"
+            className="  flex hover:text-pink-600 items-center cursor-pointer group transition-colors duration-300"
             title="Like"
           >
             <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100">
@@ -246,7 +246,7 @@ const Post = ({
             <span className="text-sm">{likeCount}</span>
           </div>
           <div
-            className="  flex hover:text-primary items-center mr-[10%] cursor-pointer group transition-colors duration-300"
+            className="  flex hover:text-primary items-center  cursor-pointer group transition-colors duration-300"
             title="Views"
           >
             <div className="bg-inherit rounded-full w-10 h-10 flex items-center justify-center dark:group-hover:bg-gray-900 group-hover:bg-gray-100 ">
