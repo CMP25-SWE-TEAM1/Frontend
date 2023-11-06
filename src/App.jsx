@@ -7,7 +7,6 @@ import PasswordReset from "./components/Login/PasswordReset"
 
 import Landing from "./components/landing-page/Landing"
 import { useState } from "react"
-import { Button } from "@mui/material"
 import { useEffect } from "react"
 
 const App = () => {
@@ -27,7 +26,7 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false)
 
   return (
-    <div className="app ml-auto mr-auto flex justify-start pl-10 pr-10">
+    <div className="app ml-auto mr-auto flex justify-start">
       {loggedIn && <Sidebar />}
       {/* true will be replaced by authorization*/}
       <BrowserRouter>
