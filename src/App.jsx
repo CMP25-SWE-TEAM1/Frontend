@@ -1,7 +1,9 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Sidebar from "./components/Sidebar";
-import Widgets from "./components/Widgets";
-import Home from "./components/Home";
+import { Routes, Route, BrowserRouter } from "react-router-dom"
+import Sidebar from "./components/Sidebar"
+import Widgets from "./components/Widgets"
+import Home from "./components/Home"
+import Login from "./components/Login/Login"
+import PasswordReset from "./components/Login/PasswordReset"
 
 const App = () => {
   return (
@@ -10,17 +12,17 @@ const App = () => {
       {/* true will be replaced by authorization*/}
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}>
-            <Route path="login"></Route>
-          </Route>
+          <Route path="login" element={<Login />}></Route>
+          <Route path="password_reset" element={<PasswordReset />}></Route>
+          <Route path="/" element={<Home />}></Route>
           <Route path="/home" element={<Home />}></Route>
           <Route path="*" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>
-      {true && <Widgets />}
+      {false && <Widgets />}
       {/* true will be replaced by authorization*/}
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
