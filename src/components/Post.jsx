@@ -68,17 +68,17 @@ const Post = ({
 
   return (
     <div
-      className="h-fit border-gray-200 border dark:border-gray-600 border-r-0 border-l-0 p-3 flex w-[100%]"
+      className="h-fit border-gray-200 border dark:border-gray-600 border-r-0 border-l-0 p-3 flex"
       data-testid="postId"
     >
-      <div className=" h-60 w-10 mr-3">
+      <div className=" h-60 w-10 sm:mr-3">
         <Avatar
           alt="Remy Sharp"
           src={profilePicTest}
           sx={{ width: 40, height: 40 }}
         />
       </div>
-      <div className=" flex-1 mr-2">
+      <div className=" sm:mr-2">
         <div className="flex justify-between items-center post-header">
           <div className="flex items-center">
             <Link className="hover:underline" to="/mohamedsamir">
