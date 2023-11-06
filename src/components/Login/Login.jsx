@@ -39,7 +39,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
     <>
       <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
         <Box style={modalStyle}>
-          <div className="m-auto flex h-[550px] justify-center bg-black text-white md:rounded-2xl">
+          <div className="m-auto flex h-full justify-center bg-black text-white md:rounded-2xl">
             <Link to="/" className="text-white" onClick={handleCloseModal}>
               <button className="relative left-2 top-2 h-10 w-10 rounded-3xl text-2xl no-underline hover:bg-zinc-900">x</button>
             </Link>
