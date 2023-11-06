@@ -134,6 +134,12 @@ const SignUp = ()=> {
                 <p className="hash-span">
                 Step 3 of 3
                 </p>
+                <h1 className="">
+                    You'll need a Password
+                </h1>
+                <p className="date-text">
+                    Make sure it's 8 characters or more
+                </p>
                 <div className="input-container">
                     <input className={password === "" ? "form-input" : "form-input filled-input"} type={showPassword ? 'text' : 'password'} name="password" id="password" autoComplete="off" value={password} onChange={(e) => setPassword(e.target.value)} />
                     <label className="input-label" htmlFor="password">
