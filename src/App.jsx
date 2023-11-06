@@ -6,7 +6,7 @@ import SignUp from "./components/SignUp";
 
 const App = () => {
   return (
-    <div className="app flex ml-auto mr-auto h-[100vh] pl-10 pr-10">
+    <div className="app flex ml-auto mr-auto h-[100vh]">
       {false && <Sidebar />}
       {/* true will be replaced by authorization*/}
       <BrowserRouter>
