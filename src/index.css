@@ -14,53 +14,6 @@
   color-scheme: var(--color-theme);
 }
 
-@layer components{
-  .fb{
-    @apply flex items-center justify-center;
-  }
-
-  .btn{
-    @apply w-72 h-10 bg-white text-black rounded-2xl font-semibold;
-  }
-
-  .btn:hover{
-    filter: brightness(80%)
-  }
-
-  .form-input{
-    @apply bg-black text-white border-white border rounded-lg w-72 h-14 border-solid p-2;
-  }
-
-  a{
-    @apply text-blue-600;
-  }
-
-  a:hover{
-    text-decoration: underline;
-  }
-
-
-  .pop-up{
-    flex-direction: column;
-    gap: 20px 0;
-    width: 600px;
-    height: 650px;
-    border-radius: 10px;
-  }
-
-  @media screen and (max-width: 700px) {
-    .app{
-      padding: 0 !important;
-    }
-
-    .pop-up{
-      width: 100vw;
-      height: 100vh;
-      border-radius: 0;
-    }
-  }
-}
-
 .hash-span {
   margin-top: -100px;
   padding-bottom: 100px;

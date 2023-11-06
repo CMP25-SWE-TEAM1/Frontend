@@ -28,6 +28,9 @@ module.exports = {
         "hero-pattern": "url('/src/assets/bgs/herobg.jpg')",
         "phone-pattern": "url('/src/assets/phone_pattern.jpg')",
       },
+      width:{
+        110: "440px"
+      }
     },
   },
   plugins: [],

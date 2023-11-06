@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+
+    .btn{
+      @apply w-110 h-10 bg-white text-black rounded-3xl font-semibold;
+    }
+  
+    .btn:hover{
+      filter: brightness(80%);
+    }
+  
+    .btn:disabled{
+      filter: brightness(50%);
+    }
+  
+    .btn:disabled:hover{
+      pointer-events: none;
+    }
+  
+    .form-input{
+      @apply bg-black text-white border-white border rounded-lg w-110 h-14 border-solid p-2 pt-8;
+    }
+  
+    .form-input:focus{
+      outline: none !important;  
+      border: 1px solid blue;
+    }
+  
+    .input-container {
+      position: relative;
+    }
+    
+    .input-label {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: #AAB8C2;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    
+    .form-input:focus + .input-label{
+      top: 10px;
+      transform: translateY(0);
+      font-size: 10px;
+      color: #1DA1F2;
+    }
+    
+    .filled-input + .input-label{
+      top: 10px;
+      transform: translateY(0);
+      font-size: 10px;
+    }
+  
+    a{
+      @apply text-blue-600;
+    }
+  
+    a:hover{
+      text-decoration: underline;
+    }
+  
+  
+    .pop-up{
+      display: flex;
+      flex-direction: column;
+      gap: 20px 0;
+      width: 600px;
+      height: 650px;
+      padding: 80px;
+    }
+  
+    .pop-up h1{
+      @apply text-3xl font-semibold;
+    }
+  
+    @media screen and (max-width: 768px) {
+      .app{
+        padding: 0 !important;
+      }
+  
+      .pop-up{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100vw;
+        height: 100vh;
+      }
+    }
+  }
