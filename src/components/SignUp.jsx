@@ -3,6 +3,10 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
+import { Modal, Box, Dialog } from "@mui/material"
+import lightLogo from "../assets/imgs/giga-chat-logo-dark-removebg-preview.png"
+
+
 
 import {styles} from '../styles'
 
@@ -46,18 +50,20 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
     }
   }
     return (
-      <div className="w-[100%] h-[100vh] flex justify-center bg-[#242d34]">
-    <div className="m-auto bg-black text-white md:rounded-2xl">
-      <span>
-        <Link to="/" className="text-white">
+      <>
+        <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
+          <Box style={styles.modalStyle}>
+      <div className="m-auto flex h-[550px] justify-center bg-black text-white md:rounded-2xl">
+        <Link to="/" className="text-white" onClick={handleCloseModal}>
           <button className="relative left-2 top-2 h-10 w-10 rounded-3xl text-2xl no-underline hover:bg-zinc-900">
             x
           </button>
         </Link>
-      </span>
 
-      <div id="Join GigaChat" className="pop-up">
-        <h1>Join GigaChat today</h1>
+              <div id="Join GigaChat" className="pop-up m-auto h-full max-w-[320px]">
+              <img src={lightLogo} alt="GigaChat Logo" className="ml-[40%] mt-4 w-[40px]" />
+                
+        <h1 className="mb-4 mt-3">Join GigaChat today</h1>
 
         <GoogleLogin
           clientId="40488454700-g3rk7h26t89sb83do0dbdeinvke0tmrj.apps.googleusercontent.com"
@@ -71,12 +77,12 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
         />
 
         <div className="flex h-10 items-center justify-center">
-          <div className="flex w-48 items-center">
-            <hr className="w-48" />
+          <div className="flex w-full items-center">
+            <hr className="w-full mr-2" />
           </div>
           &nbsp; or &nbsp;
-          <div className="flex w-48 items-center">
-            <hr className="w-48" />
+          <div className="flex w-full items-center">
+            <hr className="w-full ml-2" />
           </div>
         </div>
 
@@ -87,19 +93,22 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
           }}
         >
           Create Account
-        </button>
+                </button>
+                <span className="text-secondary text-xs">
+                  By signing up, you agree to the <a href="/#">Terms of Service</a> and <a href="/#">Privacy Policy</a>, including <a href="/#">Cookie Use</a>.
+                </span>
 
-        <span>
-          have an account already ?
-          <Link to="/Login" className="text-white">
+        <span className="text-secondary text-sm mt-3">
+          Have an account already ?&nbsp;
+          <Link to="/login" className="text-white">
             Log in
           </Link>
         </span>
       </div>
 
-      <div id="First Step" className="pop-up hidden">
-        <p className="hash-span relative">Step 1 of 3</p>
-        <h1 className="hash-span ">Create your account</h1>
+      <div id="First Step" className="pop-up m-auto hidden h-full max-w-[430px]">
+        <p className="-ml-2 mt-3 relative text-lg font-semibold">Step 1 of 3</p>
+        <h1 className="mt-3">Create your account</h1>
         <div className="input-container">
           <input
             className={
@@ -161,8 +170,8 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
         </button>
       </div>
 
-      <div id="Second Step" className="pop-up hidden">
-        <p className="hash-span">Step 2 of 3</p>
+      <div id="Second Step" className="pop-up m-auto hidden h-full max-w-[430px]">
+        <p className="-ml-2 mt-3 relative text-lg font-semibold">Step 2 of 3</p>
         <ReCAPTCHA sitekey={siteKey} onChange={handleCaptchaVerification()} />
         <button
           className="btn"
@@ -174,8 +183,8 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
         </button>
       </div>
 
-      <div id="Third Step" className="pop-up hidden">
-        <p className="hash-span">Step 3 of 3</p>
+      <div id="Third Step" className="pop-up m-auto hidden h-full max-w-[430px]">
+        <p className="-ml-2 mt-3 relative text-lg font-semibold">Step 3 of 3</p>
         <h1 className="">You'll need a Password</h1>
         <p className="date-text">Make sure it's 8 characters or more</p>
         <div className="input-container">
@@ -191,7 +200,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <label className="input-label" htmlFor="password">
-            Password
+                    Password  
           </label>
           <span
             className={`toggle-password ${showPassword ? "active" : ""}`}
@@ -209,7 +218,9 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
         </div>
       </div>
             </div>
-            </div>
+            </Box>
+          </Modal>
+            </>
   );
 };
 export default SignUp;
