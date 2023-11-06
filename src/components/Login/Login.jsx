@@ -4,19 +4,8 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Modal, Box, Dialog } from "@mui/material"
 import lightLogo from "../../assets/imgs/giga-chat-logo-dark-removebg-preview.png"
+import {styles} from '../../styles'
 
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "55%",
-  transform: "translate(-50%, -50%)",
-  width: 600,
-  height: "90vh",
-  backgroundColor: "transperant",
-  backdropFilter: "blur(5px)",
-  border: "1px solid white",
-  borderRadius: "15px",
-}
 
 const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [userName, setUserName] = useState("")
@@ -38,7 +27,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
   return (
     <>
       <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
-        <Box style={modalStyle}>
+        <Box style={styles.modalStyle}>
           <div className="m-auto flex h-full justify-center bg-black text-white md:rounded-2xl">
             <Link to="/" className="text-white" onClick={handleCloseModal}>
               <button className="relative left-2 top-2 h-10 w-10 rounded-3xl text-2xl no-underline hover:bg-zinc-900">x</button>
