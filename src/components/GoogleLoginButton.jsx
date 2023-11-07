@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { googleLogout, useGoogleLogin } from "@react-oauth/google"
+
 import axios from "axios"
 import googleLogo from "../assets/imgs/search.png"
 import { useDispatch } from "react-redux"
@@ -7,7 +8,7 @@ import { useNavigate } from "react-router"
 import { loginUser } from "../store/UserSlice"
 
 const GoogleLoginButton = ({ handleCloseModal }) => {
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState()
   const [profile, setProfile] = useState()
 
   const dispatch = useDispatch()
@@ -34,17 +35,22 @@ const GoogleLoginButton = ({ handleCloseModal }) => {
         .then((res) => {
           setProfile(res.data)
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          console.log(err)
+          localStorage.removeItem("user")
+        })
     }
   }, [user])
 
   useEffect(() => {
-    dispatch(loginUser({ userCredentials: profile, isgoogle: true })).then((result) => {
-      if (result.payload) {
-        navigate("/home")
-        handleCloseModal()
-      }
-    })
+    if (profile) {
+      dispatch(loginUser({ userCredentials: profile, isgoogle: true })).then((result) => {
+        if (result.payload) {
+          navigate("/home")
+          handleCloseModal()
+        }
+      })
+    }
   }, [profile])
 
   const logOut = () => {
@@ -67,7 +73,7 @@ const GoogleLoginButton = ({ handleCloseModal }) => {
       ) : (
         <button onClick={() => login()} className="flex h-[2.5rem] w-full items-center justify-center rounded-3xl bg-white text-black hover:brightness-75">
           <img src={googleLogo} alt="google logo" className="mr-2" />
-          <span className="font-semibold text-sm">Sign up with Google</span>
+          <span className="text-sm font-semibold">Sign up with Google</span>
         </button>
       )}
     </div>

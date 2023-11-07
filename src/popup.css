@@ -20,7 +20,7 @@
   }
 
   .form-input {
-    @apply h-14 w-full rounded-lg border border-solid border-white bg-black p-2 pt-8 text-white;
+    @apply h-14 w-full rounded-lg border border-solid border-ternairy bg-black p-2 pt-8 text-white;
   }
 
   .form-input:focus {

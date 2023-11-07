@@ -10,6 +10,8 @@ import { useState } from "react"
 import { useEffect } from "react"
 import SignUp from "./components/SignUp"
 
+
+
 const App = () => {
   const [location, setLocation] = useState(null)
 
@@ -31,9 +33,9 @@ const App = () => {
     setLocation(window.location.pathname)
   }
 
+
   return (
-    <div className="app ml-auto mr-auto flex justify-start">
-      {/* true will be replaced by authorization*/}
+    <div className="app relative ml-auto mr-auto flex justify-start h-[100vh]">
       <BrowserRouter>
         {/* {location !== "/login" && location !== "/password_reset" && <Sidebar />} */}
         {/* true will be replaced by authorization*/}
@@ -53,7 +55,7 @@ const App = () => {
           <Route path="*" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>
-      {false && <Widgets />}
+      {/* {user && <Widgets />} */}
       {/* true will be replaced by authorization*/}
     </div>
   )
