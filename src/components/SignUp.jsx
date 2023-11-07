@@ -3,10 +3,10 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
-import { Modal, Box, Dialog } from "@mui/material"
+import { Modal, Box } from "@mui/material"
 import lightLogo from "../assets/imgs/giga-chat-logo-dark-removebg-preview.png"
 
-
+// import { GoogleLogin } from "@react-oauth/google";
 
 import {styles} from '../styles'
 
@@ -17,6 +17,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [date, setDate] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
   const siteKey = "6Ldxlf4oAAAAAKjm3gXBNjq-GBJ4hM79g6NYk7KG";
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -71,6 +72,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
           onFailure={() => responseGoogle()}
           render={(renderProps) => (
             <button onClick={renderProps.onClick} className="btn">
+              
               Sign Up with Google
             </button>
           )}
