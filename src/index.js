@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import './popup.css';
+import "./popup.css"
+
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { StyledEngineProvider } from "@mui/material";
@@ -12,8 +13,9 @@ import { StyledEngineProvider } from "@mui/material";
 // htmlElement.classList.add("dark");
 
 //For setting light mode
-//document.documentElement.style.setProperty("--color-theme", "white");
-//htmlElement.classList.remove("dark");
+// document.documentElement.style.setProperty("--color-theme", "white");
+// htmlElement.classList.remove("dark");
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

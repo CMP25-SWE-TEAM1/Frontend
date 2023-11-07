@@ -8,6 +8,7 @@ import PasswordReset from "./components/Login/PasswordReset"
 import Landing from "./components/landing-page/Landing"
 import { useState } from "react"
 import { useEffect } from "react"
+import SignUp from "./components/SignUp"
 
 const App = () => {
   const [location, setLocation] = useState(null)
@@ -16,11 +17,17 @@ const App = () => {
     setLocation(window.location.pathname)
   }, [location])
 
-  //This will be moved to landing page
-  const [openModal, setOpenModal] = useState(false)
-  const handleOpenModal = () => setOpenModal(true)
-  const handleCloseModal = () => {
-    setOpenModal(false)
+  const [openLoginModal, setOpenLoginModal] = useState(false)
+  const handleOpenLoginModal = () => setOpenLoginModal(true)
+  const handleCloseLoginModal = () => {
+    setOpenLoginModal(false)
+    setLocation(window.location.pathname)
+  }
+
+  const [openSignupModal, setOpenSignupModal] = useState(false)
+  const handleOpenSignupModal = () => setOpenSignupModal(true)
+  const handleCloseSignupModal = () => {
+    setOpenSignupModal(false)
     setLocation(window.location.pathname)
   }
   const [loggedIn, setLoggedIn] = useState(false)
@@ -37,13 +44,14 @@ const App = () => {
             path="/"
             element={
               <>
-                <Landing openModal={openModal} handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal} location={location} setLocation={setLocation} />
+                <Landing openLoginModal={openLoginModal} handleOpenLoginModal={handleOpenLoginModal} handleCloseLoginModal={handleCloseLoginModal} openSignupModal={openSignupModal} handleOpenSignupModal={handleOpenSignupModal} handleCloseSignupModal={handleCloseSignupModal} location={location} setLocation={setLocation} />
               </>
             }
           ></Route>
-          <Route path="login" element={<Login openModal={true} handleCloseModal={handleCloseModal} location={location} setLocation={setLocation} />}></Route>
+          <Route path="login" element={<Login openModal={true} handleCloseModal={handleCloseLoginModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="password_reset" element={<PasswordReset />}></Route>
           <Route path="/home" element={<Home />}></Route>
+          <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation}/>}></Route>
           <Route path="*" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>
