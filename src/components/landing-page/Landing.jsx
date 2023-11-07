@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import Login from "../Login/Login"
 import "./landing.css"
+import SignUp from "../SignUp"
 
-const Landing = ({ openModal, handleOpenModal, handleCloseModal, location, setLocation }) => {
+const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, openSignupModal, handleOpenSignupModal, handleCloseSignupModal, location, setLocation }) => {
   // Dark & Light mode
   const [mode, setMode] = useState("light")
 
@@ -58,14 +59,14 @@ const Landing = ({ openModal, handleOpenModal, handleCloseModal, location, setLo
               Sign up with Apple
             </button>
             <span className="or">or</span>
-            <a href="#/i/flow/signup" className="create-acc">
+            <a className="create-acc" onClick={handleOpenSignupModal}>
               Create account
             </a>
             <span className="rules">
               By signing up, you agree to the <a href="#/tos">Terms of Service</a> and <a href="#/privacy">Privacy Policy</a>, including <a href="help.#/rules-and-policies/twitter-cookies">Cookie Use.</a>
             </span>
             <span className="acc-exist">Already have an account?</span>
-            <a onClick={handleOpenModal} className="login">
+            <a onClick={handleOpenLoginModal} className="login">
               Sign in
             </a>
           </div>
@@ -92,7 +93,8 @@ const Landing = ({ openModal, handleOpenModal, handleCloseModal, location, setLo
         <a href="#/plapla">Settings</a>
         <div>&copy; 2023 GigaChat Corp.</div>
       </div>
-      <Login openModal={openModal} handleCloseModal={handleCloseModal} location={location} setLocation={setLocation} />
+      <Login openModal={openLoginModal} handleCloseModal={handleCloseLoginModal} location={location} setLocation={setLocation} />
+      <SignUp openModal={openSignupModal} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation}/>
     </div>
   )
 }

@@ -23,12 +23,6 @@
   scrollbar-width: none; /* Firefox */
 }
 
-.hash-span {
-  margin-top: -100px;
-  margin-left: -25px;  /* this is added for the (Step # of #) in Sign Up*/
-  padding-bottom: 100px;
-  display: block;
-}
 
 .black-gradient {
   background: #000000; /* fallback for old browsers */
