@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base{
-    button, [type='button'], [type='reset'], [type='submit']{
-      background-color: white; 
-    }
-  }
-
 @layer components {
 
     /* Color palette-dark */

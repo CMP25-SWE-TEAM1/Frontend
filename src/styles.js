@@ -22,7 +22,6 @@ const styles = {
     border: "1px solid #767C86",
     borderRadius: "15px",
   },
-
 }
 
 export { styles };
