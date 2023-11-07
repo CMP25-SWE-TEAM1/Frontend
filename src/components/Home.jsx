@@ -4,6 +4,7 @@ import PostsContainer from "./PostsContainer"
 import { useState } from "react"
 import Sidebar from "./Sidebar"
 import { useNavigate } from "react-router"
+import Widgets from "./Widgets"
 
 function getUser() {
   let user = localStorage.getItem("user")
@@ -104,6 +105,7 @@ const Home = () => {
         <p>email: {user.email}</p>
         <img src={user.picture} alt="profile" />
       </div>
+      {user && <Widgets/>}
     </>
   )
 }
