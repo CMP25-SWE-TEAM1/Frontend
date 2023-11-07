@@ -1,11 +1,12 @@
-import GoogleLogin from "@leecheuk/react-google-login"
 import React from "react"
 import { useState } from "react"
-import { Link } from "react-router-dom"
-import { Modal, Box, Dialog } from "@mui/material"
+import { Link, useNavigate } from "react-router-dom"
+import { Modal, Box } from "@mui/material"
 import lightLogo from "../../assets/imgs/giga-chat-logo-dark-removebg-preview.png"
-import {styles} from '../../styles'
-
+import { styles } from "../../styles"
+import { useDispatch, useSelector } from "react-redux"
+import { loginUser } from "../../store/UserSlice"
+import GoogleLoginButton from "../GoogleLoginButton"
 
 const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [userName, setUserName] = useState("")
@@ -19,9 +20,26 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
     secondPage.style.display = "flex"
   }
 
-  function responseGoogle(response) {
-    // Handle the Google sign-in response here
-    console.log(response)
+  const { loading, error } = useSelector((state) => state.user)
+
+  const dispatch = useDispatch()
+
+  const navigate = useNavigate()
+  const handleLoginEvent = (e) => {
+    e.preventDefault()
+    let userCredentials = {
+      userName,
+      password,
+    }
+
+    dispatch(loginUser({ userCredentials, isgoogle: null })).then((result) => {
+      if (result.payload) {
+        setUserName("")
+        setPassword("")
+        navigate("/home")
+        handleCloseModal()
+      }
+    })
   }
 
   return (
@@ -37,16 +55,9 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
             <div id="firstPage" className="pop-up m-auto h-full max-w-[300px]">
               <img src={lightLogo} alt="GigaChat Logo" className="ml-[40%] mt-4 w-[40px]" />
               <h1 className="mb-4 mt-3">Log in to Gigachat</h1>
-              <GoogleLogin
-                clientId="40488454700-g3rk7h26t89sb83do0dbdeinvke0tmrj.apps.googleusercontent.com"
-                onSuccess={() => responseGoogle()}
-                onFailure={() => responseGoogle()}
-                render={(renderProps) => (
-                  <button onClick={renderProps.onClick} className="btn">
-                    Log in with Google
-                  </button>
-                )}
-              />
+
+              <GoogleLoginButton handleCloseModal={handleCloseModal} />
+
               <div className="flex h-10 items-center justify-center">
                 <div className="flex w-full items-center">
                   <hr className="mr-2 w-full" />
@@ -85,7 +96,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
               <img src={lightLogo} alt="GigaChat Logo" className="ml-[40%] mt-4 w-[40px]" />
 
               <h1 className="text-4xl">Enter your password</h1>
-              <form action="/" method="post" className="flex flex-col gap-5" autoComplete="off">
+              <form action="/" method="post" className="flex flex-col gap-5" autoComplete="off" onSubmit={handleLoginEvent}>
                 <div className="input-container">
                   <input type="text" name="username" id="username" value={userName} className="form-input filled-input border-0 bg-neutral-900" disabled />
                   <label className="input-label" htmlFor="username">
@@ -108,8 +119,9 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                   Forgot password?
                 </Link>
                 <button id="login" type="submit" className="btn mt-36 h-14 rounded-3xl bg-white" disabled={password === ""}>
-                  Log in
+                  {loading ? "Loading..." : "Log In"}
                 </button>
+                {error && <div>{error}</div>}
               </form>
               <span className="text-slate-400">
                 Don't have an account? <Link to={"/Signup"}>Sign Up</Link>
