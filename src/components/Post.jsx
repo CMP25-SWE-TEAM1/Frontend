@@ -58,7 +58,7 @@ const Post = ({
   const intDifferenceInMinutes = Math.floor(differenceInMinutes);
   const intDifferenceInHours = Math.floor(differenceInHours);
 
-  const finalDate = intDifferenceInHours
+  const finalDate =(intDifferenceInHours>24)?Math.floor(intDifferenceInHours/24)+"d": intDifferenceInHours
     ? intDifferenceInHours + "h"
     : intDifferenceInMinutes
     ? intDifferenceInMinutes + "m"

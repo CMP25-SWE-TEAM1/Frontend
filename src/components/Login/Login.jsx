@@ -1,11 +1,14 @@
-import GoogleLogin from "@leecheuk/react-google-login"
 import React from "react"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+
+import { Link, useNavigate } from "react-router-dom"
+
 import { Modal, Box } from "@mui/material"
 import lightLogo from "../../assets/imgs/giga-chat-logo-dark-removebg-preview.png"
-import {styles} from '../../styles'
-
+import { styles } from "../../styles"
+import { useDispatch, useSelector } from "react-redux"
+import { loginUser } from "../../store/UserSlice"
+import GoogleLoginButton from "../GoogleLoginButton"
 
 const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [userName, setUserName] = useState("")
@@ -19,9 +22,26 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
     secondPage.style.display = "block"
   }
 
-  function responseGoogle(response) {
-    // Handle the Google sign-in response here
-    console.log(response)
+  const { loading, error } = useSelector((state) => state.user)
+
+  const dispatch = useDispatch()
+
+  const navigate = useNavigate()
+  const handleLoginEvent = (e) => {
+    e.preventDefault()
+    let userCredentials = {
+      userName,
+      password,
+    }
+
+    dispatch(loginUser({ userCredentials, isgoogle: null })).then((result) => {
+      if (result.payload) {
+        setUserName("")
+        setPassword("")
+        navigate("/home")
+        handleCloseModal()
+      }
+    })
   }
 
   return (
@@ -34,28 +54,52 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
             </Link>
             <img src={lightLogo} alt="GigaChat Logo" className="-mt-4 ml-[45%] w-[40px]" />
             {/* --------------------------------------First Login Page------------------------------------- */}
-            <div id="firstPage">
-              <div>
-                <h1>Log in to Gigachat</h1>
-                <GoogleLogin
-                  clientId="40488454700-g3rk7h26t89sb83do0dbdeinvke0tmrj.apps.googleusercontent.com"
-                  onSuccess={() => responseGoogle()}
-                  onFailure={() => responseGoogle()}
-                  render={(renderProps) => (
-                    <button onClick={renderProps.onClick} className="btn mt-0">
-                      Log in with Google
-                    </button>
-                  )}
-                />
-                <div className="flex h-10 items-center justify-center">
-                  <div className="flex w-full items-center">
-                    <hr className="mr-2 w-full" />
-                  </div>
-                  &nbsp; or &nbsp;
-                  <div className="flex w-full items-center">
-                    <hr className="ml-2 w-full" />
-                  </div>
+            <div id="firstPage" className="pop-up m-auto h-full max-w-[300px]">
+              <img src={lightLogo} alt="GigaChat Logo" className="ml-[40%] mt-4 w-[40px]" />
+              <h1 className="mb-4 mt-3">Log in to Gigachat</h1>
+
+              <GoogleLoginButton handleCloseModal={handleCloseModal} />
+
+              <div className="flex h-10 items-center justify-center">
+                <div className="flex w-full items-center">
+                  <hr className="mr-2 w-full" />
                 </div>
+                &nbsp; or &nbsp;
+                <div className="flex w-full items-center">
+                  <hr className="ml-2 w-full" />
+                </div>
+              </div>
+              <div className="input-container">
+                <input className={userName === "" ? "form-input" : "form-input filled-input"} type="text" name="username" id="username" autoComplete="off" value={userName} onChange={(e) => setUserName(e.target.value)} />
+                <label className="input-label" htmlFor="username">
+                  Phone, email or username
+                </label>
+              </div>
+              <button type="button" id="next" className="btn mt-2 bg-white" onClick={handleNext} disabled={userName === ""}>
+                Next
+              </button>
+              <Link
+                onClick={() => {
+                  setLocation("/password_reset")
+                }}
+                to={"/password_reset"}
+              >
+                <button id="forgotPassword" className="btn mt-2 border border-white bg-black text-white">
+                  Forgot Password?
+                </button>
+              </Link>
+              <span className="mt-5 text-slate-400">
+                Don't have an account? <Link to={"/Signup"}>Sign Up</Link>{" "}
+              </span>
+            </div>
+
+            {/* --------------------------------------Second Login Page------------------------------------- */}
+            <div id="secondPage" className="pop-up m-auto hidden h-full max-w-[430px]">
+              <img src={lightLogo} alt="GigaChat Logo" className="ml-[40%] mt-4 w-[40px]" />
+
+              <h1 className="text-4xl">Enter your password</h1>
+              <form action="/" method="post" className="flex flex-col gap-5" autoComplete="off" onSubmit={handleLoginEvent}>
+
                 <div className="input-container">
                   <input className={userName === "" ? "form-input" : "form-input filled-input"} type="text" name="username" id="username" autoComplete="off" value={userName} onChange={(e) => setUserName(e.target.value)} />
                   <label className="input-label" htmlFor="username">
@@ -75,6 +119,11 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                     Forgot Password?
                   </button>
                 </Link>
+                <button id="login" type="submit" className="btn mt-36 h-14 rounded-3xl bg-white" disabled={password === ""}>
+                  {loading ? "Loading..." : "Log In"}
+                </button>
+                {error && <div>{error}</div>}
+              </form>
                 <span className="text-slate-400">
                   Don't have an account? <Link to={"/Signup"}>Sign Up</Link>{" "}
                 </span>
@@ -107,14 +156,9 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                   >
                     Forgot password?
                   </Link>
-                  <button id="login" type="submit" className="btn mt-32" disabled={password === ""}>
-                    Log in
-                  </button>
                 </form>
-                <span className="text-slate-400">
-                  Don't have an account? <Link to={"/Signup"}>Sign Up</Link>
-                </span>
               </div>
+
             </div>
           </div>
         </Box>

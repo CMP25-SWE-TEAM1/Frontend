@@ -10,6 +10,8 @@ import { useState } from "react"
 import { useEffect } from "react"
 import SignUp from "./components/SignUp"
 
+
+
 const App = () => {
   const [location, setLocation] = useState(null)
 
@@ -30,12 +32,10 @@ const App = () => {
     setOpenSignupModal(false)
     setLocation(window.location.pathname)
   }
-  const [loggedIn, setLoggedIn] = useState(false)
+
 
   return (
-    <div className="app ml-auto mr-auto flex justify-start">
-      {loggedIn && <Sidebar />}
-      {/* true will be replaced by authorization*/}
+    <div className="app relative ml-auto mr-auto flex justify-start h-[100vh]">
       <BrowserRouter>
         {/* {location !== "/login" && location !== "/password_reset" && <Sidebar />} */}
         {/* true will be replaced by authorization*/}
@@ -51,11 +51,11 @@ const App = () => {
           <Route path="login" element={<Login openModal={true} handleCloseModal={handleCloseLoginModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="password_reset" element={<PasswordReset />}></Route>
           <Route path="/home" element={<Home />}></Route>
-          <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation}/>}></Route>
+          <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="*" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>
-      {loggedIn && false && <Widgets />}
+      {/* {user && <Widgets />} */}
       {/* true will be replaced by authorization*/}
     </div>
   )
