@@ -97,7 +97,8 @@ const Landing = () => {
         </div>
       </div>
       <div className="footer">
-        <a href="#/plapla">About</a>
+        {/* NOTE: commented links until decide its state */}
+        {/* <a href="#/plapla">About</a>
         <a href="#/plapla">Download GigaChat app</a>
         <a href="#/plapla">Help Center</a>
         <a href="#/plapla">Terms of Service</a>
@@ -114,7 +115,7 @@ const Landing = () => {
         <a href="#/plapla">GigaChat for Business</a>
         <a href="#/plapla">Developers</a>
         <a href="#/plapla">Directory</a>
-        <a href="#/plapla">Settings</a>
+        <a href="#/plapla">Settings</a> */}
         <div>&copy; 2023 GigaChat Corp.</div>
       </div>
     </div>
