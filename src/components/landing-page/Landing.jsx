@@ -6,21 +6,24 @@ import GoogleLoginButton from "../GoogleLoginButton"
 
 const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, openSignupModal, handleOpenSignupModal, handleCloseSignupModal, location, setLocation }) => {
   // Dark & Light mode
-  const [mode, setMode] = useState("light")
+  const [mode, setMode] = useState(null)
 
   const logoImgDark = require("../../assets/imgs/logo-dark.jpg")
   const logoImgLight = require("../../assets/imgs/logo-light.jpg")
 
   useEffect(() => {
-    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setMode("dark")
-    } else setMode("light")
+    const rootMode = localStorage.getItem("mode");
+    if (rootMode === "dark") setMode("dark");
+    else if (rootMode === "light") setMode("light");
+    else setMode(null);
 
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
-      const colorScheme = event.matches ? "dark" : "light"
-      // console.log(colorScheme); // "dark" or "light"
-      setMode(colorScheme)
-    })
+
+    // NOTE: Commented until team handle it....
+    // window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
+    //   const colorScheme = event.matches ? "dark" : "light"
+    //   // console.log(colorScheme); // "dark" or "light"
+    //   setMode(colorScheme)
+    // })
   }, [])
 
   // -----
@@ -28,8 +31,8 @@ const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, 
     <div className={`landing ${mode}`}>
       <div className="content">
         <div className="logo">
-          {mode === "light" && <img src={logoImgLight} alt="Logo" />}
-          {mode === "dark" && <img src={logoImgDark} alt="Logo" />}
+          {mode && mode === "light" && <img src={logoImgLight} alt="Logo" />}
+          {mode && mode === "dark" && <img src={logoImgDark} alt="Logo" />}
         </div>
         <div className="info">
           <span className="t1">Happening now</span>
@@ -61,7 +64,8 @@ const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, 
         </div>
       </div>
       <div className="footer">
-        <a href="#/plapla">About</a>
+        {/* NOTE: commented links until decide its state */}
+        {/* <a href="#/plapla">About</a>
         <a href="#/plapla">Download GigaChat app</a>
         <a href="#/plapla">Help Center</a>
         <a href="#/plapla">Terms of Service</a>
@@ -78,7 +82,7 @@ const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, 
         <a href="#/plapla">GigaChat for Business</a>
         <a href="#/plapla">Developers</a>
         <a href="#/plapla">Directory</a>
-        <a href="#/plapla">Settings</a>
+        <a href="#/plapla">Settings</a> */}
         <div>&copy; 2023 GigaChat Corp.</div>
       </div>
       <Login openModal={openLoginModal} handleCloseModal={handleCloseLoginModal} location={location} setLocation={setLocation} />
