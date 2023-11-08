@@ -1,4 +1,3 @@
-import GoogleLogin from "@leecheuk/react-google-login"
 import React from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
@@ -6,9 +5,9 @@ import ReCAPTCHA from "react-google-recaptcha"
 import { Modal, Box } from "@mui/material"
 import lightLogo from "../assets/imgs/giga-chat-logo-dark-removebg-preview.png"
 
-// import { GoogleLogin } from "@react-oauth/google";
 
 import { styles } from "../styles"
+import GoogleLoginButton from "./GoogleLoginButton"
 
 const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [nickName, setNickName] = useState("")
@@ -62,16 +61,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
             <div id="Join GigaChat">
               <div>
                 <h1 className="mb-4 mt-3">Join GigaChat today</h1>
-                <GoogleLogin
-                  clientId="40488454700-g3rk7h26t89sb83do0dbdeinvke0tmrj.apps.googleusercontent.com"
-                  onSuccess={() => responseGoogle()}
-                  onFailure={() => responseGoogle()}
-                  render={(renderProps) => (
-                    <button onClick={renderProps.onClick} className="btn mt-0">
-                      Sign Up with Google
-                    </button>
-                  )}
-                />
+                <GoogleLoginButton handleCloseModal={handleCloseModal} />
                 <div className="flex h-10 items-center justify-center">
                   <div className="flex w-full items-center">
                     <hr className="mr-2 w-full" />
@@ -173,7 +163,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                       Password
                     </label>
                   </div>
-                  <span className={`absolute cursor-pointer right-4 top-4 toggle-password ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}>
+                  <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}>
                     👁️
                   </span>
                 </div>
