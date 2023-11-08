@@ -14,6 +14,8 @@ module.exports = {
         ternairy: "#767C86",
         forth: "#67b6d0",
         fifth: "#00030e",
+        lightHover: "#f0f0f0",
+        darkHover: "#16181C",
         "black-100": "#100d25",
         "black-200": "#090325",
         "white-100": "#f3f3f3",

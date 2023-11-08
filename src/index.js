@@ -12,15 +12,6 @@ import store from "./store"
 import { GoogleOAuthProvider } from "@react-oauth/google"
 const clientId = "341526416859-a1u3gf1rl41o6vj5nvl0bs3ac00sljue.apps.googleusercontent.com"
 
-//For setting dark mode
-// const htmlElement = document.getElementById("htmlid");
-// document.documentElement.style.setProperty("--color-theme", "dark");
-// htmlElement.classList.add("dark");
-
-//For setting light mode
-// document.documentElement.style.setProperty("--color-theme", "white");
-// htmlElement.classList.remove("dark");
-
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <GoogleOAuthProvider clientId={clientId}>
