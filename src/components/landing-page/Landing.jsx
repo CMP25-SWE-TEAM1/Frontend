@@ -59,16 +59,16 @@ const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, 
               Sign up with Apple
             </button>
             <span className="or">or</span>
-            <a className="create-acc" onClick={handleOpenSignupModal}>
+            <div className="create-acc hover:cursor-pointer" onClick={handleOpenSignupModal}>
               Create account
-            </a>
+            </div>
             <span className="rules">
               By signing up, you agree to the <a href="#/tos">Terms of Service</a> and <a href="#/privacy">Privacy Policy</a>, including <a href="help.#/rules-and-policies/twitter-cookies">Cookie Use.</a>
             </span>
             <span className="acc-exist">Already have an account?</span>
-            <a onClick={handleOpenLoginModal} className="login">
+            <div onClick={handleOpenLoginModal} className="login hover:cursor-pointer">
               Sign in
-            </a>
+            </div>
           </div>
         </div>
       </div>
