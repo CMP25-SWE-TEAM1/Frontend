@@ -61,7 +61,7 @@ const Sidebar = ({user,setUser}) => {
   }
 
   return (
-    <div className="max-w-[400px]  border  border-black text-center text-black dark:text-white flex-grow flex justify-end">
+    <div className="max-w-[400px] text-center text-black dark:text-white flex-grow flex justify-end">
       <div className="flex h-full flex-col pl-[30%]">
         <Button name={imageIcon("logo", lightLogo, 8)} color="text-white" backgroundColor="" height="h-12" width="w-12" link="/home" />
         {options}

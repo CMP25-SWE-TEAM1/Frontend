@@ -18,15 +18,14 @@ import getUser from "./constants"
 const App = () => {
   const [location, setLocation] = useState(null)
 
-  useEffect(()=>{
+  useEffect(() => {
     const mode = localStorage.getItem("mode")
     const htmlElement = document.getElementById("htmlid")
 
-    if(mode == "dark"){
+    if (mode == "dark") {
       document.documentElement.style.setProperty("--color-theme", "dark")
       htmlElement.classList.add("dark")
-    }
-    else{
+    } else {
       document.documentElement.style.setProperty("--color-theme", "white")
       htmlElement.classList.remove("dark")
     }
@@ -34,6 +33,7 @@ const App = () => {
 
   useEffect(() => {
     setLocation(window.location.pathname)
+    setUser(getUser())
   }, [location])
 
   const [openLoginModal, setOpenLoginModal] = useState(false)
@@ -51,7 +51,6 @@ const App = () => {
     setOpenSignupModal(false)
     setLocation(window.location.pathname)
   }
-
 
   const [user, setUser] = useState(getUser())
 
