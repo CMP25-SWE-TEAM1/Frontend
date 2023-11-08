@@ -15,12 +15,12 @@ const styles = {
     top: "50%",
     left: "55%",
     transform: "translate(-50%, -50%)",
-    width: 600,
+    width: 601.6,
     height: "90vh",
     backgroundColor: "transperant",
     backdropFilter: "blur(5px)",
     border: "1px solid #767C86",
-    borderRadius: "15px",
+    borderRadius: "16px",
   },
 }
 
