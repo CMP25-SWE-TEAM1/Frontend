@@ -3,35 +3,33 @@ import "./landing.css";
 
 const Landing = () => {
   // Dark & Light mode
-  const [mode, setMode] = useState("light");
+  const [mode, setMode] = useState(null)
 
-  const logoImgDark = require("../../assets/imgs/logo-dark.jpg");
-  const logoImgLight = require("../../assets/imgs/logo-light.jpg");
+  const logoImgDark = require("../../assets/imgs/logo-dark.jpg")
+  const logoImgLight = require("../../assets/imgs/logo-light.jpg")
 
   useEffect(() => {
-    if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      setMode("dark");
-    } else setMode("light");
+    const rootMode = localStorage.getItem("mode");
+    if (rootMode === "dark") setMode("dark");
+    else if (rootMode === "light") setMode("light");
+    else setMode(null);
 
-    window
-      .matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", (event) => {
-        const colorScheme = event.matches ? "dark" : "light";
-        // console.log(colorScheme); // "dark" or "light"
-        setMode(colorScheme);
-      });
-  }, []);
+
+    // NOTE: Commented until team handle it....
+    // window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
+    //   const colorScheme = event.matches ? "dark" : "light"
+    //   // console.log(colorScheme); // "dark" or "light"
+    //   setMode(colorScheme)
+    // })
+  }, [])
 
   // -----
   return (
     <div className={`landing ${mode}`}>
       <div className="content">
         <div className="logo">
-          {mode === "light" && <img src={logoImgLight} alt="Logo" />}
-          {mode === "dark" && <img src={logoImgDark} alt="Logo" />}
+          {mode && mode === "light" && <img src={logoImgLight} alt="Logo" />}
+          {mode && mode === "dark" && <img src={logoImgDark} alt="Logo" />}
         </div>
         <div className="info">
           <span className="t1">Happening now</span>
