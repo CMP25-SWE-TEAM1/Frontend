@@ -13,6 +13,7 @@ import Account from "./components/Settings/Account/Account"
 import AccessibilityDisplayLanguages from "./components/Settings/AccessibilityDisplayLanguages/AccessibilityDisplayLanguages"
 import Accessibility from "./components/Settings/AccessibilityDisplayLanguages/Accessibility"
 import Display from "./components/Settings/AccessibilityDisplayLanguages/Display"
+import getUser from "./constants"
 
 const App = () => {
   const [location, setLocation] = useState(null)
@@ -52,9 +53,13 @@ const App = () => {
   }
 
 
+  const [user, setUser] = useState(getUser())
+
   return (
-    <div className="app relative ml-auto mr-auto flex justify-start h-[100vh]">
+    <div className="app flex h-[100vh]">
       <BrowserRouter>
+        {user && <Sidebar user={user} setUser={setUser} />}
+
         {/* {location !== "/login" && location !== "/password_reset" && <Sidebar />} */}
         {/* true will be replaced by authorization*/}
         <Routes>
@@ -76,7 +81,7 @@ const App = () => {
             <Route path="accessibility" element={<Accessibility />}></Route>
             <Route path="display" element={<Display />}></Route>
           </Route>
-          <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation}  />}></Route>
+          <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="*" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>

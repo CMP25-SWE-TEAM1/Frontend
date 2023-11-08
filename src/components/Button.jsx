@@ -10,7 +10,7 @@ function Button({ name, color, backgroundColor, height, width, link }) {
       <div
         title="buttonNameContainer"
         className={`group-hover:${
-          backgroundColor ? "brightness-90" : "bg-gray-300"
+          backgroundColor ? "brightness-90" : "dark:hover:bg-darkHover hover:bg-lightHover"
         } flex justify-center items-center ${height} ${width} ${color} ${backgroundColor} rounded-full m-1`}
       >
         <span className="font-semibold">{name}</span>

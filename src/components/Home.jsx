@@ -5,25 +5,10 @@ import { useState } from "react"
 import Sidebar from "./Sidebar"
 import { useNavigate } from "react-router"
 import Widgets from "./Widgets"
+import getUser from '../constants/index'
 
-function getUser() {
-  let user = localStorage.getItem("user")
-  if (user) {
-    user = JSON.parse(user)
-  } else {
-    user = null
-  }
-  return user
-}
 
 const Home = () => {
-  const navigate = useNavigate()
-
-  const handleLogout = () => {
-    localStorage.removeItem("user")
-    setUser(null)
-    navigate("/")
-  }
 
   const [user, setUser] = useState(getUser())
 
@@ -81,10 +66,10 @@ const Home = () => {
   ]
 
   return (
-    <>
-      {user && <Sidebar />}
+    <div className="flex flex-1">
+      {/* {user && <Sidebar user={user} setUser={setUser} />} */}
 
-      <div className="home ml-0 mr-1 w-[85%] max-w-[600px] shrink-0 overflow-y-scroll border border-b-0 border-t-0 border-gray-100 text-center dark:border-gray-600 sm:w-[600px]">
+      <div className="home ml-0 mr-1 max-w-[620px] shrink-0 overflow-y-scroll border border-b-0 border-t-0 border-gray-100 text-center dark:border-gray-600 sm:w-[600px] flex-grow">
         <div className="sticky top-0 z-50 mb-3 border-0 border-b border-b-gray-100 bg-white bg-opacity-[87%] backdrop-blur-sm dark:border-b-gray-600  dark:bg-inherit dark:bg-opacity-[99%] ">
           {/* <div className="h-[53px] flex justify-start items-center">
           <h2 className="font-semibold text-xl text-gray-800 pl-6 dark:text-white">
@@ -97,16 +82,13 @@ const Home = () => {
         </div>
         <PostsContainer posts={postsTst} />
       </div>
-      <button type="button" onClick={handleLogout} className="h-10 bg-black text-white">
-        logout
-      </button>
-      <div>
+      {/* <div>
         <p>name: {user.name}</p>
         <p>email: {user.email}</p>
         <img src={user.picture} alt="profile" />
-      </div>
-      {user && <Widgets/>}
-    </>
+      </div> */}
+      {user && <Widgets />}
+    </div>
   )
 }
 

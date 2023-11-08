@@ -107,6 +107,7 @@ const Post = ({
               aria-haspopup="true"
               aria-expanded={openMenu ? "true" : undefined}
               onClick={handleMenuButtonClick}
+              className="bg-transparent"
             >
               <MoreHorizIcon className="text-secondary" />
             </Button>
