@@ -6,13 +6,15 @@ import Login from "./components/Login/Login"
 import PasswordReset from "./components/Login/PasswordReset"
 import Landing from "./components/landing-page/Landing"
 import Settings from "./components/Settings/Settings"
-import { useState } from "react"
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 import SignUp from "./components/SignUp"
 import Account from "./components/Settings/Account/Account"
 import AccessibilityDisplayLanguages from "./components/Settings/AccessibilityDisplayLanguages/AccessibilityDisplayLanguages"
 import Accessibility from "./components/Settings/AccessibilityDisplayLanguages/Accessibility"
 import Display from "./components/Settings/AccessibilityDisplayLanguages/Display"
+import PrivacySafety from "./components/Settings/PrivacySafety/PrivacySafety"
+import Blocked from "./components/Settings/PrivacySafety/Blocked"
+import Muted from "./components/Settings/PrivacySafety/Muted"
 
 const App = () => {
   const [location, setLocation] = useState(null)
@@ -21,7 +23,7 @@ const App = () => {
     const mode = localStorage.getItem("mode")
     const htmlElement = document.getElementById("htmlid")
 
-    if(mode == "dark"){
+    if(mode === "dark"){
       document.documentElement.style.setProperty("--color-theme", "dark")
       htmlElement.classList.add("dark")
     }
@@ -50,7 +52,7 @@ const App = () => {
     setOpenSignupModal(false)
     setLocation(window.location.pathname)
   }
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn] = useState(false)
 
   return (
     <div className="app ml-auto mr-auto flex justify-start">
@@ -73,6 +75,10 @@ const App = () => {
           <Route path="/home" element={<Home />}></Route>
           <Route path="/settings" element={<Settings />}>
             <Route path="account" element={<Account />}></Route>
+
+            <Route path="privacy_and_safety" element={<PrivacySafety />}></Route>
+            <Route path="blocked" element={<Blocked />}></Route>
+            <Route path="muted" element={<Muted />}></Route>
 
             <Route path="accessibility_display_and_languages" element={<AccessibilityDisplayLanguages />}></Route>
             <Route path="accessibility" element={<Accessibility />}></Route>

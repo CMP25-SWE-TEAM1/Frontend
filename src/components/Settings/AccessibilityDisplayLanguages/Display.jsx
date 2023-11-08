@@ -34,20 +34,20 @@ const Display = () => {
         </Link>
         <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Display</h1>
       </div>
-      <p className="mb-4 pl-4 text-xs text-secondary">Manage your font size, color, and background. These settings affect all the X accounts on this browser.</p>
+      <p className="mb-4 pl-4 pr-10 text-xs text-secondary">Manage your font size, color, and background. These settings affect all the X accounts on this browser.</p>
 
       <div>
         <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Background</h1>
         <div className="flex justify-evenly">
           <label htmlFor="default-bg">
             <div className="flex h-16 w-40 cursor-pointer items-center justify-around rounded-lg border border-secondary bg-white font-bold text-black">
-              <input type="checkbox" id="default-bg" className="w-4 h-4" checked={mode == "light"} onChange={handleLightMode} />
+              <input type="checkbox" id="default-bg" className="w-4 h-4" checked={mode === "light"} onChange={handleLightMode} />
               Default
             </div>
           </label>
           <label htmlFor="lights-out-bg">
             <div className="flex h-16 w-40 cursor-pointer items-center justify-around rounded-lg border border-secondary bg-black font-bold text-white">
-              <input type="checkbox" id="lights-out-bg" className="w-4 h-4" checked={mode == "dark"} onChange={handleDarkMode} />
+              <input type="checkbox" id="lights-out-bg" className="w-4 h-4" checked={mode === "dark"} onChange={handleDarkMode} />
               Lights Out
             </div>
           </label>

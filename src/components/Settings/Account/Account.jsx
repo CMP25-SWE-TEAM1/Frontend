@@ -4,7 +4,7 @@ const Account = () => {
   return (
     <div>
       <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Your Account</h1>
-      <p className="mb-4 pl-4 text-xs text-secondary">See information about your account, download an archive of your data, or learn about your account deactivation options</p>
+      <p className="mb-4 pl-4 pr-10 text-xs text-secondary">See information about your account, download an archive of your data, or learn about your account deactivation options</p>
       <Link to="../account_information">
         <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover">
           {/* icon */}
