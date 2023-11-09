@@ -126,8 +126,6 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
       }
     })
   }
-
-
   return (
     <>
       <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
@@ -186,7 +184,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                   <label className="input-label" htmlFor="email">
                     Email
                   </label>
-                  <Alert severity={`${validEmail(email) ? "success" : "error"}`} className={`${email?"flex":"hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+                  <Alert severity={`${validEmail(email) ? "success" : "error"}`} className={`${email ? "flex" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
                     Please enter a valid email
                   </Alert>
                 </div>
