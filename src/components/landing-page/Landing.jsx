@@ -3,6 +3,7 @@ import Login from "../Login/Login"
 import "./landing.css"
 import SignUp from "../SignUp"
 import GoogleLoginButton from "../GoogleLoginButton"
+import { useNavigate } from "react-router-dom"
 
 const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, openSignupModal, handleOpenSignupModal, handleCloseSignupModal, location, setLocation }) => {
   // Dark & Light mode
@@ -17,6 +18,15 @@ const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, 
     else setMode(null);
   }, [])
 
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const user = localStorage.getItem("user")
+    if (user) {
+      navigate("/home")
+    }
+  })
+
   // -----
   return (
     <div className={`landing ${mode}`}>
@@ -29,7 +39,7 @@ const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, 
           <span className="t1">Happening now</span>
           <span className="t2">Join today.</span>
           <div className="panel">
-            <GoogleLoginButton handleCloseModal={handleCloseLoginModal}/>
+            <GoogleLoginButton handleCloseModal={handleCloseLoginModal} />
             <button className="apple-btn mt-4">
               {/* Apple icon */}
               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -77,7 +87,7 @@ const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, 
         <div>&copy; 2023 GigaChat Corp.</div>
       </div>
       <Login openModal={openLoginModal} handleCloseModal={handleCloseLoginModal} location={location} setLocation={setLocation} />
-      <SignUp openModal={openSignupModal} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation}/>
+      <SignUp openModal={openSignupModal} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />
     </div>
   )
 }

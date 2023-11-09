@@ -7,6 +7,8 @@ import { styles } from "../../styles"
 import { useDispatch, useSelector } from "react-redux"
 import { loginUser } from "../../store/UserSlice"
 import GoogleLoginButton from "../GoogleLoginButton"
+import VisibilityIcon from "@mui/icons-material/Visibility"
+
 
 const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [userName, setUserName] = useState("")
@@ -76,7 +78,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                     Phone, email or username
                   </label>
                 </div>
-                <button type="button" id="next" className="btn mt-2" onClick={handleNext} disabled={userName === ""}>
+                <button type="button" id="next" className="btn mt-2 bg-white text-black dark:bg-black dark:text-white" onClick={handleNext} disabled={userName === ""}>
                   Next
                 </button>
                 <Link
@@ -85,7 +87,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                   }}
                   to={"/password_reset"}
                 >
-                  <button id="forgotPassword" className="btn mt-2 border border-black bg-white text-black hover:bg-lightHover dark:border-white dark:bg-black dark:text-white dark:hover:bg-darkHover">
+                  <button id="forgotPassword" className="btn mt-2 border border-lightHover dark:border-darkHover bg-white text-black hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover">
                     Forgot Password?
                   </button>
                 </Link>
@@ -101,7 +103,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                 <h1 className="text-4xl">Enter your password</h1>
                 <form action="/" method="post" className="flex flex-col gap-5" autoComplete="off" onSubmit={handleLoginEvent}>
                   <div className="input-container">
-                    <input type="text" name="username" id="username" value={userName} className="form-input filled-input border-0 !bg-gray-100 dark:!bg-gray-900 !text-ternairy" disabled />
+                    <input type="text" name="username" id="username" value={userName} className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
                     <label className="input-label" htmlFor="username">
                       Phone, email or username
                     </label>
@@ -114,7 +116,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                       </label>
                     </div>
                     <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}>
-                      👁️
+                      <VisibilityIcon className="text-primary" />
                     </span>
                   </div>
                   <Link
@@ -126,7 +128,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                   >
                     Forgot password?
                   </Link>
-                  <button id="login" type="submit" className="btn mt-36 h-14 rounded-3xl" disabled={password === ""}>
+                  <button id="login" type="submit" className="btn mt-36 h-14 rounded-3xl bg-white text-black dark:bg-black dark:text-white" disabled={password === ""}>
                     {loading ? "Loading..." : "Log In"}
                   </button>
                   {error && <div>{error}</div>}

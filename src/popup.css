@@ -9,13 +9,12 @@
     padding-left: 100px;
     padding-right: 100px;
   }
-  
-  .pop-up > div > div{
+
+  .pop-up > div > div {
     display: flex;
     flex-direction: column;
     gap: 20px 0;
     height: 500px;
-    max-width: 400px;
     margin-top: 50px;
   }
 
@@ -41,14 +40,14 @@
       height: 100vh;
     }
 
-    .pop-up > div > div{
+    .pop-up > div > div {
       padding-top: 100px;
       margin: auto;
     }
   }
 
   .btn {
-    @apply h-10 w-full rounded-3xl font-semibold mt-auto mb-2 bg-black dark:bg-white text-white dark:text-black hover:bg-darkHover dark:hover:bg-lightHover disabled:pointer-events-none;
+    @apply mb-2 mt-auto h-10 w-full border border-lightHover dark:border-darkHover rounded-3xl font-semibold dark:bg-white bg-white dark:text-black text-black hover:bg-lightHover dark:hover:bg-darkHover disabled:pointer-events-none;
   }
 
   .btn:hover ~ div {

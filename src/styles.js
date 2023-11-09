@@ -25,6 +25,53 @@ const styles = {
     border: "1px solid #767C86",
     borderRadius: "16px",
   },
+  signupPasswordCheckStyleBottom: {
+    ".MuiAlert-message": {
+      fontSize: 12,
+      padding: 0,
+    },
+    ".MuiAlert-icon": {
+      fontSize: 15,
+      paddingRight: 0,
+    },
+    height: "30px",
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+    alignItems: "center",
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  signupPasswordCheckStyleTop: {
+    ".MuiAlert-message": {
+      fontSize: 12,
+      padding: 0,
+    },
+    ".MuiAlert-icon": {
+      fontSize: 15,
+      paddingRight: 0,
+    },
+    height: "30px",
+    borderBottomRightRadius: 0,
+    borderBottomLeftRadius: 0,
+    alignItems: "center",
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  signupPasswordCheckStyleMiddle: {
+    ".MuiAlert-message": {
+      fontSize: 12,
+      padding: 0,
+    },
+    ".MuiAlert-icon": {
+      fontSize: 15,
+      paddingRight: 0,
+    },
+    height: "30px",
+    borderRadius: 0,
+    alignItems: "center",
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
 }
 
-export { styles };
+export { styles }

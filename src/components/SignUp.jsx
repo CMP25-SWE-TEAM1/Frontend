@@ -1,31 +1,36 @@
-import React from "react"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import ReCAPTCHA from "react-google-recaptcha"
 import { Modal, Box } from "@mui/material"
 import lightLogo from "../assets/imgs/giga-chat-logo-dark-removebg-preview.png"
-
+import { last120Years, days, months } from "../constants/index.js"
+import InputLabel from "@mui/material/InputLabel"
+import MenuItem from "@mui/material/MenuItem"
+import FormControl from "@mui/material/FormControl"
+import Select from "@mui/material/Select"
+import VisibilityIcon from "@mui/icons-material/Visibility"
+import Alert from "@mui/material/Alert"
+import Stack from "@mui/material/Stack"
 
 import { styles } from "../styles"
 import GoogleLoginButton from "./GoogleLoginButton"
+import { useDispatch } from "react-redux"
+import { loginUser } from "../store/UserSlice"
 
 const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [nickName, setNickName] = useState("")
   const [email, setEmail] = useState("")
-  const [date, setDate] = useState("")
+  const [year, setYear] = useState("")
+  const [month, setMonth] = useState("")
+  const [day, setDay] = useState("")
+
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
 
-  const siteKey = "6Ldxlf4oAAAAAKjm3gXBNjq-GBJ4hM79g6NYk7KG"
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
   }
-  function responseGoogle(response) {
-    console.log(response)
-  }
-  const handleCaptchaVerification = (response) => {
-    console.log("Captcha response: ", response)
-  }
+
   function nextShow(position) {
     const JoinGigaChat = document.getElementById("Join GigaChat")
     const FirstStep = document.getElementById("First Step")
@@ -48,18 +53,90 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
         break
     }
   }
+
+  const handleChangeYear = (event) => {
+    setYear(event.target.value)
+  }
+
+  const handleChangeMonth = (event) => {
+    setMonth(event.target.value)
+  }
+
+  const handleChangeDay = (event) => {
+    setDay(event.target.value)
+  }
+
+  const [mode, setMode] = useState(() => {
+    const storedMode = localStorage.getItem("mode")
+    return storedMode ? storedMode : "light"
+  })
+
+  const [captchaIsDone, setCaptchaIsDone] = useState(false)
+  const siteKey = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+  const handleCaptchaVerification = () => {
+    console.log("Captcha done")
+    setCaptchaIsDone(true)
+  }
+
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{8,}$/
+  const upperCaseLetterRegex = /^(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*()]{1,}$/
+  const lowerCaseLetterRegex = /^(?=.*[a-z])[a-zA-Z0-9!@#$%^&*()]{1,}$/
+  const specialCharacterRegex = /^(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{1,}$/
+  const numberRegex = /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*()]{1,}$/
+  const lengthRegex = /^[a-zA-Z0-9!@#$%^&*()]{8,}$/
+
+  function checkPassword(password) {
+    return !passwordRegex.test(password)
+  }
+
+  function hasUpperCaseLetter(password) {
+    return upperCaseLetterRegex.test(password)
+  }
+  function hasLowerCaseLetter(password) {
+    return lowerCaseLetterRegex.test(password)
+  }
+  function hasSpecialCharachter(password) {
+    return specialCharacterRegex.test(password)
+  }
+  function hasNumber(password) {
+    return numberRegex.test(password)
+  }
+  function hasCorrectLength(password) {
+    return lengthRegex.test(password)
+  }
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const handleLoginEvent = (e) => {
+    e.preventDefault()
+    let userCredentials = {
+      nickName,
+      password,
+    }
+
+    dispatch(loginUser({ userCredentials, isgoogle: null })).then((result) => {
+      if (result.payload) {
+        setNickName("")
+        setPassword("")
+        navigate("/home")
+        handleCloseModal()
+      }
+    })
+  }
+
   return (
     <>
       <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
         <Box style={styles.modalStyle}>
           <div className="pop-up m-auto bg-white dark:bg-black md:rounded-2xl">
             <Link to="/" className="!text-white" onClick={handleCloseModal}>
-              <button className="bg-white dark:bg-black text-black dark:text-white hover:bg-lightHover dark:hover:bg-darkHover relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent text-2xl no-underline">x</button>
+              <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover">x</button>
             </Link>
             <img src={lightLogo} alt="GigaChat Logo" className="-mt-4 ml-[45%] w-[40px]" />
 
             <div id="Join GigaChat">
-              <div>
+              <div className="m-auto max-w-[300px]">
                 <h1 className="mb-4 mt-3">Join GigaChat today</h1>
                 <GoogleLoginButton handleCloseModal={handleCloseModal} />
                 <div className="flex h-10 items-center justify-center">
@@ -72,7 +149,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                   </div>
                 </div>
                 <button
-                  className="btn mt-0"
+                  className="mb-2 h-10 w-full rounded-3xl font-semibold text-white hover:bg-darkHover dark:bg-primary dark:text-white dark:hover:bg-[#1a8cd8]"
                   onClick={() => {
                     nextShow(0)
                   }}
@@ -92,7 +169,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
             </div>
 
             <div id="First Step" className="hidden">
-              <div>
+              <div className="max-w[600px]">
                 <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 1 of 3</p>
                 <h1 className="mt-3">Create your account</h1>
                 <div className="input-container">
@@ -110,26 +187,189 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                 <div className="input-containter">
                   <div>
                     <p className="text-bold">Date of birth </p>
-                    <p className="date-text">This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.</p>
+                    <p className="date-text text-[0.8rem] text-ternairy">This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.</p>
                     <br></br>
                   </div>
-                  <input
-                    type="date"
-                    className="date-input text-black"
-                    value={date}
-                    onChange={(e) => {
-                      setDate(e.target.value)
-                      console.log(e.target.value)
-                    }}
-                  ></input>
+                  <div className="date flex">
+                    <Box sx={{ minWidth: 120 }} className="month">
+                      <FormControl
+                        sx={{
+                          "&& .MuiFormLabel-root": {
+                            color: "#9aa1ad",
+                          },
+                          minWidth: 200,
+                        }}
+                      >
+                        <InputLabel id="demo-simple-select-label">Month</InputLabel>
+                        <Select
+                          value={month}
+                          label="Age"
+                          onChange={handleChangeMonth}
+                          sx={{
+                            color: "black",
+                            ".MuiOutlinedInput-notchedOutline": {
+                              borderColor: "#767C86",
+                            },
+                            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                              borderColor: "#1d9bf0",
+                            },
+                            "&:hover .MuiOutlinedInput-notchedOutline": {
+                              borderColor: "#1d9bf0",
+                            },
+                            ".MuiSvgIcon-root ": {
+                              fill: "#767C86 !important",
+                            },
+                            ".MuiSelect-select": {
+                              color: `${mode === "light" ? "black" : "white"}`,
+                            },
+                          }}
+                          MenuProps={{
+                            sx: {
+                              ".MuiMenuItem-root": {
+                                backgroundColor: `${mode === "light" ? "white" : "black"}`,
+                                color: `${mode === "light" ? "black" : "white"}`,
+                                padding: "1px 10px",
+                                ":hover": {
+                                  backgroundColor: `${mode === "light" ? "#f0f0f0" : "#16181C"}`,
+                                },
+                              },
+                              ".MuiList-root": {
+                                padding: "10px 0 0 0",
+                              },
+                            },
+                          }}
+                        >
+                          {months.map((month) => (
+                            <MenuItem value={month} key={month}>
+                              {month}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Box>
+                    <Box sx={{ minWidth: 100 }} className="day">
+                      <FormControl
+                        sx={{
+                          "&& .MuiFormLabel-root": {
+                            color: "#9aa1ad",
+                          },
+                          minWidth: 100,
+                          padding: "0 10px",
+                        }}
+                      >
+                        <InputLabel id="demo-simple-select-label">Day</InputLabel>
+                        <Select
+                          value={day}
+                          label="Day"
+                          onChange={handleChangeDay}
+                          sx={{
+                            color: "black",
+                            ".MuiOutlinedInput-notchedOutline": {
+                              borderColor: "#767C86",
+                            },
+                            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                              borderColor: "#1d9bf0",
+                            },
+                            "&:hover .MuiOutlinedInput-notchedOutline": {
+                              borderColor: "#1d9bf0",
+                            },
+                            ".MuiSvgIcon-root ": {
+                              fill: "#767C86 !important",
+                            },
+                            ".MuiSelect-select": {
+                              color: `${mode === "light" ? "black" : "white"}`,
+                            },
+                          }}
+                          MenuProps={{
+                            sx: {
+                              ".MuiMenuItem-root": {
+                                backgroundColor: `${mode === "light" ? "white" : "black"}`,
+                                color: `${mode === "light" ? "black" : "white"}`,
+                                padding: "1px 10px",
+                                ":hover": {
+                                  backgroundColor: `${mode === "light" ? "#f0f0f0" : "#16181C"}`,
+                                },
+                              },
+                              ".MuiList-root": {
+                                padding: "10px 0 0 0",
+                              },
+                            },
+                          }}
+                        >
+                          {days.map((day) => (
+                            <MenuItem value={day} key={day}>
+                              {day}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Box>
+                    <Box sx={{ minWidth: 100 }} className="year">
+                      <FormControl
+                        sx={{
+                          "&& .MuiFormLabel-root": {
+                            color: "#9aa1ad",
+                          },
+                          minWidth: 100,
+                          paddingLeft: 0,
+                        }}
+                      >
+                        <InputLabel id="demo-simple-select-label">Year</InputLabel>
+                        <Select
+                          value={year}
+                          label="Year"
+                          onChange={handleChangeYear}
+                          sx={{
+                            color: "black",
+                            ".MuiOutlinedInput-notchedOutline": {
+                              borderColor: "#767C86",
+                            },
+                            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                              borderColor: "#1d9bf0",
+                            },
+                            "&:hover .MuiOutlinedInput-notchedOutline": {
+                              borderColor: "#1d9bf0",
+                            },
+                            ".MuiSvgIcon-root ": {
+                              fill: "#767C86 !important",
+                            },
+                            ".MuiSelect-select": {
+                              color: `${mode === "light" ? "black" : "white"}`,
+                            },
+                          }}
+                          MenuProps={{
+                            sx: {
+                              ".MuiMenuItem-root": {
+                                backgroundColor: `${mode === "light" ? "white" : "black"}`,
+                                color: `${mode === "light" ? "black" : "white"}`,
+                                padding: "1px 10px",
+                                ":hover": {
+                                  backgroundColor: `${mode === "light" ? "#f0f0f0" : "#16181C"}`,
+                                },
+                              },
+                              ".MuiList-root": {
+                                padding: "10px 0 0 0",
+                              },
+                            },
+                          }}
+                        >
+                          {last120Years.map((year) => (
+                            <MenuItem value={year} key={year}>
+                              {year}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Box>
+                  </div>
                 </div>
                 <button
-                  className="btn"
+                  className="btn bg-white text-black dark:bg-black dark:text-white"
                   id="next"
                   onClick={() => {
                     nextShow(1)
                   }}
-                  disabled={email === "" || nickName === "" || date === ""}
+                  disabled={email === "" || nickName === "" || year === "" || month === "" || day === ""}
                 >
                   Next
                 </button>
@@ -139,12 +379,13 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
             <div id="Second Step" className="hidden">
               <div>
                 <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 2 of 3</p>
-                <ReCAPTCHA sitekey={siteKey} onChange={handleCaptchaVerification()} />
+                <ReCAPTCHA sitekey={siteKey} onChange={handleCaptchaVerification} />
                 <button
-                  className="btn"
+                  className="btn bg-white text-black dark:bg-black dark:text-white"
                   onClick={() => {
                     nextShow(2)
                   }}
+                  disabled={captchaIsDone ? false : true}
                 >
                   Next
                 </button>
@@ -164,13 +405,30 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                     </label>
                   </div>
                   <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}>
-                    👁️
+                    <VisibilityIcon className="text-primary" />
                   </span>
                 </div>
-                <div className="mt-auto">
-                  <Link to="/home" className="text-white">
-                    <button className="btn" disabled={password.length <= 8}>
-                      Next
+                <div>
+                  <Stack severity={`${checkPassword(password) ? "error" : "success"}`}>
+                    <Alert severity={`${hasUpperCaseLetter(password) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleTop}>
+                      Require uppercase letter
+                    </Alert>
+                    <Alert severity={`${hasLowerCaseLetter(password) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+                      Require lowercase letter
+                    </Alert>
+                    <Alert severity={`${hasSpecialCharachter(password) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+                      Require special character !@#$%^&*()
+                    </Alert>
+                    <Alert severity={`${hasNumber(password) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+                      Require number
+                    </Alert>
+                    <Alert severity={`${hasCorrectLength(password) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleBottom}>
+                      Require at least 8 characters
+                    </Alert>
+                  </Stack>
+                  <Link className="text-white">
+                    <button className="btn mt-16 bg-white px-4 py-2 text-black dark:bg-black dark:text-white" disabled={checkPassword(password)} onClick={handleLoginEvent}>
+                      Sign Up
                     </button>
                   </Link>
                 </div>
