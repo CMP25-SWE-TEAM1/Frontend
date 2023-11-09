@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import SidebarOption from "./SidebarOption"
 import SwitchAccount from "./SwitchAccount"
 import Button from "./Button"
@@ -25,6 +25,10 @@ const Sidebar = ({ user, setUser }) => {
     return storedMode ? storedMode : "light"
   })
 
+  useEffect(() => {
+    console.log(mode)
+  }, [mode])
+
   const moreIcon = <MoreHorizOutlinedIcon />
   const userName = "Ismail Ramadan Mokhtar"
   const userTag = "ismail_sh02"
@@ -34,7 +38,7 @@ const Sidebar = ({ user, setUser }) => {
   const optionsNames = ["Home", "Explore", "Notifications", "Messages", "Lists", "Bookmarks", "Communities", "Profile", "Settings"]
   const optionsIcons = [<HomeOutlinedIcon />, <SearchRoundedIcon />, <NotificationsNoneRoundedIcon />, <MailOutlineRoundedIcon />, <ListAltRoundedIco />, <TurnedInNotOutlinedIcon />, <PeopleOutlinedIcon />, <PersonOutlinedIcon />, <SettingsIcon />]
   const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}/communities`, `/${userTag}`, "/settings/account"]
-  const options = optionsNames.map((optionName, index) => <SidebarOption icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} />)
+  const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} />)
 
   const navigate = useNavigate()
 

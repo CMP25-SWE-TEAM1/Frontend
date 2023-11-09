@@ -78,7 +78,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                     Phone, email or username
                   </label>
                 </div>
-                <button type="button" id="next" className="btn mt-2 bg-white" onClick={handleNext} disabled={userName === ""}>
+                <button type="button" id="next" className="btn mt-2" onClick={handleNext} disabled={userName === ""}>
                   Next
                 </button>
                 <Link
