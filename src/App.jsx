@@ -9,6 +9,10 @@ import Settings from "./components/Settings/Settings"
 import { useState, useEffect } from "react"
 import SignUp from "./components/SignUp"
 import Account from "./components/Settings/Account/Account"
+import AccountInformation from "./components/Settings/Account/AccountInformation"
+import ChangeUsername from "./components/Settings/Account/ChangeUsername"
+import ChangeEmail from "./components/Settings/Account/ChangeEmail"
+import ChangePassword from "./components/Settings/Account/ChangePassword"
 import AccessibilityDisplayLanguages from "./components/Settings/AccessibilityDisplayLanguages/AccessibilityDisplayLanguages"
 import Accessibility from "./components/Settings/AccessibilityDisplayLanguages/Accessibility"
 import Display from "./components/Settings/AccessibilityDisplayLanguages/Display"
@@ -75,6 +79,10 @@ const App = () => {
           <Route path="/home" element={<Home />}></Route>
           <Route path="/settings" element={<Settings />}>
             <Route path="account" element={<Account />}></Route>
+            <Route path="account_information" element={<AccountInformation />}></Route>
+            <Route path="change_username" element={<ChangeUsername />}></Route>
+            <Route path="change_email" element={<ChangeEmail />}></Route>
+            <Route path="change_password" element={<ChangePassword />}></Route>
 
             <Route path="privacy_and_safety" element={<PrivacySafety />}></Route>
             <Route path="blocked" element={<Blocked />}></Route>
