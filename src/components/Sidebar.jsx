@@ -17,17 +17,12 @@ import darkLogo from "./assets/gigachatLogoOne_dark-removebg-preview.png"
 import lightLogo from "./assets/gigachatLogoOne_light_v2-removebg-preview.png"
 import profileImage from "./assets/IMG20210811224307.jpg"
 import { useNavigate } from "react-router"
-import { useState } from "react"
+import { useSelector } from "react-redux"
 
 const Sidebar = ({ user, setUser }) => {
-  const [mode, setMode] = useState(() => {
-    const storedMode = localStorage.getItem("mode")
-    return storedMode ? storedMode : "light"
-  })
 
-  useEffect(() => {
-    console.log(mode)
-  }, [mode])
+  const darkMode = useSelector((state) => state.theme.darkMode)
+
 
   const moreIcon = <MoreHorizOutlinedIcon />
   const userName = "Ismail Ramadan Mokhtar"
@@ -49,9 +44,9 @@ const Sidebar = ({ user, setUser }) => {
   }
 
   return (
-    <div className="border-lightBorder dark:border-darkBorder flex max-w-[400px] flex-grow justify-end border-r text-center text-black dark:text-white">
+    <div className="flex max-w-[400px] flex-grow justify-end border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white">
       <div className="flex h-full flex-col pl-[30%]">
-        <Button name={mode === "light" ? imageIcon("logo", lightLogo, 12) : imageIcon("logo", darkLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" />
+        <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" />
         {options}
         <Button name="Post" color="text-white" backgroundColor="bg-[#1D9BF0]" height="h-12" width="w-56" link="/compose/tweet" />
         <SwitchAccount
