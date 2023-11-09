@@ -234,7 +234,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                                 },
                               },
                               ".MuiList-root": {
-                                padding: "10px 0 0 0",
+                                padding: 0,
                               },
                             },
                           }}
@@ -291,7 +291,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                                 },
                               },
                               ".MuiList-root": {
-                                padding: "10px 0 0 0",
+                                padding: 0,
                               },
                             },
                           }}
@@ -348,7 +348,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                                 },
                               },
                               ".MuiList-root": {
-                                padding: "10px 0 0 0",
+                                padding: 0,
                               },
                             },
                           }}
