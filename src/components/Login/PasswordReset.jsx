@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
-
 import lightLogo from "../../assets/imgs/giga-chat-logo-dark-removebg-preview.png"
+
 
 const PasswordReset = () => {
   const [userName, setUserName] = useState("")
@@ -31,7 +31,7 @@ const PasswordReset = () => {
     <div className="flex h-[100vh] w-full bg-[#242d34]">
       <div className="pop-up m-auto bg-black text-white md:rounded-2xl">
         <Link to="/" className="!text-white">
-          <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent text-2xl no-underline hover:bg-zinc-900">x</button>
+          <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover">x</button>
         </Link>
         <img src={lightLogo} alt="GigaChat Logo" className="-mt-4 ml-[45%] w-[40px]" />
 

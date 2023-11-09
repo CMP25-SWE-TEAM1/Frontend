@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { useEffect, useState } from "react"
-import Button from "../../Button"
+import VisibilityIcon from "@mui/icons-material/Visibility"
 
 const AccountInformation = () => {
   const [passwordIsConfirmed, setPasswordIsConfirmed] = useState(false)
@@ -70,7 +70,7 @@ const AccountInformation = () => {
               </label>
             </div>
             <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}>
-              👁️
+              <VisibilityIcon className="text-primary" />
             </span>
           </div>
           <Link to={"/password_reset"} className="mt-2 text-xs text-primary">
