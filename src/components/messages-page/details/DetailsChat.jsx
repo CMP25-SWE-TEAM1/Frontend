@@ -30,7 +30,18 @@ const DetailsChat = () => {
               {/* User info + Messages */}
               <div style={{ height: "1200px", paddingLeft: "16px", paddingRight: "16px" }}>
                 {/* User info */}
-                <div style={{ cursor: "pointer", borderBottom: "1px solid #eee", textAlign: "center", color: "yellow", backgroundColor: "black", height: "340px", padding: "20px 16px", marginBottom: "16px", display: "flex", flexDirection: "column" }}></div>
+                <div style={{ cursor: "pointer", borderBottom: "1px solid #eee", textAlign: "center", color: "yellow", backgroundColor: "black", height: "340px", padding: "20px 16px", marginBottom: "16px", display: "flex", flexDirection: "column" }}>
+                  {/* Image */}
+                  <div>Image</div>
+                  {/* Name + User name */}
+                  <div>Name + User name</div>
+                  {/* Bio */}
+                  <div></div>
+                  {/* Info 1 (Joined + No. of followers) */}
+                  <div>Info 1 (Joined + No. of followers)</div>
+                  {/* Info 2 (common followers) */}
+                  <div>Info 2 (common followers)</div>
+                </div>
                 {/* Messages */}
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
               </div>
