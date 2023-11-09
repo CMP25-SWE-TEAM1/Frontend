@@ -11,6 +11,7 @@ import Select from "@mui/material/Select"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import Alert from "@mui/material/Alert"
 import Stack from "@mui/material/Stack"
+import { useSelector } from "react-redux"
 
 import { styles } from "../styles"
 import GoogleLoginButton from "./GoogleLoginButton"
@@ -66,10 +67,8 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
     setDay(event.target.value)
   }
 
-  const [mode, setMode] = useState(() => {
-    const storedMode = localStorage.getItem("mode")
-    return storedMode ? storedMode : "light"
-  })
+  const darkMode = useSelector((state) => state.theme.darkMode)
+
 
   const [captchaIsDone, setCaptchaIsDone] = useState(false)
   const siteKey = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
@@ -220,17 +219,17 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                               fill: "#767C86 !important",
                             },
                             ".MuiSelect-select": {
-                              color: `${mode === "light" ? "black" : "white"}`,
+                              color: `${!darkMode ? "black" : "white"}`,
                             },
                           }}
                           MenuProps={{
                             sx: {
                               ".MuiMenuItem-root": {
-                                backgroundColor: `${mode === "light" ? "white" : "black"}`,
-                                color: `${mode === "light" ? "black" : "white"}`,
+                                backgroundColor: `${!darkMode ? "white" : "black"}`,
+                                color: `${!darkMode ? "black" : "white"}`,
                                 padding: "1px 10px",
                                 ":hover": {
-                                  backgroundColor: `${mode === "light" ? "#f0f0f0" : "#16181C"}`,
+                                  backgroundColor: `${!darkMode ? "#f0f0f0" : "#16181C"}`,
                                 },
                               },
                               ".MuiList-root": {
@@ -277,17 +276,17 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                               fill: "#767C86 !important",
                             },
                             ".MuiSelect-select": {
-                              color: `${mode === "light" ? "black" : "white"}`,
+                              color: `${!darkMode ? "black" : "white"}`,
                             },
                           }}
                           MenuProps={{
                             sx: {
                               ".MuiMenuItem-root": {
-                                backgroundColor: `${mode === "light" ? "white" : "black"}`,
-                                color: `${mode === "light" ? "black" : "white"}`,
+                                backgroundColor: `${!darkMode ? "white" : "black"}`,
+                                color: `${!darkMode ? "black" : "white"}`,
                                 padding: "1px 10px",
                                 ":hover": {
-                                  backgroundColor: `${mode === "light" ? "#f0f0f0" : "#16181C"}`,
+                                  backgroundColor: `${!darkMode ? "#f0f0f0" : "#16181C"}`,
                                 },
                               },
                               ".MuiList-root": {
@@ -334,17 +333,17 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                               fill: "#767C86 !important",
                             },
                             ".MuiSelect-select": {
-                              color: `${mode === "light" ? "black" : "white"}`,
+                              color: `${!darkMode ? "black" : "white"}`,
                             },
                           }}
                           MenuProps={{
                             sx: {
                               ".MuiMenuItem-root": {
-                                backgroundColor: `${mode === "light" ? "white" : "black"}`,
-                                color: `${mode === "light" ? "black" : "white"}`,
+                                backgroundColor: `${!darkMode ? "white" : "black"}`,
+                                color: `${!darkMode ? "black" : "white"}`,
                                 padding: "1px 10px",
                                 ":hover": {
-                                  backgroundColor: `${mode === "light" ? "#f0f0f0" : "#16181C"}`,
+                                  backgroundColor: `${!darkMode ? "#f0f0f0" : "#16181C"}`,
                                 },
                               },
                               ".MuiList-root": {

@@ -4,19 +4,14 @@ import "./landing.css"
 import SignUp from "../SignUp"
 import GoogleLoginButton from "../GoogleLoginButton"
 import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, openSignupModal, handleOpenSignupModal, handleCloseSignupModal, location, setLocation }) => {
+  const darkMode = useSelector((state) => state.theme.darkMode)
+
   // Dark & Light mode
-  const [mode, setMode] = useState(null)
   const logoImgDark = require("../../assets/imgs/logo-dark.jpg")
   const logoImgLight = require("../../assets/imgs/logo-light.jpg")
-
-  useEffect(() => {
-    const rootMode = localStorage.getItem("mode");
-    if (rootMode === "dark") setMode("dark");
-    else if (rootMode === "light") setMode("light");
-    else setMode(null);
-  }, [])
 
   const navigate = useNavigate()
 
@@ -29,11 +24,11 @@ const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, 
 
   // -----
   return (
-    <div className={`landing ${mode}`}>
+    <div className={`landing ${darkMode ? "dark" : "light"}`}>
       <div className="content">
         <div className="logo">
-          {mode && mode === "light" && <img src={logoImgLight} alt="Logo" />}
-          {mode && mode === "dark" && <img src={logoImgDark} alt="Logo" />}
+          {!darkMode && <img src={logoImgLight} alt="Logo" />}
+          {darkMode && <img src={logoImgDark} alt="Logo" />}
         </div>
         <div className="info">
           <span className="t1">Happening now</span>

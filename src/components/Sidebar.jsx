@@ -54,7 +54,6 @@ const Sidebar = ({ user, setUser }) => {
           userName={user.name}
           userTag={`@${userTag}`}
           moreIcon={moreIcon}
-          link="/" //incomplete
           handleLogout={handleLogout}
         />
       </div>

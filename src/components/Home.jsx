@@ -2,8 +2,6 @@ import HorizontalNavbar from "./HorizontalNavbar"
 import "../styles/home.css"
 import PostsContainer from "./PostsContainer"
 import { useState } from "react"
-import Sidebar from "./Sidebar"
-import { useNavigate } from "react-router"
 import Widgets from "./Widgets"
 import getUser from "../constants/index"
 
