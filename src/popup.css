@@ -47,19 +47,7 @@
   }
 
   .btn {
-    @apply mb-2 mt-auto h-10 w-full border border-lightHover dark:border-darkHover rounded-3xl font-semibold dark:bg-white bg-white dark:text-black text-black hover:bg-lightHover dark:hover:bg-darkHover disabled:pointer-events-none;
-  }
-
-  .btn:hover ~ div {
-    filter: brightness(80%);
-  }
-
-  .btn:disabled {
-    filter: brightness(50%);
-  }
-
-  .btn:disabled:hover {
-    pointer-events: none;
+    @apply mb-2 mt-auto h-10 w-full border border-lightHover dark:border-darkHover rounded-3xl font-semibold bg-black dark:bg-white text-white dark:text-black hover:bg-darkHover dark:hover:bg-lightHover disabled:pointer-events-none disabled:brightness-50;
   }
 
   .form-input {

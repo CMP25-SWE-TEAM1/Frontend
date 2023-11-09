@@ -78,7 +78,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                     Phone, email or username
                   </label>
                 </div>
-                <button type="button" id="next" className="btn mt-2 bg-white text-black dark:bg-black dark:text-white" onClick={handleNext} disabled={userName === ""}>
+                <button type="button" id="next" className="btn mt-2 bg-white" onClick={handleNext} disabled={userName === ""}>
                   Next
                 </button>
                 <Link
@@ -87,7 +87,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                   }}
                   to={"/password_reset"}
                 >
-                  <button id="forgotPassword" className="btn mt-2 border border-lightHover dark:border-darkHover bg-white text-black hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover">
+                  <button id="forgotPassword" className="btn mt-2 border border-lightBorder dark:border-darkBorder bg-black text-white hover:bg-darkHover dark:bg-white dark:text-black dark:hover:bg-lightHover">
                     Forgot Password?
                   </button>
                 </Link>
@@ -128,7 +128,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                   >
                     Forgot password?
                   </Link>
-                  <button id="login" type="submit" className="btn mt-36 h-14 rounded-3xl bg-white text-black dark:bg-black dark:text-white" disabled={password === ""}>
+                  <button id="login" type="submit" className="btn mt-36 h-14 rounded-3xl" disabled={password === ""}>
                     {loading ? "Loading..." : "Log In"}
                   </button>
                   {error && <div>{error}</div>}

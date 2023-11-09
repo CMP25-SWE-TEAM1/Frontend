@@ -364,7 +364,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                   </div>
                 </div>
                 <button
-                  className="btn bg-white text-black dark:bg-black dark:text-white"
+                  className="btn"
                   id="next"
                   onClick={() => {
                     nextShow(1)
@@ -381,7 +381,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                 <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 2 of 3</p>
                 <ReCAPTCHA sitekey={siteKey} onChange={handleCaptchaVerification} />
                 <button
-                  className="btn bg-white text-black dark:bg-black dark:text-white"
+                  className="btn"
                   onClick={() => {
                     nextShow(2)
                   }}
@@ -426,11 +426,11 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                       Require at least 8 characters
                     </Alert>
                   </Stack>
-                  <Link className="text-white">
-                    <button className="btn mt-16 bg-white px-4 py-2 text-black dark:bg-black dark:text-white" disabled={checkPassword(password)} onClick={handleLoginEvent}>
-                      Sign Up
-                    </button>
-                  </Link>
+
+                  <button className="btn mt-16" disabled={checkPassword(password)} onClick={handleLoginEvent}>
+                    <Link></Link>
+                    Sign Up
+                  </button>
                 </div>
               </div>
             </div>
