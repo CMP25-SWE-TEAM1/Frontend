@@ -19,19 +19,21 @@ import Display from "./components/Settings/AccessibilityDisplayLanguages/Display
 import PrivacySafety from "./components/Settings/PrivacySafety/PrivacySafety"
 import Blocked from "./components/Settings/PrivacySafety/Blocked"
 import Muted from "./components/Settings/PrivacySafety/Muted"
+import getUser from "./constants"
+
+import { styles } from "./styles"
 
 const App = () => {
   const [location, setLocation] = useState(null)
 
-  useEffect(()=>{
+  useEffect(() => {
     const mode = localStorage.getItem("mode")
     const htmlElement = document.getElementById("htmlid")
 
     if(mode === "dark"){
       document.documentElement.style.setProperty("--color-theme", "dark")
       htmlElement.classList.add("dark")
-    }
-    else{
+    } else {
       document.documentElement.style.setProperty("--color-theme", "white")
       htmlElement.classList.remove("dark")
     }
@@ -39,6 +41,7 @@ const App = () => {
 
   useEffect(() => {
     setLocation(window.location.pathname)
+    setUser(getUser())
   }, [location])
 
   const [openLoginModal, setOpenLoginModal] = useState(false)
@@ -56,13 +59,14 @@ const App = () => {
     setOpenSignupModal(false)
     setLocation(window.location.pathname)
   }
-  const [loggedIn] = useState(false)
+
+  const [user, setUser] = useState(getUser())
 
   return (
-    <div className="app ml-auto mr-auto flex justify-start">
-      {loggedIn && <Sidebar />}
-      {/* true will be replaced by authorization*/}
+    <div className="app flex h-[100vh] bg-white dark:bg-black text-black dark:text-white">
       <BrowserRouter>
+        {user && <Sidebar user={user} setUser={setUser} />}
+
         {/* {location !== "/login" && location !== "/password_reset" && <Sidebar />} */}
         {/* true will be replaced by authorization*/}
         <Routes>
@@ -96,7 +100,7 @@ const App = () => {
           <Route path="*" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>
-      {loggedIn && false && <Widgets />}
+      {/* {user && <Widgets />} */}
       {/* true will be replaced by authorization*/}
     </div>
   )

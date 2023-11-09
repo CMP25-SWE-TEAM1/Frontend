@@ -16,6 +16,8 @@ module.exports = {
         fifth: "#00030e",
         lightHover: "#e5e5e5",
         darkHover: "#171717",
+        lightBorder: "#F3F4F6",
+        darkBorder: "#262626",
         "black-100": "#100d25",
         "black-200": "#090325",
         "white-100": "#f3f3f3",
