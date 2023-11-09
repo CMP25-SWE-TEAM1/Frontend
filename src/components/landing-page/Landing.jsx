@@ -7,7 +7,6 @@ import GoogleLoginButton from "../GoogleLoginButton"
 const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, openSignupModal, handleOpenSignupModal, handleCloseSignupModal, location, setLocation }) => {
   // Dark & Light mode
   const [mode, setMode] = useState(null)
-
   const logoImgDark = require("../../assets/imgs/logo-dark.jpg")
   const logoImgLight = require("../../assets/imgs/logo-light.jpg")
 
@@ -16,14 +15,6 @@ const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, 
     if (rootMode === "dark") setMode("dark");
     else if (rootMode === "light") setMode("light");
     else setMode(null);
-
-
-    // NOTE: Commented until team handle it....
-    // window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
-    //   const colorScheme = event.matches ? "dark" : "light"
-    //   // console.log(colorScheme); // "dark" or "light"
-    //   setMode(colorScheme)
-    // })
   }, [])
 
   // -----

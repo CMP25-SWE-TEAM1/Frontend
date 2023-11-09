@@ -5,11 +5,9 @@ import { useState } from "react"
 import Sidebar from "./Sidebar"
 import { useNavigate } from "react-router"
 import Widgets from "./Widgets"
-import getUser from '../constants/index'
-
+import getUser from "../constants/index"
 
 const Home = () => {
-
   const [user, setUser] = useState(getUser())
 
   const homeNavLinks = [
@@ -69,8 +67,8 @@ const Home = () => {
     <div className="flex flex-1">
       {/* {user && <Sidebar user={user} setUser={setUser} />} */}
 
-      <div className="home ml-0 mr-1 max-w-[620px] shrink-0 overflow-y-scroll border border-b-0 border-t-0 border-gray-100 text-center dark:border-gray-600 sm:w-[600px] flex-grow">
-        <div className="sticky top-0 z-50 mb-3 border-0 border-b border-b-gray-100 bg-white bg-opacity-[87%] backdrop-blur-sm dark:border-b-gray-600  dark:bg-inherit dark:bg-opacity-[99%] ">
+      <div className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder sm:w-[600px]">
+        <div className="sticky top-0 z-50 mb-3 border-0 border-b border-lightBorder dark:border-darkBorder bg-white bg-opacity-[87%] backdrop-blur-sm dark:bg-inherit dark:bg-opacity-[99%] ">
           {/* <div className="h-[53px] flex justify-start items-center">
           <h2 className="font-semibold text-xl text-gray-800 pl-6 dark:text-white">
             Home

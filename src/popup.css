@@ -48,10 +48,10 @@
   }
 
   .btn {
-    @apply h-10 w-full rounded-3xl bg-white font-semibold text-black mt-auto mb-2;
+    @apply h-10 w-full rounded-3xl font-semibold mt-auto mb-2 bg-black dark:bg-white text-white dark:text-black hover:bg-darkHover dark:hover:bg-lightHover disabled:pointer-events-none;
   }
 
-  .btn:hover {
+  .btn:hover ~ div {
     filter: brightness(80%);
   }
 
@@ -64,7 +64,7 @@
   }
 
   .form-input {
-    @apply h-14 w-full rounded-lg border border-solid border-ternairy bg-black p-2 pt-8 text-white;
+    @apply h-14 w-full rounded-lg border border-solid border-ternairy p-2 pt-8 bg-white dark:bg-black;
   }
 
   .form-input:focus {

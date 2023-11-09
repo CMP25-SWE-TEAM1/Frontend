@@ -52,9 +52,9 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
     <>
       <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
         <Box style={styles.modalStyle}>
-          <div className="pop-up m-auto bg-black text-white md:rounded-2xl">
+          <div className="pop-up m-auto bg-white dark:bg-black md:rounded-2xl">
             <Link to="/" className="!text-white" onClick={handleCloseModal}>
-              <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent text-2xl no-underline hover:bg-zinc-900">x</button>
+              <button className="bg-white dark:bg-black text-black dark:text-white hover:bg-lightHover dark:hover:bg-darkHover relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent text-2xl no-underline">x</button>
             </Link>
             <img src={lightLogo} alt="GigaChat Logo" className="-mt-4 ml-[45%] w-[40px]" />
 
@@ -167,9 +167,9 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                     👁️
                   </span>
                 </div>
-                <div>
+                <div className="mt-auto">
                   <Link to="/home" className="text-white">
-                    <button className="btn px-4 py-2 " disabled={password.length <= 8}>
+                    <button className="btn" disabled={password.length <= 8}>
                       Next
                     </button>
                   </Link>

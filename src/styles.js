@@ -1,6 +1,9 @@
 // This will be for custom repeated styles
 
 const styles = {
+  normalColors: "bg-white dark:bg-black text-black dark:text-white hover:bg-lightHover dark:hover:bg-darkHover",
+  invertedColors: "bg-black dark:bg-white text-white dark:text-black hover:bg-darkHover dark:hover:bg-lightHover",
+
   paddingX: "sm:px-16 px-6",
   paddingY: "sm:py-16 py-6",
   padding: "sm:px-16 px-6 sm:py-16 py-10",
@@ -16,7 +19,7 @@ const styles = {
     left: "55%",
     transform: "translate(-50%, -50%)",
     width: 601.6,
-    height: "90vh",
+    height: 651.6,
     backgroundColor: "transperant",
     backdropFilter: "blur(5px)",
     border: "1px solid #767C86",

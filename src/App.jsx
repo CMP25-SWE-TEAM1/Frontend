@@ -15,6 +15,8 @@ import Accessibility from "./components/Settings/AccessibilityDisplayLanguages/A
 import Display from "./components/Settings/AccessibilityDisplayLanguages/Display"
 import getUser from "./constants"
 
+import { styles } from "./styles"
+
 const App = () => {
   const [location, setLocation] = useState(null)
 
@@ -55,7 +57,7 @@ const App = () => {
   const [user, setUser] = useState(getUser())
 
   return (
-    <div className="app flex h-[100vh]">
+    <div className="app flex h-[100vh] bg-white dark:bg-black text-black dark:text-white">
       <BrowserRouter>
         {user && <Sidebar user={user} setUser={setUser} />}
 
