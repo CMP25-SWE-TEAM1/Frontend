@@ -13,6 +13,7 @@ import Account from "./components/Settings/Account/Account"
 import AccessibilityDisplayLanguages from "./components/Settings/AccessibilityDisplayLanguages/AccessibilityDisplayLanguages"
 import Accessibility from "./components/Settings/AccessibilityDisplayLanguages/Accessibility"
 import Display from "./components/Settings/AccessibilityDisplayLanguages/Display"
+import Messages from "./components/messages-page/Messages"
 
 const App = () => {
   const [location, setLocation] = useState(null)
@@ -69,6 +70,7 @@ const App = () => {
           <Route path="login" element={<Login openModal={true} handleCloseModal={handleCloseLoginModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="password_reset" element={<PasswordReset />}></Route>
           <Route path="/home" element={<Home />}></Route>
+          <Route path="/messages" element={<Messages />}></Route>
           <Route path="/settings" element={<Settings />}>
             <Route path="account" element={<Account />}></Route>
 
