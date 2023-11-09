@@ -69,7 +69,6 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
 
   const darkMode = useSelector((state) => state.theme.darkMode)
 
-
   const [captchaIsDone, setCaptchaIsDone] = useState(false)
   const siteKey = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
   const handleCaptchaVerification = () => {
@@ -83,6 +82,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
   const specialCharacterRegex = /^(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{1,}$/
   const numberRegex = /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*()]{1,}$/
   const lengthRegex = /^[a-zA-Z0-9!@#$%^&*()]{8,}$/
+  const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 
   function checkPassword(password) {
     return !passwordRegex.test(password)
@@ -102,6 +102,9 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
   }
   function hasCorrectLength(password) {
     return lengthRegex.test(password)
+  }
+  function validEmail(emeil) {
+    return emailRegex.test(emeil)
   }
 
   const dispatch = useDispatch()
@@ -123,6 +126,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
       }
     })
   }
+
 
   return (
     <>
@@ -182,6 +186,9 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                   <label className="input-label" htmlFor="email">
                     Email
                   </label>
+                  <Alert severity={`${validEmail(email) ? "success" : "error"}`} className={`${email?"flex":"hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+                    Please enter a valid email
+                  </Alert>
                 </div>
                 <div className="input-containter">
                   <div>
@@ -368,7 +375,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                   onClick={() => {
                     nextShow(1)
                   }}
-                  disabled={email === "" || nickName === "" || year === "" || month === "" || day === ""}
+                  disabled={email === "" || nickName === "" || year === "" || month === "" || day === "" || !validEmail(email)}
                 >
                   Next
                 </button>
