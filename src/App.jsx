@@ -81,6 +81,7 @@ const App = () => {
           <Route path="login" element={<Login openModal={true} handleCloseModal={handleCloseLoginModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="password_reset" element={<PasswordReset />}></Route>
           <Route path="/home" element={<Home />}></Route>
+
           <Route path="/settings" element={<Settings />}>
             <Route path="account" element={<Account />}></Route>
             <Route path="account_information" element={<AccountInformation />}></Route>
@@ -96,6 +97,7 @@ const App = () => {
             <Route path="accessibility" element={<Accessibility />}></Route>
             <Route path="display" element={<Display />}></Route>
           </Route>
+
           <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="*" element={<Home />}></Route>
         </Routes>

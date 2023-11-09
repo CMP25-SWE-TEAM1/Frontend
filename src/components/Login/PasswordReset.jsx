@@ -58,7 +58,7 @@ const PasswordReset = () => {
             <h1>Confirm your email</h1>
             <p className="text-sm text-zinc-600 ">Verify your identity by entering the email address associated with your X account.</p>
             <div className="input-container">
-              <input className={email === "" ? "form-input" : "form-input filled-input"} type="text" name="email" id="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input className={email === "" ? "form-input" : "form-input filled-input"} type="email" name="email" id="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} />
               <label className="input-label" htmlFor="email">
                 Email
               </label>
