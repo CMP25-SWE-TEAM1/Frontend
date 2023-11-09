@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode, setLightMode } from "./store/ThemeSlice"
 
 const App = () => {
-  const [location, setLocation] = useState(null)
+  const [location, setLocation] = useState(window.location.pathname)
 
   const darkMode = useSelector((state) => state.theme.darkMode)
   const dispatch = useDispatch()
@@ -54,11 +54,11 @@ const App = () => {
   }
 
   const user = useSelector((state) => state.user.user)
-
+  console.log(location)
   return (
     <div className="app flex h-[100vh] bg-white text-black dark:bg-black dark:text-white">
       <BrowserRouter>
-        {user && <Sidebar />}
+        {user && location !== "/password_reset" && <Sidebar />}
 
         {/* {location !== "/login" && location !== "/password_reset" && <Sidebar />} */}
         {/* true will be replaced by authorization*/}
