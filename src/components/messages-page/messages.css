@@ -119,10 +119,10 @@
         justify-content: space-between;
         align-items: center;
         color: black;
-        background-color: rgb(255 255 255 / 0.9);
+        background-color: rgb(255 255 255 / 0.85);
         z-index: 2;
         -webkit-backdrop-filter: blur(3px);
-        backdrop-filter: blur(3px);
+        backdrop-filter: blur(7px);
     }
 
     .messages-page .details.chat .content .head>div {
@@ -219,7 +219,8 @@
     /* ================== Chat Allowed ================== */
     .messages-page .details.chat .content .body.allowed {
         height: calc(100vh - 53px);
-        background-color: blue;
+        background-color: white;
+        color: black;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox {
@@ -240,18 +241,85 @@
         cursor: pointer;
         border-bottom: 1px solid #eee;
         text-align: center;
-        color: yellow;
-        background-color: black;
+        background-color: white;
         height: 340px;
         padding: 20px 16px;
         margin-bottom: 16px;
         display: flex;
         flex-direction: column;
+        transition: background-color .218s;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info:hover {
+        background-color: #F7F9F9;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info .image {
+        width: 64px;
+        height: 64px;
+        margin-left: auto;
+        margin-right: auto;
+        overflow: hidden;
+        border-radius: 50%;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info .image img {
+        max-width: 100%;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info .contact-data {
+        margin-bottom: 4px;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info .contact-data a:first-child {
+        display: block;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info .contact-data a:first-child:hover {
+        text-decoration: underline;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info .contact-data a:nth-child(2) {
+        display: block;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 15px;
+        font-weight: 400;
+        color: rgb(83, 100, 113);
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info .contact-bio {
+        margin-top: 12px;
+        font-size: 15px;
+        font-weight: 400;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info .contact-xdata-1 {
+        margin-top: 12px;
+        margin-bottom: 12px;
+        font-size: 14px;
+        font-weight: 400;
+        color: rgb(83, 100, 113);
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info .contact-xdata-2 {
+        font-size: 13px;
+        font-weight: 400;
+        color: rgb(83, 100, 113);
     }
 
     .messages-page .details.chat .content .body.allowed .keyboard {
         height: 55px;
-        background-color: red;
+        /* Temp */
         text-align: center;
+        background-color: #1d9bf0;
+        color: white;
+        line-height: 55px;
     }
 }

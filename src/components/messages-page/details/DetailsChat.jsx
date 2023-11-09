@@ -5,9 +5,9 @@ const DetailsChat = () => {
         <div className="head">
           <div>
             <a href="#/username">
-              <img src={require("../../../assets/imgs/profile-pic.jpg")} alt="profile img" />
+              <img src={require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
             </a>
-            <h2>Mickey</h2>
+            <h2>Mickey Mouse</h2>
           </div>
           <a href="/info" title="Details">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -32,15 +32,20 @@ const DetailsChat = () => {
                 {/* User info */}
                 <div className="contact-info">
                   {/* Image */}
-                  <div className="image"> Image</div>
+                  <div className="image">
+                    <img src={require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
+                  </div>
                   {/* Name + contact name */}
-                  <div className="contact-data">Name + contact name</div>
+                  <div className="contact-data">
+                    <a href="#/username">Mickey Mouse</a>
+                    <a href="#/username">@MickeyMouseEG</a>
+                  </div>
                   {/* Bio */}
-                  <div className="contact-bio"></div>
+                  <div className="contact-bio">The Official Mickey Mouse - Egypt Account</div>
                   {/* Info 1 (Joined + No. of followers) */}
-                  <div className="contact-xdata-1">Info 1 (Joined + No. of followers)</div>
+                  <div className="contact-xdata-1">Joined January 2011 · 268.8K Followers</div>
                   {/* Info 2 (common followers) */}
-                  <div className="contact-xdata-2">Info 2 (common followers)</div>
+                  <div className="contact-xdata-2">Not followed by anyone you're following</div>
                 </div>
                 {/* Messages */}
                 <div className="messages">
@@ -48,9 +53,7 @@ const DetailsChat = () => {
                 </div>
               </div>
             </div>
-            <div className="keyboard">
-              Start a new message
-            </div>
+            <div className="keyboard">Start a new message</div>
           </div>
         )}
       </div>
