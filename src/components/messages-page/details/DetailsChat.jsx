@@ -2,7 +2,7 @@ const DetailsChat = () => {
   return (
     <div className="details chat">
       <div className="content">
-        <div className="head">
+        <div className="head" style={{ backgroundColor: "green", zIndex: "2" }}>
           <div>
             <a href="#/username">
               <img src={require("../../../assets/imgs/profile-pic.jpg")} alt="profile img" />
@@ -17,15 +17,19 @@ const DetailsChat = () => {
             </svg>
           </a>
         </div>
-        {true && (
+        {false && (
           <div className="body not-allowed">
             <div>You cannot message this user because you are not verified.</div>
           </div>
         )}
-        {false && (
-          <div className="body allowed">
-            {false && <div>Not First time there is messages</div>}
-            {true && <div>First time no messages yet</div>}
+        {true && (
+          // User info + Messages + Keyboard
+          <div className="body allowed" style={{ height: "calc(100vh - 53px)", backgroundColor: "blue" }}>
+            {/* User info + Messages */}
+            <div className="info" style={{ paddingTop: "53px", marginTop: "-53px", height: "calc(100vh - 55px)", overflowY: "auto", scrollBehavior: "smooth" }}></div>
+            <div className="keyboard" style={{ height: "55px", backgroundColor: "red", textAlign: "center" }}>
+              Start a new message
+            </div>
           </div>
         )}
       </div>
