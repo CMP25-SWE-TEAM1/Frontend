@@ -1,0 +1,266 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    button, [type='button'], [type='reset'], [type='submit']{
+      @apply bg-black dark:bg-white text-white dark:text-black;
+    }
+  }
+
+@layer components {
+
+    /* Color palette-dark */
+    .landing.dark {
+        --bg-color: #000000;
+        --main-color: #E7E9EA;
+        --second-color: #1d9bf0;
+        --second-color-alt: #1A8CD8;
+    }
+
+    /* Color palette-light */
+    .landing.light {
+        --bg-color: #ffffff;
+        --main-color: #000000;
+        --second-color: #1d9bf0;
+        --second-color-alt: #1A8CD8;
+    }
+
+    .landing {
+        /* @apply dark:text-white text-black; */
+        @apply flex flex-col w-full;
+
+        min-height: 100vh;
+        box-sizing: border-box;
+        background-color: var(--bg-color);
+    }
+
+    .landing .content {
+        @apply flex flex-1 justify-center items-center;
+    }
+
+    @media (max-width: 991px) {
+        .landing {
+            height: auto;
+        }
+
+        .landing .content {
+            flex-direction: column;
+        }
+    }
+
+    .landing .content .logo {
+        @apply flex-1 flex justify-center items-center;
+    }
+
+    .landing .content .logo img {
+        @apply max-w-full;
+    }
+
+    @media (max-width: 991px) {
+        .landing .content .logo {
+            max-width: 150px;
+            margin-right: auto;
+        }
+    }
+
+    .landing .content .info {
+        @apply p-4;
+        min-width: 45vw;
+    }
+
+    .landing .content .info .t1 {
+        @apply block text-6xl font-bold my-12;
+        color: var(--main-color);
+    }
+
+    .landing .content .info .t2 {
+        @apply block;
+        color: var(--main-color);
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 32px;
+    }
+
+    .landing .content .info .panel {
+        @apply w-80;
+    }
+
+    .landing .content .info .panel .google-btn:hover {
+        border-color: #d2e3fc;
+        background: #eef3ff;
+    }
+
+    .landing .content .info .panel .google-btn {
+        @apply h-10 w-full flex justify-center items-center;
+        background-color: #ffffff;
+        border: 1px solid #dadce0;
+        border-radius: 20px;
+        margin-bottom: 20px;
+        color: #3c4043;
+        font-size: 14px;
+        letter-spacing: 0.25px;
+        font-weight: 500;
+        /* Google is here :( */
+        font-family: "Google Sans", arial, sans-serif;
+
+        transition: background-color .218s, border-color .218s;
+    }
+
+    .landing .content .info .panel .google-btn svg {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        margin-right: 5px;
+    }
+
+    .landing .content .info .panel .apple-btn:hover {
+        background-color: #E6E6E6;
+    }
+
+    .landing .content .info .panel .apple-btn {
+        @apply h-10 w-full flex justify-center items-center;
+        background-color: #ffffff;
+        border: 1px solid #dadce0;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 700;
+        color: black;
+        /* Twitter font :( */
+        font-family: "TwitterChirp", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+        transition: background-color .218s;
+    }
+
+    .landing .content .info .panel .apple-btn svg {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        margin-right: 5px;
+    }
+
+    .landing .content .info .panel .or::before,
+    .landing .content .info .panel .or::after {
+        content: "";
+        position: absolute;
+        width: 45%;
+        height: 1px;
+        display: block;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgb(239, 243, 244);
+    }
+
+    .landing .content .info .panel .or::before {
+        left: 0;
+    }
+
+    .landing .content .info .panel .or::after {
+        right: 0;
+    }
+
+    .landing .content .info .panel .or {
+        @apply block text-center;
+        color: var(--main-color);
+        position: relative;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-size: 14px;
+        font-weight: 400;
+        /* Twitter font :( */
+        font-family: "TwitterChirp", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .landing .content .info .panel .create-acc:hover {
+        background-color: var(--second-color-alt);
+    }
+
+    .landing .content .info .panel .create-acc {
+        @apply h-10 w-full flex justify-center items-center;
+        margin-bottom: 8px;
+        border: 1px solid var(--second-color);
+        border-radius: 20px;
+        background-color: var(--second-color);
+        color: white;
+        font-size: 15px;
+        font-weight: 700;
+        /* Twitter is here :( */
+        font-family: "TwitterChirp", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+        transition: background-color .218s;
+    }
+
+    .landing .content .info .panel .rules {
+        @apply block mb-5;
+        line-height: 1;
+        font-size: 11px;
+        font-weight: 400;
+        /* Twitter is here :( */
+        font-family: "TwitterChirp", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: rgb(83, 100, 113);
+    }
+
+    .landing .content .info .panel .rules a {
+        color: var(--second-color);
+    }
+
+    .landing .content .info .panel .rules a:hover {
+        text-decoration: underline;
+    }
+
+    .landing .content .info .panel .acc-exist {
+        @apply block mt-10 mb-5;
+        color: var(--main-color);
+        font-size: 17px;
+        font-weight: 700;
+        /* Twitter is here :( */
+        font-family: "TwitterChirp", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    }
+
+    .landing.light .content .info .panel .login:hover {
+        background-color: #E8F5FD;
+    }
+
+    .landing.dark .content .info .panel .login:hover {
+        background-color: #031018;
+    }
+
+    .landing .content .info .panel .login {
+        @apply h-10 w-full flex justify-center items-center;
+        border: 1px solid #dadce0;
+        border-radius: 20px;
+        margin-bottom: 8px;
+        color: rgb(29, 155, 240);
+        font-size: 15px;
+        font-weight: 700;
+        /* Twitter is here :( */
+        font-family: "TwitterChirp", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+        transition: background-color .218s;
+    }
+
+    .landing .footer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: stretch;
+        padding: 12px 16px;
+        font-size: 13px;
+    }
+
+    .landing .footer a,
+    .landing .footer div {
+        color: rgb(83, 100, 113);
+        margin: 4px 8px;
+        line-height: 16px;
+        font-weight: 400;
+        word-wrap: break-word;
+        /* Twitter is here :( */
+        font-family: "TwitterChirp", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .landing .footer a:hover {
+        text-decoration: underline;
+    }
+}

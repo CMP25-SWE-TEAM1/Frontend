@@ -11,9 +11,13 @@ module.exports = {
       colors: {
         primary: "#1d9bf0",
         secondary: "#9aa1ad",
-        ternary: "#767C86",
+        ternairy: "#767C86",
         forth: "#67b6d0",
         fifth: "#00030e",
+        lightHover: "#e5e5e5",
+        darkHover: "#171717",
+        lightBorder: "#F3F4F6",
+        darkBorder: "#262626",
         "black-100": "#100d25",
         "black-200": "#090325",
         "white-100": "#f3f3f3",
@@ -28,6 +32,9 @@ module.exports = {
         "hero-pattern": "url('/src/assets/bgs/herobg.jpg')",
         "phone-pattern": "url('/src/assets/phone_pattern.jpg')",
       },
+      width:{
+        110: "440px"
+      }
     },
   },
   plugins: [],

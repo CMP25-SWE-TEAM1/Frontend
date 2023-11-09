@@ -1,29 +1,31 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { StyledEngineProvider } from "@mui/material";
+import React from "react"
+import ReactDOM from "react-dom/client"
+import "./index.css"
+import "./popup.css"
 
-//For setting dark mode
-// const htmlElement = document.getElementById("htmlid");
-// document.documentElement.style.setProperty("--color-theme", "dark");
-// htmlElement.classList.add("dark");
+import App from "./App"
+import reportWebVitals from "./reportWebVitals"
+import { StyledEngineProvider } from "@mui/material"
+import { Provider } from "react-redux"
+import store from "./store"
 
-//For setting light mode
-// document.documentElement.style.setProperty("--color-theme", "white");
-// htmlElement.classList.remove("dark");
+import { GoogleOAuthProvider } from "@react-oauth/google"
+const clientId = "341526416859-a1u3gf1rl41o6vj5nvl0bs3ac00sljue.apps.googleusercontent.com"
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
-  <React.StrictMode>
-    <StyledEngineProvider injectFirst>
-      <App />
-    </StyledEngineProvider>
-  </React.StrictMode>
-);
+  <GoogleOAuthProvider clientId={clientId}>
+    <React.StrictMode>
+      <StyledEngineProvider injectFirst>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </StyledEngineProvider>
+    </React.StrictMode>
+  </GoogleOAuthProvider>
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+reportWebVitals()
