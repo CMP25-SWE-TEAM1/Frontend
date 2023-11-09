@@ -4,7 +4,7 @@ import axios from "axios"
 export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredentials, isgoogle }) => {
   let response
   if (isgoogle) {
-    console.log(userCredentials)
+    // console.log(userCredentials)
     response = userCredentials
     localStorage.setItem("user", JSON.stringify(userCredentials))
   } else {

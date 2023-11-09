@@ -7,6 +7,8 @@ import { styles } from "../../styles"
 import { useDispatch, useSelector } from "react-redux"
 import { loginUser } from "../../store/UserSlice"
 import GoogleLoginButton from "../GoogleLoginButton"
+import VisibilityIcon from "@mui/icons-material/Visibility"
+
 
 const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [userName, setUserName] = useState("")
@@ -85,7 +87,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                   }}
                   to={"/password_reset"}
                 >
-                  <button id="forgotPassword" className="btn mt-2 border border-black bg-white text-black hover:bg-lightHover dark:border-white dark:bg-black dark:text-white dark:hover:bg-darkHover">
+                  <button id="forgotPassword" className="btn mt-2 border border-lightBorder dark:border-darkBorder bg-black text-white hover:bg-darkHover dark:bg-white dark:text-black dark:hover:bg-lightHover">
                     Forgot Password?
                   </button>
                 </Link>
@@ -101,7 +103,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                 <h1 className="text-4xl">Enter your password</h1>
                 <form action="/" method="post" className="flex flex-col gap-5" autoComplete="off" onSubmit={handleLoginEvent}>
                   <div className="input-container">
-                    <input type="text" name="username" id="username" value={userName} className="form-input filled-input border-0 !bg-gray-100 dark:!bg-gray-900 !text-ternairy" disabled />
+                    <input type="text" name="username" id="username" value={userName} className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
                     <label className="input-label" htmlFor="username">
                       Phone, email or username
                     </label>
@@ -114,7 +116,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                       </label>
                     </div>
                     <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}>
-                      👁️
+                      <VisibilityIcon className="text-primary" />
                     </span>
                   </div>
                   <Link

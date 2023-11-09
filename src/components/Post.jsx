@@ -55,7 +55,7 @@ const Post = ({ userName, userTag, date, replyCount, repostCount, likeCount, vie
   //fix if houres more that 24
 
   return (
-    <div className="flex h-fit border border-l-0 border-r-0 border-lightBorder dark:border-darkBorder p-3" data-testid="postId">
+    <div className="border-lightBorder dark:border-darkBorder flex h-fit border border-l-0 border-r-0 p-3" data-testid="postId">
       <div className=" h-60 w-10 sm:mr-3">
         <Avatar alt="Remy Sharp" src={profilePicTest} sx={{ width: 40, height: 40 }} />
       </div>
@@ -73,7 +73,7 @@ const Post = ({ userName, userTag, date, replyCount, repostCount, likeCount, vie
             </Link>
           </div>
           <div>
-            <Button id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent">
+            <Button target={"_blank"} variant="text" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent">
               <MoreHorizIcon className="text-secondary" />
             </Button>
             <Menu
