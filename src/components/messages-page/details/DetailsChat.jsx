@@ -26,7 +26,15 @@ const DetailsChat = () => {
           // User info + Messages + Keyboard
           <div className="body allowed" style={{ height: "calc(100vh - 53px)", backgroundColor: "blue" }}>
             {/* User info + Messages */}
-            <div className="info" style={{ paddingTop: "53px", marginTop: "-53px", height: "calc(100vh - 55px)", overflowY: "auto", scrollBehavior: "smooth" }}></div>
+            <div className="info" style={{ paddingTop: "53px", marginTop: "-53px", height: "calc(100vh - 55px)", overflowY: "auto", scrollBehavior: "smooth" }}>
+              {/* User info + Messages */}
+              <div style={{ height: "1200px", paddingLeft: "16px", paddingRight: "16px" }}>
+                {/* User info */}
+                <div style={{ cursor: "pointer", borderBottom: "1px solid #eee", textAlign: "center", color: "yellow", backgroundColor: "black", height: "340px", padding: "20px 16px", marginBottom: "16px", display: "flex", flexDirection: "column" }}></div>
+                {/* Messages */}
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+              </div>
+            </div>
             <div className="keyboard" style={{ height: "55px", backgroundColor: "red", textAlign: "center" }}>
               Start a new message
             </div>
