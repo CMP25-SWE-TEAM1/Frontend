@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+const initMode = localStorage.getItem("mode")
+
 const initialState = {
-  darkMode: localStorage.getItem("mode") === "dark",
+  darkMode: initMode === "true" ? true : false,
 }
 
 export const themeSlice = createSlice({
@@ -20,18 +22,6 @@ export const themeSlice = createSlice({
       document.documentElement.style.setProperty("--color-theme", "white")
       htmlElement.classList.remove("dark")
     },
-    // toggleTheme: (state) => {
-    //   const htmlElement = document.getElementById("htmlid")
-
-    //   state.darkMode = !state.darkMode
-    //   if (state.darkMode) {
-    //     document.documentElement.style.setProperty("--color-theme", "dark")
-    //     htmlElement.classList.add("dark")
-    //   } else {
-    //     document.documentElement.style.setProperty("--color-theme", "white")
-    //     htmlElement.classList.remove("dark")
-    //   }
-    // },
   },
 })
 

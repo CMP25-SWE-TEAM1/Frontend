@@ -17,12 +17,11 @@ import darkLogo from "./assets/gigachatLogoOne_dark-removebg-preview.png"
 import lightLogo from "./assets/gigachatLogoOne_light_v2-removebg-preview.png"
 import profileImage from "./assets/IMG20210811224307.jpg"
 import { useNavigate } from "react-router"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import { logoutUser } from "../store/UserSlice"
 
-const Sidebar = ({ user, setUser }) => {
-
+const Sidebar = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
-
 
   const moreIcon = <MoreHorizOutlinedIcon />
   const userName = "Ismail Ramadan Mokhtar"
@@ -36,10 +35,12 @@ const Sidebar = ({ user, setUser }) => {
   const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} />)
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const user = useSelector((state) => state.user.user)
 
   const handleLogout = () => {
     localStorage.removeItem("user")
-    setUser(null)
+    dispatch(logoutUser())
     navigate("/")
   }
 
@@ -49,13 +50,7 @@ const Sidebar = ({ user, setUser }) => {
         <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" />
         {options}
         <Button name="Post" color="text-white" backgroundColor="bg-[#1D9BF0]" height="h-12" width="w-56" link="/compose/tweet" />
-        <SwitchAccount
-          profilePhoto={imageIcon("profile", user.picture, 2.5)}
-          userName={user.name}
-          userTag={`@${userTag}`}
-          moreIcon={moreIcon}
-          handleLogout={handleLogout}
-        />
+        <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} />
       </div>
     </div>
   )

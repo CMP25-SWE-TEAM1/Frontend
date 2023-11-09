@@ -1,16 +1,18 @@
-import React from "react";
+import React from "react"
+import { useNavigate } from "react-router-dom"
 
 function SidebarOption({ icon, name, link }) {
+  const navigate = useNavigate()
   return (
-    <a href={link} data-testid="link" alt="" className="group m-0 box-border cursor-pointer border-0">
+    <div data-testid="link" alt="" className="group m-0 box-border cursor-pointer border-0" onClick={() => navigate(link)}>
       <div className="flex w-fit content-center items-start rounded-full p-0.5 group-hover:bg-lightHover dark:group-hover:bg-darkHover">
         <div className="py-2 pl-2">{icon}</div>
         <div className="py-2 pl-4 pr-6">
           <span>{name}</span>
         </div>
       </div>
-    </a>
+    </div>
   )
 }
 
-export default SidebarOption;
+export default SidebarOption

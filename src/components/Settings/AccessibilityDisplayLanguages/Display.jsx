@@ -9,17 +9,18 @@ const Display = () => {
   const dispatch = useDispatch()
   const darkMode = useSelector((state) => state.theme.darkMode)
 
-
-  useEffect(() => {
-    localStorage.setItem("mode", darkMode)
-  }, [darkMode])
+  // useEffect(() => {
+  //   localStorage.setItem("mode", darkMode)
+  // }, [darkMode])
 
   function handleLightMode() {
     dispatch(setLightMode())
+    localStorage.setItem("mode", false)
   }
 
   function handleDarkMode() {
     dispatch(setDarkMode())
+    localStorage.setItem("mode", true)
   }
 
   return (

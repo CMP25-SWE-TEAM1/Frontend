@@ -17,12 +17,21 @@ export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredent
   return response
 })
 
+const initialUser = localStorage.getItem("user")
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
     loading: false,
-    user: null,
+    user: initialUser ? JSON.parse(initialUser) : null,
     error: null,
+  },
+  reducers: {
+    logoutUser: (state) => {
+      state.user = null
+      state.loading = false
+      state.error = null
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -48,5 +57,7 @@ const userSlice = createSlice({
       })
   },
 })
+
+export const logoutUser = userSlice.actions.logoutUser
 
 export default userSlice.reducer
