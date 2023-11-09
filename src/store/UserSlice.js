@@ -14,6 +14,7 @@ export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredent
     response = await request.data
     localStorage.setItem("user", JSON.stringify(response.user))
   }
+
   return response
 })
 
@@ -42,7 +43,7 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false
-        state.user = action.payload
+        state.user = action.payload.user
         state.error = null
       })
       .addCase(loginUser.rejected, (state, action) => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import SidebarOption from "./SidebarOption"
 import SwitchAccount from "./SwitchAccount"
 import Button from "./Button"
@@ -34,9 +34,10 @@ const Sidebar = () => {
   const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}/communities`, `/${userTag}`, "/settings/account"]
   const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} />)
 
+  const user = useSelector((state) => state.user.user)
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.user.user)
 
   const handleLogout = () => {
     localStorage.removeItem("user")

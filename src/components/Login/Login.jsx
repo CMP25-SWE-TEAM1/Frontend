@@ -9,7 +9,6 @@ import { loginUser } from "../../store/UserSlice"
 import GoogleLoginButton from "../GoogleLoginButton"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 
-
 const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
@@ -39,8 +38,8 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
       if (result.payload) {
         setUserName("")
         setPassword("")
-        navigate("/home")
         handleCloseModal()
+        navigate("/home")
       }
     })
   }
@@ -87,7 +86,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                   }}
                   to={"/password_reset"}
                 >
-                  <button id="forgotPassword" className="btn mt-2 border border-lightBorder dark:border-darkBorder bg-black text-white hover:bg-darkHover dark:bg-white dark:text-black dark:hover:bg-lightHover">
+                  <button id="forgotPassword" className="btn mt-2 border border-lightBorder bg-black text-white hover:bg-darkHover dark:border-darkBorder dark:bg-white dark:text-black dark:hover:bg-lightHover">
                     Forgot Password?
                   </button>
                 </Link>
