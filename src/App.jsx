@@ -34,6 +34,7 @@ const App = () => {
     } else {
       dispatch(setLightMode())
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const [openLoginModal, setOpenLoginModal] = useState(false)
