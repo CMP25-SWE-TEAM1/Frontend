@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import ReCAPTCHA from "react-google-recaptcha"
 import axios from "axios"
@@ -48,8 +48,10 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
 
+  const [emailExistError, setEmailExistError] = useState(false)
+
   const APIs = {
-    mock: { emailExistAPI: "" },
+    mock: { emailExistAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/checkEmail" },
     actual: { emailExistAPI: "" },
   }
 
@@ -109,7 +111,27 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
     })
   }
 
-  const handleEmailBlur = () => {}
+  const handleEmailBlur = () => {
+    let emailExist
+    axios
+      .post(APIs.mock.emailExistAPI, { email: email })
+      .then((res) => {
+        emailExist = res.data.emailExist
+      })
+      .then(() => {
+        console.log(emailExist)
+        if (emailExist) {
+          setEmailExistError(true)
+        } else {
+          setEmailExistError(false)
+        }
+      })
+      .catch((err) => {
+        setEmailExistError(false)
+
+        console.log(err)
+      })
+  }
 
   const handleCaptchaVerification = () => {
     console.log("Captcha done")
@@ -144,9 +166,10 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
       <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
         <Box style={styles.modalStyle}>
           <div className="pop-up m-auto bg-white dark:bg-black md:rounded-2xl">
-            <Link to="/" className="!text-white" onClick={handleCloseModal}>
-              <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover">x</button>
-            </Link>
+            <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>
+              x
+            </button>
+
             <img src={lightLogo} alt="GigaChat Logo" className="-mt-4 ml-[45%] w-[40px]" />
 
             <div id="Join GigaChat">
@@ -182,7 +205,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
               </div>
             </div>
 
-            <div id="First Step" className="hidden">
+            <div id="First Step" className="-mt-10 hidden">
               <div className="max-w[600px]">
                 <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 1 of 3</p>
                 <h1 className="mt-3">Create your account</h1>
@@ -193,15 +216,18 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                   </label>
                 </div>
                 <div className="input-container">
-                  <input className={email === "" ? "form-input" : "form-input filled-input"} type="text" name="email" id="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleEmailBlur} />
-                  <label className="input-label" htmlFor="email">
+                  <input className={`${email === "" ? "form-input" : "form-input filled-input"} ${emailExistError ? "border border-red-600" : ""}`} type="text" name="email" id="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleEmailBlur} />
+                  <label className={`input-label ${emailExistError ? "text-red-600" : "text-secondary"}`} htmlFor="email">
                     Email
                   </label>
-                  <Alert severity={`${validEmail(email) ? "success" : "error"}`} className={`${email ? "flex" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
-                    Please enter a valid email
-                  </Alert>
+                  {!validEmail(email) && (
+                    <Alert severity="error" className={`${email ? "flex" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+                      Please enter a valid email
+                    </Alert>
+                  )}
+                  {emailExistError && <span className="ml-3 text-sm text-red-600">Email has already been taken</span>}
                 </div>
-                <div className="input-containter">
+                <div className={`${emailExistError ? "-mt-5" : ""} input-containter`}>
                   <div>
                     <p className="text-bold">Date of birth </p>
                     <p className="date-text text-[0.8rem] text-ternairy">This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.</p>
@@ -386,14 +412,14 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                   onClick={() => {
                     nextShow(1)
                   }}
-                  disabled={email === "" || nickName === "" || year === "" || month === "" || day === "" || !validEmail(email)}
+                  disabled={email === "" || nickName === "" || year === "" || month === "" || day === "" || !validEmail(email) || emailExistError}
                 >
                   Next
                 </button>
               </div>
             </div>
 
-            <div id="Second Step" className="hidden">
+            <div id="Second Step" className="-mt-10 hidden">
               <div>
                 <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 2 of 3</p>
                 <ReCAPTCHA sitekey={siteKey} onChange={handleCaptchaVerification} />
@@ -409,7 +435,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
               </div>
             </div>
 
-            <div id="Third Step" className="hidden">
+            <div id="Third Step" className="-mt-10 hidden">
               <div>
                 <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 3 of 3</p>
                 <h1 className="">You'll need a Password</h1>
