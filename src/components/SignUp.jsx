@@ -97,7 +97,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
   const handleLoginEvent = (e) => {
     e.preventDefault()
     let userCredentials = {
-      nickName,
+      userName: email,
       password,
     }
 
@@ -134,7 +134,6 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
   }
 
   const handleCaptchaVerification = () => {
-    console.log("Captcha done")
     setCaptchaIsDone(true)
   }
 
