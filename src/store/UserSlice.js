@@ -1,28 +1,42 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
+let google = false
+
 export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredentials, isgoogle }) => {
   let response
   if (isgoogle) {
-    // console.log(userCredentials)
+    google = true
+    console.log(userCredentials)
     response = userCredentials
     localStorage.setItem("user", JSON.stringify(userCredentials))
   } else {
+    google = false
     const correctURL = `https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/login`
     const wrongURL = `https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/wlogin`
     const request = await axios.post(correctURL, userCredentials)
     response = await request.data
     localStorage.setItem("user", JSON.stringify(response.user))
   }
+
   return response
 })
+
+const initialUser = localStorage.getItem("user")
 
 const userSlice = createSlice({
   name: "user",
   initialState: {
     loading: false,
-    user: null,
+    user: initialUser ? JSON.parse(initialUser) : null,
     error: null,
+  },
+  reducers: {
+    logoutUser: (state) => {
+      state.user = null
+      state.loading = false
+      state.error = null
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -33,7 +47,7 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false
-        state.user = action.payload
+        state.user = google ? action.payload : action.payload.user
         state.error = null
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -48,5 +62,7 @@ const userSlice = createSlice({
       })
   },
 })
+
+export const logoutUser = userSlice.actions.logoutUser
 
 export default userSlice.reducer

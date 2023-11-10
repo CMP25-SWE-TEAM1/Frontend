@@ -52,7 +52,6 @@ const Post = ({ userName, userTag, date, replyCount, repostCount, likeCount, vie
 
   const finalDate = intDifferenceInHours > 24 ? Math.floor(intDifferenceInHours / 24) + "d" : intDifferenceInHours ? intDifferenceInHours + "h" : intDifferenceInMinutes ? intDifferenceInMinutes + "m" : intDifferenceInSeconds + "s"
 
-  //fix if houres more that 24
 
   return (
     <div className="border-lightBorder dark:border-darkBorder flex h-fit border border-l-0 border-r-0 p-3" data-testid="postId">

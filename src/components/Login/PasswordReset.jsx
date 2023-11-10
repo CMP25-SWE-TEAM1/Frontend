@@ -29,7 +29,7 @@ const PasswordReset = () => {
 
   return (
     <div className="flex h-[100vh] w-full bg-[#242d34]">
-      <div className="pop-up m-auto bg-black text-white md:rounded-2xl">
+      <div className="pop-up m-auto bg-white dark:bg-black md:rounded-2xl">
         <Link to="/" className="!text-white">
           <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover">x</button>
         </Link>
@@ -73,7 +73,7 @@ const PasswordReset = () => {
         <div id="page3" className="hidden">
           <div>
             <h1>Where should we send a confirmation code?</h1>
-            <p className="text-sm text-zinc-600 ">Before you can change your password, we need to make sure it’s really you.</p>
+            <p className="text-sm text-zinc-600 ">Before you can change your password, we need to make sure it&apos;s really you.</p>
             <p className="text-sm text-zinc-600 ">Start by choosing where to send a confirmation code.</p>
             Send an email to {email}.
             <button type="button" id="next3" className="btn" onClick={handleNext3}>

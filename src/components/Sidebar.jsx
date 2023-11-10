@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import SidebarOption from "./SidebarOption"
 import SwitchAccount from "./SwitchAccount"
 import Button from "./Button"
@@ -17,17 +17,11 @@ import darkLogo from "./assets/gigachatLogoOne_dark-removebg-preview.png"
 import lightLogo from "./assets/gigachatLogoOne_light_v2-removebg-preview.png"
 import profileImage from "./assets/IMG20210811224307.jpg"
 import { useNavigate } from "react-router"
-import { useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { logoutUser } from "../store/UserSlice"
 
-const Sidebar = ({ user, setUser }) => {
-  const [mode, setMode] = useState(() => {
-    const storedMode = localStorage.getItem("mode")
-    return storedMode ? storedMode : "light"
-  })
-
-  useEffect(() => {
-    console.log(mode)
-  }, [mode])
+const Sidebar = () => {
+  const darkMode = useSelector((state) => state.theme.darkMode)
 
   const moreIcon = <MoreHorizOutlinedIcon />
   const userName = "Ismail Ramadan Mokhtar"
@@ -40,28 +34,24 @@ const Sidebar = ({ user, setUser }) => {
   const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}/communities`, `/${userTag}`, "/settings/account"]
   const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} />)
 
+  const user = useSelector((state) => state.user.user)
+
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleLogout = () => {
     localStorage.removeItem("user")
-    setUser(null)
+    dispatch(logoutUser())
     navigate("/")
   }
 
   return (
-    <div className="border-lightBorder dark:border-darkBorder flex max-w-[400px] flex-grow justify-end border-r text-center text-black dark:text-white">
+    <div className="flex max-w-[400px] flex-grow justify-end border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white">
       <div className="flex h-full flex-col pl-[30%]">
-        <Button name={mode === "light" ? imageIcon("logo", lightLogo, 12) : imageIcon("logo", darkLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" />
+        <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" />
         {options}
         <Button name="Post" color="text-white" backgroundColor="bg-[#1D9BF0]" height="h-12" width="w-56" link="/compose/tweet" />
-        <SwitchAccount
-          profilePhoto={imageIcon("profile", user.picture, 2.5)}
-          userName={user.name}
-          userTag={`@${userTag}`}
-          moreIcon={moreIcon}
-          link="/" //incomplete
-          handleLogout={handleLogout}
-        />
+        <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} />
       </div>
     </div>
   )

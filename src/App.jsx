@@ -19,30 +19,23 @@ import Display from "./components/Settings/AccessibilityDisplayLanguages/Display
 import PrivacySafety from "./components/Settings/PrivacySafety/PrivacySafety"
 import Blocked from "./components/Settings/PrivacySafety/Blocked"
 import Muted from "./components/Settings/PrivacySafety/Muted"
-import getUser from "./constants"
-
-import { styles } from "./styles"
+import { useDispatch, useSelector } from "react-redux"
+import { setDarkMode, setLightMode } from "./store/ThemeSlice"
 
 const App = () => {
-  const [location, setLocation] = useState(null)
+  const [location, setLocation] = useState(window.location.pathname)
+
+  const darkMode = useSelector((state) => state.theme.darkMode)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const mode = localStorage.getItem("mode")
-    const htmlElement = document.getElementById("htmlid")
-
-    if(mode === "dark"){
-      document.documentElement.style.setProperty("--color-theme", "dark")
-      htmlElement.classList.add("dark")
+    if (darkMode) {
+      dispatch(setDarkMode())
     } else {
-      document.documentElement.style.setProperty("--color-theme", "white")
-      htmlElement.classList.remove("dark")
+      dispatch(setLightMode())
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  useEffect(() => {
-    setLocation(window.location.pathname)
-    setUser(getUser())
-  }, [location])
 
   const [openLoginModal, setOpenLoginModal] = useState(false)
   const handleOpenLoginModal = () => {
@@ -60,12 +53,12 @@ const App = () => {
     setLocation(window.location.pathname)
   }
 
-  const [user, setUser] = useState(getUser())
-
+  const user = useSelector((state) => state.user.user)
+  console.log(location)
   return (
-    <div className="app flex h-[100vh] bg-white dark:bg-black text-black dark:text-white">
+    <div className="app flex h-[100vh] bg-white text-black dark:bg-black dark:text-white">
       <BrowserRouter>
-        {user && <Sidebar user={user} setUser={setUser} />}
+        {user && location !== "/password_reset" && <Sidebar />}
 
         {/* {location !== "/login" && location !== "/password_reset" && <Sidebar />} */}
         {/* true will be replaced by authorization*/}
