@@ -1,4 +1,10 @@
+import { useNavigate } from "react-router-dom"
+import Message from "./message/Message"
+
 const DetailsChat = () => {
+  const one = true;
+  const two = true;
+  const navigate = useNavigate()
   return (
     <div className="details chat">
       <div className="content">
@@ -17,41 +23,46 @@ const DetailsChat = () => {
             </svg>
           </a>
         </div>
-        {false && (
+        {!one && (
           <div className="body not-allowed">
             <div>You cannot message this user because you are not verified.</div>
           </div>
         )}
-        {true && (
+        {one && (
           // User info + Messages + Keyboard
           <div className="body allowed">
             {/* User info + Messages */}
             <div className="chatbox">
-              {/* User info + Messages */}
-              <div className="chatbox-content">
-                {/* User info */}
-                <div className="contact-info">
-                  {/* Image */}
-                  <div className="image">
-                    <img src={require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
+              {/* (Only If there is messages, show it) User info + Messages */}
+              {two && (
+                <div className="chatbox-content">
+                  {/* User info */}
+                  <div className="contact-info" onClick={() => navigate("#/username")}>
+                    {/* Image */}
+                    <div className="image">
+                      <img src={require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
+                    </div>
+                    {/* Name + contact name */}
+                    <div className="contact-data">
+                      <a href="#/username">Mickey Mouse</a>
+                      <a href="#/username">@MickeyMouseEG</a>
+                    </div>
+                    {/* Bio */}
+                    <div className="contact-bio">The Official Mickey Mouse - Egypt Account</div>
+                    {/* Info 1 (Joined + No. of followers) */}
+                    <div className="contact-xdata-1">Joined January 2011 · 268.8K Followers</div>
+                    {/* Info 2 (common followers) */}
+                    <div className="contact-xdata-2">Not followed by anyone you're following</div>
                   </div>
-                  {/* Name + contact name */}
-                  <div className="contact-data">
-                    <a href="#/username">Mickey Mouse</a>
-                    <a href="#/username">@MickeyMouseEG</a>
+                  {/* Messages */}
+                  <div className="messages">
+                    <Message />
+                    <Message />
+                    <Message />
+                    <Message />
                   </div>
-                  {/* Bio */}
-                  <div className="contact-bio">The Official Mickey Mouse - Egypt Account</div>
-                  {/* Info 1 (Joined + No. of followers) */}
-                  <div className="contact-xdata-1">Joined January 2011 · 268.8K Followers</div>
-                  {/* Info 2 (common followers) */}
-                  <div className="contact-xdata-2">Not followed by anyone you're following</div>
                 </div>
-                {/* Messages */}
-                <div className="messages">
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                </div>
-              </div>
+              )}
             </div>
             <div className="keyboard">Start a new message</div>
           </div>

@@ -6,6 +6,8 @@ import InfoChat from "./navigation/InfoChat"
 import InfoNoChat from "./navigation/InfoNoChat"
 
 const Messages = () => {
+  const one = true
+  const two = false
   return (
     <>
       <div className="sidebar">Sidebar</div>
@@ -32,11 +34,11 @@ const Messages = () => {
               </a>
             </div>
           </div>
-          {true && <InfoNoChat />}
-          {false && <InfoChat />}
+          {one && <InfoNoChat />}
+          {!one && <InfoChat />}
         </div>
-        {false && <DetailsNoChat />}
-        {true && <DetailsChat />}
+        {two && <DetailsNoChat />}
+        {!two && <DetailsChat />}
       </div>
     </>
   )

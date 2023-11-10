@@ -232,9 +232,10 @@
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content {
-        height: 1200px;
         padding-left: 16px;
         padding-right: 16px;
+        /* Extra Temp */
+        /* height: 1200px; */
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info {
@@ -278,6 +279,7 @@
         margin-right: auto;
         font-size: 15px;
         font-weight: 600;
+        transition: text-decoration .218s;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info .contact-data a:first-child:hover {
@@ -321,5 +323,88 @@
         background-color: #1d9bf0;
         color: white;
         line-height: 55px;
+    }
+
+    /* ================== Chat - Message ================== */
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message {
+        /* Alert! */
+        align-items: stretch;
+        /* === */
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 24px;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content {
+        cursor: pointer;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data {
+        width: 87.5%;
+        display: flex;
+        padding-right: 12px;
+        align-items: center;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-text {
+        padding: 12px 16px;
+        background-color: #1d9bf0;
+        color: white;
+        border-radius: 24px 24px 24px 4px;
+        font-size: 15px;
+        font-weight: 400;
+        transition: background-color .218s;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-text:hover {
+        background-color: #1A8CD8;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction {
+        padding-left: 4px;
+        display: flex;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction .message-react,
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction .message-more {
+        width: 36px;
+        height: 36px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        visibility: hidden;
+        border-radius: 50%;
+        transition: visibility .218s, background-color .218s;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content:hover .message-data .message-interaction .message-react,
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content:hover .message-data .message-interaction .message-more {
+        visibility: visible;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction .message-react:hover,
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction .message-more:hover {
+        background-color: #E8F5FD;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction .message-react svg,
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction .message-more svg {
+        /* TODO: Why not working */
+        color: rgb(107, 127, 142);
+    }
+
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-meta {
+        cursor: pointer;
+        margin-top: 6px;
+        width: 87.5%;
+        display: flex;
+        font-size: 13px;
+        color: rgb(83, 100, 113);
+        font-weight: 400;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-meta span:hover {
+        text-decoration: underline;
     }
 }
