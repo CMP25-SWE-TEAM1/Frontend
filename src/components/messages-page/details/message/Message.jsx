@@ -1,4 +1,4 @@
-const Message = () => {
+const Message = (props) => {
   // {/* [Message Received] Message-content + message-info */}
   return (
     <div className="message">
@@ -8,7 +8,7 @@ const Message = () => {
         <div className="message-data">
           {/* Message Text */}
           <div className="message-text">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            {props.messageText}
           </div>
           {/* Message Interaction */}
           <div className="message-interaction">

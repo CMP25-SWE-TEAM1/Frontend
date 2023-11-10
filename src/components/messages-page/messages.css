@@ -342,27 +342,44 @@
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data {
         width: 87.5%;
         display: flex;
-        padding-right: 12px;
         align-items: center;
+        /* Message on Left */
+        /* padding-right: 12px; */
+        /* Message on Right */
+        flex-direction: row-reverse;
+        margin-left: auto;
+        padding-left: 12px;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-text {
         padding: 12px 16px;
-        background-color: #1d9bf0;
         color: white;
-        border-radius: 24px 24px 24px 4px;
         font-size: 15px;
         font-weight: 400;
         transition: background-color .218s;
+        /* Message with no meta */
+        /* border-radius: 24px 24px 24px 24px; */
+        /* Message on Left */
+        /* border-radius: 24px 24px 24px 4px;
+        background-color: #D88589; */
+        /* Message on Right */
+        border-radius: 24px 24px 4px 24px;
+        background-color: #1d9bf0;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-text:hover {
+        /* Message on Right */
         background-color: #1A8CD8;
+        /* Message on Left */
+        /* background-color: #E44A6B; */
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction {
-        padding-left: 4px;
         display: flex;
+        /* Message on Left */
+        /* padding-left: 4px; */
+        /* Message on Right */
+        padding-right: 4px;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction .message-react,
@@ -402,6 +419,9 @@
         font-size: 13px;
         color: rgb(83, 100, 113);
         font-weight: 400;
+        /* Message on Right */
+        flex-direction: row-reverse;
+        margin-left: auto;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-meta span:hover {
