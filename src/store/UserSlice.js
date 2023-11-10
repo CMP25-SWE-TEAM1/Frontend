@@ -12,9 +12,8 @@ export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredent
     localStorage.setItem("user", JSON.stringify(userCredentials))
   } else {
     google = false
-    const correctURL = `https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/login`
-    const wrongURL = `https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/wlogin`
-    const request = await axios.post(correctURL, userCredentials)
+    const mockURL = `https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/login`
+    const request = await axios.post(mockURL, userCredentials)
     response = await request.data
     localStorage.setItem("user", JSON.stringify(response.user))
   }
@@ -57,7 +56,10 @@ const userSlice = createSlice({
         if (action.error.message === "Request failed with status code 401") {
           state.error = "Access Denied! Invalid Credentials"
         } else {
-          state.error = action.error.message
+          state.error = "Access Denied! Invalid Credentials"
+
+          //this may be changed
+          // state.error = action.error.message
         }
       })
   },
