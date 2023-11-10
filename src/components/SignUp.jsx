@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import ReCAPTCHA from "react-google-recaptcha"
+import axios from "axios"
+
 import { Modal, Box } from "@mui/material"
-import lightLogo from "../assets/imgs/giga-chat-logo-dark-removebg-preview.png"
-import { last120Years, days, months } from "../constants/index.js"
 import InputLabel from "@mui/material/InputLabel"
 import MenuItem from "@mui/material/MenuItem"
 import FormControl from "@mui/material/FormControl"
@@ -11,14 +11,34 @@ import Select from "@mui/material/Select"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import Alert from "@mui/material/Alert"
 import Stack from "@mui/material/Stack"
-import { useSelector } from "react-redux"
 
-import { styles } from "../styles"
-import GoogleLoginButton from "./GoogleLoginButton"
+import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { loginUser } from "../store/UserSlice"
 
+import GoogleLoginButton from "./GoogleLoginButton"
+
+import { styles } from "../styles"
+import { last120Years, days, months } from "../constants/index.js"
+import lightLogo from "../assets/imgs/giga-chat-logo-dark-removebg-preview.png"
+
 const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
+  const [captchaIsDone, setCaptchaIsDone] = useState(false)
+  const siteKey = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{8,}$/
+  const upperCaseLetterRegex = /^(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*()]{1,}$/
+  const lowerCaseLetterRegex = /^(?=.*[a-z])[a-zA-Z0-9!@#$%^&*()]{1,}$/
+  const specialCharacterRegex = /^(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{1,}$/
+  const numberRegex = /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*()]{1,}$/
+  const lengthRegex = /^[a-zA-Z0-9!@#$%^&*()]{8,}$/
+  const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+
+  const darkMode = useSelector((state) => state.theme.darkMode)
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const [nickName, setNickName] = useState("")
   const [email, setEmail] = useState("")
   const [year, setYear] = useState("")
@@ -27,6 +47,11 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
 
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
+
+  const APIs = {
+    mock: { emailExistAPI: "" },
+    actual: { emailExistAPI: "" },
+  }
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
@@ -67,22 +92,29 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
     setDay(event.target.value)
   }
 
-  const darkMode = useSelector((state) => state.theme.darkMode)
+  const handleLoginEvent = (e) => {
+    e.preventDefault()
+    let userCredentials = {
+      nickName,
+      password,
+    }
 
-  const [captchaIsDone, setCaptchaIsDone] = useState(false)
-  const siteKey = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+    dispatch(loginUser({ userCredentials, isgoogle: null })).then((result) => {
+      if (result.payload) {
+        setNickName("")
+        setPassword("")
+        navigate("/home")
+        handleCloseModal()
+      }
+    })
+  }
+
+  const handleEmailBlur = () => {}
+
   const handleCaptchaVerification = () => {
     console.log("Captcha done")
     setCaptchaIsDone(true)
   }
-
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{8,}$/
-  const upperCaseLetterRegex = /^(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*()]{1,}$/
-  const lowerCaseLetterRegex = /^(?=.*[a-z])[a-zA-Z0-9!@#$%^&*()]{1,}$/
-  const specialCharacterRegex = /^(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{1,}$/
-  const numberRegex = /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*()]{1,}$/
-  const lengthRegex = /^[a-zA-Z0-9!@#$%^&*()]{8,}$/
-  const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 
   function checkPassword(password) {
     return !passwordRegex.test(password)
@@ -107,25 +139,6 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
     return emailRegex.test(emeil)
   }
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
-  const handleLoginEvent = (e) => {
-    e.preventDefault()
-    let userCredentials = {
-      nickName,
-      password,
-    }
-
-    dispatch(loginUser({ userCredentials, isgoogle: null })).then((result) => {
-      if (result.payload) {
-        setNickName("")
-        setPassword("")
-        navigate("/home")
-        handleCloseModal()
-      }
-    })
-  }
   return (
     <>
       <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
@@ -180,7 +193,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                   </label>
                 </div>
                 <div className="input-container">
-                  <input className={email === "" ? "form-input" : "form-input filled-input"} type="text" name="email" id="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <input className={email === "" ? "form-input" : "form-input filled-input"} type="text" name="email" id="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleEmailBlur} />
                   <label className="input-label" htmlFor="email">
                     Email
                   </label>

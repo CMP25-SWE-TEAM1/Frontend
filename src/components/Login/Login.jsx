@@ -1,32 +1,53 @@
-import React from "react"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { Modal, Box } from "@mui/material"
+
+import { Modal, Box, Alert } from "@mui/material"
+import VisibilityIcon from "@mui/icons-material/Visibility"
+
 import lightLogo from "../../assets/imgs/giga-chat-logo-dark-removebg-preview.png"
 import { styles } from "../../styles"
+
 import { useDispatch, useSelector } from "react-redux"
 import { loginUser } from "../../store/UserSlice"
+
 import GoogleLoginButton from "../GoogleLoginButton"
-import VisibilityIcon from "@mui/icons-material/Visibility"
+import axios from "axios"
 
 const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
 
-  function handleNext() {
-    const firstPage = document.getElementById("firstPage")
-    const secondPage = document.getElementById("secondPage")
-
-    firstPage.style.display = "none"
-    secondPage.style.display = "block"
-  }
-
   const { loading, error } = useSelector((state) => state.user)
+
+  const [emailExistError, setEmailExistError] = useState(false)
 
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
+
+  const APIs = {
+    mock: { emailExistAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/checkEmail" },
+    actual: { emailExistAPI: "" },
+  }
+
+  function handleNext(emailExist) {
+    console.log(emailExist)
+
+    if (emailExist) {
+      const firstPage = document.getElementById("firstPage")
+      const secondPage = document.getElementById("secondPage")
+
+      firstPage.style.display = "none"
+      secondPage.style.display = "block"
+    } else {
+      setEmailExistError(true)
+      setTimeout(() => {
+        setEmailExistError(false)
+      }, 3000)
+    }
+  }
+
   const handleLoginEvent = (e) => {
     e.preventDefault()
     let userCredentials = {
@@ -46,6 +67,22 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
+  }
+
+  const handleEmailCheck = () => {
+    let emailExist
+    axios
+      .post(APIs.mock.emailExistAPI, { email: userName })
+      .then((res) => {
+        emailExist = res.data.emailExist
+      })
+      .then(() => {
+        handleNext(emailExist)
+      })
+      .catch((err) => {
+        handleNext(false) //this will be removed
+        console.log(err)
+      })
   }
 
   return (
@@ -77,7 +114,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                     Phone, email or username
                   </label>
                 </div>
-                <button type="button" id="next" className="btn mt-2" onClick={handleNext} disabled={userName === ""}>
+                <button type="button" id="next" className="btn mt-2" onClick={handleEmailCheck} disabled={userName === ""}>
                   Next
                 </button>
                 <Link
@@ -93,6 +130,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                 <span className="mt-5 text-slate-400">
                   Don't have an account? <Link to={"/Signup"}>Sign Up</Link>{" "}
                 </span>
+                {emailExistError && <Alert severity="error">sorry we couldn't find your email</Alert>}
               </div>
             </div>
 
@@ -107,7 +145,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                       Phone, email or username
                     </label>
                   </div>
-                  <div className="relative">
+                  <div className={`relative ${error ? "-mb-4" : ""}`}>
                     <div className="input-container">
                       <input className={password === "" ? "form-input" : "form-input filled-input"} type={showPassword ? "text" : "password"} name="password" id="password" autoComplete="off" value={password} onChange={(e) => setPassword(e.target.value)} />
                       <label className="input-label" htmlFor="password">
@@ -118,6 +156,12 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                       <VisibilityIcon className="text-primary" />
                     </span>
                   </div>
+                  {error && (
+                    <Alert severity="error" sx={styles.signupPasswordCheckStyleMiddle}>
+                      {error}
+                    </Alert>
+                  )}
+
                   <Link
                     onClick={() => {
                       setLocation("/password_reset")
@@ -127,10 +171,9 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                   >
                     Forgot password?
                   </Link>
-                  <button id="login" type="submit" className="btn mt-36 h-14 rounded-3xl" disabled={password === ""}>
+                  <button id="login" type="submit" className="btn -mb-4 mt-36 h-14 rounded-3xl" disabled={password === ""}>
                     {loading ? "Loading..." : "Log In"}
                   </button>
-                  {error && <div>{error}</div>}
                 </form>
               </div>
             </div>
