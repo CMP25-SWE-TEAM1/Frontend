@@ -51,7 +51,7 @@ const Sidebar = () => {
         <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" />
         {options}
         <Button name="Post" color="text-white" backgroundColor="bg-[#1D9BF0]" height="h-12" width="w-56" link="/compose/tweet" />
-        <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} />
+        <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.nickname} userTag={`@${user.username}`} moreIcon={moreIcon} handleLogout={handleLogout} />
       </div>
     </div>
   )

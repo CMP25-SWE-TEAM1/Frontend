@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
+import { useSelector } from "react-redux"
 
 let google = false
 
-export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredentials, isgoogle }) => {
+export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredentials, isgoogle, issignup }) => {
   let response
   if (isgoogle) {
     google = true
@@ -33,6 +34,14 @@ const userSlice = createSlice({
   reducers: {
     logoutUser: (state) => {
       state.user = null
+      state.loading = false
+      state.error = null
+    },
+    signupUser: (state, action) => {
+      console.log(action.payload)
+      state.user = action.payload.user
+      localStorage.setItem("user", JSON.stringify(action.payload.user))
+
       state.loading = false
       state.error = null
     },
@@ -66,5 +75,6 @@ const userSlice = createSlice({
 })
 
 export const logoutUser = userSlice.actions.logoutUser
+export const signupUser = userSlice.actions.signupUser
 
 export default userSlice.reducer
