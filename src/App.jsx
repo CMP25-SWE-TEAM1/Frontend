@@ -54,7 +54,7 @@ const App = () => {
   }
 
   const user = useSelector((state) => state.user.user)
-  console.log(location)
+  // console.log(location)
   return (
     <div className="app flex h-[100vh] bg-white text-black dark:bg-black dark:text-white">
       <BrowserRouter>
