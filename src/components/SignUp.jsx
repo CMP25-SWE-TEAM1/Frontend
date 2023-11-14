@@ -13,6 +13,7 @@ import Alert from "@mui/material/Alert"
 import Stack from "@mui/material/Stack"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import Typography from "@mui/material/Typography"
+import ErrorIcon from "@mui/icons-material/Error"
 
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
@@ -49,6 +50,8 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [day, setDay] = useState("")
   const [userToken, setUserToken] = useState("")
   const [user, setUser] = useState()
+  const [userTag, setUserTag] = useState()
+  const [originalUsername, setOriginalUsername] = useState("")
 
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -56,6 +59,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [emailExistError, setEmailExistError] = useState(false)
   const [birthdateError, setBirthdateError] = useState(false)
   const [emailConfirmationError, setEmailConfirmationError] = useState(false)
+  const [usernameError, setUsernameError] = useState(false)
 
   const APIs = {
     mock: { emailExistAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/checkEmail" },
@@ -66,6 +70,8 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
       resendConfirmationEmail: "http://13.48.45.126:3000/api/user/resendConfirmEmail",
       confirmEmail: "http://13.48.45.126:3000/api/user/confirmEmail",
       assignPassword: "http://13.48.45.126:3000/api/user/AssignPassword",
+      checkUsername: "http://13.48.45.126:3000/api/user/checkAvailableUsername",
+      assignUsername: "http://13.48.45.126:3000/api/user/AssignUsername",
     },
   }
 
@@ -80,6 +86,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
     const ThirdStep = document.getElementById("Third Step")
     const ForthStep = document.getElementById("Forth Step")
     const FifthStep = document.getElementById("Fifth Step")
+    const TagStep = document.getElementById("Tag Step")
 
     switch (position) {
       case 0:
@@ -106,6 +113,10 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
         ForthStep.style.display = "none"
         FifthStep.style.display = "block"
         break
+      case 5:
+        FifthStep.style.display = "none"
+        TagStep.style.display = "block"
+        break
       default:
         break
     }
@@ -123,18 +134,18 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
     setDay(event.target.value)
   }
 
-  const handleLoginEvent = (e) => {
-    e.preventDefault()
+  // const handleLoginEvent = (e) => {
+  //   e.preventDefault()
 
-    dispatch(loginUser({ user, isgoogle: null, issignup: true })).then((result) => {
-      if (result.payload) {
-        setNickName("")
-        setPassword("")
-        navigate("/home")
-        handleCloseModal()
-      }
-    })
-  }
+  //   dispatch(loginUser({ user, isgoogle: null, issignup: true })).then((result) => {
+  //     if (result.payload) {
+  //       setNickName("")
+  //       setPassword("")
+  //       navigate("/home")
+  //       handleCloseModal()
+  //     }
+  //   })
+  // }
 
   const handleEmailBlur = () => {
     let emailExist
@@ -154,6 +165,23 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
         setEmailExistError(false)
 
         console.log(err)
+      })
+  }
+
+  const handleUsernameBlur = () => {
+    axios
+      .post(APIs.actual.checkUsername, {
+        username: userTag,
+      })
+      .then((res) => {
+        setUsernameError(false)
+      })
+      .catch((err) => {
+        if (userTag !== originalUsername) {
+          setUsernameError(true)
+          console.log(err)
+        }
+        setUsernameError(false)
       })
   }
 
@@ -263,12 +291,48 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
 
   const handleAssignPassword = () => {
     axios
-      .post(APIs.actual.assignPassword, {
-        token: userToken,
-        password: password,
-      })
+      .patch(
+        APIs.actual.assignPassword,
+        {
+          password: password,
+        },
+        {
+          headers: {
+            authorization: "Bearer " + userToken,
+          },
+        }
+      )
       .then((res) => {
-        dispatch(signupUser({ user: user })).then((result) => {
+        setUser(res.data.data.currentUser)
+        setUserTag(user.username)
+        setOriginalUsername(user.username)
+        nextShow(5)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const handleAssignUsername = () => {
+    axios
+      .patch(
+        APIs.actual.assignUsername,
+        {
+          username: userTag,
+        },
+        {
+          headers: {
+            authorization: "Bearer " + userToken,
+          },
+        }
+      )
+      .then((res) => {
+        const newuser = {
+          ...user,
+          username: userTag,
+        }
+        setUser(newuser)
+        dispatch(signupUser({ user: newuser, token: userToken })).then((result) => {
           if (result.payload) {
             setNickName("")
             setPassword("")
@@ -289,6 +353,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
         email: email,
       })
       .then((res) => {
+        console.log(res)
         setUserToken(res.data.token)
         setUser(res.data.data.user)
         nextShow(4)
@@ -665,7 +730,7 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
             <div id="Fifth Step" className="-mt-10 hidden">
               <div>
                 <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 5 of 5</p>
-                <h1 className="">You'll need a Password</h1>
+                <h1>You'll need a Password</h1>
                 <p className="date-text">Make sure it's 8 characters or more</p>
                 <div className="relative">
                   <div className="input-container">
@@ -702,6 +767,26 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                     Sign Up
                   </button>
                 </div>
+              </div>
+            </div>
+
+            <div id="Tag Step" className="-mt-10 hidden">
+              <div>
+                <h1>What should we call you?</h1>
+                <p className="text-xs text-secondary">Your @username is unique. You can always change it later.</p>
+
+                <div className="input-container relative">
+                  <input className={`${userTag === "" ? "form-input" : "form-input filled-input"} ${usernameError ? "border-red-600" : ""}`} name="userTag" id="userTag" autoComplete="off" value={`${userTag}`} onChange={(e) => setUserTag(e.target.value)} onBlur={handleUsernameBlur} />
+                  <label className={`${usernameError ? "text-red-600" : ""} input-label`} htmlFor="userTag">
+                    Username
+                  </label>
+                  {!usernameError && <CheckCircleIcon className="absolute bottom-0 right-0 -translate-x-2 -translate-y-2 text-[18px] text-green-600" />}
+                  {usernameError && <ErrorIcon className="absolute bottom-0 right-0 -translate-x-2 -translate-y-8 text-[18px] text-red-600" />}
+                  {usernameError && <span className="ml-3 text-sm text-red-600">Username has already been taken</span>}
+                </div>
+                <button className="btn mt-3" onClick={handleAssignUsername} disabled={usernameError}>
+                  Next
+                </button>
               </div>
             </div>
 

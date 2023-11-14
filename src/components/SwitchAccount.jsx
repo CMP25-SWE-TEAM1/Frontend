@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 function SwitchAccount({ profilePhoto, userName, userTag, moreIcon, link ,handleLogout}) {
   return (

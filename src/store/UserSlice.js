@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
-import { useSelector } from "react-redux"
+
+// TODO store token instead of user
 
 let google = false
 
@@ -23,6 +24,7 @@ export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredent
 })
 
 const initialUser = localStorage.getItem("user")
+const initialToken=localStorage.getItem('token')
 
 const userSlice = createSlice({
   name: "user",
@@ -30,6 +32,7 @@ const userSlice = createSlice({
     loading: false,
     user: initialUser ? JSON.parse(initialUser) : null,
     error: null,
+    token: initialToken ? JSON.parse(initialToken) : null,
   },
   reducers: {
     logoutUser: (state) => {
@@ -40,10 +43,14 @@ const userSlice = createSlice({
     signupUser: (state, action) => {
       console.log(action.payload)
       state.user = action.payload.user
+
+      //next line will be removed
       localStorage.setItem("user", JSON.stringify(action.payload.user))
+      localStorage.setItem("token", JSON.stringify(action.payload.token))
 
       state.loading = false
       state.error = null
+      state.token=action.payload.token
     },
   },
   extraReducers: (builder) => {
@@ -52,11 +59,13 @@ const userSlice = createSlice({
         state.loading = true
         state.user = null
         state.error = null
+        state.token = null
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false
         state.user = google ? action.payload : action.payload.user
         state.error = null
+        state.token = "////////////////////"
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false
@@ -70,6 +79,7 @@ const userSlice = createSlice({
           //this may be changed
           // state.error = action.error.message
         }
+        state.token = null
       })
   },
 })
