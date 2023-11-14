@@ -18,10 +18,19 @@ import lightLogo from "../assets/gigachatLogoOne_light_v2-removebg-preview.png"
 import { useNavigate } from "react-router"
 import { useSelector, useDispatch } from "react-redux"
 import { logoutUser } from "../../store/UserSlice"
+import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined';
 
 const Sidebar = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
-
+  const [shrink,setShrink]=useState(false);
+  const handleResize = () => {
+    if(window.innerWidth<1278)
+      setShrink(true);
+    else
+      setShrink(false);
+      };
+  window.addEventListener('resize', handleResize);
+ 
   const moreIcon = <MoreHorizOutlinedIcon />
   const userName = "Ismail Ramadan Mokhtar"
   const userTag = "ismail_sh02"
@@ -46,11 +55,14 @@ const Sidebar = () => {
 
   return (
     <div className="flex max-w-[400px] flex-grow justify-end border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white">
-      <div className="flex h-full flex-col pl-[30%] normalSidebar:bg-blue-400">
-        <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" />
+      <div className={`flex h-full flex-col pl-[30%] max-[1278px]:items-end max-[1278px]:pr-[5%]`}>
+        <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} backgroundColor="" color="text-white" height="h-12" width="w-12" link="/home" />
         {options}
-        <Button name="Post" color="text-white" backgroundColor="bg-[#1D9BF0]" height="h-12" width="w-56" link="/compose/tweet" />
-        <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} />
+        <Button name={shrink ? <HistoryEduOutlinedIcon/>:"Post"} color="text-white" backgroundColor="bg-[#1D9BF0]" height={shrink ?"h-14":"h-12"} width={shrink ?"w-14":"w-56"} link="/compose/tweet" />
+        {shrink ?
+        <Button name={imageIcon("logo", user.picture, 12)} backgroundColor="" color="text-white mt-auto mb-2" height="h-12" width="w-12" link="/home" />
+        :
+        <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} />}
       </div>
     </div>
   )

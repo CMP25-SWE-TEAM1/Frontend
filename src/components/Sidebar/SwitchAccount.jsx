@@ -7,11 +7,11 @@ function SwitchAccount({ profilePhoto, userName, userTag, moreIcon, link ,handle
         <div title="profileIcon" className="w-[18%]">
           {profilePhoto}
         </div>
-        <div className="w-[75%]">
+        <div className="w-[75%] max-[1278px]:hidden">
           <div className="truncate font-semibold">{userName}</div>
           <div className="truncate text-secondary">{userTag}</div>
         </div>
-        <div title="moreIcon" className="w-[10%]">
+        <div title="moreIcon" className="w-[10%] max-[1278px]:hidden">
           {moreIcon}
         </div>
       </div>

@@ -3,7 +3,7 @@ import HorizontalNavbar from '../HorizontalNavbar';
 import RepliesContainer from './RepliesContainer';
 import Widgets from '../Widgets';
 function PostPage() {
-    const postNavLink = { title: "Post", location: "" };
+    const postNavLink = [{ title: "Post", location: "" }];
     const replies=[{
       userName: "Mohamed Samir",
       userTag: "MSamir245",

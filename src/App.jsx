@@ -91,7 +91,7 @@ const App = () => {
             <Route path="display" element={<Display />}></Route>
           </Route>
           <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
-          <Route paht="/replies" element={<PostPage />}></Route>
+          <Route path="/replies" element={<PostPage />}></Route>
           <Route path="*" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>
