@@ -13,12 +13,11 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined"
 import PendingOutlinedIcon from "@mui/icons-material/PendingOutlined"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
 import SettingsIcon from "@mui/icons-material/Settings"
-import darkLogo from "./assets/gigachatLogoOne_dark-removebg-preview.png"
-import lightLogo from "./assets/gigachatLogoOne_light_v2-removebg-preview.png"
-import profileImage from "./assets/IMG20210811224307.jpg"
+import darkLogo from "../assets/gigachatLogoOne_dark-removebg-preview.png"
+import lightLogo from "../assets/gigachatLogoOne_light_v2-removebg-preview.png"
 import { useNavigate } from "react-router"
 import { useSelector, useDispatch } from "react-redux"
-import { logoutUser } from "../store/UserSlice"
+import { logoutUser } from "../../store/UserSlice"
 
 const Sidebar = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
@@ -47,7 +46,7 @@ const Sidebar = () => {
 
   return (
     <div className="flex max-w-[400px] flex-grow justify-end border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white">
-      <div className="flex h-full flex-col pl-[30%]">
+      <div className="flex h-full flex-col pl-[30%] normalSidebar:bg-blue-400">
         <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" />
         {options}
         <Button name="Post" color="text-white" backgroundColor="bg-[#1D9BF0]" height="h-12" width="w-56" link="/compose/tweet" />

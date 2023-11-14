@@ -1,5 +1,5 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom"
-import Sidebar from "./components/Sidebar"
+import Sidebar from "./components/Sidebar/Sidebar"
 import Widgets from "./components/Widgets"
 import Home from "./components/Home"
 import Login from "./components/Login/Login"
@@ -21,6 +21,7 @@ import Blocked from "./components/Settings/PrivacySafety/Blocked"
 import Muted from "./components/Settings/PrivacySafety/Muted"
 import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode, setLightMode } from "./store/ThemeSlice"
+import PostPage from "./components/PostPage/PostPage";
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
@@ -90,6 +91,7 @@ const App = () => {
             <Route path="display" element={<Display />}></Route>
           </Route>
           <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
+          <Route paht="/replies" element={<PostPage />}></Route>
           <Route path="*" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>

@@ -4,6 +4,7 @@ import PostsContainer from "./PostsContainer"
 import { useState } from "react"
 import Widgets from "./Widgets"
 import getUser from "../constants/index"
+import RepliesContainer from "./PostPage/RepliesContainer"
 
 const Home = () => {
   const [user, setUser] = useState(getUser())
