@@ -14,6 +14,7 @@ import Stack from "@mui/material/Stack"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import Typography from "@mui/material/Typography"
 import ErrorIcon from "@mui/icons-material/Error"
+import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined"
 
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
@@ -24,6 +25,7 @@ import GoogleLoginButton from "./GoogleLoginButton"
 import { styles } from "../styles"
 import { last120Years, days, months } from "../constants/index.js"
 import lightLogo from "../assets/imgs/giga-chat-logo-dark-removebg-preview.png"
+import defaultProfilePic from "../assets/imgs/Default_Profile_Picture.png"
 
 const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [captchaIsDone, setCaptchaIsDone] = useState(false)
@@ -64,14 +66,15 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
   const APIs = {
     mock: { emailExistAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/checkEmail" },
     actual: {
-      emailExistAPI: "http://13.48.45.126:3000/api/user/checkExistedEmail",
-      checkBirthdateAPI: "http://13.48.45.126:3000/api/user/checkBirthDate",
-      signupAPI: "http://13.48.45.126:3000/api/user/signup",
-      resendConfirmationEmail: "http://13.48.45.126:3000/api/user/resendConfirmEmail",
-      confirmEmail: "http://13.48.45.126:3000/api/user/confirmEmail",
-      assignPassword: "http://13.48.45.126:3000/api/user/AssignPassword",
-      checkUsername: "http://13.48.45.126:3000/api/user/checkAvailableUsername",
-      assignUsername: "http://13.48.45.126:3000/api/user/AssignUsername",
+      emailExistAPI: "http://51.20.216.159/api/user/checkExistedEmail",
+      checkBirthdateAPI: "http://51.20.216.159/api/user/checkBirthDate",
+      signupAPI: "http://51.20.216.159/api/user/signup",
+      resendConfirmationEmail: "http://51.20.216.159/api/user/resendConfirmEmail",
+      confirmEmail: "http://51.20.216.159/api/user/confirmEmail",
+      assignPassword: "http://51.20.216.159/api/user/AssignPassword",
+      checkUsername: "http://51.20.216.159/api/user/checkAvailableUsername",
+      assignUsername: "http://51.20.216.159/api/user/AssignUsername",
+      changeProfilePicture: "http://51.20.216.159/api/user/profile/image",
     },
   }
 
@@ -87,6 +90,8 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
     const ForthStep = document.getElementById("Forth Step")
     const FifthStep = document.getElementById("Fifth Step")
     const TagStep = document.getElementById("Tag Step")
+    const PictureStep = document.getElementById("Picture Step")
+
 
     switch (position) {
       case 0:
@@ -116,6 +121,10 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
       case 5:
         FifthStep.style.display = "none"
         TagStep.style.display = "block"
+        break
+      case 6:
+        TagStep.style.display = "none"
+        PictureStep.style.display = "block"
         break
       default:
         break
@@ -313,6 +322,17 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
       })
   }
 
+  const handleCompleteSignup = (user) => {
+    dispatch(signupUser({ user: user, token: userToken })).then((result) => {
+      if (result.payload) {
+        setNickName("")
+        setPassword("")
+        navigate("/home")
+        handleCloseModal()
+      }
+    })
+  }
+
   const handleAssignUsername = () => {
     axios
       .patch(
@@ -332,18 +352,31 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
           username: userTag,
         }
         setUser(newuser)
-        dispatch(signupUser({ user: newuser, token: userToken })).then((result) => {
-          if (result.payload) {
-            setNickName("")
-            setPassword("")
-            navigate("/home")
-            handleCloseModal()
-          }
-        })
+        nextShow(6)
+        
       })
       .catch((err) => {
         console.log(err)
       })
+  }
+
+  const handleAssignProfilePicture = () => {
+    const formData = new FormData()
+    formData.append('image', profilePic)
+    axios.patch(APIs.actual.changeProfilePicture, {
+      profile_image:formData
+    }).then((res) => {
+      const newuser = {
+        ...user,
+        picture: profilePicURL,
+      }
+      setUser(newuser)
+      console.log(res)
+      handleCompleteSignup(newuser)
+    })
+      .catch((error) => {
+      console.log(error)
+    })
   }
 
   const handleConfirmEmail = () => {
@@ -368,6 +401,27 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
       })
   }
 
+  const [profilePic, setProfilePic] = useState(defaultProfilePic)
+  const [profilePicURL,setProfilePicURL]=useState(defaultProfilePic)
+
+  const hiddenFileInput = useRef(null)
+  const skipForNowButton = useRef(null)
+  const completeSignupButton = useRef(null)
+
+
+  const handlePictureClick = (event) => {
+    hiddenFileInput.current.click()
+  }
+  const handlePictureChange = (event) => {
+    const fileUploaded = event.target.files[0]
+    console.log(fileUploaded)
+    console.log(URL.createObjectURL(event.target.files[0]))
+
+    setProfilePic(fileUploaded)
+    setProfilePicURL(URL.createObjectURL(event.target.files[0]))
+    skipForNowButton.current.style.display ="none"
+    completeSignupButton.current.style.display="block"
+  }
   return (
     <>
       <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
@@ -786,6 +840,35 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                 </div>
                 <button className="btn mt-3" onClick={handleAssignUsername} disabled={usernameError}>
                   Next
+                </button>
+              </div>
+            </div>
+
+            <div id="Picture Step" className="-mt-10 hidden">
+              <div>
+                <h1>Pick a profile picture</h1>
+
+                <p className="-mt-1 text-xs text-secondary">Have a favorite selfie? Upload it now.</p>
+                <div className="relative m-auto w-fit rounded-full border-2 border-black dark:border-white">
+                  <div className="w-fit rounded-full border border-white dark:border-black">
+                    <img src={profilePicURL} alt="profile" className="h-[200px] w-[200px] rounded-full" />
+                  </div>
+                  <button className="absolute left-[50%] top-[50%] m-auto h-[47px] w-[47px] -translate-x-[50%] -translate-y-[50%] rounded-full bg-darkHover hover:bg-darkBorder" onClick={handlePictureClick}>
+                    <AddAPhotoOutlinedIcon className="-ml-[3px] -mt-[5px] text-white" />
+                    <input
+                      type="file"
+                      onChange={handlePictureChange}
+                      ref={hiddenFileInput}
+                      style={{ display: "none" }} // Make the file input element invisible
+                    />
+                  </button>
+                </div>
+
+                <button className="btn mt-3" ref={skipForNowButton} onClick={handleCompleteSignup}>
+                  Skip for now
+                </button>
+                <button className="btn mt-3 hidden" ref={completeSignupButton} onClick={handleAssignProfilePicture}>
+                  Complete sign up
                 </button>
               </div>
             </div>
