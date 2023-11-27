@@ -71,7 +71,7 @@ const GoogleLoginButton = ({ handleCloseModal }) => {
           <button onClick={logOut}>Log out</button>
         </div>
       ) : (
-        <button onClick={() => login()} className="flex h-[2.5rem] w-full items-center justify-center rounded-3xl bg-white text-black border border-ternary transition-colors">
+        <button onClick={() => login()} className="border-ternary flex h-[2.5rem] w-full items-center justify-center rounded-3xl border bg-white text-black transition-colors">
           <img src={googleLogo} alt="google logo" className="mr-2" />
           <span className="text-sm font-semibold">Sign up with Google</span>
         </button>
