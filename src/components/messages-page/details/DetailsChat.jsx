@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import Message from "./message/Message"
+import MessageInput from "./message/MessageInput"
 
 const DetailsChat = () => {
   const one = true
@@ -68,7 +69,7 @@ const DetailsChat = () => {
                 </div>
               )}
             </div>
-            <div className="keyboard">Start a new message</div>
+            <MessageInput />
           </div>
         )}
       </div>

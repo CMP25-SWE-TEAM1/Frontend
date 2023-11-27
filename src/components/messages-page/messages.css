@@ -221,14 +221,19 @@
         height: calc(100vh - 53px);
         background-color: white;
         color: black;
+
+        flex-direction: column;
+        display: flex;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox {
         padding-top: 53px;
         margin-top: -53px;
-        height: calc(100vh - 55px);
         overflow-y: auto;
         scroll-behavior: smooth;
+        border-bottom: 1px solid #eee;
+
+        flex: 1;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content {
@@ -319,12 +324,12 @@
     .messages-page .details.chat .content .body.allowed .keyboard {
         min-height: 55px;
         max-height: 187px;
-		overflow-y: auto;
+        overflow-y: auto;
         /* Temp */
-        text-align: center;
+        /* text-align: center;
         background-color: #1d9bf0;
         color: white;
-        line-height: 55px;
+        line-height: 55px; */
     }
 
     /* ================== Chat - Message ================== */
