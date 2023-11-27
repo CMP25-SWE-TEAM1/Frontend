@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, {  useState } from "react"
 import SidebarOption from "./SidebarOption"
 import SwitchAccount from "./SwitchAccount"
 import Button from "./Button"
@@ -10,8 +10,6 @@ import ListAltRoundedIco from "@mui/icons-material/ListAltRounded"
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined"
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined"
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined"
-import PendingOutlinedIcon from "@mui/icons-material/PendingOutlined"
-import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
 import SettingsIcon from "@mui/icons-material/Settings"
 import darkLogo from "../assets/gigachatLogoOne_dark-removebg-preview.png"
 import lightLogo from "../assets/gigachatLogoOne_light_v2-removebg-preview.png"
@@ -31,7 +29,6 @@ const Sidebar = () => {
       };
   window.addEventListener('resize', handleResize);
  
-  const moreIcon = <MoreHorizOutlinedIcon />
   const userName = "Ismail Ramadan Mokhtar"
   const userTag = "ismail_sh02"
   const imageIcon = (altName, image, radius) => {
@@ -62,7 +59,7 @@ const Sidebar = () => {
         {shrink ?
         <Button name={imageIcon("logo", user.picture, 12)} backgroundColor="" color="text-white mt-auto mb-2" height="h-12" width="w-12" link="/home" />
         :
-        <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} />}
+        <SwitchAccount  userName={user.name} userTag={`@${userTag}`}  handleLogout={handleLogout} />}
       </div>
     </div>
   )

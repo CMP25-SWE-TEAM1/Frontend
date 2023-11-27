@@ -54,6 +54,8 @@ const App = () => {
     setLocation(window.location.pathname)
   }
 
+
+
   const user = useSelector((state) => state.user.user)
   // console.log(location)
   const testPost={
