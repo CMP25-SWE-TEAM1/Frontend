@@ -21,7 +21,7 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
 
-const Post = ({ userName, userTag, date, replyCount, repostCount, likeCount, viewCount }) => {
+const Post = ({ userName, userTag, date, replyCount, repostCount, likeCount, viewCount , media }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
 
   const openMenu = Boolean(anchorPostMenu)
@@ -54,7 +54,8 @@ const Post = ({ userName, userTag, date, replyCount, repostCount, likeCount, vie
 
 
   return (
-    <div className="border-lightBorder dark:border-darkBorder flex h-fit border border-l-0 border-r-0 p-3" data-testid="postId">
+    <Link className="" to={`/${userTag}/status/tweetId`}>
+    <div className=" border-lightBorder dark:border-darkBorder flex h-fit border border-l-0 border-r-0 p-3" data-testid="postId">
       <div className=" h-60 w-10 sm:mr-3">
         <Avatar alt="Remy Sharp" src={profilePicTest} sx={{ width: 40, height: 40 }} />
       </div>
@@ -215,6 +216,7 @@ const Post = ({ userName, userTag, date, replyCount, repostCount, likeCount, vie
         </div>
       </div>
     </div>
+    </Link>
   )
 }
 

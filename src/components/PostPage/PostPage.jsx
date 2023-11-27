@@ -2,8 +2,10 @@ import React from 'react'
 import HorizontalNavbar from '../HorizontalNavbar';
 import RepliesContainer from './RepliesContainer';
 import Widgets from '../Widgets';
-function PostPage() {
-    const postNavLink = [{ title: "Post", location: "" }];
+import Post from '../Post';
+import WestIcon from '@mui/icons-material/West';
+function PostPage({post}) {
+    const postNavLink = [{title :<WestIcon/> , location:""},{ title: "Post", location: "" }];
     const replies=[{
       userName: "Mohamed Samir",
       userTag: "MSamir245",
@@ -36,6 +38,16 @@ function PostPage() {
         <HorizontalNavbar urls={postNavLink} originalUrl={"/replies"} />
         </div>
       </div>
+      <Post 
+      userName={post.userName}
+      userTag={post.userTag}
+      date={post.date}
+      replyCount={post.replyCount}
+      repostCount={post.repostCount}
+      likeCount={post.likeCount}
+      viewCount={post.viewCount}
+      key={post.userTag}
+      />
       <RepliesContainer replies={replies}/>
     </div>
     {/* <div>
