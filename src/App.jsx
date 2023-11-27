@@ -21,6 +21,7 @@ import Blocked from "./components/Settings/PrivacySafety/Blocked"
 import Muted from "./components/Settings/PrivacySafety/Muted"
 import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode, setLightMode } from "./store/ThemeSlice"
+import PostPage from "./PostPage/PostPage"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
@@ -99,10 +100,7 @@ const App = () => {
             <Route path="display" element={<Display />}></Route>
           </Route>
           <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
-<<<<<<< Updated upstream
-=======
           <Route path="/replies" element={<PostPage post={testPost} />}></Route>
->>>>>>> Stashed changes
           <Route path="*" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>
