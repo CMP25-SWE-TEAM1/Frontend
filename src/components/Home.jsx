@@ -6,7 +6,7 @@ import Widgets from "./Widgets"
 import getUser from "../constants/index"
 
 import RepliesContainer from "./PostPage/RepliesContainer"
-import ComposePost from "./ComposePost"
+import ComposePost from "./Home/ComposePost"
 import axios from "axios"
 
 

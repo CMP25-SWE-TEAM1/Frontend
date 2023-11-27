@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Avatar } from "@mui/material"
-import profilePicTest from "../assets/profilePicTest.JPG"
-import GeneralButton from "./Sidebar/Button"
+import profilePicTest from "../../assets/profilePicTest.JPG"
+import GeneralButton from "../Sidebar/Button"
 
 import Button from "@mui/material/Button"
 import Menu from "@mui/material/Menu"
