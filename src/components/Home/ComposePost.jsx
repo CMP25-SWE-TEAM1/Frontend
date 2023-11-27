@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import React, {useState} from 'react'
+import {useSelector} from 'react-redux'
+import TextField from '@mui/material/TextField'
 import { Avatar } from "@mui/material"
 import profilePicTest from "../../assets/profilePicTest.JPG"
 import GeneralButton from "../Sidebar/Button"
@@ -8,11 +8,6 @@ import GeneralButton from "../Sidebar/Button"
 import Button from "@mui/material/Button"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
-import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt"
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied"
-import VolumeOffOutlinedIcon from "@mui/icons-material/VolumeOffOutlined"
-import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined"
-import QueryStatsOutlinedIcon from "@mui/icons-material/QueryStatsOutlined"
 import axios from "axios"
 
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
