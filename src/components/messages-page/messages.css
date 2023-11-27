@@ -409,6 +409,10 @@
         display: flex;
     }
 
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction>div {
+        cursor: pointer;
+    }
+
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-data .message-interaction {
         padding-left: 4px;
     }
@@ -466,5 +470,66 @@
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-meta span:hover {
         text-decoration: underline;
+    }
+
+    /* ================== Chat - Message Input ================== */
+
+    .messages-page .details.chat .content .body.allowed .keyboard .content {
+        border-radius: 16px;
+        background-color: rgba(239, 243, 244, 1.00);
+        padding: 4px;
+        margin: 7px 12px 4px;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    .messages-page .details.chat .content .body.allowed .keyboard .content .icons {
+        margin-right: 4px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .messages-page .details.chat .content .body.allowed .keyboard .content .icons .media-icon,
+    .messages-page .details.chat .content .body.allowed .keyboard .content .icons .gif-icon,
+    .messages-page .details.chat .content .body.allowed .keyboard .content .icons .emoji-icon,
+    .messages-page .details.chat .content .body.allowed .keyboard .content .send-message .send-icon {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .messages-page .details.chat .content .body.allowed .keyboard .content .message-text {
+        font-weight: 300;
+        font-size: 15px;
+        padding: 4px 12px;
+        flex: 1;
+    }
+
+    .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .input-area:empty::before {
+        content: attr(placeholder);
+        color: rgb(83, 100, 113);
+    }
+
+    .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .input-area {
+        max-width: 391px;
+        min-height: 24px;
+        max-height: 160px;
+        overflow-y: auto;
+        cursor: text;
+    }
+
+    .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .input-area:focus {
+        outline: none;
+    }
+
+    .messages-page .details.chat .content .body.allowed .keyboard .content .send-message {
+        margin-left: 4px;
+        border-bottom-left-radius: 9999px;
+        border-top-left-radius: 9999px;
+        border-bottom-right-radius: 9999px;
+        border-top-right-radius: 9999px;
     }
 }
