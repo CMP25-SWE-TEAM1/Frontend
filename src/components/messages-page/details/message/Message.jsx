@@ -1,15 +1,13 @@
 const Message = (props) => {
   // {/* [Message Received] Message-content + message-info */}
   return (
-    <div className="message">
+    <div className={`message ${props.direction === "R" ? "right" : "left"}`}>
       {/* Message-content */}
       <div className="message-content">
         {/* Message-text + Message-interact */}
         <div className="message-data">
           {/* Message Text */}
-          <div className="message-text">
-            {props.messageText}
-          </div>
+          <div className="message-text">{props.messageText}</div>
           {/* Message Interaction */}
           <div className="message-interaction">
             <div className="message-react" title="React">

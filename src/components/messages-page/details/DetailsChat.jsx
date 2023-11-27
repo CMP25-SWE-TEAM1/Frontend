@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom"
 import Message from "./message/Message"
 
 const DetailsChat = () => {
-  const one = true;
-  const two = true;
+  const one = true
+  const two = true
   const navigate = useNavigate()
   return (
     <div className="details chat">
@@ -56,10 +56,14 @@ const DetailsChat = () => {
                   </div>
                   {/* Messages */}
                   <div className="messages">
-                    <Message messageText="first message 👋"/>
-                    <Message messageText="Another one 😄"/>
-                    <Message messageText="read fourth carefully 😈😈"/>
-                    <Message messageText="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."/>
+                    <Message direction="R" messageText="First message for me👋" />
+                    <Message direction="L" messageText="Me too 😄" />
+                    <Message direction="L" messageText="Another one 😄" />
+                    <Message direction="R" messageText="Read next carefully 😈😈" />
+                    <Message
+                      direction="R"
+                      messageText="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                    />
                   </div>
                 </div>
               )}
