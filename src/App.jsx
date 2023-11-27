@@ -1,5 +1,5 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom"
-import Sidebar from "./components/Sidebar"
+import Sidebar from "./components/Sidebar/Sidebar"
 import Widgets from "./components/Widgets"
 import Home from "./components/Home"
 import Login from "./components/Login/Login"
@@ -21,6 +21,7 @@ import Blocked from "./components/Settings/PrivacySafety/Blocked"
 import Muted from "./components/Settings/PrivacySafety/Muted"
 import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode, setLightMode } from "./store/ThemeSlice"
+import PostPage from "./components/PostPage/PostPage";
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
@@ -55,6 +56,15 @@ const App = () => {
 
   const user = useSelector((state) => state.user.user)
   // console.log(location)
+  const testPost={
+    userName: "Mohamed Samir",
+    userTag: "MSamir245",
+    date: "Thu Oct 26 2023 2:28:01 GMT+0200 (Eastern European Standard Time)",
+    replyCount: "23K",
+    repostCount: "45K",
+    likeCount: "64K",
+    viewCount: "1M",
+  }
   return (
     <div className="app flex h-[100vh] bg-white text-black dark:bg-black dark:text-white">
       <BrowserRouter>
@@ -90,6 +100,7 @@ const App = () => {
             <Route path="display" element={<Display />}></Route>
           </Route>
           <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
+          <Route path="/replies" element={<PostPage post={testPost} />}></Route>
           <Route path="*" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>

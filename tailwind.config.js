@@ -16,6 +16,8 @@ module.exports = {
         fifth: "#00030e",
         lightHover: "#e5e5e5",
         darkHover: "#171717",
+        postLightHover: "#a35b35",
+        postDarkHover: "#171717",
         lightBorder: "#F3F4F6",
         darkBorder: "#262626",
         "black-100": "#100d25",
@@ -27,6 +29,7 @@ module.exports = {
       },
       screens: {
         xs: "475px",
+        smallSidebar:"max-width: 200px"
       },
       backgroundImage: {
         "hero-pattern": "url('/src/assets/bgs/herobg.jpg')",
