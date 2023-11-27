@@ -47,11 +47,14 @@ const Sidebar = () => {
 
   return (
     <div className="flex max-w-[400px] flex-grow justify-end border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white">
-      <div className="flex h-full flex-col pl-[30%]">
+      <div className={`flex h-full flex-col pl-[30%] max-[1278px]:items-end max-[1278px]:pr-[5%]`}>
         <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" />
         {options}
-        <Button name="Post" color="text-white" backgroundColor="bg-[#1D9BF0]" height="h-12" width="w-56" link="/compose/tweet" />
-        <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} />
+        <Button name={shrink ? <HistoryEduOutlinedIcon/>:"Post"} color="text-white" backgroundColor="bg-[#1D9BF0]" height={shrink ?"h-14":"h-12"} width={shrink ?"w-14":"w-56"} link="/compose/tweet" />
+        {shrink ?
+        <Button name={imageIcon("logo", user.picture, 12)} color="text-white mt-auto mb-2" height="h-12" width="w-12" link="/home" />
+        :
+        <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} />}
       </div>
     </div>
   )
