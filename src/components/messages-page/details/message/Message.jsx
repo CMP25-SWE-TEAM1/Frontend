@@ -5,9 +5,17 @@ const Message = (props) => {
       {/* Message-content */}
       <div className="message-content">
         {/* Message-text + Message-interact */}
-        <div className="message-data">
-          {/* Message Text */}
-          <div className="message-text">{props.messageText}</div>
+        <div className="message-box">
+          <div className="message-data">
+            {/* Message image OR GIF */}
+            {props.messageMedia && (
+              <div className="message-media">
+                <img src={props.messageMedia} alt="attachment" />
+              </div>
+            )}
+            {/* Message Text */}
+            {props.messageText && <div className="message-text">{props.messageText}</div>}
+          </div>
           {/* Message Interaction */}
           <div className="message-interaction">
             <div className="message-react" title="React">

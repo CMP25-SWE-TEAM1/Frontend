@@ -350,24 +350,51 @@
         cursor: default;
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box {
         width: 87.5%;
         display: flex;
         align-items: center;
 
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-data {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-box {
         padding-right: 12px;
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-data {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box {
         flex-direction: row-reverse;
         margin-left: auto;
         padding-left: 12px;
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-text {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-data:has(.message-media) {
+        flex: 1
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-media {
+        border-radius: 24px;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-media img {
+        width: 100%;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-media+.message-text {
+        width: fit-content;
+        margin-top: 4px;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-media+.message-text {
+        margin-left: auto;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-box .message-media+.message-text {
+        margin-right: auto;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-text {
         padding: 12px 16px;
         color: white;
         font-size: 15px;
@@ -379,12 +406,12 @@
 
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-data .message-text {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-text {
         border-radius: 24px 24px 4px 24px;
         background-color: #1d9bf0;
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-data .message-text {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-box .message-text {
         border-radius: 24px 24px 24px 4px;
         background-color: #EFF3F4;
         color: black;
@@ -394,35 +421,35 @@
         */
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-text:hover {}
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-text:hover {}
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-data .message-text:hover {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-text:hover {
         background-color: #1A8CD8;
     }
 
     /* No hover left */
-    /* .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-data .message-text:hover {
+    /* .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-box .message-text:hover {
         background-color: #E44A6B;
     } */
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction {
         display: flex;
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction>div {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction>div {
         cursor: pointer;
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-data .message-interaction {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-box .message-interaction {
         padding-left: 4px;
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-data .message-interaction {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-interaction {
         padding-right: 4px;
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction .message-react,
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction .message-more {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-react,
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-more {
         width: 36px;
         height: 36px;
         justify-content: center;
@@ -433,18 +460,18 @@
         transition: visibility .218s, background-color .218s;
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content:hover .message-data .message-interaction .message-react,
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content:hover .message-data .message-interaction .message-more {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content:hover .message-box .message-interaction .message-react,
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content:hover .message-box .message-interaction .message-more {
         visibility: visible;
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction .message-react:hover,
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction .message-more:hover {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-react:hover,
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-more:hover {
         background-color: #E8F5FD;
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction .message-react svg,
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-data .message-interaction .message-more svg {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-react svg,
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-more svg {
         /* TODO: Why not working */
         color: rgb(107, 127, 142);
     }

@@ -57,12 +57,14 @@ const DetailsChat = () => {
                   </div>
                   {/* Messages */}
                   <div className="messages">
-                    <Message direction="R" messageText="First message for me👋" />
-                    <Message direction="L" messageText="Me too 😄" />
+                    <Message direction="R" messageMedia="https://www.harrisburgu.edu/wp-content/uploads/189dce017fb19e3ca1b94b2095d519cc514df22c.jpg" messageText="First message for me 👋" />
+                    <Message direction="L" messageMedia="https://assetsio.reedpopcdn.com/Rocket-League-(header-suggestion).jpg?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp" messageText="Me too 😄" />
+                    <Message direction="L" messageMedia="https://assetsio.reedpopcdn.com/Rocket-League-(header-suggestion).jpg?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp" />
                     <Message direction="L" messageText="Another one 😄" />
                     <Message direction="R" messageText="Read next carefully 😈😈" />
                     <Message
                       direction="R"
+                      messageMedia="https://m.media-amazon.com/images/M/MV5BMTQ2NDg4MDA2MV5BMl5BanBnXkFtZTgwNzQxOTQ1MjE@._V1_.jpg"
                       messageText="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                     />
                   </div>
