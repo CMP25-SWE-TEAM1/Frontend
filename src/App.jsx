@@ -55,6 +55,15 @@ const App = () => {
 
   const user = useSelector((state) => state.user.user)
   // console.log(location)
+  const testPost={
+    userName: "Mohamed Samir",
+    userTag: "MSamir245",
+    date: "Thu Oct 26 2023 2:28:01 GMT+0200 (Eastern European Standard Time)",
+    replyCount: "23K",
+    repostCount: "45K",
+    likeCount: "64K",
+    viewCount: "1M",
+  }
   return (
     <div className="app flex h-[100vh] bg-white text-black dark:bg-black dark:text-white">
       <BrowserRouter>
@@ -90,6 +99,10 @@ const App = () => {
             <Route path="display" element={<Display />}></Route>
           </Route>
           <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
+<<<<<<< Updated upstream
+=======
+          <Route path="/replies" element={<PostPage post={testPost} />}></Route>
+>>>>>>> Stashed changes
           <Route path="*" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>
