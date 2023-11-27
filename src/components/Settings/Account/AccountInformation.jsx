@@ -2,9 +2,13 @@ import { Link } from "react-router-dom"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { useEffect, useState } from "react"
 import VisibilityIcon from "@mui/icons-material/Visibility"
+import axios from "axios"
+import { useSelector } from "react-redux"
 
 const AccountInformation = () => {
-  const [passwordIsConfirmed, setPasswordIsConfirmed] = useState(false)
+  const [passwordIsConfirmed, setPasswordIsConfirmed] = useState(sessionStorage.getItem("passwordIsConfirmed"))
+  const user = useSelector((state) => state.user.user)
+  const [rerender, setRerender] = useState(false)
 
   const Information = () => {
     return (
@@ -20,7 +24,7 @@ const AccountInformation = () => {
           <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover">
             <div className="flex h-[57px] flex-col justify-center p-[11px]">
               <div className="w-[90%] text-sm">Username</div>
-              <p className="text-xs text-secondary">"current username"</p>
+              <p className="text-xs text-secondary">{user.name}</p>
             </div>
             <div className="m-auto mr-3 text-2xl">&gt;</div>
           </div>
@@ -29,7 +33,7 @@ const AccountInformation = () => {
           <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover">
             <div className="flex h-[57px] flex-col justify-center p-[11px]">
               <div className="w-[90%] text-sm">Email</div>
-              <p className="text-xs text-secondary">"current email"</p>
+              <p className="text-xs text-secondary">{user.email}</p>
             </div>
             <div className="m-auto mr-3 text-2xl">&gt;</div>
           </div>
@@ -41,10 +45,28 @@ const AccountInformation = () => {
   const ConfirmPassword = () => {
     const [password, setPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
+    const [errorMsg, setErrorMsg] = useState("")
 
-    const handleConfirmPassword = ()=>{
-      if(password == "1234") //to compare the actual password later
-        setPasswordIsConfirmed(true)
+    const APIs = {
+      mock: { confirmPasswordAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/ckeckPassword" },
+      actual: { confirmPasswordAPI: "" },
+    }
+
+    const handleConfirmPassword = () => {
+      setErrorMsg("")
+      axios
+        .post(APIs.mock.confirmPasswordAPI, { password: password })
+        .then((res) => {
+          if (res.status == 200) {
+            sessionStorage.setItem("passwordIsConfirmed", "true")
+            setPasswordIsConfirmed("true")
+          }
+        })
+        .catch((err) => {
+          if (err.response.status == 401 || err.response.status == 404) {
+            setErrorMsg("Incorrect password")
+          } else console.log(err)
+        })
     }
 
     const togglePasswordVisibility = () => {
@@ -76,7 +98,12 @@ const AccountInformation = () => {
           <Link to={"/password_reset"} className="mt-2 text-xs text-primary">
             Forgot password?
           </Link>
-          <button id="confirmPassword" className="btn mt-6 ml-auto w-24 !bg-primary !text-white hover:brightness-90" onClick={handleConfirmPassword} disabled={password === ""}>
+        </div>
+
+        <hr />
+        <div className="flex p-5">
+          <div className="text-red-600">{errorMsg}</div>
+          <button id="confirmPassword" className="btn ml-auto mt-6 w-24 !bg-primary !text-white hover:brightness-90" onClick={handleConfirmPassword} disabled={password === ""}>
             Confirm
           </button>
         </div>
@@ -84,7 +111,7 @@ const AccountInformation = () => {
     )
   }
 
-  return passwordIsConfirmed === true ? <Information /> : <ConfirmPassword />
+  return passwordIsConfirmed === "true" ? <Information /> : <ConfirmPassword />
 }
 
 export default AccountInformation

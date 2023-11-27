@@ -1,29 +1,39 @@
 import { Link } from "react-router-dom"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { useState } from "react"
+import axios from "axios"
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  const [errorMsg, setErrorMsg] = useState("")
 
-  const handleConfirmPassword = () => {
+  const APIs = {
+    mock: { changePasswordAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/changePassword" },
+    actual: { changePasswordAPI: "" },
+  }
 
+  const handlePasswordChange = () => {
+    setErrorMsg("")
     // call password check api to compare the actual password
-    if(currentPassword === "1234"){
-      if(newPassword === confirmPassword)
-        {
-          //  call password change api
-          console.log("password changed!")
-        }
-      else {
-        // error new passwords don't match
-      }
+    if (newPassword === confirmPassword) {
+      axios
+        .patch(APIs.mock.changePasswordAPI, { currentPassword: currentPassword, newPassword: newPassword })
+        .then((res) => {
+          if (res.status == 200) {
+            window.location.href = '/settings/account';
+          }
+        })
+        .catch((err) => {
+          if (err.response.status == 401 || err.response.status == 404) {
+            setErrorMsg("Incorrect password")
+          } else console.log(err)
+        })
+    } else {
+      // error new passwords don't match
+      setErrorMsg("New password doesn't match confirmation")
     }
-    else{
-      //  error password is incorrect
-    }
-   
   }
 
   return (
@@ -67,8 +77,9 @@ const ChangePassword = () => {
 
       <hr />
 
-      <div className="flex pr-5">
-        <button id="confirmPassword" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleConfirmPassword} disabled={currentPassword === "" || newPassword === "" || confirmPassword === ""}>
+      <div className="flex p-5">
+        <div className="text-red-600">{errorMsg}</div>
+        <button id="confirmPassword" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handlePasswordChange} disabled={currentPassword === "" || newPassword === "" || confirmPassword === ""}>
           Save
         </button>
       </div>
