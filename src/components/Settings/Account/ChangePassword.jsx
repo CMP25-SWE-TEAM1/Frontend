@@ -2,12 +2,43 @@ import { Link } from "react-router-dom"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { useState } from "react"
 import axios from "axios"
+import Alert from "@mui/material/Alert"
+import Stack from "@mui/material/Stack"
+import { styles } from "../../../styles"
+
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [errorMsg, setErrorMsg] = useState("")
+
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{8,}$/
+  const upperCaseLetterRegex = /^(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*()]{1,}$/
+  const lowerCaseLetterRegex = /^(?=.*[a-z])[a-zA-Z0-9!@#$%^&*()]{1,}$/
+  const specialCharacterRegex = /^(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{1,}$/
+  const numberRegex = /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*()]{1,}$/
+  const lengthRegex = /^[a-zA-Z0-9!@#$%^&*()]{8,}$/
+
+  function checkPassword(newPassword) {
+    return !passwordRegex.test(newPassword)
+  }
+
+  function hasUpperCaseLetter(newPassword) {
+    return upperCaseLetterRegex.test(newPassword)
+  }
+  function hasLowerCaseLetter(newPassword) {
+    return lowerCaseLetterRegex.test(newPassword)
+  }
+  function hasSpecialCharachter(newPassword) {
+    return specialCharacterRegex.test(newPassword)
+  }
+  function hasNumber(newPassword) {
+    return numberRegex.test(newPassword)
+  }
+  function hasCorrectLength(newPassword) {
+    return lengthRegex.test(newPassword)
+  }
 
   const APIs = {
     mock: { changePasswordAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/changePassword" },
@@ -21,12 +52,12 @@ const ChangePassword = () => {
       axios
         .patch(APIs.mock.changePasswordAPI, { currentPassword: currentPassword, newPassword: newPassword })
         .then((res) => {
-          if (res.status == 200) {
-            window.location.href = '/settings/account';
+          if (res.status === 200) {
+            window.location.href = "/settings/account"
           }
         })
         .catch((err) => {
-          if (err.response.status == 401 || err.response.status == 404) {
+          if (err.response.status === 401 || err.response.status === 404) {
             setErrorMsg("Incorrect password")
           } else console.log(err)
         })
@@ -67,19 +98,36 @@ const ChangePassword = () => {
             New password
           </label>
         </div>
-        <div className="input-container">
+        <div className="input-container mb-5">
           <input className={confirmPassword === "" ? "form-input" : "form-input filled-input"} type="password" name="confirmPassword" id="confirmPassword" autoComplete="off" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
           <label className="input-label" htmlFor="password">
             Confirm password
           </label>
         </div>
+        <Stack severity={`${checkPassword(newPassword) ? "error" : "success"}`}>
+          <Alert severity={`${hasUpperCaseLetter(newPassword) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleTop}>
+            Require uppercase letter
+          </Alert>
+          <Alert severity={`${hasLowerCaseLetter(newPassword) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+            Require lowercase letter
+          </Alert>
+          <Alert severity={`${hasSpecialCharachter(newPassword) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+            Require special character !@#$%^&*()
+          </Alert>
+          <Alert severity={`${hasNumber(newPassword) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+            Require number
+          </Alert>
+          <Alert severity={`${hasCorrectLength(newPassword) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleBottom}>
+            Require at least 8 characters
+          </Alert>
+        </Stack>
       </div>
 
       <hr />
 
       <div className="flex p-5">
         <div className="text-red-600">{errorMsg}</div>
-        <button id="confirmPassword" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handlePasswordChange} disabled={currentPassword === "" || newPassword === "" || confirmPassword === ""}>
+        <button id="changePasswordBtn" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handlePasswordChange} disabled={currentPassword === "" || newPassword === "" || confirmPassword === "" ||  checkPassword(newPassword)}>
           Save
         </button>
       </div>

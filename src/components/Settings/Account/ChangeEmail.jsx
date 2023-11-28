@@ -3,12 +3,19 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { useSelector } from "react-redux"
 import { useState } from "react"
 import axios from "axios"
+import Alert from "@mui/material/Alert"
+import { styles } from "../../../styles"
 
 const ChangeEmail = () => {
   const [email, setEmail] = useState("")
   const user = useSelector((state) => state.user.user)
   const [errorMsg, setErrorMsg] = useState("")
 
+  const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+
+  function validEmail(emeil) {
+    return emailRegex.test(emeil)
+  }
 
   const APIs = {
     mock: { ChangeEmailAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/changeEmail" },
@@ -21,7 +28,7 @@ const ChangeEmail = () => {
       .patch(APIs.mock.ChangeEmailAPI, { email: email })
       .then((res) => {
         if (res.status == 200) {
-          window.location.href = '/settings/account';
+          window.location.href = "/settings/account"
         }
       })
       .catch((err) => {
@@ -56,6 +63,9 @@ const ChangeEmail = () => {
           <label className="input-label" htmlFor="password">
             New email
           </label>
+          <Alert severity={`${validEmail(email) ? "success" : "error"}`} className={`${email ? "flex" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+            Please enter a valid email
+          </Alert>
         </div>
       </div>
 
