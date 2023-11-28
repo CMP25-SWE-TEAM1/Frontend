@@ -21,6 +21,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
   const { loading, error } = useSelector((state) => state.user)
 
   const [emailExistError, setEmailExistError] = useState(false)
+  const [loginError, setLoginError] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -28,12 +29,13 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
 
   const APIs = {
     mock: { emailExistAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/checkEmail" },
-    actual: { emailExistAPI: "" },
+    actual: {
+      emailExistAPI: "http://51.20.216.159/api/user/checkExistedEmail",
+      loginAPI: "http://51.20.216.159/api/user/login",
+    },
   }
 
   function handleNext(emailExist) {
-    console.log(emailExist)
-
     if (emailExist) {
       const firstPage = document.getElementById("firstPage")
       const secondPage = document.getElementById("secondPage")
@@ -51,16 +53,29 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
   const handleLoginEvent = (e) => {
     e.preventDefault()
     let userCredentials = {
-      userName,
-      password,
+      email: userName,
+      password: password,
     }
+    // axios
+    //   .post(APIs.actual.loginAPI, userCredentials)
+    //   .then((res) => {
+    //     console.log(res.data.data.user)
+    //     console.log(res.data.token)
+    //   })
+    //   .catch((err) => {
+    //      setLoginError(err.message === "Request failed with status code 401")
+    //   })
 
     dispatch(loginUser({ userCredentials, isgoogle: null })).then((result) => {
+      // console.log(result)
       if (result.payload) {
         setUserName("")
         setPassword("")
         handleCloseModal()
         navigate("/home")
+        setLoginError(false)
+      } else {
+        setLoginError(result.error.message === "Request failed with status code 401")
       }
     })
   }
@@ -72,16 +87,17 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
   const handleEmailCheck = () => {
     let emailExist
     axios
-      .post(APIs.mock.emailExistAPI, { email: userName })
+      .post(APIs.actual.emailExistAPI, { email: userName })
       .then((res) => {
-        emailExist = res.data.emailExist
+        emailExist = res.status === 200
       })
       .then(() => {
         handleNext(emailExist)
       })
       .catch((err) => {
-        handleNext(false) //this will be removed
-        console.log(err)
+        emailExist = !err.message === "Request failed with status code 404"
+        handleNext(emailExist) //this will be removed
+        // console.log(emailExist)
       })
   }
 
@@ -90,9 +106,9 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
       <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
         <Box style={styles.modalStyle}>
           <div className="pop-up m-auto bg-white dark:bg-black md:rounded-2xl">
-            <Link to="/" className="!text-white" onClick={handleCloseModal}>
-              <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover">x</button>
-            </Link>
+            <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>
+              x
+            </button>
             <img src={lightLogo} alt="GigaChat Logo" className="-mt-4 ml-[45%] w-[40px]" />
             {/* --------------------------------------First Login Page------------------------------------- */}
             <div id="firstPage">
@@ -156,7 +172,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                       <VisibilityIcon className="text-primary" />
                     </span>
                   </div>
-                  {error && (
+                  {loginError && (
                     <Alert severity="error" sx={styles.signupPasswordCheckStyleMiddle}>
                       {error}
                     </Alert>
@@ -167,7 +183,7 @@ const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
                       setLocation("/password_reset")
                     }}
                     to={"/password_reset"}
-                    className="-mt-3 text-xs text-primary"
+                    className=" text-xs text-primary"
                   >
                     Forgot password?
                   </Link>

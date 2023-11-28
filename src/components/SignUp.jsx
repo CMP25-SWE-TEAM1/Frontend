@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import ReCAPTCHA from "react-google-recaptcha"
 import axios from "axios"
@@ -11,28 +11,29 @@ import Select from "@mui/material/Select"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import Alert from "@mui/material/Alert"
 import Stack from "@mui/material/Stack"
+import CheckCircleIcon from "@mui/icons-material/CheckCircle"
+import Typography from "@mui/material/Typography"
+import ErrorIcon from "@mui/icons-material/Error"
+import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined"
 
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
-import { loginUser } from "../store/UserSlice"
+import { loginUser, signupUser } from "../store/UserSlice"
 
 import GoogleLoginButton from "./GoogleLoginButton"
 
 import { styles } from "../styles"
 import { last120Years, days, months } from "../constants/index.js"
-import lightLogo from "../assets/imgs/giga-chat-logo-dark-removebg-preview.png"
+import lightLogo from "../assets/imgs/logo-light.jpg"
+import darkLogo from "../assets/imgs/logo-dark.jpg"
+
+import { PASSWORD_REGEX, UPPER_CASE_LETTER_REGEX, LOWER_CASE_LETTER_REGEX, SPECIAL_CHARACTER_REGEX, NUMBER_REGEX, LENGTH_REGEX, EMAIL_REGEX, APIs } from "../constants/signupConstants.js"
+
+import UploadProfilePicture from "./UploadProfilePicture.jsx"
 
 const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [captchaIsDone, setCaptchaIsDone] = useState(false)
   const siteKey = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{8,}$/
-  const upperCaseLetterRegex = /^(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*()]{1,}$/
-  const lowerCaseLetterRegex = /^(?=.*[a-z])[a-zA-Z0-9!@#$%^&*()]{1,}$/
-  const specialCharacterRegex = /^(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{1,}$/
-  const numberRegex = /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*()]{1,}$/
-  const lengthRegex = /^[a-zA-Z0-9!@#$%^&*()]{8,}$/
-  const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 
   const darkMode = useSelector((state) => state.theme.darkMode)
 
@@ -43,15 +44,21 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
   const [email, setEmail] = useState("")
   const [year, setYear] = useState("")
   const [month, setMonth] = useState("")
+  const [verficationCode, setVerficationCode] = useState("")
   const [day, setDay] = useState("")
+  const [userToken, setUserToken] = useState("")
+  const [user, setUser] = useState()
+  const [userTag, setUserTag] = useState()
+  const [originalUsername, setOriginalUsername] = useState("")
 
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
 
-  const APIs = {
-    mock: { emailExistAPI: "" },
-    actual: { emailExistAPI: "" },
-  }
+  const [emailExistError, setEmailExistError] = useState(false)
+  const [birthdateError, setBirthdateError] = useState(false)
+  const [emailConfirmationError, setEmailConfirmationError] = useState(false)
+  const [usernameError, setUsernameError] = useState(false)
+  const [openBirthdateErrorModal, setOpenBirthdateErrorModal] = useState(false)
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
@@ -62,6 +69,11 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
     const FirstStep = document.getElementById("First Step")
     const SecondStep = document.getElementById("Second Step")
     const ThirdStep = document.getElementById("Third Step")
+    const ForthStep = document.getElementById("Forth Step")
+    const FifthStep = document.getElementById("Fifth Step")
+    const TagStep = document.getElementById("Tag Step")
+    const PictureStep = document.getElementById("Picture Step")
+
     switch (position) {
       case 0:
         JoinGigaChat.style.display = "none"
@@ -74,6 +86,26 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
       case 2:
         SecondStep.style.display = "none"
         ThirdStep.style.display = "block"
+        break
+      case 3:
+        ThirdStep.style.display = "none"
+        ForthStep.style.display = "block"
+        break
+      case -1:
+        ThirdStep.style.display = "none"
+        FirstStep.style.display = "block"
+        break
+      case 4:
+        ForthStep.style.display = "none"
+        FifthStep.style.display = "block"
+        break
+      case 5:
+        FifthStep.style.display = "none"
+        TagStep.style.display = "block"
+        break
+      case 6:
+        TagStep.style.display = "none"
+        PictureStep.style.display = "block"
         break
       default:
         break
@@ -92,51 +124,251 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
     setDay(event.target.value)
   }
 
-  const handleLoginEvent = (e) => {
-    e.preventDefault()
-    let userCredentials = {
-      nickName,
-      password,
-    }
+  // const handleLoginEvent = (e) => {
+  //   e.preventDefault()
 
-    dispatch(loginUser({ userCredentials, isgoogle: null })).then((result) => {
-      if (result.payload) {
-        setNickName("")
-        setPassword("")
-        navigate("/home")
-        handleCloseModal()
-      }
-    })
+  //   dispatch(loginUser({ user, isgoogle: null, issignup: true })).then((result) => {
+  //     if (result.payload) {
+  //       setNickName("")
+  //       setPassword("")
+  //       navigate("/home")
+  //       handleCloseModal()
+  //     }
+  //   })
+  // }
+
+  const handleEmailBlur = () => {
+    let emailExist
+    axios
+      .post(APIs.actual.emailExistAPI, { email: email })
+      .then((res) => {
+        emailExist = res.data.message === "Email is existed"
+      })
+      .then(() => {
+        if (emailExist) {
+          setEmailExistError(true)
+        } else {
+          setEmailExistError(false)
+        }
+      })
+      .catch((err) => {
+        setEmailExistError(false)
+
+        console.log(err)
+      })
   }
 
-  const handleEmailBlur = () => {}
+  const handleUsernameBlur = () => {
+    axios
+      .post(APIs.actual.checkUsername, {
+        username: userTag,
+      })
+      .then((res) => {
+        setUsernameError(false)
+      })
+      .catch((err) => {
+        if (userTag !== originalUsername) {
+          setUsernameError(true)
+          console.log(err)
+        } else {
+          setUsernameError(false)
+        }
+      })
+  }
 
   const handleCaptchaVerification = () => {
-    console.log("Captcha done")
     setCaptchaIsDone(true)
   }
 
   function checkPassword(password) {
-    return !passwordRegex.test(password)
+    return !PASSWORD_REGEX.test(password)
   }
-
   function hasUpperCaseLetter(password) {
-    return upperCaseLetterRegex.test(password)
+    return UPPER_CASE_LETTER_REGEX.test(password)
   }
   function hasLowerCaseLetter(password) {
-    return lowerCaseLetterRegex.test(password)
+    return LOWER_CASE_LETTER_REGEX.test(password)
   }
   function hasSpecialCharachter(password) {
-    return specialCharacterRegex.test(password)
+    return SPECIAL_CHARACTER_REGEX.test(password)
   }
   function hasNumber(password) {
-    return numberRegex.test(password)
+    return NUMBER_REGEX.test(password)
   }
   function hasCorrectLength(password) {
-    return lengthRegex.test(password)
+    return LENGTH_REGEX.test(password)
   }
   function validEmail(emeil) {
-    return emailRegex.test(emeil)
+    return EMAIL_REGEX.test(emeil)
+  }
+
+  const handleSignup = () => {
+    axios
+      .post(APIs.actual.signupAPI, {
+        nickname: nickName,
+        birthDate: `${month}-${day}-${year}`,
+        email: email,
+      })
+      .catch((err) => {
+        handleOpenBirthdateError()
+        console.log(err)
+      })
+  }
+
+  const handleCheckBirthdate = () => {
+    let acceptedBirthdate
+    axios
+      .post(APIs.actual.checkBirthdateAPI, { birthDate: `${month}-${day}-${year}` })
+      .then((res) => {
+        acceptedBirthdate = res.data.message === "User is above 13 years old."
+      })
+      .then(() => {
+        setBirthdateError(false)
+        handleSignup()
+        nextShow(3)
+      })
+      .catch((err) => {
+        if (err.message === "Request failed with status code 403") {
+          setBirthdateError(true)
+          handleOpenBirthdateError()
+        } else {
+          console.log(err)
+        }
+      })
+  }
+
+  const handleOpenBirthdateErrorModal = () => setOpenBirthdateErrorModal(true)
+  const handleCloseBirthdateErrorModal = () => setOpenBirthdateErrorModal(false)
+
+  const handleOpenBirthdateError = () => {
+    const ErrorPage = document.getElementById("Error Page")
+    const ThirdStep = document.getElementById("Third Step")
+
+    ThirdStep.style.display = "none"
+    ErrorPage.style.display = "block"
+
+    handleOpenBirthdateErrorModal()
+  }
+
+  const handleCloseBirthdateError = () => {
+    const ErrorPage = document.getElementById("Error Page")
+    const FirstStep = document.getElementById("First Step")
+
+    ErrorPage.style.display = "none"
+    FirstStep.style.display = "block"
+
+    setDay("")
+    setMonth("")
+    setYear("")
+    setNickName("")
+    setEmail("")
+
+    handleCloseBirthdateErrorModal()
+  }
+
+  const handleResendConfirmationEmail = () => {
+    axios
+      .post(APIs.actual.resendConfirmationEmail, {
+        email: email,
+      })
+      .catch((err) => {
+        handleOpenBirthdateError()
+        console.log(err)
+      })
+  }
+
+  const handleAssignPassword = () => {
+    axios
+      .patch(
+        APIs.actual.assignPassword,
+        {
+          password: password,
+        },
+        {
+          headers: {
+            authorization: "Bearer " + userToken,
+          },
+        }
+      )
+      .then((res) => {
+        setUser(res.data.data.currentUser)
+        setUserTag(user.username)
+        setOriginalUsername(user.username)
+        nextShow(5)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const handleCompleteSignup = (user) => {
+    console.log(user)
+    handleCloseModal()
+
+    let userCredentials = {
+      email: email,
+      password: password,
+    }
+    // dispatch(signupUser({ user: user, token: userToken, navigate }))
+
+    dispatch(loginUser({ userCredentials, isgoogle: null })).then((result) => {
+      // console.log(result)
+      if (result.payload) {
+        setEmail("")
+        setPassword("")
+        handleCloseModal()
+        navigate("/home")
+      }
+    })
+  }
+
+
+  const handleAssignUsername = () => {
+    axios
+      .patch(
+        APIs.actual.assignUsername,
+        {
+          username: userTag,
+        },
+        {
+          headers: {
+            authorization: "Bearer " + userToken,
+          },
+        }
+      )
+      .then((res) => {
+        const newuser = {
+          ...user,
+          username: userTag,
+        }
+        setUser(newuser)
+        nextShow(6)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const handleConfirmEmail = () => {
+    axios
+      .post(APIs.actual.confirmEmail, {
+        confirmEmailCode: verficationCode,
+        email: email,
+      })
+      .then((res) => {
+        // console.log(res)
+        setUserToken(res.data.token)
+        setUser(res.data.data.user)
+        nextShow(4)
+      })
+      .catch((err) => {
+        console.log(err)
+        setEmailConfirmationError(true)
+        setVerficationCode("")
+        setTimeout(() => {
+          setEmailConfirmationError(false)
+        }, 3000)
+      })
   }
 
   return (
@@ -144,10 +376,11 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
       <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
         <Box style={styles.modalStyle}>
           <div className="pop-up m-auto bg-white dark:bg-black md:rounded-2xl">
-            <Link to="/" className="!text-white" onClick={handleCloseModal}>
-              <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover">x</button>
-            </Link>
-            <img src={lightLogo} alt="GigaChat Logo" className="-mt-4 ml-[45%] w-[40px]" />
+            <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>
+              x
+            </button>
+
+            <img src={darkMode ? darkLogo : lightLogo} alt="GigaChat Logo" className="-mt-4 ml-[45%] w-[40px]" />
 
             <div id="Join GigaChat">
               <div className="m-auto max-w-[300px]">
@@ -182,9 +415,9 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
               </div>
             </div>
 
-            <div id="First Step" className="hidden">
+            <div id="First Step" className="-mt-10 hidden">
               <div className="max-w[600px]">
-                <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 1 of 3</p>
+                <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 1 of 5</p>
                 <h1 className="mt-3">Create your account</h1>
                 <div className="input-container">
                   <input className={nickName === "" ? "form-input" : "form-input filled-input"} type="text" name="name" id="name" autoComplete="off" value={nickName} onChange={(e) => setNickName(e.target.value)} />
@@ -193,15 +426,18 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                   </label>
                 </div>
                 <div className="input-container">
-                  <input className={email === "" ? "form-input" : "form-input filled-input"} type="text" name="email" id="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleEmailBlur} />
-                  <label className="input-label" htmlFor="email">
+                  <input className={`${email === "" ? "form-input" : "form-input filled-input"} ${emailExistError ? "border border-red-600" : ""}`} type="text" name="email" id="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleEmailBlur} />
+                  <label className={`input-label ${emailExistError ? "text-red-600" : "text-secondary"}`} htmlFor="email">
                     Email
                   </label>
-                  <Alert severity={`${validEmail(email) ? "success" : "error"}`} className={`${email ? "flex" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
-                    Please enter a valid email
-                  </Alert>
+                  {!validEmail(email) && (
+                    <Alert severity="error" className={`${email ? "flex" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+                      Please enter a valid email
+                    </Alert>
+                  )}
+                  {emailExistError && <span className="ml-3 text-sm text-red-600">Email has already been taken</span>}
                 </div>
-                <div className="input-containter">
+                <div className={`${emailExistError ? "-mt-5" : ""} input-containter`}>
                   <div>
                     <p className="text-bold">Date of birth </p>
                     <p className="date-text text-[0.8rem] text-ternairy">This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.</p>
@@ -386,16 +622,16 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                   onClick={() => {
                     nextShow(1)
                   }}
-                  disabled={email === "" || nickName === "" || year === "" || month === "" || day === "" || !validEmail(email)}
+                  disabled={email === "" || nickName === "" || year === "" || month === "" || day === "" || !validEmail(email) || emailExistError}
                 >
                   Next
                 </button>
               </div>
             </div>
 
-            <div id="Second Step" className="hidden">
+            <div id="Second Step" className="-mt-10 hidden">
               <div>
-                <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 2 of 3</p>
+                <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 2 of 5</p>
                 <ReCAPTCHA sitekey={siteKey} onChange={handleCaptchaVerification} />
                 <button
                   className="btn"
@@ -409,10 +645,97 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
               </div>
             </div>
 
-            <div id="Third Step" className="hidden">
+            <div id="Third Step" className="-mt-10 hidden">
               <div>
-                <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 3 of 3</p>
-                <h1 className="">You'll need a Password</h1>
+                <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 3 of 5</p>
+                <h1 className="">Create your account</h1>
+
+                <div className="input-container relative">
+                  <input readOnly className={nickName === "" ? "form-input" : "form-input filled-input"} type="text" name="name" id="name" autoComplete="off" value={nickName} onFocus={() => nextShow(-1)} />
+
+                  <label className="input-label" htmlFor="name">
+                    Name
+                  </label>
+                  <CheckCircleIcon className="absolute bottom-0 right-0 -translate-x-2 -translate-y-2 text-[18px] text-green-600" />
+                </div>
+                <div className="input-container">
+                  <input readOnly className={`${email === "" ? "form-input" : "form-input filled-input"} ${emailExistError ? "border border-red-600" : ""}`} type="text" name="email" id="email" autoComplete="off" value={email} onFocus={() => nextShow(-1)} />
+                  <label className={`input-label ${emailExistError ? "text-red-600" : "text-secondary"}`} htmlFor="email">
+                    Email
+                  </label>
+                  <CheckCircleIcon className="absolute bottom-0 right-0 -translate-x-2 -translate-y-2 text-[18px] text-green-600" />
+
+                  {!validEmail(email) && (
+                    <Alert severity="error" className={`${email ? "flex" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+                      Please enter a valid email
+                    </Alert>
+                  )}
+                  {emailExistError && <span className="ml-3 text-sm text-red-600">Email has already been taken</span>}
+                </div>
+                <div className="input-container relative">
+                  <input readOnly className={day === "" ? "form-input" : "form-input filled-input"} type="text" name="name" id="name" autoComplete="off" value={`${month} ${day}, ${year}`} onFocus={() => nextShow(-1)} />
+
+                  <label className="input-label" htmlFor="name">
+                    Date of birth
+                  </label>
+                  <CheckCircleIcon className="absolute bottom-0 right-0 -translate-x-2 -translate-y-2 text-[18px] text-green-600" />
+                </div>
+
+                <p className="text-xs text-secondary">
+                  By signing up, you agree to the <a>Terms of Service</a> and <a>Privacy Policy</a>, including <a>Cookie Use</a>. Twitter may use your contact information, including your email address and phone number for purposes outlined in our Privacy Policy, like keeping your account secure and personalizing our services, including ads. <a>Learn more</a>. Others will be able to find you by email or phone number, when provided, unless you choose otherwise <a>here</a>.
+                </p>
+
+                <button className="btn" id="next" onClick={handleCheckBirthdate} disabled={email === "" || nickName === "" || year === "" || month === "" || day === "" || !validEmail(email) || emailExistError}>
+                  Sign Up
+                </button>
+              </div>
+            </div>
+
+            <div id="Forth Step" className="-mt-10 hidden">
+              <div>
+                <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 4 of 5</p>
+                <h1 className="">We sent you a code</h1>
+                <p className="text-xs text-secondary">Enter it below to verify {email}.</p>
+                <div className="input-container relative">
+                  <input
+                    className={verficationCode === "" ? "form-input" : "form-input filled-input"}
+                    type="text"
+                    name="verficationCode"
+                    id="verficationCode"
+                    autoComplete="off"
+                    value={verficationCode}
+                    onChange={(e) => {
+                      setVerficationCode(e.target.value)
+                    }}
+                  />
+                  {/* {console.log(user)} */}
+
+                  <label className="input-label" htmlFor="verficationCode">
+                    Verfication Code
+                  </label>
+                </div>
+                <a onClick={handleResendConfirmationEmail} className="cursor-pointer">
+                  Resend email
+                </a>
+
+                {emailConfirmationError && <Alert severity="error">Verfication Code is wrong</Alert>}
+
+                <button
+                  className="btn mt-20"
+                  onClick={() => {
+                    handleConfirmEmail()
+                  }}
+                  disabled={verficationCode === ""}
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+
+            <div id="Fifth Step" className="-mt-10 hidden">
+              <div>
+                <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 5 of 5</p>
+                <h1>You'll need a Password</h1>
                 <p className="date-text">Make sure it's 8 characters or more</p>
                 <div className="relative">
                   <div className="input-container">
@@ -444,11 +767,66 @@ const SignUp = ({ openModal, handleCloseModal, location, setLocation }) => {
                     </Alert>
                   </Stack>
 
-                  <button className="btn mt-16" disabled={checkPassword(password)} onClick={handleLoginEvent}>
+                  <button className="btn mt-16" disabled={checkPassword(password)} onClick={handleAssignPassword}>
                     <Link></Link>
                     Sign Up
                   </button>
                 </div>
+              </div>
+            </div>
+
+            <div id="Tag Step" className="-mt-10 hidden">
+              <div>
+                <h1>What should we call you?</h1>
+                <p className="text-xs text-secondary">Your @username is unique. You can always change it later.</p>
+
+                <div className="input-container relative">
+                  <input className={`${userTag === "" ? "form-input" : "form-input filled-input"} ${usernameError ? "border-red-600" : ""}`} name="userTag" id="userTag" autoComplete="off" value={`${userTag}`} onChange={(e) => setUserTag(e.target.value)} onBlur={handleUsernameBlur} />
+                  <label className={`${usernameError ? "text-red-600" : ""} input-label`} htmlFor="userTag">
+                    Username
+                  </label>
+                  {!usernameError && <CheckCircleIcon className="absolute bottom-0 right-0 -translate-x-2 -translate-y-2 text-[18px] text-green-600" />}
+                  {usernameError && <ErrorIcon className="absolute bottom-0 right-0 -translate-x-2 -translate-y-8 text-[18px] text-red-600" />}
+                  {usernameError && <span className="ml-3 text-sm text-red-600">Username has already been taken</span>}
+                </div>
+                <button className="btn mt-3" onClick={handleAssignUsername} disabled={usernameError}>
+                  Next
+                </button>
+              </div>
+            </div>
+
+            <UploadProfilePicture userR={user} setUser={setUser} handleCompleteSignup={handleCompleteSignup} handleCloseModal={handleCloseModal} fromSwitch={false} />
+
+            <div id="Error Page" className="-mt-10 hidden">
+              <div>
+                <Modal className="relative" open={openBirthdateErrorModal} onClose={handleCloseBirthdateErrorModal} disableEscapeKeyDown disablePortal aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, 100%)",
+                      width: 300,
+                      bgcolor: "transparent",
+                      border: "1px solid white",
+                      boxShadow: 24,
+                      p: 2,
+                      borderRadius: "10px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      // marginTop: "45%",
+                    }}
+                  >
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                      Can't complete your signup right now.
+                    </Typography>
+                    <button className="btn mt-3 w-[100px]" onClick={handleCloseBirthdateError}>
+                      Close
+                    </button>
+                  </Box>
+                </Modal>
               </div>
             </div>
           </div>
