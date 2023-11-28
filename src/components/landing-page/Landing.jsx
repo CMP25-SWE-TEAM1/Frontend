@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import Login from "../Login/Login"
 import "./landing.css"
-import SignUp from "../SignUp"
+import SignUp from "../Signup/SignUp"
 import GoogleLoginButton from "../GoogleLoginButton"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
@@ -81,8 +81,8 @@ const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, 
         <a href="#/plapla">Settings</a> */}
         <div>&copy; 2023 GigaChat Corp.</div>
       </div>
-      <Login openModal={openLoginModal} handleCloseModal={handleCloseLoginModal} location={location} setLocation={setLocation} />
-      <SignUp openModal={openSignupModal} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />
+      <Login openModal={openLoginModal} handleCloseModal={handleCloseLoginModal} setLocation={setLocation} />
+      <SignUp openModal={openSignupModal} handleCloseModal={handleCloseSignupModal} />
     </div>
   )
 }

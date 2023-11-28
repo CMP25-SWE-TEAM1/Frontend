@@ -21,7 +21,6 @@ export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredent
     localStorage.setItem("user", JSON.stringify(userCredentials))
   } else {
     google = false
-    const mockURL = `https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/login`
     const request = await axios.post(APIs.actual.loginAPI, userCredentials)
     response = await request.data
     localStorage.setItem("user", JSON.stringify(response.data.user))

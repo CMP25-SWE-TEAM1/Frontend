@@ -1,5 +1,5 @@
 import React from 'react'
-import HorizontalNavbar from '../HorizontalNavbar';
+import HorizontalNavbar from '../General/HorizontalNavbar';
 import RepliesContainer from './RepliesContainer';
 import Widgets from '../Widgets';
 import Post from '../Post';

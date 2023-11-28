@@ -6,7 +6,7 @@ import { Avatar } from "@mui/material"
 
 import { useState } from "react"
 
-import UploadProfilePicture from "../UploadProfilePicture"
+import UploadProfilePicture from "../Signup/UploadProfilePicture"
 
 import { styles } from "../../styles"
 

@@ -30,7 +30,6 @@ const Sidebar = () => {
       };
   window.addEventListener('resize', handleResize);
  
-  const userName = "Ismail Ramadan Mokhtar"
   const userTag = "ismail_sh02"
   const moreIcon = <MoreHorizIcon/>
   const imageIcon = (altName, image, radius) => {

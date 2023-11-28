@@ -2,13 +2,13 @@ import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined"
 
 import { useEffect, useRef, useState } from "react"
 
-import defaultProfilePic from "../assets/imgs/Default_Profile_Picture.png"
+import defaultProfilePic from "../../assets/imgs/Default_Profile_Picture.png"
 
 import axios from "axios"
 
-import { APIs } from "../constants/signupConstants"
+import { APIs } from "../../constants/signupConstants"
 
-import { changeProfilePicture } from "../store/UserSlice"
+import { changeProfilePicture } from "../../store/UserSlice"
 
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
@@ -77,7 +77,6 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
             handleCompleteSignup(newuser)
           }
         }, 1000)
-
       })
       .catch((error) => {
         // handleCompleteSignup(user)
@@ -92,7 +91,6 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
       PictureStep.style.display = "block"
     }
   })
-
 
   return (
     <div id="Picture Step" className="-mt-10 hidden">
@@ -119,6 +117,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
           className="btn mt-3"
           ref={skipForNowButton}
           onClick={() => {
+            console.log(userR)
             handleCompleteSignup(userR)
             handleCloseModal()
           }}

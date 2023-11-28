@@ -13,7 +13,7 @@ import { loginUser } from "../../store/UserSlice"
 import GoogleLoginButton from "../GoogleLoginButton"
 import axios from "axios"
 
-const Login = ({ openModal, handleCloseModal, location, setLocation }) => {
+const Login = ({ openModal, handleCloseModal, setLocation }) => {
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)

@@ -7,7 +7,17 @@ export const LENGTH_REGEX = /^[a-zA-Z0-9!@#$%^&*()]{8,}$/
 export const EMAIL_REGEX = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 
 export const APIs = {
-  mock: { emailExistAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/checkEmail" },
+  mock: {
+    emailExistAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/checkEmail",
+    checkBirthdateAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/api/user/checkBirthDate",
+    signupAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/api/user/signup",
+    resendConfirmationEmail: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/api/user/resendConfirmEmail",
+    confirmEmail: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/api/user/confirmEmail",
+    assignPassword: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/api/user/AssignPassword",
+    checkUsername: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/api/user/checkAvailableUsername",
+    assignUsername: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/api/user/AssignUsername",
+    changeProfilePicture: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/api/user/profile/image",
+  },
   actual: {
     emailExistAPI: "http://51.20.216.159/api/user/checkExistedEmail",
     checkBirthdateAPI: "http://51.20.216.159/api/user/checkBirthDate",
