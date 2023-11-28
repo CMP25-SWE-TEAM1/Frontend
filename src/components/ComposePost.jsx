@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
-import Box from '@mui/material/Box';
+import { useSelector } from "react-redux"
 import TextField from '@mui/material/TextField';
 import { Avatar } from "@mui/material"
-import profilePicTest from "../assets/profilePicTest.JPG"
-import profilePicTest from "../../assets/profilePicTest.JPG"
 import GeneralButton from "../Sidebar/Button"
 import Button from "@mui/material/Button"
 import Menu from "@mui/material/Menu"
@@ -24,11 +22,14 @@ import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfi
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 
-function ComposePost() {
+function ComposePost({handleNewTweet}) {
     const [anchorPostMenu, setAnchorPostMenu] = useState(null)
     const [description, setDescription] = useState("")
     const [replyPermissionIndex,setReplyPermissionIndex] = useState(0)
+
     const darkMode = useSelector((state) => state.theme.darkMode)
+    const user = useSelector((state) => state.user.user)
+
     const APIs = {
       mock: { postTweetAPI: "https://bad9e0a6-fe2e-4d82-b68f-51c141e126d9.mock.pstmn.io/tweet/addTweet2" },
       actual: { postTweetAPI: "http://13.48.45.126:3000/api/tweets/" },
@@ -65,6 +66,7 @@ function ComposePost() {
       const composeTweet = getComposeTweet();
       axios.post(APIs.mock.postTweetAPI,JSON.stringify(composeTweet)).then(response=>{
         console.log(response.data);
+        handleNewTweet(response.data);
       }).catch(error=>{
         console.log(error);
       });
@@ -97,7 +99,7 @@ function ComposePost() {
   return (
     <form onSubmit={handleSubmit} className="ComposePost text-black dark:text-white border-lightBorder dark:border-darkBorder flex h-fit border border-l-0 border-r-0 p-3" data-testid="postId">
     <div className=" h-10 w-10 sm:mr-3">
-      <Avatar alt="Remy Sharp" src={profilePicTest} sx={{ width: 40, height: 40 }} />
+      <Avatar alt="Remy Sharp" src={user.profileImage} sx={{ width: 40, height: 40 }} />
     </div>
     <div className="w-full mt-1.5">
     <TextField

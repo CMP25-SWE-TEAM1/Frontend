@@ -8,6 +8,7 @@ import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneR
 import MailOutlineRoundedIcon from "@mui/icons-material/MailOutlineRounded"
 import ListAltRoundedIco from "@mui/icons-material/ListAltRounded"
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined"
+import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined'
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined"
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined"
 import PendingOutlinedIcon from "@mui/icons-material/PendingOutlined"
@@ -25,6 +26,16 @@ const Sidebar = () => {
 
   const moreIcon = <MoreHorizOutlinedIcon />
   const userName = "Ismail Ramadan Mokhtar"
+  const [shrink,setShrink]=useState(window.innerWidth<1278);
+  const handleResize = () => {
+    if(window.innerWidth<1278)
+      setShrink(true);
+    else
+      setShrink(false);
+      };
+  window.addEventListener('resize', handleResize);
+ 
+  
   const userTag = "ismail_sh02"
   const imageIcon = (altName, image, radius) => {
     return <img src={image} alt={`${altName}ImageIcon`} className={`h-${radius} w-${radius} rounded-full`} />

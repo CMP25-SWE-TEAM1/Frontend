@@ -21,7 +21,7 @@ import Blocked from "./components/Settings/PrivacySafety/Blocked"
 import Muted from "./components/Settings/PrivacySafety/Muted"
 import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode, setLightMode } from "./store/ThemeSlice"
-import PostPage from "./PostPage/PostPage"
+import PostPage from "./components/PostPage/PostPage"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)

@@ -1,7 +1,4 @@
 import React, { useState } from "react"
-
-import profilePicTest from "../assets/profilePicTest.JPG"
-
 import { Link } from "react-router-dom"
 
 import { Avatar } from "@mui/material"
@@ -21,7 +18,7 @@ import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlin
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
 
-const Post = ({ userName, userTag, date, replyCount, repostCount, likeCount, viewCount , media }) => {
+const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostCount, likeCount, viewCount, description, media }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
 
   const openMenu = Boolean(anchorPostMenu)
@@ -57,7 +54,7 @@ const Post = ({ userName, userTag, date, replyCount, repostCount, likeCount, vie
     <Link className="" to={`/${userTag}/status/tweetId`}>
     <div className=" border-lightBorder dark:border-darkBorder flex h-fit border border-l-0 border-r-0 p-3" data-testid="postId">
       <div className=" h-60 w-10 sm:mr-3">
-        <Avatar alt="Remy Sharp" src={profilePicTest} sx={{ width: 40, height: 40 }} />
+        <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
       </div>
       <div className=" sm:mr-2">
         <div className="post-header flex items-center justify-between">
@@ -135,13 +132,13 @@ const Post = ({ userName, userTag, date, replyCount, repostCount, likeCount, vie
         </div>
         <div className="post-text">
           <div className="max-h-[100px] overflow-hidden text-start dark:text-gray-300" data-testid="post-text-id">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi facere unde sed amet placeat. Odit consequatur eveniet quam vero, modi incidunt libero distinctio commodi quo, ab itaque dolor ipsam. Lorem ipsum dolor sit amet, adipisicing elit. Dolorumggg veniam cum quibusdam fuga quod ad molestias ratione, repellat voluptatum earum error libero! Architecto, at sapiente delectus blandit sunt molestias!
+          {description}
           </div>
           {/* <div>show more</div> */}
         </div>
         <div className="mt-3">
           <Link>
-            <img src={profilePicTest} alt="" className="rounded-xl" />
+            <img src={media} alt="" className="rounded-xl" />
           </Link>
         </div>
         <div className="mt-3 flex max-w-full justify-between text-ternairy dark:text-secondary">
@@ -193,6 +190,7 @@ const Post = ({ userName, userTag, date, replyCount, repostCount, likeCount, vie
 
             <span className="text-sm">{viewCount}</span>
           </div>
+          <div className="bookmarkUpload flex">
           <div className={`group flex cursor-pointer items-center transition-colors duration-300 hover:text-primary`} title="Bookmark">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900">
               <BookmarkBorderOutlinedIcon
@@ -212,6 +210,7 @@ const Post = ({ userName, userTag, date, replyCount, repostCount, likeCount, vie
                 }}
               />
             </div>
+          </div>
           </div>
         </div>
       </div>
