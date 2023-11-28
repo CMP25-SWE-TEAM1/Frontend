@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Login from "../Login/Login"
 import "./landing.css"
 import SignUp from "../Signup/SignUp"
-import GoogleLoginButton from "../GoogleLoginButton"
+import GoogleLoginButton from "../General/GoogleLoginButton"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 

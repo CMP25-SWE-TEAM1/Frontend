@@ -10,7 +10,7 @@ import { styles } from "../../styles"
 import { useDispatch, useSelector } from "react-redux"
 import { loginUser } from "../../store/UserSlice"
 
-import GoogleLoginButton from "../GoogleLoginButton"
+import GoogleLoginButton from "../General/GoogleLoginButton"
 import axios from "axios"
 
 const Login = ({ openModal, handleCloseModal, setLocation }) => {

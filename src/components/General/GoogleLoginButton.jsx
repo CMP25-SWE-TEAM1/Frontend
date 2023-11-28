@@ -2,10 +2,10 @@ import { useState, useEffect } from "react"
 import { googleLogout, useGoogleLogin } from "@react-oauth/google"
 
 import axios from "axios"
-import googleLogo from "../assets/imgs/search.png"
+import googleLogo from "../../assets/imgs/search.png"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router"
-import { loginUser } from "../store/UserSlice"
+import { loginUser } from "../../store/UserSlice"
 
 const GoogleLoginButton = ({ handleCloseModal }) => {
   const [user, setUser] = useState()

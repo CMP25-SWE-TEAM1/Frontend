@@ -1,4 +1,4 @@
-import GoogleLoginButton from "../GoogleLoginButton.jsx"
+import GoogleLoginButton from "../General/GoogleLoginButton"
 
 import { Link } from "react-router-dom"
 
