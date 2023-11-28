@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import SidebarOption from "./SidebarOption"
 import SwitchAccount from "./SwitchAccount"
-import Button from "./Button"
+import Button from "../Button"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded"
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded"
@@ -19,7 +19,7 @@ import lightLogo from "./assets/gigachatLogoOne_light_v2-removebg-preview.png"
 import profileImage from "./assets/IMG20210811224307.jpg"
 import { useNavigate } from "react-router"
 import { useSelector, useDispatch } from "react-redux"
-import { logoutUser } from "../store/UserSlice"
+import { logoutUser } from "../../store/UserSlice"
 
 const Sidebar = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
