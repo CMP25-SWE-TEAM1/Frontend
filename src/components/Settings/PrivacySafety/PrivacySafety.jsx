@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom"
 
-const AccessibilityDisplayLanguages = () => {
+const PrivacySafety = () => {
   return (
     <div>
       <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Privacy and Safety</h1>
       <p className="mb-4 pl-4 text-xs text-secondary">Manage what information you see and share on Gigachat.</p>
-      <Link to="../blocked">
+      <Link to="/settings/blocked">
         <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover">
           {/* icon */}
           <div className="flex h-[57px] flex-col justify-center p-[11px]">
@@ -15,7 +15,7 @@ const AccessibilityDisplayLanguages = () => {
           <div className="m-auto mr-3 text-2xl">&gt;</div>
         </div>
       </Link>
-      <Link to="../muted">
+      <Link to="/settings/muted">
         <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover">
           {/* icon */}
           <div className="flex h-[57px] flex-col justify-center p-[11px]">
@@ -29,4 +29,4 @@ const AccessibilityDisplayLanguages = () => {
   )
 }
 
-export default AccessibilityDisplayLanguages
+export default PrivacySafety
