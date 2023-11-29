@@ -48,7 +48,7 @@ function PostPage({post}) {
       viewCount={post.viewCount}
       key={post.userTag}
       />
-      <RepliesContainer replies={replies}/>
+      {/* <RepliesContainer replies={replies}/> */}
     </div>
     {/* <div>
       <p>name: {user.name}</p>

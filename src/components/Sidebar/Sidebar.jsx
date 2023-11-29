@@ -8,6 +8,7 @@ import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneR
 import MailOutlineRoundedIcon from "@mui/icons-material/MailOutlineRounded"
 import ListAltRoundedIco from "@mui/icons-material/ListAltRounded"
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined"
+import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined'
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined"
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined"
 import SettingsIcon from "@mui/icons-material/Settings"
@@ -38,7 +39,7 @@ const Sidebar = () => {
   const optionsNames = ["Home", "Explore", "Notifications", "Messages", "Lists", "Bookmarks", "Communities", "Profile", "Settings"]
   const optionsIcons = [<HomeOutlinedIcon />, <SearchRoundedIcon />, <NotificationsNoneRoundedIcon />, <MailOutlineRoundedIcon />, <ListAltRoundedIco />, <TurnedInNotOutlinedIcon />, <PeopleOutlinedIcon />, <PersonOutlinedIcon />, <SettingsIcon />]
   const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}/communities`, `/${userTag}`, "/settings/account"]
-  const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} />)
+  const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} alt="sidebarOption"/>)
 
   const user = useSelector((state) => state.user.user)
 
@@ -54,13 +55,13 @@ const Sidebar = () => {
   return (
     <div className="flex max-w-[400px] flex-grow justify-end border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white">
       <div className={`flex h-full flex-col pl-[30%] max-[1278px]:items-end max-[1278px]:pr-[5%]`}>
-        <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" />
+        <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" alt="gigaChatIcon"/>
         {options}
-        <Button name={shrink ? <HistoryEduOutlinedIcon/>:"Post"} color="text-white" backgroundColor="bg-[#1D9BF0]" height={shrink ?"h-14":"h-12"} width={shrink ?"w-14":"w-56"} link="/compose/tweet" />
+        <Button name={shrink ? <HistoryEduOutlinedIcon/>:"Post"} color="text-white" backgroundColor="bg-[#1D9BF0]" height={shrink ?"h-14":"h-12"} width={shrink ?"w-14":"w-56"} link="/compose/tweet" alt="post"/>
         {shrink ?
-        <Button name={imageIcon("logo", user.picture, 12)} color="text-white mt-auto mb-2" height="h-12" width="w-12" link="/home" />
+        <Button name={imageIcon("logo", user.picture, 12)} color="text-white mt-auto mb-2" height="h-12" width="w-12" link="/home" alt="switchAccountIcon"/>
         :
-        <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} />}
+        <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${user.userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} />}
       </div>
     </div>
   )

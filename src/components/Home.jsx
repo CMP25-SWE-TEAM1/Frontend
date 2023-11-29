@@ -26,11 +26,17 @@ const Home = () => {
     if(response.status === 200)
     {
       console.log(response.data[0].data.tweet_owner.nickname)
-      // console.log(response.data)
+      console.log(response.data)
       setTweets(response.data);
     }
   })
 },[])
+
+  const handleNewTweet = (newTweet)=>{
+    console.log("handleNewTweet");
+    setTweets([newTweet,...tweets]);
+    console.log(tweets);
+  }
 
   // const postsTst = [
   //   {
@@ -95,7 +101,7 @@ const Home = () => {
             <HorizontalNavbar urls={homeNavLinks} originalUrl={"/home"} />
           </div>
         </div>
-        <ComposePost />
+        <ComposePost handleNewTweet={(newTweet)=>handleNewTweet(newTweet)}/>
         <PostsContainer posts={tweets} />
       </div>
       {/* <div>

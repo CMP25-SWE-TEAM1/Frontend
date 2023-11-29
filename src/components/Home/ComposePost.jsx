@@ -24,11 +24,14 @@ import SentimentSatisfiedOutlinedIcon from '@mui/icons-material/SentimentSatisfi
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 
-function ComposePost() {
+function ComposePost({handleNewTweet}) {
     const [anchorPostMenu, setAnchorPostMenu] = useState(null)
     const [description, setDescription] = useState("")
     const [replyPermissionIndex,setReplyPermissionIndex] = useState(0)
+
     const darkMode = useSelector((state) => state.theme.darkMode)
+    const user = useSelector((state) => state.user.user)
+
     const APIs = {
       mock: { postTweetAPI: "https://bad9e0a6-fe2e-4d82-b68f-51c141e126d9.mock.pstmn.io/tweet/addTweet2" },
       actual: { postTweetAPI: "http://13.48.45.126:3000/api/tweets/" },
@@ -65,6 +68,7 @@ function ComposePost() {
       const composeTweet = getComposeTweet();
       axios.post(APIs.mock.postTweetAPI,JSON.stringify(composeTweet)).then(response=>{
         console.log(response.data);
+        handleNewTweet(response.data);
       }).catch(error=>{
         console.log(error);
       });
@@ -97,7 +101,7 @@ function ComposePost() {
   return (
     <form onSubmit={handleSubmit} className="ComposePost text-black dark:text-white border-lightBorder dark:border-darkBorder flex h-fit border border-l-0 border-r-0 p-3" data-testid="postId">
     <div className=" h-10 w-10 sm:mr-3">
-      <Avatar alt="Remy Sharp" src={profilePicTest} sx={{ width: 40, height: 40 }} />
+      <Avatar alt="Remy Sharp" src={user.profileImage} sx={{ width: 40, height: 40 }} />
     </div>
     <div className="w-full mt-1.5">
     <TextField
@@ -119,7 +123,7 @@ function ComposePost() {
       }}
         />
         <div >
-            <Button target={"_blank"} color="text-[#1D9BF0]" size="sm" variant="plain" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent dark:bg-transparent hover:bg-[#031018] dark:hover:bg-[#031018] rounded-full py-0 my-3">
+            <Button target={"_blank"} color="text-[#1D9BF0]" size="sm" variant="plain" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent dark:bg-transparent hover:bg-[#e7f5fd] dark:hover:bg-[#031018] rounded-full py-0 my-3">
               <GeneralButton name={permissionOptions[replyPermissionIndex].icon2} color="text-[#1D9BF0]" backgroundColor="bg-transparent" height="h-6" width="w-6s"></GeneralButton>
               <div className="ml-0.5 normal-case text-[14px] text-[#1D9BF0]">{permissionOptions[replyPermissionIndex].name} can reply</div>
             </Button>
@@ -176,12 +180,12 @@ function ComposePost() {
         <hr className="h-px border-0 bg-lightBorder dark:bg-darkBorder"/>
         <div className="pt-3 flex justify-between">
         <div className="flex bg-transparent">
-          <GeneralButton name={<InsertPhotoOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-        <GeneralButton name={<GifBoxOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet"/>
-        <GeneralButton name={<BallotOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-        <GeneralButton name={<SentimentSatisfiedOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-        <GeneralButton name={<EditCalendarIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]"/>
-        <GeneralButton name={<LocationOnOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]"/>
+          <GeneralButton name={<InsertPhotoOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
+        <GeneralButton name={<GifBoxOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet"/>
+        <GeneralButton name={<BallotOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
+        <GeneralButton name={<SentimentSatisfiedOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
+        <GeneralButton name={<EditCalendarIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]"/>
+        <GeneralButton name={<LocationOnOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]"/>
         </div>
         <button type="submit" className="bg-[#1D9BF0] p-0 rounded-full"><GeneralButton name="Post" color="text-white" backgroundColor="bg-[#1D9BF0]" height="h-8" width="w-16" /></button>
         </div>
