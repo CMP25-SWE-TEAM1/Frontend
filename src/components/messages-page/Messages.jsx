@@ -1,4 +1,3 @@
-import Sidebar from "../Sidebar"
 import DetailsChat from "./details/DetailsChat"
 import DetailsNoChat from "./details/DetailsNoChat"
 import "./messages.css"
@@ -11,7 +10,6 @@ const Messages = () => {
   return (
     <>
       {/* <div className="sidebar">Sidebar</div> */}
-      <Sidebar />
       <div className="messages-page">
         <div className="navigation">
           <div className="header">
