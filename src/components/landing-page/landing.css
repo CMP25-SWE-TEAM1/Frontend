@@ -3,9 +3,7 @@
 @tailwind utilities;
 
 @layer base{
-    button, [type='button'], [type='reset'], [type='submit']{
-      @apply bg-black dark:bg-white text-white dark:text-black;
-    }
+  
   }
 
 @layer components {
