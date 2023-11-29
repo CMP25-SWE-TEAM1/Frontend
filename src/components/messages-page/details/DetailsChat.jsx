@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import Message from "./message/Message"
 import MessageInput from "./message/MessageInput"
 import { useState, useRef } from "react"
+import { useEffect } from "react"
 
 const DetailsChat = () => {
   const one = true
@@ -9,6 +10,9 @@ const DetailsChat = () => {
   const navigate = useNavigate()
   // scroll to bottom button
   const endOfChat = useRef(null)
+  useEffect(() => {
+    scrollToBottom()
+  }, [])
   const scrollToBottom = () => {
     // endOfChat?.current?.scrollIntoView({ behavior: "smooth" })
     endOfChat?.current?.scrollIntoView()
