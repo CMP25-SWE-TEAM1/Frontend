@@ -24,7 +24,7 @@ import ErrorPage from "./ErrorPage.jsx"
 import PreStep from "./PreStep.jsx"
 
 const SignUp = ({ openModal, handleCloseModal }) => {
-  const mock = false
+  const mock = true
 
   const darkMode = useSelector((state) => state.theme.darkMode)
 

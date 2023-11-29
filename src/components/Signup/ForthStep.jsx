@@ -4,13 +4,21 @@ import Alert from "@mui/material/Alert"
 
 import { APIs } from "../../constants/signupConstants.js"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 
-const ForthStep = ({  setUser, setUserToken, nextShow, handleOpenBirthdateError, mock, email }) => {
-    
+import { useSelector } from "react-redux"
+
+const ForthStep = ({ setUser, setUserToken, nextShow, handleOpenBirthdateError, mock, email }) => {
+  const darkMode = useSelector((state) => state.theme.darkMode)
+
   const [verficationCode, setVerficationCode] = useState("")
   const [emailConfirmationError, setEmailConfirmationError] = useState(false)
 
+  const [countdown, setCountdown] = useState(30)
+  const [isResending, setIsResending] = useState(false)
+
+  const resendCode = useRef(null)
+  const resendCodeSpan = useRef(null)
 
   const handleConfirmEmail = () => {
     axios
@@ -39,11 +47,37 @@ const ForthStep = ({  setUser, setUserToken, nextShow, handleOpenBirthdateError,
       .post(mock ? APIs.mock.resendConfirmationEmail : APIs.actual.resendConfirmationEmail, {
         email: email,
       })
+      .then(() => {
+        setIsResending(true)
+      })
       .catch((err) => {
+        if (mock) {
+          setIsResending(true)
+        }
         handleOpenBirthdateError()
         console.log(err)
       })
   }
+
+  useEffect(() => {
+    let timer
+
+    if (countdown > 0 && isResending) {
+      resendCode.current.disabled = true
+      resendCodeSpan.current.style.color = darkMode ? "white" : "black"
+      timer = setTimeout(() => setCountdown(countdown - 1), 1000)
+    }
+
+    if (countdown === 0) {
+      setIsResending(false)
+      setCountdown(30)
+      resendCode.current.disabled = false
+      resendCodeSpan.current.style.color = "#1d9bf0"
+      
+    }
+
+    return () => clearTimeout(timer)
+  }, [countdown, isResending])
 
   return (
     <div id="Forth Step" className="-mt-10 hidden">
@@ -69,9 +103,11 @@ const ForthStep = ({  setUser, setUserToken, nextShow, handleOpenBirthdateError,
             Verfication Code
           </label>
         </div>
-        <a onClick={handleResendConfirmationEmail} className="cursor-pointer">
-          Resend email
-        </a>
+        <button ref={resendCode} onClick={handleResendConfirmationEmail} className="w-fit cursor-pointer !bg-transparent">
+          <span ref={resendCodeSpan} className=" text-primary hover:underline">
+            {isResending ? `Resending in ${countdown}s` : "Resend Email"}
+          </span>
+        </button>
 
         {emailConfirmationError && <Alert severity="error">Verfication Code is wrong</Alert>}
 
@@ -88,5 +124,5 @@ const ForthStep = ({  setUser, setUserToken, nextShow, handleOpenBirthdateError,
     </div>
   )
 }
- 
-export default ForthStep;
+
+export default ForthStep
