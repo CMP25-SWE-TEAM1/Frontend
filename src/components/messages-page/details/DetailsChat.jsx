@@ -17,6 +17,9 @@ const DetailsChat = () => {
     // endOfChat?.current?.scrollIntoView({ behavior: "smooth" })
     endOfChat?.current?.scrollIntoView()
   }
+  const handleBackToBottom = () => {
+    if (chatBtnDwnAppear) scrollToBottom()
+  }
   const [chatBtnDwnAppear, setChatBtnDwnAppear] = useState(false)
   const handleChatScrlBtn = (event) => {
     event.currentTarget.scrollHeight - event.currentTarget.scrollTop <= event.currentTarget.clientHeight + 44 ? setChatBtnDwnAppear(false) : setChatBtnDwnAppear(true)
@@ -102,7 +105,7 @@ const DetailsChat = () => {
               )}
               <div className={`chat-scroll-down ${chatBtnDwnAppear ? "" : "hide"}`}>
                 {/* Note: onClick console error */}
-                <div onClick={chatBtnDwnAppear ? scrollToBottom : {}}>
+                <div onClick={() => handleBackToBottom}>
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <g>
                       <path d="M13 3v13.59l5.043-5.05 1.414 1.42L12 20.41l-7.457-7.45 1.414-1.42L11 16.59V3h2z"></path>
