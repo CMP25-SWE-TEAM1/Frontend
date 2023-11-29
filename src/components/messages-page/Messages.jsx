@@ -10,7 +10,8 @@ const Messages = () => {
   const two = false
   return (
     <>
-      <div className="sidebar">Sidebar</div>
+      {/* <div className="sidebar">Sidebar</div> */}
+      <Sidebar />
       <div className="messages-page">
         <div className="navigation">
           <div className="header">
