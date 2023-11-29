@@ -1,12 +1,12 @@
-import "../styles/home.css"
+import "../../styles/home.css"
 import PostsContainer from "./PostsContainer"
-import HorizontalNavbar from "./General/HorizontalNavbar"
+import HorizontalNavbar from "../General/HorizontalNavbar"
 import { useState, useEffect } from "react"
-import Widgets from "./Widgets"
-import getUser from "../constants/index"
+import Widgets from "../Widgets"
+import getUser from "../../constants/index"
 
-import RepliesContainer from "./PostPage/RepliesContainer"
-import ComposePost from "./Home/ComposePost"
+import RepliesContainer from "../PostPage/RepliesContainer"
+import ComposePost from "./ComposePost"
 import axios from "axios"
 
 

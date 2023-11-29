@@ -17,12 +17,11 @@ import lightLogo from "../assets/gigachatLogoOne_light_v2-removebg-preview.png"
 import { useNavigate } from "react-router"
 import { useSelector, useDispatch } from "react-redux"
 import { logoutUser } from "../../store/UserSlice"
-import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 const Sidebar = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
-  const [shrink,setShrink]=useState(false);
+  const [shrink,setShrink]=useState(window.innerWidth<1278);
   const handleResize = () => {
     if(window.innerWidth<1278)
       setShrink(true);

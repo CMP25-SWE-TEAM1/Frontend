@@ -1,5 +1,5 @@
 import Post from "./Post";
-import profilePicTest from "../assets/profilePicTest.JPG"
+import profilePicTest from "../../assets/profilePicTest.JPG"
 
 const PostsContainer = ({ posts }) => {
   const handlePostClick=(p)=>{
