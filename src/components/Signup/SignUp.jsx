@@ -150,9 +150,9 @@ const SignUp = ({ openModal, handleCloseModal }) => {
 
             <ThirdStep nickName={nickName} email={email} month={month} day={day} year={year} emailExistError={emailExistError} validEmail={validEmail} mock={mock} nextShow={nextShow} handleOpenBirthdateError={handleOpenBirthdateError} />
 
-            <ForthStep setUser={setUser} setUserToken={setUserToken} nextShow={nextShow} handleOpenBirthdateError={handleOpenBirthdateError} mock={mock} email={email} />
+            <ForthStep setUserTag={setUserTag} setOriginalUsername={setOriginalUsername} setUser={setUser} setUserToken={setUserToken} nextShow={nextShow} handleOpenBirthdateError={handleOpenBirthdateError} mock={mock} email={email} />
 
-            <FifthStep mock={mock} user={user} setUser={setUser} setUserTag={setUserTag} userToken={userToken} setOriginalUsername={setOriginalUsername} nextShow={nextShow} password={password} setPassword={setPassword} />
+            <FifthStep mock={mock} userToken={userToken} userTag={userTag} setUser={setUser}  nextShow={nextShow} password={password} setPassword={setPassword} />
 
             <TagStep mock={mock} userTag={userTag} setUserTag={setUserTag} originalUsername={originalUsername} userToken={userToken} user={user} setUser={setUser} nextShow={nextShow} />
 

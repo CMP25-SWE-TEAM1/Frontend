@@ -8,7 +8,7 @@ import { useState, useRef, useEffect } from "react"
 
 import { useSelector } from "react-redux"
 
-const ForthStep = ({ setUser, setUserToken, nextShow, handleOpenBirthdateError, mock, email }) => {
+const ForthStep = ({  setUserTag, setOriginalUsername, setUser, setUserToken, nextShow, handleOpenBirthdateError, mock, email }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
 
   const [verficationCode, setVerficationCode] = useState("")
@@ -29,8 +29,10 @@ const ForthStep = ({ setUser, setUserToken, nextShow, handleOpenBirthdateError, 
       .then((res) => {
         console.log(res)
         setUserToken(res.data.token)
-        setUser(res.data.data.user)
+        setUserTag(res.data.data.suggestedUsername)
+        setOriginalUsername(res.data.data.suggestedUsername)
         nextShow(4)
+        // return res.data.data.suggestedUsername
       })
       .catch((err) => {
         console.log(err)
@@ -73,7 +75,6 @@ const ForthStep = ({ setUser, setUserToken, nextShow, handleOpenBirthdateError, 
       setCountdown(30)
       resendCode.current.disabled = false
       resendCodeSpan.current.style.color = "#1d9bf0"
-      
     }
 
     return () => clearTimeout(timer)

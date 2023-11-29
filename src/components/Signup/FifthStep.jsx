@@ -11,7 +11,7 @@ import axios from "axios"
 import { PASSWORD_REGEX, UPPER_CASE_LETTER_REGEX, LOWER_CASE_LETTER_REGEX, SPECIAL_CHARACTER_REGEX, NUMBER_REGEX, LENGTH_REGEX, EMAIL_REGEX, APIs } from "../../constants/signupConstants.js"
 import { styles } from "../../styles.js"
 
-const FifthStep = ({ mock, user, setUser, setUserTag, userToken, setOriginalUsername, nextShow, password, setPassword }) => {
+const FifthStep = ({ setUser, mock, userToken, userTag, nextShow, password, setPassword }) => {
   const [showPassword, setShowPassword] = useState(false)
 
   const togglePasswordVisibility = () => {
@@ -38,6 +38,14 @@ const FifthStep = ({ mock, user, setUser, setUserTag, userToken, setOriginalUser
   }
 
   const handleAssignPassword = () => {
+    console.log({
+      headers: {
+        authorization: "Bearer " + userToken,
+      },
+    })
+    console.log({
+      password: password,
+    })
     axios
       .patch(
         mock ? APIs.mock.assignPassword : APIs.actual.assignPassword,
@@ -50,12 +58,17 @@ const FifthStep = ({ mock, user, setUser, setUserTag, userToken, setOriginalUser
           },
         }
       )
+
       .then((res) => {
-        setUser(res.data.data.currentUser)
-        setUserTag(user.username)
-        setOriginalUsername(user.username)
-        nextShow(5)
         console.log(res)
+        nextShow(5)
+      })
+      .then(() => {
+        console.log(APIs.actual.getProfile + userTag)
+        axios.get(mock ? APIs.mock.getProfile : APIs.actual.getProfile + userTag).then((res) => {
+          console.log(res)
+          setUser(res.data.user)
+        })
       })
       .catch((err) => {
         console.log(err)

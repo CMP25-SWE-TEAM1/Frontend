@@ -30,8 +30,8 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
   const APIs = {
     mock: { emailExistAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/checkEmail" },
     actual: {
-      emailExistAPI: "http://51.20.216.159/api/user/checkExistedEmail",
-      loginAPI: "http://51.20.216.159/api/user/login",
+      emailExistAPI: "http://backend.gigachat.cloudns.org/api/user/existedEmailORusername",
+      loginAPI: "http://backend.gigachat.cloudns.org/api/user/login",
     },
   }
 

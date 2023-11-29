@@ -6,7 +6,7 @@ import axios from "axios"
 const APIs = {
   mock: { loginAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/login" },
   actual: {
-    loginAPI: "http://51.20.216.159/api/user/login",
+    loginAPI: "http://backend.gigachat.cloudns.org/api/user/login",
   },
 }
 
