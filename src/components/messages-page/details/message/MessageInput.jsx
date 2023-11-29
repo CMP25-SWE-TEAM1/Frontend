@@ -1,17 +1,4 @@
 const MessageInput = () => {
-  // == Next code will be deleted when i find the problem of pasting
-  const inputArea = document.querySelector(".input-area")
-
-  inputArea.addEventListener("paste", function (event) {
-    event.preventDefault()
-
-    const clipboardData = event.clipboardData || window.clipboardData
-    const plainText = clipboardData.getData("text/plain")
-
-    document.execCommand("insertText", false, plainText)
-  })
-  // == previous code will be deleted when i find the problem of pasting
-
   return (
     <div className="keyboard">
       <div className="content">
