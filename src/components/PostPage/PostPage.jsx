@@ -1,6 +1,6 @@
 import React from 'react'
 import HorizontalNavbar from '../HorizontalNavbar';
-import RepliesContainer from './RepliesContainer';
+// import RepliesContainer from './RepliesContainer';
 import Widgets from '../Widgets';
 import Post from '../Post';
 import WestIcon from '@mui/icons-material/West';
@@ -48,7 +48,7 @@ function PostPage({post}) {
       viewCount={post.viewCount}
       key={post.userTag}
       />
-      <RepliesContainer replies={replies}/>
+      {/* <RepliesContainer replies={replies}/> */}
     </div>
     {/* <div>
       <p>name: {user.name}</p>

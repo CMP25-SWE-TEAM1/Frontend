@@ -2,7 +2,7 @@ import React from "react";
 
 function SwitchAccount({ profilePhoto, userName, userTag, moreIcon, link ,handleLogout}) {
   return (
-    <a href={link} alt="" className="group mt-auto mb-2 box-border w-full cursor-pointer border-0" onClick={handleLogout}>
+    <a href={link} alt="switchAccount" className="group mt-auto mb-2 box-border w-full cursor-pointer border-0" onClick={handleLogout}>
       <div title="switchAccountContainer" className="m-1 flex w-fit items-center justify-around rounded-full p-2 group-hover:bg-lightHover dark:group-hover:bg-darkHover">
         <div title="profileIcon" className="w-[18%]">
           {profilePhoto}

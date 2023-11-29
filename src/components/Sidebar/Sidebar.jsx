@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import SidebarOption from "./SidebarOption"
 import SwitchAccount from "./SwitchAccount"
-import Button from "../Button"
+import Button from "./Button"
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded"
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded"
@@ -14,9 +14,8 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined"
 import PendingOutlinedIcon from "@mui/icons-material/PendingOutlined"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
 import SettingsIcon from "@mui/icons-material/Settings"
-import darkLogo from "./assets/gigachatLogoOne_dark-removebg-preview.png"
-import lightLogo from "./assets/gigachatLogoOne_light_v2-removebg-preview.png"
-import profileImage from "./assets/IMG20210811224307.jpg"
+import darkLogo from "../assets/gigachatLogoOne_dark-removebg-preview.png"
+import lightLogo from "../assets/gigachatLogoOne_light_v2-removebg-preview.png"
 import { useNavigate } from "react-router"
 import { useSelector, useDispatch } from "react-redux"
 import { logoutUser } from "../../store/UserSlice"
@@ -25,7 +24,6 @@ const Sidebar = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
 
   const moreIcon = <MoreHorizOutlinedIcon />
-  const userName = "Ismail Ramadan Mokhtar"
   const [shrink,setShrink]=useState(window.innerWidth<1278);
   const handleResize = () => {
     if(window.innerWidth<1278)
@@ -43,7 +41,7 @@ const Sidebar = () => {
   const optionsNames = ["Home", "Explore", "Notifications", "Messages", "Lists", "Bookmarks", "Communities", "Profile", "Settings"]
   const optionsIcons = [<HomeOutlinedIcon />, <SearchRoundedIcon />, <NotificationsNoneRoundedIcon />, <MailOutlineRoundedIcon />, <ListAltRoundedIco />, <TurnedInNotOutlinedIcon />, <PeopleOutlinedIcon />, <PersonOutlinedIcon />, <SettingsIcon />]
   const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}/communities`, `/${userTag}`, "/settings/account"]
-  const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} />)
+  const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} alt="sidebarOption"/>)
 
   const user = useSelector((state) => state.user.user)
 
@@ -59,13 +57,13 @@ const Sidebar = () => {
   return (
     <div className="flex max-w-[400px] flex-grow justify-end border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white">
       <div className={`flex h-full flex-col pl-[30%] max-[1278px]:items-end max-[1278px]:pr-[5%]`}>
-        <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" />
+        <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" alt="gigaChatIcon"/>
         {options}
-        <Button name={shrink ? <HistoryEduOutlinedIcon/>:"Post"} color="text-white" backgroundColor="bg-[#1D9BF0]" height={shrink ?"h-14":"h-12"} width={shrink ?"w-14":"w-56"} link="/compose/tweet" />
+        <Button name={shrink ? <HistoryEduOutlinedIcon/>:"Post"} color="text-white" backgroundColor="bg-[#1D9BF0]" height={shrink ?"h-14":"h-12"} width={shrink ?"w-14":"w-56"} link="/compose/tweet" alt="post"/>
         {shrink ?
-        <Button name={imageIcon("logo", user.picture, 12)} color="text-white mt-auto mb-2" height="h-12" width="w-12" link="/home" />
+        <Button name={imageIcon("logo", user.picture, 12)} color="text-white mt-auto mb-2" height="h-12" width="w-12" link="/home" alt="switchAccountIcon"/>
         :
-        <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} />}
+        <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${user.userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} />}
       </div>
     </div>
   )

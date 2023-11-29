@@ -1,5 +1,5 @@
 import { screen, render } from "@testing-library/react";
-import SwitchAccount from "./SwitchAccount";
+import SwitchAccount from "../../../components/Sidebar/SwitchAccount";
 import user from "@testing-library/user-event";
 
 describe("testing SwitchAccount component", () => {

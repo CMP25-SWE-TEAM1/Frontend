@@ -1,6 +1,6 @@
 import { screen, render ,act} from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import Button from "./Button";
+import Button from "../../../components/Sidebar/Button";
 import user from '@testing-library/user-event';
 
 describe('testing Button component',()=>{
@@ -23,4 +23,5 @@ describe('testing Button component',()=>{
     const button = screen.getByRole('link');
     expect(button).toHaveAttribute('href', '/compose/tweet');
   })
+ 
 });

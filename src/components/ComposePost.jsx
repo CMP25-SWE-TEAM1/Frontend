@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { useSelector } from "react-redux"
 import TextField from '@mui/material/TextField';
 import { Avatar } from "@mui/material"
-import GeneralButton from "../Sidebar/Button"
+import GeneralButton from "./Sidebar/Button"
 import Button from "@mui/material/Button"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
@@ -121,7 +121,7 @@ function ComposePost({handleNewTweet}) {
       }}
         />
         <div >
-            <Button target={"_blank"} color="text-[#1D9BF0]" size="sm" variant="plain" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent dark:bg-transparent hover:bg-[#031018] dark:hover:bg-[#031018] rounded-full py-0 my-3">
+            <Button target={"_blank"} color="text-[#1D9BF0]" size="sm" variant="plain" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent dark:bg-transparent hover:bg-[#e7f5fd] dark:hover:bg-[#031018] rounded-full py-0 my-3">
               <GeneralButton name={permissionOptions[replyPermissionIndex].icon2} color="text-[#1D9BF0]" backgroundColor="bg-transparent" height="h-6" width="w-6s"></GeneralButton>
               <div className="ml-0.5 normal-case text-[14px] text-[#1D9BF0]">{permissionOptions[replyPermissionIndex].name} can reply</div>
             </Button>
@@ -178,12 +178,12 @@ function ComposePost({handleNewTweet}) {
         <hr className="h-px border-0 bg-lightBorder dark:bg-darkBorder"/>
         <div className="pt-3 flex justify-between">
         <div className="flex bg-transparent">
-          <GeneralButton name={<InsertPhotoOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-        <GeneralButton name={<GifBoxOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet"/>
-        <GeneralButton name={<BallotOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-        <GeneralButton name={<SentimentSatisfiedOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-        <GeneralButton name={<EditCalendarIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]"/>
-        <GeneralButton name={<LocationOnOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]"/>
+          <GeneralButton name={<InsertPhotoOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
+        <GeneralButton name={<GifBoxOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet"/>
+        <GeneralButton name={<BallotOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
+        <GeneralButton name={<SentimentSatisfiedOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
+        <GeneralButton name={<EditCalendarIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]"/>
+        <GeneralButton name={<LocationOnOutlinedIcon fontSize="small"/>} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]"/>
         </div>
         <button type="submit" className="bg-[#1D9BF0] p-0 rounded-full"><GeneralButton name="Post" color="text-white" backgroundColor="bg-[#1D9BF0]" height="h-8" width="w-16" /></button>
         </div>
