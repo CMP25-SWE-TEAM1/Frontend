@@ -27,7 +27,7 @@ const ForthStep = ({  setUserTag, setOriginalUsername, setUser, setUserToken, ne
         email: email,
       })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         setUserToken(res.data.token)
         setUserTag(res.data.data.suggestedUsername)
         setOriginalUsername(res.data.data.suggestedUsername)

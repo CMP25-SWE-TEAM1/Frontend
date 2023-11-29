@@ -38,14 +38,14 @@ const FifthStep = ({ setUser, mock, userToken, userTag, nextShow, password, setP
   }
 
   const handleAssignPassword = () => {
-    console.log({
-      headers: {
-        authorization: "Bearer " + userToken,
-      },
-    })
-    console.log({
-      password: password,
-    })
+    // console.log({
+    //   headers: {
+    //     authorization: "Bearer " + userToken,
+    //   },
+    // })
+    // console.log({
+    //   password: password,
+    // })
     axios
       .patch(
         mock ? APIs.mock.assignPassword : APIs.actual.assignPassword,
@@ -60,11 +60,11 @@ const FifthStep = ({ setUser, mock, userToken, userTag, nextShow, password, setP
       )
 
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         nextShow(5)
       })
       .then(() => {
-        console.log(APIs.actual.getProfile + userTag)
+        // console.log(APIs.actual.getProfile + userTag)
         axios.get(mock ? APIs.mock.getProfile : APIs.actual.getProfile + userTag).then((res) => {
           console.log(res)
           setUser(res.data.user)
