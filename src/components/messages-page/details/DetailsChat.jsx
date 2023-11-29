@@ -1,11 +1,18 @@
 import { useNavigate } from "react-router-dom"
 import Message from "./message/Message"
 import MessageInput from "./message/MessageInput"
+import { useRef } from "react"
 
 const DetailsChat = () => {
   const one = true
   const two = true
   const navigate = useNavigate()
+  // scroll to bottom button
+  const endOfChat = useRef(null)
+  const scrollToBottom = () => {
+    endOfChat?.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
   return (
     <div className="details chat">
       <div className="content">
@@ -68,8 +75,22 @@ const DetailsChat = () => {
                       messageText="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                     />
                   </div>
+                  <div ref={endOfChat}></div>
                 </div>
               )}
+              <div
+                className="chat-scroll-down"
+                // Add style display:none with thershold
+                // style={{}}
+              >
+                <div onClick={scrollToBottom}>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <g>
+                      <path d="M13 3v13.59l5.043-5.05 1.414 1.42L12 20.41l-7.457-7.45 1.414-1.42L11 16.59V3h2z"></path>
+                    </g>
+                  </svg>
+                </div>
+              </div>
             </div>
             <MessageInput />
           </div>

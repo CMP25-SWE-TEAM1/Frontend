@@ -234,6 +234,7 @@
         border-bottom: 1px solid #eee;
 
         flex: 1;
+        position: relative;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content {
@@ -319,6 +320,37 @@
         font-size: 13px;
         font-weight: 400;
         color: rgb(83, 100, 113);
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chat-scroll-down {
+        position: absolute;
+        bottom: 12px;
+        right: 15px;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chat-scroll-down div {
+        z-index: 2;
+        cursor: pointer;
+        position: fixed;
+        transform: translateX(-100%) translateY(-100%);
+        background-color: white;
+        min-height: 36px;
+        min-width: 36px;
+        padding-left: 16px;
+        padding-right: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom-left-radius: 9999px;
+        border-bottom-right-radius: 9999px;
+        border-top-left-radius: 9999px;
+        border-top-right-radius: 9999px;
+        box-shadow: 0 0 8px rgba(101, 119, 134, 0.2), 0 1px 3px 1px rgba(101, 119, 134, 0.25);
+        transition: background-color 0.2s;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chat-scroll-down div:hover {
+        background-color: #E6E6E6;
     }
 
     .messages-page .details.chat .content .body.allowed .keyboard {
