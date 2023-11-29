@@ -417,6 +417,8 @@
         border-radius: 24px;
         overflow: hidden;
         width: 100%;
+        max-height: 700px;
+        overflow-y: hidden;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-media img {
