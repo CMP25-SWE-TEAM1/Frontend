@@ -4,7 +4,9 @@ import { useState } from "react"
 
 const SecondStep = ({nextShow}) => {
   const [captchaIsDone, setCaptchaIsDone] = useState(false)
-  const siteKey = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+  const siteKey = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" //testing
+  // const siteKey = "6LfH3AgpAAAAAC3AH4ytvhBY1eXoStTZnqaif6tE" //actual
+
 
   const handleCaptchaVerification = () => {
     setCaptchaIsDone(true)
