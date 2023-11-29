@@ -22,8 +22,6 @@ import Muted from "./components/Settings/PrivacySafety/Muted"
 import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode, setLightMode } from "./store/ThemeSlice"
 import PostPage from "./components/PostPage/PostPage"
-import ProfilePage from "./components/ProfilePage/ProfilePage"
-import FollowPage  from "./components/ProfilePage/FollowPage/FollowPage"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
@@ -104,10 +102,6 @@ const App = () => {
             <Route path="accessibility" element={<Accessibility />}></Route>
             <Route path="display" element={<Display />}></Route>
           </Route>
-
-          <Route path={`/${user.name}`} element={<ProfilePage/>}></Route>
-          <Route path={`/${user.name}/following`} element={<FollowPage type={true} />}></Route>
-          <Route path={`/${user.name}/followers`} element={<FollowPage type={false} />}></Route>
 
           <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/replies" element={<PostPage post={testPost} />}></Route>
