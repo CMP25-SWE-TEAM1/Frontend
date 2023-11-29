@@ -10,17 +10,20 @@ const DetailsChat = () => {
   // scroll to bottom button
   const endOfChat = useRef(null)
   const scrollToBottom = () => {
-    endOfChat?.current?.scrollIntoView({ behavior: "smooth" })
+    // endOfChat?.current?.scrollIntoView({ behavior: "smooth" })
+    endOfChat?.current?.scrollIntoView()
   }
   const [chatBtnDwnAppear, setChatBtnDwnAppear] = useState(false)
   const handleChatScrlBtn = (event) => {
     event.currentTarget.scrollHeight - event.currentTarget.scrollTop <= event.currentTarget.clientHeight + 44 ? setChatBtnDwnAppear(false) : setChatBtnDwnAppear(true)
   }
-  const [messages, setMessages] = useState(null)
+  const [messages, setMessages] = useState([])
   const handleSendMessage = (message) => {
     // TODO:send message
     console.log("Sent message:", message)
     // Add message to the chat
+    setMessages([...messages, message])
+    scrollToBottom()
     // Send message in BackEnd
   }
 
@@ -85,7 +88,9 @@ const DetailsChat = () => {
                       messageMedia="https://m.media-amazon.com/images/M/MV5BMTQ2NDg4MDA2MV5BMl5BanBnXkFtZTgwNzQxOTQ1MjE@._V1_.jpg"
                       messageText="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                     />
-                    {/* {messages} */}
+                    {messages.map((msg) => (
+                      <Message direction="R" messageText={msg} />
+                    ))}
                   </div>
                   <div ref={endOfChat}></div>
                 </div>
