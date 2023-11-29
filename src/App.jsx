@@ -22,6 +22,7 @@ import Muted from "./components/Settings/PrivacySafety/Muted"
 import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode, setLightMode } from "./store/ThemeSlice"
 import PostPage from "./components/PostPage/PostPage"
+import Messages from "./components/messages-page/Messages"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
@@ -35,7 +36,7 @@ const App = () => {
     } else {
       dispatch(setLightMode())
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const [openLoginModal, setOpenLoginModal] = useState(false)
@@ -54,11 +55,9 @@ const App = () => {
     setLocation(window.location.pathname)
   }
 
-
-
   const user = useSelector((state) => state.user.user)
   // console.log(location)
-  const testPost={
+  const testPost = {
     userName: "Mohamed Samir",
     userTag: "MSamir245",
     date: "Thu Oct 26 2023 2:28:01 GMT+0200 (Eastern European Standard Time)",
@@ -86,7 +85,7 @@ const App = () => {
           <Route path="login" element={<Login openModal={true} handleCloseModal={handleCloseLoginModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="password_reset" element={<PasswordReset />}></Route>
           <Route path="/home" element={<Home />}></Route>
-
+          <Route path="/messages" element={<Messages />}></Route>
           <Route path="/settings" element={<Settings />}>
             <Route path="account" element={<Account />}></Route>
             <Route path="account_information" element={<AccountInformation />}></Route>
