@@ -16,6 +16,11 @@ const DetailsChat = () => {
   const handleChatScrlBtn = (event) => {
     event.currentTarget.scrollHeight - event.currentTarget.scrollTop <= event.currentTarget.clientHeight + 44 ? setChatBtnDwnAppear(false) : setChatBtnDwnAppear(true)
   }
+  // const [messages, setMessages] = useState(null)
+  // const handleSendMessage = (e, message) => {
+  //   setMessages(<Message direction="R" messageText={message} />)
+  // }
+
   return (
     <div className="details chat">
       <div className="content">
@@ -77,6 +82,7 @@ const DetailsChat = () => {
                       messageMedia="https://m.media-amazon.com/images/M/MV5BMTQ2NDg4MDA2MV5BMl5BanBnXkFtZTgwNzQxOTQ1MjE@._V1_.jpg"
                       messageText="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
                     />
+                    {/* {messages} */}
                   </div>
                   <div ref={endOfChat}></div>
                 </div>
@@ -91,7 +97,9 @@ const DetailsChat = () => {
                 </div>
               </div>
             </div>
-            <MessageInput />
+            <MessageInput
+            // handleSendMessage={handleSendMessage}
+            />
           </div>
         )}
       </div>

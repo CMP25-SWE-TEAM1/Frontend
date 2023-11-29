@@ -578,7 +578,7 @@
     }
 
     .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .input-area:empty::before {
-        content: attr(placeholder);
+        /* content: attr(placeholder); */
         color: rgb(83, 100, 113);
     }
 
@@ -591,7 +591,7 @@
     }
 
     .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .input-area:focus {
-        outline: none;
+        /* outline: none; */
     }
 
     .messages-page .details.chat .content .body.allowed .keyboard .content .send-message {
