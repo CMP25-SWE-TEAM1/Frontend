@@ -18,6 +18,7 @@ import { useNavigate } from "react-router"
 import { useSelector, useDispatch } from "react-redux"
 import { logoutUser } from "../../store/UserSlice"
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { Avatar } from "@mui/material"
 
 const Sidebar = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
@@ -58,7 +59,11 @@ const Sidebar = () => {
         {options}
         <Button name={shrink ? <HistoryEduOutlinedIcon/>:"Post"} color="text-white" backgroundColor="bg-[#1D9BF0]" height={shrink ?"h-14":"h-12"} width={shrink ?"w-14":"w-56"} link="/compose/tweet" alt="post"/>
         {shrink ?
-        <Button name={imageIcon("logo", user.picture, 12)} color="text-white mt-auto mb-2" height="h-12" width="w-12" link="/home" alt="switchAccountIcon"/>
+        <a href="/" alt="" className="group mb-2 mt-auto box-border w-full cursor-pointer border-0">
+        <div title="switchAccountContainer" className=" flex w-full  items-center justify-around rounded-full p-3 group-hover:bg-lightHover dark:group-hover:bg-darkHover">
+          <Avatar alt={user.nickname} src={user.profileImage} />
+          </div>
+          </a>
         :
         <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${user.userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} />}
       </div>
