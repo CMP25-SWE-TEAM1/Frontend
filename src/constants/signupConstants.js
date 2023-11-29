@@ -19,7 +19,7 @@ export const APIs = {
     changeProfilePicture: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/api/user/profile/image",
   },
   actual: {
-    emailExistAPI: "http://51.20.216.159/api/user/checkExistedEmail",
+    emailExistAPI: "http://51.20.216.159/api/user/existedEmailORusername",
     checkBirthdateAPI: "http://51.20.216.159/api/user/checkBirthDate",
     signupAPI: "http://51.20.216.159/api/user/signup",
     resendConfirmationEmail: "http://51.20.216.159/api/user/resendConfirmEmail",
