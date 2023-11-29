@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import Message from "./message/Message"
 import MessageInput from "./message/MessageInput"
-import { useRef } from "react"
+import { useState, useRef } from "react"
 
 const DetailsChat = () => {
   const one = true
@@ -12,7 +12,10 @@ const DetailsChat = () => {
   const scrollToBottom = () => {
     endOfChat?.current?.scrollIntoView({ behavior: "smooth" })
   }
-
+  const [chatBtnDwnAppear, setChatBtnDwnAppear] = useState(false)
+  const handleChatScrlBtn = (event) => {
+    event.currentTarget.scrollHeight - event.currentTarget.scrollTop <= event.currentTarget.clientHeight + 44 ? setChatBtnDwnAppear(false) : setChatBtnDwnAppear(true)
+  }
   return (
     <div className="details chat">
       <div className="content">
@@ -40,7 +43,7 @@ const DetailsChat = () => {
           // User info + Messages + Keyboard
           <div className="body allowed">
             {/* User info + Messages */}
-            <div className="chatbox">
+            <div className="chatbox" onScroll={handleChatScrlBtn}>
               {/* (Only If there is messages, show it) User info + Messages */}
               {two && (
                 <div className="chatbox-content">
@@ -78,12 +81,8 @@ const DetailsChat = () => {
                   <div ref={endOfChat}></div>
                 </div>
               )}
-              <div
-                className="chat-scroll-down"
-                // Add style display:none with thershold
-                // style={{}}
-              >
-                <div onClick={scrollToBottom}>
+              <div className={`chat-scroll-down ${chatBtnDwnAppear ? "" : "hide"}`}>
+                <div onClick={chatBtnDwnAppear ? scrollToBottom : {}}>
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <g>
                       <path d="M13 3v13.59l5.043-5.05 1.414 1.42L12 20.41l-7.457-7.45 1.414-1.42L11 16.59V3h2z"></path>

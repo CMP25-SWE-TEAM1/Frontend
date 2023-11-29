@@ -326,6 +326,12 @@
         position: absolute;
         bottom: 12px;
         right: 15px;
+        opacity: 100%;
+        transition: opacity 0.2s;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chat-scroll-down.hide {
+        opacity: 0;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chat-scroll-down div {
@@ -347,6 +353,10 @@
         border-top-right-radius: 9999px;
         box-shadow: 0 0 8px rgba(101, 119, 134, 0.2), 0 1px 3px 1px rgba(101, 119, 134, 0.25);
         transition: background-color 0.2s;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chat-scroll-down.hide div {
+        cursor: auto;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chat-scroll-down div:hover {
