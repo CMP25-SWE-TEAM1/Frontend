@@ -16,10 +16,13 @@ const DetailsChat = () => {
   const handleChatScrlBtn = (event) => {
     event.currentTarget.scrollHeight - event.currentTarget.scrollTop <= event.currentTarget.clientHeight + 44 ? setChatBtnDwnAppear(false) : setChatBtnDwnAppear(true)
   }
-  // const [messages, setMessages] = useState(null)
-  // const handleSendMessage = (e, message) => {
-  //   setMessages(<Message direction="R" messageText={message} />)
-  // }
+  const [messages, setMessages] = useState(null)
+  const handleSendMessage = (message) => {
+    // TODO:send message
+    console.log("Sent message:", message)
+    // Add message to the chat
+    // Send message in BackEnd
+  }
 
   return (
     <div className="details chat">
@@ -88,6 +91,7 @@ const DetailsChat = () => {
                 </div>
               )}
               <div className={`chat-scroll-down ${chatBtnDwnAppear ? "" : "hide"}`}>
+                {/* Note: onClick console error */}
                 <div onClick={chatBtnDwnAppear ? scrollToBottom : {}}>
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <g>
@@ -97,9 +101,7 @@ const DetailsChat = () => {
                 </div>
               </div>
             </div>
-            <MessageInput
-            // handleSendMessage={handleSendMessage}
-            />
+            <MessageInput handleSendMessage={handleSendMessage} />
           </div>
         )}
       </div>
