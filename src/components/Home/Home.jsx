@@ -20,15 +20,17 @@ const Home = () => {
     mock: { getAllTweetsAPI: "https://d93f6897-d144-47d7-9946-fe63b27f73ea.mock.pstmn.io/testAPIs/tweets" },
     actual: { getAllTweetsAPI: "" },
   }
-  // useEffect(() => {
-  //   axios.get(APIs.mock.getAllTweetsAPI).then((response) => {
-  //     if (response.status === 200) {
-  //       console.log(response.data[0].data.tweet_owner.nickname)
-  //       console.log(response.data)
-  //       setTweets(response.data)
-  //     }
-  //   })
-  // }, [])
+  useEffect(()=>{
+    axios.get(APIs.mock.getAllTweetsAPI).then((response)=>{
+    if(response.status === 200)
+    {
+      console.log(response.data[0].data.tweet_owner.nickname)
+      console.log(response.data)
+      setTweets(response.data);
+    }
+  }).catch(error=>{
+    console.log(error);
+  })},[])
 
   const handleNewTweet = (newTweet) => {
     console.log("handleNewTweet")
