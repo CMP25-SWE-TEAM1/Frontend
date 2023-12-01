@@ -133,7 +133,7 @@ const SignUp = ({ openModal, handleCloseModal }) => {
 
   return (
     <>
-      <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
+      <Modal open={openModal} onClose={handleCloseModal} data-testid="signupModal" className="w-[90%]" disableEscapeKeyDown disablePortal>
         <Box style={styles.modalStyle}>
           <div className="pop-up m-auto bg-white dark:bg-black md:rounded-2xl">
             <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>

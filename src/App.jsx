@@ -3,7 +3,7 @@ import Sidebar from "./components/Sidebar/Sidebar"
 import Widgets from "./components/Widgets"
 import Home from "./components/Home/Home"
 import Login from "./components/Login/Login"
-import PasswordReset from "./components/Login/PasswordReset"
+import PasswordReset from "./components/PasswordReset/PasswordReset"
 import Landing from "./components/landing-page/Landing"
 import Settings from "./components/Settings/Settings"
 import { useState, useEffect } from "react"
@@ -82,7 +82,7 @@ const App = () => {
               </>
             }
           ></Route>
-          <Route path="login" element={<Login openModal={true} handleCloseModal={handleCloseLoginModal} location={location} setLocation={setLocation} />}></Route>
+          <Route path="login" element={<Login openModal={true} handleCloseModal={handleCloseLoginModal} setLocation={setLocation} />}></Route>
           <Route path="password_reset" element={<PasswordReset />}></Route>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/messages" element={<Messages />}></Route>

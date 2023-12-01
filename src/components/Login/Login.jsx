@@ -103,7 +103,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
 
   return (
     <>
-      <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
+      <Modal open={openModal} onClose={handleCloseModal} data-testid="loginModal" className="w-[90%]" disableEscapeKeyDown disablePortal>
         <Box style={styles.modalStyle}>
           <div className="pop-up m-auto bg-white dark:bg-black md:rounded-2xl">
             <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>
@@ -146,7 +146,9 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                 <span className="mt-5 text-slate-400">
                   Don't have an account? <Link to={"/Signup"}>Sign Up</Link>{" "}
                 </span>
-                {emailExistError && <Alert severity="error">sorry we couldn't find your email</Alert>}
+                <Alert severity="error" data-testid="emailExistError" className={`${emailExistError ? "" : "hidden"}`}>
+                  sorry we couldn't find your email
+                </Alert>
               </div>
             </div>
 
@@ -156,7 +158,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                 <h1 className="text-4xl">Enter your password</h1>
                 <form action="/" method="post" className="flex flex-col gap-5" autoComplete="off" onSubmit={handleLoginEvent}>
                   <div className="input-container">
-                    <input type="text" name="username" id="username" value={userName} className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
+                    <input type="text" name="username" id="username" data-testid="emailInput" value={userName} className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
                     <label className="input-label" htmlFor="username">
                       Phone, email or username
                     </label>
@@ -172,11 +174,9 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                       <VisibilityIcon className="text-primary" />
                     </span>
                   </div>
-                  {loginError && (
-                    <Alert severity="error" sx={styles.signupPasswordCheckStyleMiddle}>
-                      {error}
-                    </Alert>
-                  )}
+                  <Alert severity="error" sx={styles.signupPasswordCheckStyleMiddle} className={`${loginError ? "" : "hidden"}`}>
+                    {error}
+                  </Alert>
 
                   <Link
                     onClick={() => {
@@ -184,6 +184,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                     }}
                     to={"/password_reset"}
                     className=" text-xs text-primary"
+                    data-testid="forgetPassword"
                   >
                     Forgot password?
                   </Link>

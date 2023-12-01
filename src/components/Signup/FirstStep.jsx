@@ -34,13 +34,13 @@ const FirstStep = ({ nickName, setNickName, email, setEmail, month, setMonth, da
         <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 1 of 5</p>
         <h1 className="mt-3">Create your account</h1>
         <div className="input-container">
-          <input className={nickName === "" ? "form-input" : "form-input filled-input"} type="text" name="name" id="name" autoComplete="off" value={nickName} onChange={(e) => setNickName(e.target.value)} />
+          <input className={nickName === "" ? "form-input" : "form-input filled-input"} type="text" data-testid="nameInput" name="name" id="name" autoComplete="off" value={nickName} onChange={(e) => setNickName(e.target.value)} />
           <label className="input-label" htmlFor="name">
             Name
           </label>
         </div>
         <div className="input-container">
-          <input className={`${email === "" ? "form-input" : "form-input filled-input"} ${emailExistError ? "border border-red-600" : ""}`} type="text" name="email" id="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleEmailBlur} />
+          <input className={`${email === "" ? "form-input" : "form-input filled-input"} ${emailExistError ? "border border-red-600" : ""}`} type="text" data-testid="emailInput" name="email" id="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleEmailBlur} />
           <label className={`input-label ${emailExistError ? "text-red-600" : "text-secondary"}`} htmlFor="email">
             Email
           </label>
@@ -49,7 +49,7 @@ const FirstStep = ({ nickName, setNickName, email, setEmail, month, setMonth, da
               Please enter a valid email
             </Alert>
           )}
-          {emailExistError && <span className="ml-3 text-sm text-red-600">Email has already been taken</span>}
+          <span className={`ml-3 text-sm text-red-600 ${emailExistError ? "" : "hidden"}`}>Email has already been taken</span>
         </div>
         <div className={`${emailExistError ? "-mt-5" : ""} input-containter`}>
           <div>
