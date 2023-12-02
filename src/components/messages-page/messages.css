@@ -698,7 +698,27 @@
         height: 150px;
         border-radius: 12px;
         overflow: hidden;
+        position: relative;
+    }
 
+    .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div .cancel-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #4A4B49;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        fill: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transform: translate(-5px, 5px);
+    }
+
+    .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div .cancel-btn:hover {
+        background-color: #5b5c5a;
     }
 
     .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div>img {
