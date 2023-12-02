@@ -55,7 +55,7 @@ const MessageInput = (props) => {
               InputProps={{
                 disableUnderline: true,
               }}
-              placeholder="Start a new message"
+              // placeholder="Start a new message"
               id="message-input-filed"
               onChange={handleChange}
               onKeyDown={handleKeyDown}
