@@ -31,11 +31,12 @@ const Birthdate = ({ month, setMonth, day, setDay, year, setYear }) => {
             "&& .MuiFormLabel-root": {
               color: "#9aa1ad",
             },
-            minWidth: 200,
+            minWidth: 120,
           }}
         >
           <InputLabel id="demo-simple-select-label">Month</InputLabel>
           <Select
+            data-testid="monthSelect"
             value={month}
             label="Age"
             onChange={handleChangeMonth}
@@ -74,7 +75,7 @@ const Birthdate = ({ month, setMonth, day, setDay, year, setYear }) => {
             }}
           >
             {months.map((month) => (
-              <MenuItem value={month} key={month}>
+              <MenuItem value={month} key={month} data-testid={month}>
                 {month}
               </MenuItem>
             ))}
@@ -93,6 +94,7 @@ const Birthdate = ({ month, setMonth, day, setDay, year, setYear }) => {
         >
           <InputLabel id="demo-simple-select-label">Day</InputLabel>
           <Select
+            data-testid="daySelect"
             value={day}
             label="Day"
             onChange={handleChangeDay}
@@ -131,7 +133,7 @@ const Birthdate = ({ month, setMonth, day, setDay, year, setYear }) => {
             }}
           >
             {days.map((day) => (
-              <MenuItem value={day} key={day}>
+              <MenuItem value={day} key={day} data-testid={day}>
                 {day}
               </MenuItem>
             ))}
@@ -150,6 +152,7 @@ const Birthdate = ({ month, setMonth, day, setDay, year, setYear }) => {
         >
           <InputLabel id="demo-simple-select-label">Year</InputLabel>
           <Select
+            data-testid="yearSelect"
             value={year}
             label="Year"
             onChange={handleChangeYear}
@@ -188,7 +191,7 @@ const Birthdate = ({ month, setMonth, day, setDay, year, setYear }) => {
             }}
           >
             {last120Years.map((year) => (
-              <MenuItem value={year} key={year}>
+              <MenuItem value={year} key={year} data-testid={year}>
                 {year}
               </MenuItem>
             ))}

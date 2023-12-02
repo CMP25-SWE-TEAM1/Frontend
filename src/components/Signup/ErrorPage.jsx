@@ -19,8 +19,8 @@ const ErrorPage = ({ setDay, setMonth, setYear, setNickName, setEmail, openBirth
     handleCloseBirthdateErrorModal()
   }
   return (
-    <div id="Error Page" className="-mt-10 hidden">
-      <div>
+    <div id="Error Page" className="m-auto -mt-10 hidden w-[320px]">
+      <div className="!h-fit">
         <Modal className="relative" open={openBirthdateErrorModal} onClose={handleCloseBirthdateErrorModal} disableEscapeKeyDown disablePortal aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
           <Box
             sx={{

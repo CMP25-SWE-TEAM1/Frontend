@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import {  useNavigate } from "react-router-dom"
 
 import { Modal, Box } from "@mui/material"
@@ -131,12 +131,48 @@ const SignUp = ({ openModal, handleCloseModal }) => {
     })
   }
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  // Update the window width when the component mounts
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    // Remove the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+
+  const modalStyle = {
+    position: "absolute",
+
+    backgroundColor: "transparent",
+    border: "1px solid #767C86",
+    borderRadius: "16px",
+  }
+
+  if (windowWidth < 700) {
+    modalStyle.width = "100vw"
+    modalStyle.height = "100vh"
+    modalStyle.maxWidth = "none" // optional, to remove any max-width constraints
+  } else {
+    modalStyle.width = "601.6px"
+    modalStyle.height = "651.6px"
+    modalStyle.top = "50%"
+    modalStyle.left = "50%"
+    modalStyle.transform = "translate(-50%, -50%)"
+    modalStyle.maxWidth = "none" // optional, to remove any max-width constraints
+  }
   return (
     <>
-      <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
-        <Box style={styles.modalStyle}>
-          <div className="pop-up m-auto bg-white dark:bg-black md:rounded-2xl">
-            <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>
+      <Modal open={openModal} onClose={handleCloseModal} data-testid="signupModal" className="w-[90%]" disableEscapeKeyDown disablePortal>
+        <Box style={modalStyle}>
+          <div className="pop-up m-auto min-w-[350px] bg-white dark:bg-black md:rounded-2xl">
+            <button className="relative  top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>
               x
             </button>
 
@@ -152,7 +188,7 @@ const SignUp = ({ openModal, handleCloseModal }) => {
 
             <ForthStep setUserTag={setUserTag} setOriginalUsername={setOriginalUsername} setUser={setUser} setUserToken={setUserToken} nextShow={nextShow} handleOpenBirthdateError={handleOpenBirthdateError} mock={mock} email={email} />
 
-            <FifthStep mock={mock} userToken={userToken} userTag={userTag} setUser={setUser}  nextShow={nextShow} password={password} setPassword={setPassword} />
+            <FifthStep mock={mock} userToken={userToken} userTag={userTag} setUser={setUser} nextShow={nextShow} password={password} setPassword={setPassword} />
 
             <TagStep mock={mock} userTag={userTag} setUserTag={setUserTag} originalUsername={originalUsername} userToken={userToken} user={user} setUser={setUser} nextShow={nextShow} />
 
