@@ -635,18 +635,18 @@
     }
 
     /* ================== Chat - Message Input - Emojis ================== */
-    .messages-page .details.chat .content .body.allowed .keyboard .content .icons .emoji-icon {
+    /* .messages-page .details.chat .content .body.allowed .keyboard .content .icons .emoji-icon {
         position: relative
-    }
+    } */
 
-    .messages-page .details.chat .content .body.allowed .keyboard .content .icons .emoji-icon .giga-emoji-picker {
+    .messages-page .details.chat .content .body.allowed .keyboard .content .icons .giga-emoji-picker {
         position: absolute;
         top: 0;
         /* padding: 10px; */
         /* background-color: white; */
         border-radius: 12px;
         font-size: 14px;
-        transform: translateY(calc(-100% - 20px));
+        transform: translateY(calc(-100% - 20px)) translateX(-50%);
         border: none;
         box-shadow: 0 0 8px rgba(101, 119, 134, 0.2), 0 1px 3px 1px rgba(101, 119, 134, 0.25);
     }
