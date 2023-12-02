@@ -4,17 +4,7 @@ import { createTheme } from "@mui/material"
 import ReactEmojiPicker from "./ReactEmojiPicker"
 import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
-import { experimentalStyled as styled } from "@mui/material/styles"
-import Paper from "@mui/material/Paper"
 import Grid from "@mui/material/Grid"
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(2),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}))
 
 const modalStyle = {
   position: "absolute",
@@ -61,8 +51,13 @@ const MessageInput = (props) => {
   const handleSndMsg = () => {
     if (newMessageText !== "" || newMessageMedia !== undefined) {
       // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
-      if (newMessageMedia) handleSendMessage(newMessageText, "https://www.harrisburgu.edu/wp-content/uploads/189dce017fb19e3ca1b94b2095d519cc514df22c.jpg", "Img")
-      else handleSendMessage(newMessageText)
+      if (newMessageMedia) {
+        if(newMessageMediaType==="Img")
+          handleSendMessage(newMessageText, "https://www.harrisburgu.edu/wp-content/uploads/189dce017fb19e3ca1b94b2095d519cc514df22c.jpg", newMessageMediaType)
+        else
+        handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
+      }
+        else handleSendMessage(newMessageText)
     }
     // Reset values
     setNewMessage("")
@@ -113,6 +108,13 @@ const MessageInput = (props) => {
   const [GIFsModalOpen, setGIFsModalOpen] = useState(false)
   const handleGIFsModalOpen = () => setGIFsModalOpen(true)
   const handleGIFsModalClose = () => setGIFsModalOpen(false)
+  // GIF Input
+  const handleGIFSelect = (e, MediaURL, MediaType) => {
+    setNewMessageMedia(MediaURL)
+    setMediaInputPreview(MediaURL)
+    setNewMessageMediaType(MediaType)
+    handleGIFsModalClose()
+  }
 
   return (
     <div className="keyboard">
@@ -172,7 +174,14 @@ const MessageInput = (props) => {
                     </g>
                   </svg>
                 </div>
-                <img src={mediaInputPreview} alt="attached media" />
+                {newMessageMediaType === "Img" && <img src={mediaInputPreview} alt="attached media" />}
+                {
+                  newMessageMediaType === "GIF" && (
+                    // <div className="relative cursor-pointer overflow-hidden rounded-md">
+                    <video src={mediaInputPreview} alt="attached media" loop autoPlay muted preload="auto" playsInline type="video/mp4" className="max-w-full"></video>
+                  )
+                  // </div>
+                }
               </div>
             </div>
           )}
@@ -219,8 +228,12 @@ const MessageInput = (props) => {
           <Grid container spacing={1} columns={{ xs: 4, sm: 8, md: 12 }}>
             {gifsData.map((gifData, index) => (
               <Grid item xs={2} sm={4} md={4} key={index} className="">
-                {/* </Item> */}
-                <div className="relative cursor-pointer overflow-hidden rounded-md">
+                <div
+                  className="relative cursor-pointer overflow-hidden rounded-md"
+                  onClick={(e) => {
+                    handleGIFSelect(e, gifData.gif, "GIF")
+                  }}
+                >
                   <video src={gifData.gif} alt={gifData.title} loop autoPlay muted preload="auto" playsInline type="video/mp4" className="max-w-full"></video>
                 </div>
                 <p className="text-center">{gifData.title}</p>
@@ -239,7 +252,7 @@ const gifsData = [
     title: "Breakfast",
   },
   {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
     title: "Burger",
   },
   {
@@ -247,7 +260,7 @@ const gifsData = [
     title: "Camera",
   },
   {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
     title: "Coffee",
   },
   {
@@ -255,7 +268,7 @@ const gifsData = [
     title: "Hats",
   },
   {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
     title: "Honey",
   },
   {
@@ -263,7 +276,7 @@ const gifsData = [
     title: "Basketball",
   },
   {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
     title: "Fern",
   },
   {
@@ -271,7 +284,7 @@ const gifsData = [
     title: "Mushrooms",
   },
   {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
     title: "Tomato basil",
   },
   {
@@ -279,7 +292,7 @@ const gifsData = [
     title: "Sea star",
   },
   {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
     title: "Bike",
   },
   {
@@ -287,7 +300,7 @@ const gifsData = [
     title: "Mushrooms",
   },
   {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
     title: "Tomato basil",
   },
   {
@@ -295,7 +308,7 @@ const gifsData = [
     title: "Sea star",
   },
   {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
     title: "Bike",
   },
   {
@@ -303,7 +316,7 @@ const gifsData = [
     title: "Mushrooms",
   },
   {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
     title: "Tomato basil",
   },
   {
@@ -311,7 +324,7 @@ const gifsData = [
     title: "Sea star",
   },
   {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
     title: "Bike",
   },
 ]

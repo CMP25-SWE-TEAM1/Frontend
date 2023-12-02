@@ -715,13 +715,15 @@
         align-items: center;
         cursor: pointer;
         transform: translate(-5px, 5px);
+        z-index: 400;
     }
 
     .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div .cancel-btn:hover {
         background-color: #5b5c5a;
     }
 
-    .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div>img {
+    .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div>img,
+    .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div>video {
         max-width: 100%;
         max-height: 100%;
     }
