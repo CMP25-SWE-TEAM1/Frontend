@@ -89,6 +89,8 @@ const DetailsChat = () => {
   }
   const handleDeleteMsg = (msgId) => {
     let newMessagesData = messagesData.filter((msg) => msg.id !== msgId)
+    console.log("messages data", messagesData)
+    console.log("new messages data", newMessagesData)
     setMessagesData(newMessagesData)
   }
 
@@ -144,7 +146,7 @@ const DetailsChat = () => {
                   {/* Messages */}
                   <div className="messages">
                     {messagesData.map((msg) => (
-                      <Message direction={msg.direction} messageText={msg.messageText} key={msg.id} deleteMessage={handleDeleteMsg} />
+                      <Message direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
                     ))}
                   </div>
                   <div ref={endOfChat}></div>

@@ -32,7 +32,7 @@ const MessageTools = (props) => {
     setIsDeleteMessageVisible(true)
   }
   const handleDeleteMsg = () => {
-    console.log("message is deleted")
+    console.log(`message with id(${messageId}) is deleted!`)
     deleteMessage(messageId)
     setIsDeleteMessageVisible(false)
   }
