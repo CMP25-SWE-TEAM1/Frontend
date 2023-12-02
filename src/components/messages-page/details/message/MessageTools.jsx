@@ -10,6 +10,7 @@ const MessageTools = (props) => {
   const visibiltyStyle = props.visibiltyStyle
   const [isAlertVisible, setIsAlertVisible] = useState(false)
   const [alertVTimeOut, setAlertVTimeOut] = useState(null)
+  const [isDeleteMessageVisible, setIsDeleteMessageVisible] = useState(false)
 
   // const handleReply = () => {
   //   hideMsgTools()
@@ -27,6 +28,8 @@ const MessageTools = (props) => {
   }
   const handleDelete = () => {
     hideMsgTools()
+    setIsDeleteMessageVisible(true)
+    console.log("delete message invoked")
   }
   return (
     <>
@@ -71,6 +74,20 @@ const MessageTools = (props) => {
         </ul>
       </div>
       {isAlertVisible && <div className="message-copied-pop">Copied to clipboard</div>}
+      {isDeleteMessageVisible && (
+        <div className="message-delete-pop">
+          <div className="delete-pop-content">
+            <h1 className="delete-pop-head">Delete message?</h1>
+            <div className="delete-pop-description">This message will be deleted for you. Other people in the conversation will still be able to see it. </div>
+            <div className="delete-pop-choices">
+              <ul>
+                <li className="delete">Delete</li>
+                <li className="cancel">Cancel</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }
