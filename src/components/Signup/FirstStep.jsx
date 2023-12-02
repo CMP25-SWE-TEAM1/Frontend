@@ -8,19 +8,20 @@ import Birthdate from "./Birthdate.jsx"
 
 const FirstStep = ({ nickName, setNickName, email, setEmail, month, setMonth, day, setDay, year, setYear, nextShow, emailExistError, setEmailExistError, validEmail, mock }) => {
   const handleEmailBlur = () => {
-    let emailExist
+    // let emailExist
     axios
       .post(mock ? APIs.mock.emailExistAPI : APIs.actual.emailExistAPI, { email: email })
       .then((res) => {
-        emailExist = res.data.message === "Email is existed"
+        setEmailExistError(res.data.message === "Email is existed")
+        // emailExist = res.data.message === "Email is existed"
       })
-      .then(() => {
-        if (emailExist) {
-          setEmailExistError(true)
-        } else {
-          setEmailExistError(false)
-        }
-      })
+      // .then(() => {
+      //   if (emailExist) {
+      //     setEmailExistError(true)
+      //   } else {
+      //     setEmailExistError(false)
+      //   }
+      // })
       .catch((err) => {
         setEmailExistError(false)
 
@@ -65,6 +66,7 @@ const FirstStep = ({ nickName, setNickName, email, setEmail, month, setMonth, da
           onClick={() => {
             nextShow(1)
           }}
+          data-testid="firstPageNext"
           disabled={email === "" || nickName === "" || year === "" || month === "" || day === "" || !validEmail(email) || emailExistError}
         >
           Next
