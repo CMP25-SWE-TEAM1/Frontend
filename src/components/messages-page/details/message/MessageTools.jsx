@@ -1,9 +1,26 @@
+import copyToClipboard from "copy-to-clipboard"
+import { useState } from "react"
+
 const MessageTools = (props) => {
   const messageId = props.messageId
+  const messageMedia = props.messageMedia
+  const messageText = props.messageText
+  const hideMsgTools = props.hideMsgTools
   const visibiltyStyle = props.visibiltyStyle
+  const [isAlertVisible, setIsAlertVisible] = useState(false)
+  const [alertVTimeOut, setAlertVTimeOut] = useState(null)
 
   const handleReply = () => {}
-  const handleCopy = () => {}
+  const handleCopy = () => {
+    copyToClipboard(`${messageText}\n${messageMedia ? messageMedia : ""}`)
+    clearTimeout(alertVTimeOut)
+    setIsAlertVisible(true)
+    setAlertVTimeOut(
+      setTimeout(() => {
+        setIsAlertVisible(false)
+      }, 2250)
+    )
+  }
   const handleDelete = () => {}
   return (
     <div className="message-tools" style={{ display: visibiltyStyle }}>
@@ -45,6 +62,7 @@ const MessageTools = (props) => {
           </div>
         </li>
       </ul>
+      {isAlertVisible && <div className="message-copied-pop">Copied to clipboard</div>}
     </div>
   )
 }

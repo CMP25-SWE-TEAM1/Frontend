@@ -8,6 +8,8 @@ const Message = (props) => {
     setMsgToolsVisibile(!msgToolsVisibile)
     msgToolsVisibile ? setMsgToolsVisibiltyStyle("block") : setMsgToolsVisibiltyStyle("none")
   }
+  const messageMedia = props.messageMedia
+  const messageText = props.messageText
 
   // {/* [Message Received] Message-content + message-info */}
   return (
@@ -18,13 +20,13 @@ const Message = (props) => {
         <div className="message-box">
           <div className="message-data">
             {/* Message image OR GIF */}
-            {props.messageMedia && (
+            {messageMedia && (
               <div className="message-media">
-                <img src={props.messageMedia} alt="attachment" />
+                <img src={messageMedia} alt="attachment" />
               </div>
             )}
             {/* Message Text */}
-            {props.messageText && <div className="message-text">{props.messageText}</div>}
+            {messageText && <div className="message-text">{messageText}</div>}
           </div>
           {/* Message Interaction */}
           <div className="message-interaction">
@@ -43,7 +45,7 @@ const Message = (props) => {
                 }}
                 style={{ display: msgToolsVisibiltyStyle }}
               ></div>
-              <MessageTools visibiltyStyle={msgToolsVisibiltyStyle} />
+              <MessageTools messageMedia={messageMedia} messageText={messageText} hideMsgTools={handleMsgToolsVisibilty} visibiltyStyle={msgToolsVisibiltyStyle} />
               <div
                 className="message-more"
                 title="More"

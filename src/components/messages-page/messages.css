@@ -648,6 +648,7 @@
         left: 0;
         top: 0;
         z-index: 100;
+        cursor: default;
     }
 
     .messages-page .details.chat .content .body.allowed .keyboard .content .icons .giga-emoji-picker {
@@ -683,6 +684,19 @@
         overflow: hidden;
         box-shadow: 0 0 15px rgba(101, 119, 134, 0.2), 0 0 3px 1px rgba(101, 119, 134, 0.15);
         z-index: 101;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools .message-copied-pop {
+        position: fixed;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1D9BF0;
+        color: white;
+        font-size: 15px;
+        font-weight: 400;
+        padding: 10px 20px;
+        border-radius: 4px;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools ul li {}
