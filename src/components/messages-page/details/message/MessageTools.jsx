@@ -11,9 +11,9 @@ const MessageTools = (props) => {
   const [isAlertVisible, setIsAlertVisible] = useState(false)
   const [alertVTimeOut, setAlertVTimeOut] = useState(null)
 
-  const handleReply = () => {
-    hideMsgTools()
-  }
+  // const handleReply = () => {
+  //   hideMsgTools()
+  // }
   const handleCopy = () => {
     hideMsgTools()
     copyToClipboard(`${messageText}\n${messageMedia ? messageMedia : ""}`)
@@ -32,7 +32,7 @@ const MessageTools = (props) => {
     <>
       <div className={`message-tools ${msgToolsPosition === "T" ? "to-top" : "to-bottom"}`} style={{ display: visibiltyStyle }}>
         <ul>
-          <li className="reply-tool" onClick={handleReply}>
+          {/* <li className="reply-tool" onClick={handleReply}>
             <div className="tool-content">
               <div className="tool-icon">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -43,7 +43,7 @@ const MessageTools = (props) => {
               </div>
               <div className="tool-text">Reply</div>
             </div>
-          </li>
+          </li> */}
           <li className="copy-tool" onClick={handleCopy}>
             <div className="tool-content">
               <div className="tool-icon">
