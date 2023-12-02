@@ -14,7 +14,6 @@ import ChangeUsername from "./components/Settings/Account/ChangeUsername"
 import ChangeEmail from "./components/Settings/Account/ChangeEmail"
 import ChangePassword from "./components/Settings/Account/ChangePassword"
 import AccessibilityDisplayLanguages from "./components/Settings/AccessibilityDisplayLanguages/AccessibilityDisplayLanguages"
-import Accessibility from "./components/Settings/AccessibilityDisplayLanguages/Accessibility"
 import Display from "./components/Settings/AccessibilityDisplayLanguages/Display"
 import PrivacySafety from "./components/Settings/PrivacySafety/PrivacySafety"
 import Blocked from "./components/Settings/PrivacySafety/Blocked"
@@ -98,7 +97,6 @@ const App = () => {
             <Route path="muted" element={<Muted />}></Route>
 
             <Route path="accessibility_display_and_languages" element={<AccessibilityDisplayLanguages />}></Route>
-            <Route path="accessibility" element={<Accessibility />}></Route>
             <Route path="display" element={<Display />}></Route>
           </Route>
 

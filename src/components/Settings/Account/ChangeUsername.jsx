@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import axios from "axios"
+import { changeUsername } from "../../../store/UserSlice"
 
 const ChangeUsername = () => {
   const [userName, setUserName] = useState("")
@@ -10,9 +11,11 @@ const ChangeUsername = () => {
   const [errorMsg, setErrorMsg] = useState("")
 
   const APIs = {
-    mock: { ChangeUsernameAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/changeUsername" },
+    mock: { ChangeUsernameAPI: "http://localhost:3001/changeUsername" },
     actual: { ChangeUsernameAPI: "" },
   }
+
+  const dispatch = useDispatch() 
 
   const handleChangeUsername = () => {
     setErrorMsg("")
@@ -20,13 +23,13 @@ const ChangeUsername = () => {
       .patch(APIs.mock.ChangeUsernameAPI, { userName: userName })
       .then((res) => {
         if (res.status == 200) {
+          dispatch(changeUsername(userName))
           window.location.href = '/settings/account';
         }
       })
       .catch((err) => {
-        if (err.response.status == 401 || err.response.status == 404) {
-          setErrorMsg("Error changing username, please try again later")
-        } else console.log(err)
+        setErrorMsg("Error changing username, please try again later")
+        console.log(err)
       })
   }
 
