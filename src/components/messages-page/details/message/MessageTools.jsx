@@ -8,6 +8,7 @@ const MessageTools = (props) => {
   const hideMsgTools = props.hideMsgTools
   const msgToolsPosition = props.msgToolsPosition
   const visibiltyStyle = props.visibiltyStyle
+  const deleteMessage = props.deleteMessage
   const [isAlertVisible, setIsAlertVisible] = useState(false)
   const [alertVTimeOut, setAlertVTimeOut] = useState(null)
   const [isDeleteMessageVisible, setIsDeleteMessageVisible] = useState(false)
@@ -32,6 +33,7 @@ const MessageTools = (props) => {
   }
   const handleDeleteMsg = () => {
     console.log("message is deleted")
+    deleteMessage(messageId)
     setIsDeleteMessageVisible(false)
   }
   return (
