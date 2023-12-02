@@ -11,16 +11,16 @@ const PostsContainer = ({ posts }) => {
       {posts.map((p) => (
         <Post
           userProfilePicture={profilePicTest}
-          userName={p.data.tweet_owner.nickname}
-          userTag={p.data.tweet_owner.username}
-          date={p.data.creation_time}
+          userName={p.tweetDetails.tweet_owner.nickname}
+          userTag={p.tweetDetails.tweet_owner.username}
+          date={p.tweetDetails.createdAt}
           media={profilePicTest}
-          description={p.data.description}
-          replyCount={p.data.repliesNum}
-          repostCount={p.data.repostsNum}
-          likeCount={p.data.likesNum}
-          viewCount={p.data.viewsNum}
-          key={p.data.tweet_owner.username}
+          description={p.tweetDetails.description}
+          replyCount={p.tweetDetails.repliesNum}
+          repostCount={p.tweetDetails.repostsNum}
+          likeCount={p.tweetDetails.likesNum}
+          viewCount={p.tweetDetails.viewsNum}
+          key={p.tweetDetails.tweet_owner.username}
         />
       ))}
     </div>
