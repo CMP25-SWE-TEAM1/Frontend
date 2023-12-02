@@ -707,7 +707,7 @@
         cursor: default;
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-delete-pop {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-delete-pop .delete-pop-bg-lock {
         position: fixed;
         top: 0;
         left: 0;
