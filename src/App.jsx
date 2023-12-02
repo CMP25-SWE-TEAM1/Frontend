@@ -13,7 +13,7 @@ import AccountInformation from "./components/Settings/Account/AccountInformation
 import ChangeUsername from "./components/Settings/Account/ChangeUsername"
 import ChangeEmail from "./components/Settings/Account/ChangeEmail"
 import ChangePassword from "./components/Settings/Account/ChangePassword"
-import AccessibilityDisplayLanguages from "./components/Settings/AccessibilityDisplayLanguages/AccessibilityDisplayLanguages"
+import AccessibilityDisplayLanguages from './components/Settings/AccessibilityDisplayLanguages/AccessibilityDisplayLanguages'
 import Display from "./components/Settings/AccessibilityDisplayLanguages/Display"
 import PrivacySafety from "./components/Settings/PrivacySafety/PrivacySafety"
 import Blocked from "./components/Settings/PrivacySafety/Blocked"
