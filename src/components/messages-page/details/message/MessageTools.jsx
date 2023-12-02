@@ -10,8 +10,11 @@ const MessageTools = (props) => {
   const [isAlertVisible, setIsAlertVisible] = useState(false)
   const [alertVTimeOut, setAlertVTimeOut] = useState(null)
 
-  const handleReply = () => {}
+  const handleReply = () => {
+    hideMsgTools()
+  }
   const handleCopy = () => {
+    hideMsgTools()
     copyToClipboard(`${messageText}\n${messageMedia ? messageMedia : ""}`)
     clearTimeout(alertVTimeOut)
     setIsAlertVisible(true)
@@ -21,7 +24,9 @@ const MessageTools = (props) => {
       }, 2250)
     )
   }
-  const handleDelete = () => {}
+  const handleDelete = () => {
+    hideMsgTools()
+  }
   return (
     <>
       <div className="message-tools" style={{ display: visibiltyStyle }}>
