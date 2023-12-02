@@ -53,7 +53,7 @@ const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, 
               By signing up, you agree to the <a href="#/tos">Terms of Service</a> and <a href="#/privacy">Privacy Policy</a>, including <a href="help.#/rules-and-policies/twitter-cookies">Cookie Use.</a>
             </span>
             <span className="acc-exist">Already have an account?</span>
-            <div onClick={handleOpenLoginModal} className="login hover:cursor-pointer">
+            <div onClick={handleOpenLoginModal} className="login hover:cursor-pointer" id="mahmoud_signin_button">
               Sign in
             </div>
           </div>

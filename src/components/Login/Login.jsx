@@ -105,7 +105,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
     <>
       <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
         <Box style={styles.modalStyle}>
-          <div className="pop-up m-auto bg-white dark:bg-black md:rounded-2xl">
+          <div className="pop-up m-auto bg-white dark:bg-black md:rounded-2xl" id="mahmoud_login_box">
             <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>
               x
             </button>
@@ -154,7 +154,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
             <div id="secondPage" className="hidden">
               <div>
                 <h1 className="text-4xl">Enter your password</h1>
-                <form action="/" method="post" className="flex flex-col gap-5" autoComplete="off" onSubmit={handleLoginEvent}>
+                <form action="/" method="post" className="flex flex-col gap-5" autoComplete="off" onSubmit={handleLoginEvent} id="mahmoud_form">
                   <div className="input-container">
                     <input type="text" name="username" id="username" value={userName} className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
                     <label className="input-label" htmlFor="username">
@@ -168,7 +168,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                         Password
                       </label>
                     </div>
-                    <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}>
+                    <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility} id="mahmoud_sees_you">
                       <VisibilityIcon className="text-primary" />
                     </span>
                   </div>

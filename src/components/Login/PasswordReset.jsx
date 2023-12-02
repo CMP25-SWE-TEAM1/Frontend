@@ -71,7 +71,7 @@ const PasswordReset = () => {
 
         {/* --------------------------------------Third Password Reset Page------------------------------------- */}
         <div id="page3" className="hidden">
-          <div>
+          <div id="mahmoud_signature">
             <h1>Where should we send a confirmation code?</h1>
             <p className="text-sm text-zinc-600 ">Before you can change your password, we need to make sure it&apos;s really you.</p>
             <p className="text-sm text-zinc-600 ">Start by choosing where to send a confirmation code.</p>
