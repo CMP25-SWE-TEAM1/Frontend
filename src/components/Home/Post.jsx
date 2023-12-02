@@ -21,6 +21,8 @@ import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
 const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostCount, likeCount, viewCount, description, media }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
 
+  const descriptionLines = description.split("\n");
+
   const openMenu = Boolean(anchorPostMenu)
 
   const handleMenuButtonClick = (event) => {
@@ -129,7 +131,7 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
           </div>
           <div className="post-text">
             <div className="max-h-[100px] overflow-hidden text-start dark:text-gray-300" data-testid="post-text-id">
-              {description}
+              {descriptionLines.map(line => <p>{line}<br/></p>)}
             </div>
             {/* <div>show more</div> */}
           </div>
