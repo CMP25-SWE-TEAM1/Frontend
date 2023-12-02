@@ -57,7 +57,7 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
         <div className=" h-60 w-10 sm:mr-3">
           <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
         </div>
-        <div className=" sm:mr-2">
+        <div className=" sm:mr-2 w-full">
           <div className="post-header flex items-center justify-between">
             <div className="flex items-center">
               <Link className="hover:underline" to="/mohamedsamir">
@@ -137,7 +137,7 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
           </div>
           <div className="mt-3">
             <Link>
-              <img src={media} alt="" className="rounded-xl" />
+              <img src={media} alt="" className="rounded-xl w-full" />
             </Link>
           </div>
           <div className="mt-3 flex max-w-full justify-between text-ternairy dark:text-secondary">

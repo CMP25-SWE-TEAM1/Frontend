@@ -14,7 +14,7 @@ const PostsContainer = ({ posts }) => {
           userName={p.tweetDetails.tweet_owner.nickname}
           userTag={p.tweetDetails.tweet_owner.username}
           date={p.tweetDetails.createdAt}
-          media={profilePicTest}
+          media={p.tweetDetails.media[0].data}
           description={p.tweetDetails.description}
           replyCount={p.tweetDetails.repliesNum}
           repostCount={p.tweetDetails.repostsNum}
