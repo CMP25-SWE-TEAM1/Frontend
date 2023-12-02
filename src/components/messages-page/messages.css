@@ -666,13 +666,19 @@
 
     /* ================== Chat - Message - More (Copy/Reply/Delte) ================== */
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-interaction .message-tools {
-        top: 0;
         left: 0;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-box .message-interaction .message-tools {
-        top: 0;
         right: 0;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools.to-top {
+        bottom: 0;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools.to-bottom {
+        top: 0;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools {
@@ -686,7 +692,7 @@
         z-index: 101;
     }
 
-    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools .message-copied-pop {
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-copied-pop {
         position: fixed;
         bottom: 50px;
         left: 50%;
@@ -697,6 +703,8 @@
         font-weight: 400;
         padding: 10px 20px;
         border-radius: 4px;
+        z-index: 105;
+        cursor: default;
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools ul li {}

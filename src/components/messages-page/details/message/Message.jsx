@@ -1,11 +1,16 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import MessageTools from "./MessageTools"
 
 const Message = (props) => {
+  const msgToolsRef = useRef(null)
+  const [msgToolsPosition, setMsgToolsPosition] = useState("T")
   const [msgToolsVisibile, setMsgToolsVisibile] = useState(false)
   const [msgToolsVisibiltyStyle, setMsgToolsVisibiltyStyle] = useState("none")
   const handleMsgToolsVisibilty = () => {
     setMsgToolsVisibile(!msgToolsVisibile)
+    const rectMsgTools = msgToolsRef.current.getBoundingClientRect()
+    if (rectMsgTools.bottom >= window.innerHeight - rectMsgTools.bottom) setMsgToolsPosition("T")
+    else setMsgToolsPosition("B")
     msgToolsVisibile ? setMsgToolsVisibiltyStyle("block") : setMsgToolsVisibiltyStyle("none")
   }
   const messageMedia = props.messageMedia
@@ -45,13 +50,14 @@ const Message = (props) => {
                 }}
                 style={{ display: msgToolsVisibiltyStyle }}
               ></div>
-              <MessageTools messageMedia={messageMedia} messageText={messageText} hideMsgTools={handleMsgToolsVisibilty} visibiltyStyle={msgToolsVisibiltyStyle} />
+              <MessageTools messageMedia={messageMedia} messageText={messageText} hideMsgTools={handleMsgToolsVisibilty} msgToolsPosition={msgToolsPosition} visibiltyStyle={msgToolsVisibiltyStyle} />
               <div
                 className="message-more"
                 title="More"
                 onClick={() => {
                   handleMsgToolsVisibilty()
                 }}
+                ref={msgToolsRef}
               >
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <g>
