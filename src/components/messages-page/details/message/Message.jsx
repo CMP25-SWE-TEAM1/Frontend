@@ -1,4 +1,14 @@
+import { useState } from "react"
+import MessageTools from "./MessageTools"
+
 const Message = (props) => {
+  const [msgToolsVisibile, setMsgToolsVisibile] = useState(false)
+  const [msgToolsVisibiltyStyle, setMsgToolsVisibiltyStyle] = useState("none")
+  const handleMsgToolsVisibilty = () => {
+    setMsgToolsVisibile(!msgToolsVisibile)
+    msgToolsVisibile ? setMsgToolsVisibiltyStyle("block") : setMsgToolsVisibiltyStyle("none")
+  }
+
   // {/* [Message Received] Message-content + message-info */}
   return (
     <div className={`message ${props.direction === "R" ? "right" : "left"}`}>
@@ -25,12 +35,28 @@ const Message = (props) => {
                 </g>
               </svg>
             </div>
-            <div className="message-more" title="More">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <g>
-                  <path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path>
-                </g>
-              </svg>
+            <div style={{ position: "relative" }}>
+              <div
+                className="giga-bglock"
+                onClick={() => {
+                  handleMsgToolsVisibilty()
+                }}
+                style={{ display: msgToolsVisibiltyStyle }}
+              ></div>
+              <MessageTools visibiltyStyle={msgToolsVisibiltyStyle} />
+              <div
+                className="message-more"
+                title="More"
+                onClick={() => {
+                  handleMsgToolsVisibilty()
+                }}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <g>
+                    <path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path>
+                  </g>
+                </svg>
+              </div>
             </div>
           </div>
         </div>

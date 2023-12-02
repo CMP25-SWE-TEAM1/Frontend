@@ -22,11 +22,8 @@ const MessageInput = (props) => {
       handleSndMsg()
     }
   }
-  const handleAddEmoji = (emoji) => {
-    console.log(`emoji is  ${emoji}`)
-    console.log(`old message is:  ${newMessage}`)
-    setNewMessage(`${newMessage}${emoji}`)
-    console.log(`new message is:  ${newMessage}`)
+  const handleAddEmoji = (kk) => {
+    setNewMessage(newMessage + kk)
     setSndMsgActv("active")
   }
   const handleEmojiPickerVisibilty = () => {
@@ -40,7 +37,7 @@ const MessageInput = (props) => {
     setSndMsgActv("")
   }
 
-  const myTheme = createTheme({
+  const spacingTheme = createTheme({
     spacing: 1,
   })
 
@@ -101,8 +98,8 @@ const MessageInput = (props) => {
                 disableUnderline: true,
               }}
               sx={{
-                px: myTheme.spacing(4),
-                py: myTheme.spacing(7),
+                px: spacingTheme.spacing(4),
+                py: spacingTheme.spacing(7),
               }}
               id="message-input-field"
               onChange={handleChange}
