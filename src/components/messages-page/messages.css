@@ -27,13 +27,14 @@
     }
 
     .messages-page {
-        padding-right: 70px;
+        /* padding-right: 70px; */
     }
 
     /* ====== My Style ===== */
     .messages-page {
         display: flex;
-        flex: 1;
+        /* flex: 1; */
+        flex-grow: 1;
         background-color: white;
     }
 
@@ -47,6 +48,12 @@
         flex: 1;
         border-right: 1px solid #eee;
         border-left: 1px solid #eee;
+    }
+
+    @media(max-width:997px) {
+        .messages-page .navigation {
+            display: none
+        }
     }
 
     .messages-page .navigation .header {
@@ -94,9 +101,20 @@
 
     .messages-page .details {
         background-color: white;
-        width: 600px;
         display: flex;
         border-right: 1px solid #eee;
+    }
+
+    @media (min-width:768px) {
+
+        /* .messages-page {
+            flex: 999 1;
+        } */
+        .messages-page .details {
+            width: 600px;
+            /* flex: 1; */
+        }
+
     }
 
     .messages-page .details.no-chat {
