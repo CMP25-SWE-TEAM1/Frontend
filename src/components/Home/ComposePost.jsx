@@ -33,15 +33,17 @@ function ComposePost({ handleNewTweet }) {
   const user = useSelector((state) => state.user.user)
   const userToken = useSelector((state) => state.user.token)
 
-
-  const APIs = {
-    mock: { postTweetAPI: "https://bad9e0a6-fe2e-4d82-b68f-51c141e126d9.mock.pstmn.io/tweet/addTweet2" },
-    actual: { postTweetAPI: "http://backend.gigachat.cloudns.org/api/tweets/" },
-  }
-  const getComposeTweet = () => {
-    return {
+    const APIs = {
+      mock: { postTweetAPI: "https://bad9e0a6-fe2e-4d82-b68f-51c141e126d9.mock.pstmn.io/tweet/addTweet2" },
+      actual: { postTweetAPI: "http://13.48.45.126:3000/api/tweets/" },
+    }
+    const getTweetDescription = ()=>{
+      return document.querySelector("#description").value;
+    } 
+    const getComposeTweet = (()=>{
+      return {
       referredTweetId: "",
-      description: document.querySelector("#description").value,
+      description: getTweetDescription(),
       media: [
         {
           type: "jpg",
@@ -50,7 +52,7 @@ function ComposePost({ handleNewTweet }) {
       ],
       type: "tweet",
     }
-  }
+  });
   const openMenu = Boolean(anchorPostMenu)
 
   const handleMenuButtonClick = (event) => {
@@ -66,7 +68,7 @@ function ComposePost({ handleNewTweet }) {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(document.querySelector("#description").value)
+    console.log(getTweetDescription())
     console.log(userToken)
     const composeTweet = getComposeTweet()
     axios

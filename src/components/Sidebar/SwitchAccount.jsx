@@ -1,8 +1,11 @@
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
+import { Dropdown } from "@mui/base/Dropdown"
+import { MenuButton } from "@mui/base/MenuButton"
 import { Modal, Box } from "@mui/material"
 import { Avatar } from "@mui/material"
+import { styled } from "@mui/system"
 
 import { useState } from "react"
 
@@ -12,8 +15,8 @@ import { styles } from "../../styles"
 
 import { useSelector } from "react-redux"
 
-import darkLogo from ".././assets/gigachatLogoOne_dark-removebg-preview.png"
-import lightLogo from ".././assets/gigachatLogoOne_light_v2-removebg-preview.png"
+import darkLogo from "../../assets/imgs/gigachatLogoOne_dark-removebg-preview.png"
+import lightLogo from "../../assets/imgs/gigachatLogoOne_light_v2-removebg-preview.png"
 
 function SwitchAccount({ userName, userTag, link, handleLogout }) {
   const [anchorMenu, setAnchorMenu] = useState(null)
@@ -25,6 +28,8 @@ function SwitchAccount({ userName, userTag, link, handleLogout }) {
     setAnchorMenu(null)
   }
 
+  const htmlElement = document.getElementById("htmlid")
+
   const [openModal, setOpenSignupModal] = useState(false)
   const handleOpenModal = () => setOpenSignupModal(true)
   const handleCloseModal = () => {
@@ -35,33 +40,60 @@ function SwitchAccount({ userName, userTag, link, handleLogout }) {
 
   const darkMode = useSelector((state) => state.theme.darkMode)
 
-
   return (
     <>
-      <a href={link} alt="" className="group mb-2 mt-auto box-border w-full cursor-pointer border-0">
-        <div title="switchAccountContainer" className=" flex w-full  items-center justify-around rounded-full p-2 group-hover:bg-lightHover dark:group-hover:bg-darkHover">
-          <Avatar alt={user.nickname} src={user.profileImage} className="-ml-2" />
+      <p className="group !mb-0 mt-auto box-border w-full cursor-pointer border-0">
+        <div title="switchAccountContainer" className=" flex w-full items-center justify-around rounded-full group-hover:bg-lightHover dark:group-hover:bg-darkHover xs:!p-3">
+          <Avatar alt={user.nickname} src={user.profileImage} />
           <div>
             <div className="truncate font-semibold">{user.nickname}</div>
             <div className="truncate text-secondary">@{user.username}</div>
           </div>
 
           <div title="moreIcon" className="w-[10%]">
-            <MoreHorizOutlinedIcon id="basic-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleClickMenu} />
+            <MoreHorizOutlinedIcon id="demo-positioned-button" aria-controls={openMenu ? "demo-positioned-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleClickMenu} />
+
             <Menu
-              id="basic-menu"
+              id="demo-positioned-menu"
+              aria-labelledby="demo-positioned-button"
               anchorEl={anchorMenu}
               open={openMenu}
               onClose={handleCloseMenu}
               MenuListProps={{
                 "aria-labelledby": "basic-button",
               }}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              sx={
+                htmlElement.classList.contains("dark")
+                  ? {
+                      "& .MuiMenu-paper": {
+                        background: "black",
+                        borderRadius: "20px",
+                        boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #333435",
+                        border: "solid 1px #333435",
+                      },
+                    }
+                  : {
+                      "& .MuiMenu-paper": {
+                        borderRadius: "20px",
+                        boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #767C86",
+                      },
+                    }
+              }
             >
               <MenuItem
                 onClick={() => {
                   handleCloseMenu()
                   handleOpenModal()
                 }}
+                className="text-base dark:text-white"
               >
                 Change Profile Picture (beta)
               </MenuItem>
@@ -70,13 +102,15 @@ function SwitchAccount({ userName, userTag, link, handleLogout }) {
                   handleCloseMenu()
                   handleLogout()
                 }}
+                className="text-base dark:text-white"
               >
                 Logout
               </MenuItem>
             </Menu>
           </div>
         </div>
-      </a>
+      </p>
+
       <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
         <Box style={styles.modalStyle}>
           <div className="pop-up m-auto bg-white dark:bg-black md:rounded-2xl">

@@ -81,8 +81,8 @@ const ForthStep = ({  setUserTag, setOriginalUsername, setUser, setUserToken, ne
   }, [countdown, isResending])
 
   return (
-    <div id="Forth Step" className="-mt-10 hidden">
-      <div>
+    <div id="Forth Step" className="m-auto -mt-10 hidden w-[320px]">
+      <div className="!h-fit">
         <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 4 of 5</p>
         <h1 className="">We sent you a code</h1>
         <p className="text-xs text-secondary">Enter it below to verify {email}.</p>

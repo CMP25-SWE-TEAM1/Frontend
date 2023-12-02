@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import { Modal, Box, Alert } from "@mui/material"
@@ -26,6 +26,43 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  // Update the window width when the component mounts
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    // Remove the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+
+  const modalStyle = {
+    position: "absolute",
+
+    backgroundColor: "transparent",
+    border: "1px solid #767C86",
+    borderRadius: "16px",
+  }
+
+  if (windowWidth < 700) {
+    modalStyle.width = "100vw"
+    modalStyle.height = "100vh"
+    modalStyle.maxWidth = "none" // optional, to remove any max-width constraints
+  } else {
+    modalStyle.width = "601.6px"
+    modalStyle.height = "651.6px"
+    modalStyle.top = "50%"
+    modalStyle.left = "50%"
+    modalStyle.transform = "translate(-50%, -50%)"
+    modalStyle.maxWidth = "none" // optional, to remove any max-width constraints
+  }
 
   const APIs = {
     mock: { emailExistAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/checkEmail" },
@@ -103,15 +140,15 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
 
   return (
     <>
-      <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
-        <Box style={styles.modalStyle}>
-          <div className="pop-up m-auto bg-white dark:bg-black md:rounded-2xl">
-            <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>
+      <Modal open={openModal} onClose={handleCloseModal} data-testid="loginModal"  disableEscapeKeyDown disablePortal>
+        <Box style={modalStyle}>
+          <div className="pop-up  min-w-[350px] bg-white dark:bg-black md:rounded-2xl " id="mahmoud_login_box">
+            <button className="relative top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>
               x
             </button>
             <img src={lightLogo} alt="GigaChat Logo" className="-mt-4 ml-[45%] w-[40px]" />
             {/* --------------------------------------First Login Page------------------------------------- */}
-            <div id="firstPage">
+            <div id="firstPage" className="m-auto w-[300px]">
               <div>
                 <h1 className="mb-4 mt-3">Log in to Gigachat</h1>
                 <GoogleLoginButton handleCloseModal={handleCloseModal} />
@@ -146,17 +183,19 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                 <span className="mt-5 text-slate-400">
                   Don't have an account? <Link to={"/Signup"}>Sign Up</Link>{" "}
                 </span>
-                {emailExistError && <Alert severity="error">sorry we couldn't find your email</Alert>}
+                <Alert severity="error" data-testid="emailExistError" className={`${emailExistError ? "" : "hidden"}`}>
+                  sorry we couldn't find your email
+                </Alert>
               </div>
             </div>
 
             {/* --------------------------------------Second Login Page------------------------------------- */}
-            <div id="secondPage" className="hidden">
+            <div id="secondPage" className="m-auto hidden  max-w-[300px]">
               <div>
                 <h1 className="text-4xl">Enter your password</h1>
-                <form action="/" method="post" className="flex flex-col gap-5" autoComplete="off" onSubmit={handleLoginEvent}>
+                <form action="/" method="post" className="flex flex-col gap-5" autoComplete="off" onSubmit={handleLoginEvent} id="mahmoud_form">
                   <div className="input-container">
-                    <input type="text" name="username" id="username" value={userName} className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
+                    <input type="text" name="username" id="username" data-testid="emailInput" value={userName} className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
                     <label className="input-label" htmlFor="username">
                       Phone, email or username
                     </label>
@@ -168,15 +207,13 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                         Password
                       </label>
                     </div>
-                    <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}>
+                    <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility} id="mahmoud_sees_you">
                       <VisibilityIcon className="text-primary" />
                     </span>
                   </div>
-                  {loginError && (
-                    <Alert severity="error" sx={styles.signupPasswordCheckStyleMiddle}>
-                      {error}
-                    </Alert>
-                  )}
+                  <Alert severity="error" sx={styles.signupPasswordCheckStyleMiddle} className={`${loginError ? "" : "hidden"}`}>
+                    {error}
+                  </Alert>
 
                   <Link
                     onClick={() => {
@@ -184,6 +221,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                     }}
                     to={"/password_reset"}
                     className=" text-xs text-primary"
+                    data-testid="forgetPassword"
                   >
                     Forgot password?
                   </Link>

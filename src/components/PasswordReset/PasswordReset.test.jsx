@@ -1,5 +1,5 @@
 import { screen, render, within, act } from "@testing-library/react"
-import PasswordReset from "./PasswordReset"
+import PasswordReset from "../PasswordReset/PasswordReset"
 import { BrowserRouter } from "react-router-dom"
 import user from "@testing-library/user-event"
 
