@@ -5,6 +5,7 @@ import ReactEmojiPicker from "./ReactEmojiPicker"
 import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
 import Grid from "@mui/material/Grid"
+import GifPicker, { ContentFilter } from "gif-picker-react"
 
 const modalStyle = {
   position: "absolute",
@@ -20,6 +21,7 @@ const modalStyle = {
   boxShadow: 24,
   p: 4,
 }
+const Tenor_API_KEY = "AIzaSyDBlLa0hsL-R9uO6LO46bK8uEH-S4sxiEQ"
 
 const MessageInput = (props) => {
   // Message input
@@ -52,12 +54,9 @@ const MessageInput = (props) => {
     if (newMessageText !== "" || newMessageMedia !== undefined) {
       // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
       if (newMessageMedia) {
-        if(newMessageMediaType==="Img")
-          handleSendMessage(newMessageText, "https://www.harrisburgu.edu/wp-content/uploads/189dce017fb19e3ca1b94b2095d519cc514df22c.jpg", newMessageMediaType)
-        else
-        handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
-      }
-        else handleSendMessage(newMessageText)
+        if (newMessageMediaType === "Img") handleSendMessage(newMessageText, "https://www.harrisburgu.edu/wp-content/uploads/189dce017fb19e3ca1b94b2095d519cc514df22c.jpg", newMessageMediaType)
+        else handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
+      } else handleSendMessage(newMessageText)
     }
     // Reset values
     setNewMessage("")
@@ -113,7 +112,23 @@ const MessageInput = (props) => {
     setNewMessageMedia(MediaURL)
     setMediaInputPreview(MediaURL)
     setNewMessageMediaType(MediaType)
+    setSndMsgActv("active")
     handleGIFsModalClose()
+  }
+  const tenorMp4FromGIF = (TenorGIFLink) => {
+    // change url
+    var lastIndex = TenorGIFLink.lastIndexOf("/")
+    var charsToChange = TenorGIFLink.substring(lastIndex - 2, lastIndex)
+    var newURL = TenorGIFLink.replace(charsToChange, "Po")
+
+    // Change extenstion
+    newURL = newURL.slice(0, -3) + "mp4"
+    // return
+    return newURL
+  }
+  const onGifClick = (TenorImage) => {
+    const newURL = tenorMp4FromGIF(TenorImage.url)
+    handleGIFSelect(null, newURL, "GIF")
   }
 
   return (
@@ -225,108 +240,13 @@ const MessageInput = (props) => {
       </div>
       <Modal open={GIFsModalOpen} onClose={handleGIFsModalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box sx={modalStyle}>
-          <Grid container spacing={1} columns={{ xs: 4, sm: 8, md: 12 }}>
-            {gifsData.map((gifData, index) => (
-              <Grid item xs={2} sm={4} md={4} key={index} className="">
-                <div
-                  className="relative cursor-pointer overflow-hidden rounded-md"
-                  onClick={(e) => {
-                    handleGIFSelect(e, gifData.gif, "GIF")
-                  }}
-                >
-                  <video src={gifData.gif} alt={gifData.title} loop autoPlay muted preload="auto" playsInline type="video/mp4" className="max-w-full"></video>
-                </div>
-                <p className="text-center">{gifData.title}</p>
-              </Grid>
-            ))}
-          </Grid>
+          <div>
+            <GifPicker tenorApiKey={Tenor_API_KEY} ContentFilter={ContentFilter.HIGH} onGifClick={onGifClick} />
+          </div>
         </Box>
       </Modal>
     </div>
   )
 }
-
-const gifsData = [
-  {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
-    title: "Breakfast",
-  },
-  {
-    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
-    title: "Burger",
-  },
-  {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
-    title: "Camera",
-  },
-  {
-    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
-    title: "Coffee",
-  },
-  {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
-    title: "Hats",
-  },
-  {
-    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
-    title: "Honey",
-  },
-  {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
-    title: "Basketball",
-  },
-  {
-    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
-    title: "Fern",
-  },
-  {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
-    title: "Mushrooms",
-  },
-  {
-    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
-    title: "Tomato basil",
-  },
-  {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
-    title: "Sea star",
-  },
-  {
-    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
-    title: "Bike",
-  },
-  {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
-    title: "Mushrooms",
-  },
-  {
-    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
-    title: "Tomato basil",
-  },
-  {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
-    title: "Sea star",
-  },
-  {
-    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
-    title: "Bike",
-  },
-  {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
-    title: "Mushrooms",
-  },
-  {
-    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
-    title: "Tomato basil",
-  },
-  {
-    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
-    title: "Sea star",
-  },
-  {
-    gif: "https://media.tenor.com/GTE9_j1-xGIAAAPo/why.mp4",
-    title: "Bike",
-  },
-]
 
 export default MessageInput
