@@ -215,12 +215,12 @@ function ComposePost({ handleNewTweet }) {
         <hr className="h-px border-0 bg-lightBorder dark:bg-darkBorder" />
         <div className="flex justify-between pt-3">
           <div className="flex bg-transparent">
-            <GeneralButton name={<InsertPhotoOutlinedIcon fontSize="small" />} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-            <GeneralButton name={<GifBoxOutlinedIcon fontSize="small" />} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-            <GeneralButton name={<BallotOutlinedIcon fontSize="small" />} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-            <GeneralButton name={<SentimentSatisfiedOutlinedIcon fontSize="small" />} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-            <GeneralButton name={<EditCalendarIcon fontSize="small" />} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]" />
-            <GeneralButton name={<LocationOnOutlinedIcon fontSize="small" />} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]" />
+            <GeneralButton name={<InsertPhotoOutlinedIcon fontSize="small" />} title="Media" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="" />
+            <GeneralButton name={<GifBoxOutlinedIcon fontSize="small" />} title="GIF" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
+            <GeneralButton name={<BallotOutlinedIcon fontSize="small" />} title="Poll" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
+            <GeneralButton name={<SentimentSatisfiedOutlinedIcon fontSize="small" />} title="Emoji" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
+            <GeneralButton name={<EditCalendarIcon fontSize="small" />} title="Schedule"color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]" />
+            <GeneralButton name={<LocationOnOutlinedIcon fontSize="small" />} title="Location" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]" />
           </div>
           <div className="flex items-center">
           <Box sx={{ position: 'relative',top: '4px',border:'1.5px'}}>
@@ -246,7 +246,7 @@ function ComposePost({ handleNewTweet }) {
       </Box>
           </Box>
           <div className="px-3 py-1 border-l ml-3 border-gray-300">
-          <GeneralButton name={<AddRoundedIcon fontSize="small" />} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-6" width="w-6 border-[1.5px] border-gray-300 rounded-full" link="/compose/tweet" />
+          <GeneralButton name={<AddRoundedIcon fontSize="small" />} title="Add" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-6" width="w-6 border-[1.5px] border-gray-300 rounded-full" link="/compose/tweet" />
           </div>
           <button type="submit" className="rounded-full bg-[#1D9BF0] p-0">
             <GeneralButton name="Post" color="text-white" backgroundColor="bg-[#1D9BF0]" height="h-8" width="w-16" />
