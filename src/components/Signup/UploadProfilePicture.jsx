@@ -12,7 +12,6 @@ import { changeProfilePicture } from "../../store/UserSlice"
 
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
-import { async } from "q"
 
 const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleCloseModal, fromSwitch }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
@@ -128,8 +127,8 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
   })
 
   return (
-    <div id="Picture Step" className="-mt-10 hidden">
-      <div>
+    <div id="Picture Step" className="m-auto -mt-10 hidden w-[320px]">
+      <div className="!h-fit">
         <h1>Pick a profile picture</h1>
 
         <p className="-mt-1 text-xs text-secondary">Have a favorite selfie? Upload it now.</p>

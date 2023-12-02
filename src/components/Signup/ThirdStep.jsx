@@ -49,8 +49,8 @@ const ThirdStep = ({ nickName, email, month, day, year, emailExistError, validEm
   }
 
   return (
-    <div id="Third Step" className="-mt-10 hidden h-fit">
-      <div>
+    <div id="Third Step" className="m-auto -mt-10 hidden h-fit w-[320px]">
+      <div className="!h-fit">
         <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 3 of 5</p>
         <h1 className="">Create your account</h1>
 

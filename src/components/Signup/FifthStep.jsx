@@ -65,10 +65,16 @@ const FifthStep = ({ setUser, mock, userToken, userTag, nextShow, password, setP
       })
       .then(() => {
         // console.log(APIs.actual.getProfile + userTag)
-        axios.get(mock ? APIs.mock.getProfile : APIs.actual.getProfile + userTag).then((res) => {
-          console.log(res)
-          setUser(res.data.user)
-        })
+        axios
+          .get(mock ? APIs.mock.getProfile : APIs.actual.getProfile + userTag, {
+            headers: {
+              authorization: "Bearer " + userToken,
+            },
+          })
+          .then((res) => {
+            console.log(res)
+            setUser(res.data.user)
+          })
       })
       .catch((err) => {
         console.log(err)
@@ -76,8 +82,8 @@ const FifthStep = ({ setUser, mock, userToken, userTag, nextShow, password, setP
   }
 
   return (
-    <div id="Fifth Step" className="-mt-10 hidden">
-      <div>
+    <div id="Fifth Step" className="m-auto -mt-10 hidden w-[320px]">
+      <div className="!h-fit">
         <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 5 of 5</p>
         <h1>You'll need a Password</h1>
         <p className="date-text">Make sure it's 8 characters or more</p>

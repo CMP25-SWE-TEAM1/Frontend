@@ -31,7 +31,7 @@ const Birthdate = ({ month, setMonth, day, setDay, year, setYear }) => {
             "&& .MuiFormLabel-root": {
               color: "#9aa1ad",
             },
-            minWidth: 200,
+            minWidth: 120,
           }}
         >
           <InputLabel id="demo-simple-select-label">Month</InputLabel>

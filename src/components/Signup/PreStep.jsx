@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 const PreStep = ({handleCloseModal,nextShow}) => {
   return (
     <div id="Join GigaChat">
-      <div className="m-auto max-w-[300px]">
+      <div className="m-auto max-w-[350px]">
         <h1 className="mb-4 mt-3">Join GigaChat today</h1>
         <GoogleLoginButton handleCloseModal={handleCloseModal} />
         <div className="flex h-10 items-center justify-center">
