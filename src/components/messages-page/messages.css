@@ -452,33 +452,37 @@
         display: flex;
         align-items: center;
         position: absolute;
-        left: 25px;
-        bottom: 10px;
+        left: 15px;
+        bottom: 12px;
+    }
+
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-media .message-media-gif .message-media-icons .gif-play-btn,
+    .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-media .message-media-gif .message-media-icons .gif-notation {
+        background-color: rgb(0 0 0 / 0.3);
+        fill: #fff;
+        color: #fff;
+        width: 25px;
+        height: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-media .message-media-gif .message-media-icons .gif-play-btn {
-        background-color: rgb(0 0 0 / 0.2);
-        fill: #fff;
-        width: 20px;
-        height: 20px;
         padding: 4px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        border-bottom-left-radius: 3px;
+        border-top-left-radius: 3px;
+        /* border-right: 1px solid rgb(255 255 255 / 0.2); */
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-media .message-media-gif .message-media-icons .gif-notation {
-        color: #fff;
-        font-size: 10px;
-        font-weight: 600;
-        background-color: rgb(0 0 0 / 0.3);
-        fill: #fff;
+        font-size: 11px;
+        font-weight: 700;
         padding: 0 4px;
-        width: 20px;
-        height: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        border-bottom-right-radius: 3px;
+        border-top-right-radius: 3px;
+
     }
 
     .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-media video {

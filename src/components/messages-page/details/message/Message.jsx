@@ -20,7 +20,16 @@ const Message = (props) => {
   const messageId = props.messageId
 
   const [gifPaused, setGifPaused] = useState(false)
-  const vidRef = useRef(null)
+  const gifRef = useRef(null)
+  const handleGIFPress = () => {
+    if (!gifPaused) {
+      gifRef.current.pause()
+      setGifPaused(true)
+    } else {
+      gifRef.current.play()
+      setGifPaused(false)
+    }
+  }
 
   // {/* [Message Received] Message-content + message-info */}
   return (
@@ -40,6 +49,7 @@ const Message = (props) => {
                     className="message-media-gif"
                     onClick={() => {
                       setGifPaused(!gifPaused)
+                      handleGIFPress()
                     }}
                   >
                     <div className="message-media-icons">
@@ -65,7 +75,7 @@ const Message = (props) => {
                         </div>
                       </div>
                     </div>
-                    <video ref={vidRef} src="https://media.tenor.com/Bs908IpGqOsAAAPo/pheasant-pheasant-hunting.mp4" loop autoplay="true" muted preload="auto" playsinline="true" style={{ maxWidth: "518px" }} type="video/mp4"></video>
+                    <video ref={gifRef} src={messageMedia} loop autoplay="true" muted preload="auto" playsinline="true" type="video/mp4"></video>
                   </div>
                 )}
               </div>
