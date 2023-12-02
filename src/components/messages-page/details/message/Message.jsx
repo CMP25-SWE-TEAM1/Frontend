@@ -75,7 +75,7 @@ const Message = (props) => {
                         </div>
                       </div>
                     </div>
-                    <video ref={gifRef} src={messageMedia} loop autoplay="true" muted preload="auto" playsinline="true" type="video/mp4"></video>
+                    <video ref={gifRef} src={messageMedia} loop autoPlay muted preload="auto" playsInline type="video/mp4"></video>
                   </div>
                 )}
               </div>

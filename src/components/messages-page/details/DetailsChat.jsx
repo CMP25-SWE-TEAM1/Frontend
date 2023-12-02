@@ -58,8 +58,14 @@ const DetailsChat = () => {
     {
       id: msgIdCounter++,
       direction: "R",
-      messageText: "GIF testing",
-      messageMedia: "https://media.tenor.com/KY0s3ausSwgAAAPo/run-bye-bye.mp4",
+      messageText: "Angry text testing. Lorem Ipsum is simply dummy text.",
+      messageMedia: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+      mediaType: "GIF",
+    },
+    {
+      id: msgIdCounter++,
+      direction: "L",
+      messageMedia: "https://media.tenor.com/Vk9E_QK45u8AAAPo/run-running.mp4",
       mediaType: "GIF",
     },
   ])
