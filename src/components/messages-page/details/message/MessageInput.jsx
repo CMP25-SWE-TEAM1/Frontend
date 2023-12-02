@@ -2,6 +2,34 @@ import { useState } from "react"
 import TextField from "@mui/material/TextField"
 import { createTheme } from "@mui/material"
 import ReactEmojiPicker from "./ReactEmojiPicker"
+import Box from "@mui/material/Box"
+import Modal from "@mui/material/Modal"
+import { experimentalStyled as styled } from "@mui/material/styles"
+import Paper from "@mui/material/Paper"
+import Grid from "@mui/material/Grid"
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(2),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}))
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  minWidth: 400,
+  maxWidth: "80%",
+  maxHeight: "80vh",
+  overflowY: "auto",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+}
 
 const MessageInput = (props) => {
   // Message input
@@ -81,6 +109,11 @@ const MessageInput = (props) => {
   const getImgURL = () => {}
   // Media input - Upload image
 
+  // GIFs modal
+  const [GIFsModalOpen, setGIFsModalOpen] = useState(false)
+  const handleGIFsModalOpen = () => setGIFsModalOpen(true)
+  const handleGIFsModalClose = () => setGIFsModalOpen(false)
+
   return (
     <div className="keyboard">
       <div className="content">
@@ -95,7 +128,7 @@ const MessageInput = (props) => {
                 </g>
               </svg>
             </div>
-            <div className="gif-icon" title="GIF">
+            <div className="gif-icon" title="GIF" onClick={handleGIFsModalOpen}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <g>
                   <path d="M3 5.5C3 4.119 4.12 3 5.5 3h13C19.88 3 21 4.119 21 5.5v13c0 1.381-1.12 2.5-2.5 2.5h-13C4.12 21 3 19.881 3 18.5v-13zM5.5 5c-.28 0-.5.224-.5.5v13c0 .276.22.5.5.5h13c.28 0 .5-.224.5-.5v-13c0-.276-.22-.5-.5-.5h-13zM18 10.711V9.25h-3.74v5.5h1.44v-1.719h1.7V11.57h-1.7v-.859H18zM11.79 9.25h1.44v5.5h-1.44v-5.5zm-3.07 1.375c.34 0 .77.172 1.02.43l1.03-.86c-.51-.601-1.28-.945-2.05-.945C7.19 9.25 6 10.453 6 12s1.19 2.75 2.72 2.75c.85 0 1.54-.344 2.05-.945v-2.149H8.38v1.032H9.4v.515c-.17.086-.42.172-.68.172-.76 0-1.36-.602-1.36-1.375 0-.688.6-1.375 1.36-1.375z"></path>
@@ -181,8 +214,106 @@ const MessageInput = (props) => {
           </div>
         </div>
       </div>
+      <Modal open={GIFsModalOpen} onClose={handleGIFsModalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+        <Box sx={modalStyle}>
+          <Grid container spacing={1} columns={{ xs: 4, sm: 8, md: 12 }}>
+            {gifsData.map((gifData, index) => (
+              <Grid item xs={2} sm={4} md={4} key={index} className="">
+                {/* </Item> */}
+                <div className="relative cursor-pointer overflow-hidden rounded-md">
+                  <video src={gifData.gif} alt={gifData.title} loop autoPlay muted preload="auto" playsInline type="video/mp4" className="max-w-full"></video>
+                </div>
+                <p className="text-center">{gifData.title}</p>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      </Modal>
     </div>
   )
 }
+
+const gifsData = [
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Breakfast",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Burger",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Camera",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Coffee",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Hats",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Honey",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Basketball",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Fern",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Mushrooms",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Tomato basil",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Sea star",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Bike",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Mushrooms",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Tomato basil",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Sea star",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Bike",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Mushrooms",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Tomato basil",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Sea star",
+  },
+  {
+    gif: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
+    title: "Bike",
+  },
+]
 
 export default MessageInput
