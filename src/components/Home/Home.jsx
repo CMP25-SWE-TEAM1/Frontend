@@ -8,8 +8,10 @@ import getUser from "../../constants/index"
 import RepliesContainer from "../PostPage/RepliesContainer"
 import ComposePost from "./ComposePost"
 import axios from "axios"
+import { useSelector } from "react-redux"
 
 const Home = () => {
+  const userToken = useSelector((state) => state.user.token)
   const [user, setUser] = useState(getUser())
   const [tweets, setTweets] = useState([])
   const homeNavLinks = [
@@ -17,25 +19,28 @@ const Home = () => {
     { title: "Following", location: "following" },
   ]
   const APIs = {
-    mock: { getAllTweetsAPI: "https://d93f6897-d144-47d7-9946-fe63b27f73ea.mock.pstmn.io/testAPIs/tweets" },
-    actual: { getAllTweetsAPI: "" },
+    mock: { getAllTweetsAPI: "https://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/posts" },
+    actual: { getAllTweetsAPI: "http://backend.gigachat.cloudns.org/api/homepage/following" },
   }
   useEffect(()=>{
-    axios.get(APIs.mock.getAllTweetsAPI).then((response)=>{
+    axios.get(APIs.actual.getAllTweetsAPI, {
+      headers: {
+        authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY",
+      }
+    })
+    .then((response)=>{
     if(response.status === 200)
     {
-      console.log(response.data[0].data.tweet_owner.nickname)
-      console.log(response.data)
-      setTweets(response.data);
+      console.log("in then ");
+      console.log(response.data.tweetList);
+      setTweets(response.data.tweetList);
     }
   }).catch(error=>{
     console.log(error);
   })},[])
 
   const handleNewTweet = (newTweet) => {
-    console.log("handleNewTweet")
     setTweets([newTweet, ...tweets])
-    console.log(tweets)
   }
 
   const postsTst = [
@@ -150,7 +155,7 @@ const Home = () => {
           </div>
         </div>
         <ComposePost handleNewTweet={(newTweet) => handleNewTweet(newTweet)} />
-        <PostsContainer posts={postsTst} />
+        <PostsContainer posts={tweets} />
       </div>
       {/* <div>
         <p>name: {user.name}</p>
