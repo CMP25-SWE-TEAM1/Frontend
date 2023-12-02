@@ -13,10 +13,14 @@ const Message = (props) => {
     else setMsgToolsPosition("B")
     msgToolsVisibile ? setMsgToolsVisibiltyStyle("block") : setMsgToolsVisibiltyStyle("none")
   }
-  const messageMedia = props.messageMedia
   const messageText = props.messageText
+  const messageMedia = props.messageMedia
+  const mediaType = props.mediaType
   const deleteMessage = props.deleteMessage
   const messageId = props.messageId
+
+  const [gifPaused, setGifPaused] = useState(false)
+  const vidRef = useRef(null)
 
   // {/* [Message Received] Message-content + message-info */}
   return (
@@ -29,7 +33,41 @@ const Message = (props) => {
             {/* Message image OR GIF */}
             {messageMedia && (
               <div className="message-media">
-                <img src={messageMedia} alt="attachment" />
+                {mediaType === "Img" && <img src={messageMedia} alt="attachment" />}
+                {/* {mediaType === "GIF" && <video src="{messageMedia}" alt="attachment" type="video/mp4" preload="auto"></video>} */}
+                {mediaType === "GIF" && (
+                  <div
+                    className="message-media-gif"
+                    onClick={() => {
+                      setGifPaused(!gifPaused)
+                    }}
+                  >
+                    <div className="message-media-icons">
+                      <div className="gif-play-btn">
+                        {gifPaused && (
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <g>
+                              <path d="M21 12L4 2v20l17-10z"></path>
+                            </g>
+                          </svg>
+                        )}
+                        {!gifPaused && (
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <g>
+                              <path d="M4 2h5v20H4V2zm11 20h5V2h-5v20z"></path>
+                            </g>
+                          </svg>
+                        )}
+                      </div>
+                      <div className="gif-notation">
+                        <div dir="ltr">
+                          <span>GIF</span>
+                        </div>
+                      </div>
+                    </div>
+                    <video ref={vidRef} src="https://media.tenor.com/Bs908IpGqOsAAAPo/pheasant-pheasant-hunting.mp4" loop autoplay="true" muted preload="auto" playsinline="true" style={{ maxWidth: "518px" }} type="video/mp4"></video>
+                  </div>
+                )}
               </div>
             )}
             {/* Message Text */}
