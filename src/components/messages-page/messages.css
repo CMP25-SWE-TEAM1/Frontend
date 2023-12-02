@@ -588,31 +588,43 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        border-radius: 50%;
+    }
+
+    .messages-page .details.chat .content .body.allowed .keyboard .content .send-message .send-icon {
+        fill: #86C7F2;
+    }
+
+    .messages-page .details.chat .content .body.allowed .keyboard .content .icons .media-icon,
+    .messages-page .details.chat .content .body.allowed .keyboard .content .icons .gif-icon,
+    .messages-page .details.chat .content .body.allowed .keyboard .content .icons .emoji-icon,
+    .messages-page .details.chat .content .body.allowed .keyboard .content .send-message.active .send-icon {
+        cursor: pointer;
+        fill: #1D9BF0;
+    }
+
+    .messages-page .details.chat .content .body.allowed .keyboard .content .icons .media-icon:hover,
+    .messages-page .details.chat .content .body.allowed .keyboard .content .icons .gif-icon:hover,
+    .messages-page .details.chat .content .body.allowed .keyboard .content .icons .emoji-icon:hover,
+    .messages-page .details.chat .content .body.allowed .keyboard .content .send-message.active .send-icon:hover {
+        background-color: #DAEAF3;
     }
 
     .messages-page .details.chat .content .body.allowed .keyboard .content .message-text {
         font-weight: 300;
         font-size: 15px;
-        padding: 4px 12px;
+        /* padding: 4px 12px; */
         flex: 1;
     }
 
-    .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .input-area:empty::before {
-        /* content: attr(placeholder); */
-        color: rgb(83, 100, 113);
-    }
 
     .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .input-area {
-        max-width: 391px;
+        /* max-width: 391px; */
         min-height: 24px;
         max-height: 160px;
         overflow-y: auto;
-        cursor: text;
     }
 
-    .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .input-area:focus {
-        /* outline: none; */
-    }
 
     .messages-page .details.chat .content .body.allowed .keyboard .content .send-message {
         margin-left: 4px;
