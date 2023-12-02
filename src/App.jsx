@@ -67,10 +67,9 @@ const App = () => {
     viewCount: "1M",
   }
   return (
-    <div className="app flex h-[100vh] bg-white text-black dark:bg-black dark:text-white">
+    <div className="app relative flex h-[100vh] bg-white text-black dark:bg-black dark:text-white">
       <BrowserRouter>
         {user && location !== "/password_reset" && <Sidebar />}
-
         {/* {location !== "/login" && location !== "/password_reset" && <Sidebar />} */}
         {/* true will be replaced by authorization*/}
         <Routes>

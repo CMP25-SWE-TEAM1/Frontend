@@ -12,6 +12,7 @@ import { changeProfilePicture } from "../../store/UserSlice"
 
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
+import { async } from "q"
 
 const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleCloseModal, fromSwitch }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
@@ -27,6 +28,8 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
   const [profilePic, setProfilePic] = useState(user ? user.profileImage : defaultProfilePic)
   const [profilePicURL, setProfilePicURL] = useState(user ? user.profileImage : defaultProfilePic)
 
+  // const [mediaUrls, setMediaUrls] = useState([])
+
   const handlePictureClick = (event) => {
     hiddenFileInput.current.click()
   }
@@ -40,35 +43,69 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
     completeSignupButton.current.style.display = "block"
   }
 
-  const handleAssignProfilePicture = () => {
-    console.log(userToken)
-    const formData = new FormData()
-    formData.append("profile_image", profilePic)
+  // const handleUploadMedia = () => {
+  //   const formData = new FormData()
+  //   formData.append("media", profilePic)
+
+  //   axios
+  //     .post(APIs.actual.uploadMedia, formData, {
+  //       headers: {
+  //         authorization: "Bearer " + userToken,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       setMediaUrls(res.data.data.usls)
+  //       console.log(res.data.data.usls)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // }
+
+  const handleAssignProfilePicture = async () => {
+    const mediaFormData = new FormData()
+    mediaFormData.append("media", profilePic)
+    let newuser
+
     axios
-      .patch(APIs.actual.changeProfilePicture, formData, {
+      .post(APIs.actual.uploadMedia, mediaFormData, {
         headers: {
           authorization: "Bearer " + userToken,
         },
       })
       .then((res) => {
-        let newuser
+        // console.log(res.data.data.usls[0])
+        // console.log(userToken)
         if (fromSwitch) {
           newuser = {
             ...user,
             // picture: profilePicURL,
-            profileImage: res.data.image_profile_url,
+            profileImage: res.data.data.usls[0],
           }
         } else {
           newuser = {
             ...userR,
             // picture: profilePicURL,
-            profileImage: res.data.image_profile_url,
+            profileImage: res.data.data.usls[0],
           }
         }
+        // console.log(newuser)
+
+        return axios.patch(
+          APIs.actual.changeProfilePicture,
+          { profile_image: res.data.data.usls[0] },
+          {
+            headers: {
+              authorization: "Bearer " + userToken,
+            },
+          }
+        )
+      })
+      .then((res) => {
+        console.log("Profile picture changed successfully")
         setUser(newuser)
 
-        console.log(newuser)
-        console.log(res)
+        // console.log(res)
 
         setTimeout(() => {
           if (fromSwitch) {
@@ -79,9 +116,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
         }, 1000)
       })
       .catch((error) => {
-        // handleCompleteSignup(user)
-
-        console.log(error)
+        console.error(error)
       })
   }
 

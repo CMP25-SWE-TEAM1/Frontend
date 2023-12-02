@@ -12,8 +12,8 @@ import { styles } from "../../styles"
 
 import { useSelector } from "react-redux"
 
-import darkLogo from ".././assets/gigachatLogoOne_dark-removebg-preview.png"
-import lightLogo from ".././assets/gigachatLogoOne_light_v2-removebg-preview.png"
+import darkLogo from "../../assets/imgs/gigachatLogoOne_dark-removebg-preview.png"
+import lightLogo from "../../assets/imgs/gigachatLogoOne_light_v2-removebg-preview.png"
 
 function SwitchAccount({ userName, userTag, link, handleLogout }) {
   const [anchorMenu, setAnchorMenu] = useState(null)
