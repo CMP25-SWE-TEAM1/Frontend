@@ -93,11 +93,11 @@ const DetailsChat = () => {
   const handleChatScrlBtn = (event) => {
     event.currentTarget.scrollHeight - event.currentTarget.scrollTop <= event.currentTarget.clientHeight + 44 ? setChatBtnDwnAppear(false) : setChatBtnDwnAppear(true)
   }
-  const handleSendMessage = (messageText) => {
+  const handleSendMessage = (messageText, messageMedia, messageMediaType) => {
     // TODO:send message
     console.log("Sent message:", messageText)
     // Add message to the chat
-    setMessagesData([...messagesData, { id: msgIdCounterS, direction: "R", messageText }])
+    setMessagesData([...messagesData, { id: msgIdCounterS, direction: "R", messageText, messageMedia, mediaType: messageMediaType }])
     setMsgIdCounterS(msgIdCounterS + 1)
     scrollToBottom()
     // Send message in BackEnd

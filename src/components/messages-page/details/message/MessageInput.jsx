@@ -8,7 +8,7 @@ const MessageInput = (props) => {
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false)
   const [emojiPickerVisibiltyStyle, setEmojiPickerVisibiltyStyle] = useState("none")
   const handleSendMessage = props.handleSendMessage
-  const [newMessage, setNewMessage] = useState("")
+  const [newMessageText, setNewMessage] = useState("")
   const [sndMsgActv, setSndMsgActv] = useState("")
 
   const handleChange = (event) => {
@@ -22,8 +22,8 @@ const MessageInput = (props) => {
       handleSndMsg()
     }
   }
-  const handleAddEmoji = (kk) => {
-    setNewMessage(newMessage + kk)
+  const handleAddEmoji = (emoji) => {
+    setNewMessage(newMessageText + emoji)
     setSndMsgActv("active")
   }
   const handleEmojiPickerVisibilty = () => {
@@ -31,10 +31,17 @@ const MessageInput = (props) => {
     emojiPickerVisible ? setEmojiPickerVisibiltyStyle("block") : setEmojiPickerVisibiltyStyle("none")
   }
   const handleSndMsg = () => {
-    if (newMessage !== "") handleSendMessage(newMessage)
+    if (newMessageText !== "" || newMessageMedia !== undefined) {
+      // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
+      if (newMessageMedia) handleSendMessage(newMessageText, "https://www.harrisburgu.edu/wp-content/uploads/189dce017fb19e3ca1b94b2095d519cc514df22c.jpg", "Img")
+      else handleSendMessage(newMessageText)
+    }
     // Reset values
     setNewMessage("")
     setSndMsgActv("")
+    setNewMessageMedia()
+    setNewMessageMediaType()
+    setMediaInputPreview()
   }
 
   const spacingTheme = createTheme({
@@ -42,8 +49,8 @@ const MessageInput = (props) => {
   })
 
   // Media Input
-  const [mediaInput, setMediaInput] = useState()
-  const [mediaInputType, setMediaInputType] = useState()
+  const [newMessageMedia, setNewMessageMedia] = useState()
+  const [newMessageMediaType, setNewMessageMediaType] = useState()
   const [mediaInputPreview, setMediaInputPreview] = useState()
   const handleMediaUpload = (e, MediaType) => {
     // Check file type
@@ -53,25 +60,26 @@ const MessageInput = (props) => {
       setMediaInputPreview(file.result)
     }
     if (e.target.files[0] === undefined) {
-      setMediaInput()
-      setMediaInputType()
+      setNewMessageMedia()
+      setNewMessageMediaType()
       setMediaInputPreview()
       return
     }
 
     file.readAsDataURL(e.target.files[0])
     // Change state
-    setMediaInput(e.target.files[0])
-    setMediaInputType(MediaType)
+    setNewMessageMedia(e.target.files[0])
+    setNewMessageMediaType(MediaType)
     setSndMsgActv("active")
     console.log(e.target.files[0])
   }
   const handleMediaCancel = () => {
-    setMediaInput()
-    setMediaInputType()
+    setNewMessageMedia()
+    setNewMessageMediaType()
     setMediaInputPreview()
   }
   const getImgURL = () => {}
+  // Media input - Upload image
 
   return (
     <div className="keyboard">
@@ -140,7 +148,7 @@ const MessageInput = (props) => {
               fullWidth
               multiline
               maxRows={6}
-              value={newMessage}
+              value={newMessageText}
               variant="standard"
               // placeholder cause error in runtime (no solution found for now!)
               // placeholder="Start a new message"
