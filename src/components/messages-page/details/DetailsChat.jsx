@@ -56,6 +56,7 @@ const DetailsChat = () => {
       mediaType: "Img",
     },
   ])
+  const [msgIdCounterS, setMsgIdCounterS] = useState(messagesData.length)
   const [msgData, setMsgData] = useState({
     direction: "L", // "L" or "R"
     messageText: "", // (if exist) "<some text>"
@@ -83,14 +84,13 @@ const DetailsChat = () => {
     // TODO:send message
     console.log("Sent message:", messageText)
     // Add message to the chat
-    setMessagesData([...messagesData, { id: msgIdCounter++, direction: "R", messageText }])
+    setMessagesData([...messagesData, { id: msgIdCounterS, direction: "R", messageText }])
+    setMsgIdCounterS(msgIdCounterS + 1)
     scrollToBottom()
     // Send message in BackEnd
   }
   const handleDeleteMsg = (msgId) => {
     let newMessagesData = messagesData.filter((msg) => msg.id !== msgId)
-    console.log("messages data", messagesData)
-    console.log("new messages data", newMessagesData)
     setMessagesData(newMessagesData)
   }
 
