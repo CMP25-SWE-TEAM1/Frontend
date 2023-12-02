@@ -64,6 +64,13 @@ const MessageInput = (props) => {
             </svg>
           </div>
           <div style={{ position: "relative" }}>
+            <div
+              className="giga-emoji-picker-bglock"
+              onClick={() => {
+                handleEmojiPickerVisibilty()
+              }}
+              style={{ display: emojiPickerVisibiltyStyle }}
+            ></div>
             <ReactEmojiPicker visibiltyStyle={emojiPickerVisibiltyStyle} handleAddEmoji={handleAddEmoji} />
             <div
               className="emoji-icon"
