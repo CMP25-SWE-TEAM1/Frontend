@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState,useEffect } from "react"
 import SidebarOption from "./SidebarOption"
 import SwitchAccount from "./SwitchAccount"
 import Button from "./Button"
@@ -19,6 +19,12 @@ import { useSelector, useDispatch } from "react-redux"
 import { logoutUser } from "../../store/UserSlice"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
 import { Avatar } from "@mui/material"
+import Menu from "@mui/material/Menu"
+import MenuItem from "@mui/material/MenuItem"
+import { Modal, Box } from "@mui/material"
+import UploadProfilePicture from "../Signup/UploadProfilePicture"
+
+import { styles } from "../../styles"
 
 const Sidebar = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
@@ -50,6 +56,59 @@ const Sidebar = () => {
     dispatch(logoutUser())
     navigate("/")
   }
+  const htmlElement = document.getElementById("htmlid")
+
+  const [anchorMenu, setAnchorMenu] = useState(null)
+  const openMenu = Boolean(anchorMenu)
+  const handleClickMenu = (event) => {
+    setAnchorMenu(event.currentTarget)
+  }
+  const handleCloseMenu = () => {
+    setAnchorMenu(null)
+  }
+
+  const [openModal, setOpenSignupModal] = useState(false)
+  const handleOpenModal = () => setOpenSignupModal(true)
+  const handleCloseModal = () => {
+    setOpenSignupModal(false)
+  }
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  // Update the window width when the component mounts
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    // Remove the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+
+  const modalStyle = {
+    position: "absolute",
+
+    backgroundColor: "transparent",
+    border: "1px solid #767C86",
+    borderRadius: "16px",
+  }
+
+  if (windowWidth < 700) {
+    modalStyle.width = "100vw"
+    modalStyle.height = "100vh"
+    modalStyle.maxWidth = "none" // optional, to remove any max-width constraints
+  } else {
+    modalStyle.width = "601.6px"
+    modalStyle.height = "651.6px"
+    modalStyle.top = "50%"
+    modalStyle.left = "50%"
+    modalStyle.transform = "translate(-50%, -50%)"
+    modalStyle.maxWidth = "none" // optional, to remove any max-width constraints
+  }
 
   return (
     <div className=" flex flex-grow items-center  justify-between border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white max-xs:!sticky max-xs:bottom-0 max-xs:bg-black max-xs:bg-opacity-50 xs:max-w-[400px] xs:justify-end">
@@ -60,13 +119,79 @@ const Sidebar = () => {
         {shrink ? (
           <a alt="" className="group mb-2 mt-auto box-border w-full cursor-pointer border-0">
             <div title="switchAccountContainer" className=" flex w-full  items-center justify-around rounded-full p-3 group-hover:bg-lightHover dark:group-hover:bg-darkHover">
-              <Avatar alt={user.nickname} src={user.profileImage} />
+              <Avatar alt={user.nickname} src={user.profileImage} id="demo-positioned-button" aria-controls={openMenu ? "demo-positioned-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleClickMenu} />
+              <Menu
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                anchorEl={anchorMenu}
+                open={openMenu}
+                onClose={handleCloseMenu}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                sx={
+                  htmlElement.classList.contains("dark")
+                    ? {
+                        "& .MuiMenu-paper": {
+                          background: "black",
+                          borderRadius: "20px",
+                          boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #333435",
+                          border: "solid 1px #333435",
+                        },
+                      }
+                    : {
+                        "& .MuiMenu-paper": {
+                          borderRadius: "20px",
+                          boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #767C86",
+                        },
+                      }
+                }
+              >
+                <MenuItem
+                  onClick={() => {
+                    handleCloseMenu()
+                    handleOpenModal()
+                  }}
+                  className="text-base dark:text-white"
+                >
+                  Change Profile Picture (beta)
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleCloseMenu()
+                    handleLogout()
+                  }}
+                  className="text-base dark:text-white"
+                >
+                  Logout
+                </MenuItem>
+              </Menu>
             </div>
           </a>
         ) : (
-          <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${user.userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} />
+          <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${user.userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} openMenu={openMenu} anchorMenu={anchorMenu} handleCloseMenu={handleCloseMenu} handleClickMenu={handleClickMenu} />
         )}
       </div>
+      <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
+        <Box style={modalStyle}>
+          <div className="pop-up m-auto min-w-[350px] bg-white dark:bg-black md:rounded-2xl">
+            <button className="relative  top-0 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>
+              x
+            </button>
+
+            <img src={darkMode ? darkLogo : lightLogo} alt="GigaChat Logo" className="-mt-4 ml-[45%] w-[40px]" />
+            <UploadProfilePicture userR={undefined} setUser={() => {}} handleCompleteSignup={() => {}} handleCloseModal={handleCloseModal} fromSwitch={true} />
+          </div>
+        </Box>
+      </Modal>
     </div>
   )
 }

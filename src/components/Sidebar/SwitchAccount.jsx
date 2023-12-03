@@ -18,15 +18,8 @@ import { useSelector } from "react-redux"
 import darkLogo from "../../assets/imgs/gigachatLogoOne_dark-removebg-preview.png"
 import lightLogo from "../../assets/imgs/gigachatLogoOne_light_v2-removebg-preview.png"
 
-function SwitchAccount({ userName, userTag, link, handleLogout }) {
-  const [anchorMenu, setAnchorMenu] = useState(null)
-  const openMenu = Boolean(anchorMenu)
-  const handleClickMenu = (event) => {
-    setAnchorMenu(event.currentTarget)
-  }
-  const handleCloseMenu = () => {
-    setAnchorMenu(null)
-  }
+function SwitchAccount({ userName, userTag, link, handleLogout,openMenu,anchorMenu,handleCloseMenu,handleClickMenu }) {
+  
 
   const htmlElement = document.getElementById("htmlid")
 
