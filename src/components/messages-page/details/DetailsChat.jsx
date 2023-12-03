@@ -4,6 +4,12 @@ import MessageInput from "./message/MessageInput"
 import { useState, useRef } from "react"
 import { useEffect } from "react"
 
+// Socket.io
+import io from "socket.io-client"
+const SOCKET_IO_LOCAL = "http://localhost:3001"
+const SOCKET_IO_ONLINE = "http://gigachat.com??.."
+const socket = io.connect(SOCKET_IO_LOCAL)
+
 const DetailsChat = () => {
   const one = true
   const two = true
@@ -107,17 +113,45 @@ const DetailsChat = () => {
     event.currentTarget.scrollHeight - event.currentTarget.scrollTop <= event.currentTarget.clientHeight + 44 ? setChatBtnDwnAppear(false) : setChatBtnDwnAppear(true)
   }
   const handleSendMessage = (messageText, messageMedia, messageMediaType) => {
+    setScrollToBottomFlag(true)
     // TODO:send message
-    console.log("Sent message:", messageText)
+    // console.log("Sent message:", messageText)
     // Add message to the chat
     setMessagesData([...messagesData, { id: msgIdCounterS, direction: "R", messageText, messageMedia, mediaType: messageMediaType }])
     setMsgIdCounterS(msgIdCounterS + 1)
-    scrollToBottom()
+    // scrollToBottom()
     // Send message in BackEnd
+    const message = { messageText, messageMedia, messageMediaType }
+    // console.log("message will be sent", message)
+    sendMessage_toServer(message)
   }
   const handleDeleteMsg = (msgId) => {
+    setScrollToBottomFlag(false)
     let newMessagesData = messagesData.filter((msg) => msg.id !== msgId)
     setMessagesData(newMessagesData)
+  }
+
+  // Scroll to bottom (with new messages)
+  const [scrollToBottomFlag, setScrollToBottomFlag] = useState(true)
+  useEffect(() => {
+    if (scrollToBottomFlag) scrollToBottom()
+  }, [messagesData, scrollToBottomFlag])
+
+  // Connect to Socket.io
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      // console.log("received_message:", data.message)
+      setScrollToBottomFlag(true)
+      const message = data.message
+      setMessagesData([...messagesData, { id: msgIdCounterS, messageText: message.messageText, messageMedia: message.messageMedia, mediaType: message.messageMediaType }])
+      setMsgIdCounterS(msgIdCounterS + 1)
+      // scrollToBottom()
+    })
+  }, [messagesData, msgIdCounterS])
+  // Send message to socket sercer
+  const sendMessage_toServer = (message) => {
+    // console.log("message sending...", message)
+    socket.emit("send_message", { message })
   }
 
   return (

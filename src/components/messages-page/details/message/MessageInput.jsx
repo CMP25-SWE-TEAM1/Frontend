@@ -4,7 +4,6 @@ import { createTheme } from "@mui/material"
 import ReactEmojiPicker from "./ReactEmojiPicker"
 import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
-import Grid from "@mui/material/Grid"
 import GifPicker, { ContentFilter } from "gif-picker-react"
 
 const modalStyle = {
@@ -21,7 +20,7 @@ const modalStyle = {
   boxShadow: 24,
   p: 4,
 }
-const Tenor_API_KEY = "AIzaSyDBlLa0hsL-R9uO6LO46bK8uEH-S4sxiEQ"
+const Tenor_API_KEY = "AIzaSyDE0FD8utv75fMWO_i0DzKDXyLR9-hn77o"
 
 const MessageInput = (props) => {
   // Message input
