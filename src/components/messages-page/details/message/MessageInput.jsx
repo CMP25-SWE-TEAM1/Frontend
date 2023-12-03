@@ -5,6 +5,7 @@ import ReactEmojiPicker from "./ReactEmojiPicker"
 import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
 import GifPicker, { ContentFilter } from "gif-picker-react"
+import { TENOR_API_KEY } from "../MessagesConstants"
 
 const modalStyle = {
   position: "absolute",
@@ -20,7 +21,6 @@ const modalStyle = {
   boxShadow: 24,
   p: 4,
 }
-const Tenor_API_KEY = "AIzaSyDE0FD8utv75fMWO_i0DzKDXyLR9-hn77o"
 
 const MessageInput = (props) => {
   // Message input
@@ -240,7 +240,7 @@ const MessageInput = (props) => {
       <Modal open={GIFsModalOpen} onClose={handleGIFsModalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box sx={modalStyle}>
           <div>
-            <GifPicker tenorApiKey={Tenor_API_KEY} ContentFilter={ContentFilter.HIGH} onGifClick={onGifClick} />
+            <GifPicker tenorApiKey={TENOR_API_KEY} ContentFilter={ContentFilter.HIGH} onGifClick={onGifClick} />
           </div>
         </Box>
       </Modal>

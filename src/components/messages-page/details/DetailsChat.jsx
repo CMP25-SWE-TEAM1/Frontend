@@ -1,14 +1,13 @@
 import { useNavigate } from "react-router-dom"
 import Message from "./message/Message"
 import MessageInput from "./message/MessageInput"
-import { useState, useRef } from "react"
-import { useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 // Socket.io
 import io from "socket.io-client"
-const SOCKET_IO_LOCAL = "http://localhost:3001"
-const SOCKET_IO_ONLINE = "http://gigachat.com??.."
-const socket = io.connect(SOCKET_IO_LOCAL)
+import { SOCKET_ON, SOCKET_IO } from "./MessagesConstants"
+
+const socket = SOCKET_ON ? io.connect(SOCKET_IO.mock) : ""
 
 const DetailsChat = () => {
   const one = true
@@ -123,7 +122,7 @@ const DetailsChat = () => {
     // Send message in BackEnd
     const message = { messageText, messageMedia, messageMediaType }
     // console.log("message will be sent", message)
-    sendMessage_toServer(message)
+    if (SOCKET_ON) sendMessage_toServer(message)
   }
   const handleDeleteMsg = (msgId) => {
     setScrollToBottomFlag(false)
@@ -139,14 +138,16 @@ const DetailsChat = () => {
 
   // Connect to Socket.io
   useEffect(() => {
-    socket.on("receive_message", (data) => {
-      // console.log("received_message:", data.message)
-      setScrollToBottomFlag(true)
-      const message = data.message
-      setMessagesData([...messagesData, { id: msgIdCounterS, messageText: message.messageText, messageMedia: message.messageMedia, mediaType: message.messageMediaType }])
-      setMsgIdCounterS(msgIdCounterS + 1)
-      // scrollToBottom()
-    })
+    if (SOCKET_ON) {
+      socket.on("receive_message", (data) => {
+        // console.log("received_message:", data.message)
+        setScrollToBottomFlag(true)
+        const message = data.message
+        setMessagesData([...messagesData, { id: msgIdCounterS, messageText: message.messageText, messageMedia: message.messageMedia, mediaType: message.messageMediaType }])
+        setMsgIdCounterS(msgIdCounterS + 1)
+        // scrollToBottom()
+      })
+    }
   }, [messagesData, msgIdCounterS])
   // Send message to socket sercer
   const sendMessage_toServer = (message) => {
