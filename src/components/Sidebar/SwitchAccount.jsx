@@ -39,8 +39,8 @@ function SwitchAccount({ userName, userTag, link, handleLogout,openMenu,anchorMe
         <div title="switchAccountContainer" className=" flex w-full items-center justify-around rounded-full group-hover:bg-lightHover dark:group-hover:bg-darkHover xs:!p-3">
           <Avatar alt={user.nickname} src={user.profileImage} />
           <div>
-            <div className="truncate font-semibold">{user.nickname}</div>
-            <div className="truncate text-secondary">@{user.username}</div>
+            <div className="truncate font-semibold" id="mahmoud_name">{user.nickname}</div>
+            <div className="truncate text-secondary" id="mahmoud_username">@{user.username}</div>
           </div>
 
           <div title="moreIcon" className="w-[10%]">

@@ -112,7 +112,7 @@ const Sidebar = () => {
 
   return (
     <div className=" flex flex-grow items-center  justify-between border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white max-xs:!sticky max-xs:bottom-0 max-xs:bg-black max-xs:bg-opacity-50 xs:max-w-[400px] xs:justify-end">
-      <div className={`flex h-full flex-row max-[1278px]:items-end  xs:flex-col xs:pl-[30%]`}>
+      <div className={`flex h-full flex-row max-[1278px]:items-end  xs:flex-col xs:pl-[30%]`} id="mahmoud_navigate_pre">
         {/* <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" alt="gigaChatIcon" /> */}
         {options}
         <Button name={shrink ? <HistoryEduOutlinedIcon /> : "Post"} color="text-white" backgroundColor="bg-[#1D9BF0]" height={shrink ? "h-14" : "h-12"} width={shrink ? "w-14" : "w-56"} link="/compose/tweet" alt="post" />
