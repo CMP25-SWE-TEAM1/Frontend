@@ -8,7 +8,7 @@ const Blocked = () => {
   const [userData, setUserData] = useState([])
 
   const APIs = {
-    mock: { BlockedAccountsAPI: "http://localhost:3001/blockedAccounts", UnblockUserAPI: "http://localhost:3001/unblockUser" },
+    mock: { BlockedAccountsAPI: "http://localhost:3001/blockedAccounts", UnblockUserAPI: "http://localhost:3001/unblockUser", blockUserAPI: "http://localhost:3001/blockUser" },
     actual: { BlockedAccountsAPI: "", UnblockUserAPI: "" },
   }
 
@@ -25,18 +25,42 @@ const Blocked = () => {
   }, [])
 
   function handleUnblock(e) {
-    const userId = e.target.dataset.id
+    const element = e.currentTarget
+    console.log(element)
+    const userId = e.currentTarget.dataset.id
+    const blocked = e.currentTarget.dataset.blocked
     if (userId) {
-      axios
-        .delete(APIs.mock.UnblockUserAPI + `/${userId}`)
+      if(blocked == "true"){
+        axios
+        .delete(APIs.mock.UnblockUserAPI + `?id=${userId}`)
         .then((res) => {
           if (res.status === 200) {
             console.log("user unblocked successfully")
+            element.classList.add("text-blue-600")
+            element.querySelector("title").innerHTML = "Block"
+            element.dataset.blocked = false
           }
         })
         .catch((err) => {
           console.log(err)
         })
+      }
+      else{
+        axios
+        .post(APIs.mock.blockUserAPI + `?id=${userId}`)
+        .then((res) => {
+          if (res.status === 200) {
+            console.log("user blocked successfully")
+            element.classList.remove("text-blue-600")
+            element.querySelector("title").innerHTML = "Unblock"
+            element.dataset.blocked = true
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+     
     }
   }
 
@@ -66,7 +90,7 @@ const Blocked = () => {
               </Link>
             </div>
             <div className="m-auto w-[10%]">
-              <BlockIcon data-id={user.id} titleAccess="Unblock" className="text-3xl text-red-600 hover:cursor-pointer" onClick={handleUnblock}></BlockIcon>
+              <BlockIcon data-id={user.id} data-blocked={true} titleAccess="Unblock" className="text-3xl text-red-600 hover:cursor-pointer hover:brightness-150" onClick={handleUnblock}></BlockIcon>
             </div>
           </div>
         ))}

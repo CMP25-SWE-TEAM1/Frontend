@@ -15,20 +15,21 @@ const ChangeUsername = () => {
     actual: { ChangeUsernameAPI: "" },
   }
 
-  const dispatch = useDispatch() 
+  const dispatch = useDispatch()
 
   const handleChangeUsername = () => {
     setErrorMsg("")
     axios
-      .patch(APIs.mock.ChangeUsernameAPI, { userName: userName })
+      .patch(APIs.mock.ChangeUsernameAPI, { newUsername: userName })
       .then((res) => {
         if (res.status == 200) {
           dispatch(changeUsername(userName))
-          window.location.href = '/settings/account';
+          window.location.href = "/settings/account"
         }
       })
       .catch((err) => {
-        setErrorMsg("Error changing username, please try again later")
+        if (err.response.status === 400) setErrorMsg("Username already exists")
+        else setErrorMsg("Error changing username, please try again later")
         console.log(err)
       })
   }
@@ -45,7 +46,7 @@ const ChangeUsername = () => {
 
       <div className="flex flex-col p-5">
         <div className="input-container">
-          <input type="text" name="username" id="username" value={user.name} className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
+          <input type="text" id="currentUsername" className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
           <label className="input-label" htmlFor="username">
             Current Username
           </label>
@@ -54,7 +55,7 @@ const ChangeUsername = () => {
 
       <div className="flex flex-col p-5">
         <div className="input-container mb-4">
-          <input className={userName === "" ? "form-input" : "form-input filled-input"} type="text" name="userName" id="userName" autoComplete="off" value={userName} onChange={(e) => setUserName(e.target.value)} />
+          <input className={userName === "" ? "form-input" : "form-input filled-input"} type="text" id="newUsername" autoComplete="off" value={userName} onChange={(e) => setUserName(e.target.value)} />
           <label className="input-label" htmlFor="password">
             New Username
           </label>
@@ -63,7 +64,7 @@ const ChangeUsername = () => {
 
       <hr />
 
-      <div className="flex p-5">        
+      <div className="flex p-5">
         <div className="text-red-600">{errorMsg}</div>
         <button id="changeUsernameBtn" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleChangeUsername} disabled={userName === ""}>
           Save

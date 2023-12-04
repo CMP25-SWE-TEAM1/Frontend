@@ -6,7 +6,6 @@ import Alert from "@mui/material/Alert"
 import Stack from "@mui/material/Stack"
 import { styles } from "../../../styles"
 
-
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
@@ -50,14 +49,15 @@ const ChangePassword = () => {
     // call password check api to compare the actual password
     if (newPassword === confirmPassword) {
       axios
-        .patch(APIs.mock.changePasswordAPI, { currentPassword: currentPassword, newPassword: newPassword })
+        .patch(APIs.mock.changePasswordAPI, { oldPassword: currentPassword, newPassword: newPassword })
         .then((res) => {
           if (res.status === 200) {
             window.location.href = "/settings/account"
           }
         })
         .catch((err) => {
-          setErrorMsg("Incorrect password")
+          if (err.response.status === 400) setErrorMsg("Incorrect password")
+          else setErrorMsg("Error updating password, please try again later")
           console.log(err)
         })
     } else {
@@ -126,7 +126,7 @@ const ChangePassword = () => {
 
       <div className="flex p-5">
         <div className="text-red-600">{errorMsg}</div>
-        <button id="changePasswordBtn" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handlePasswordChange} disabled={currentPassword === "" || newPassword === "" || confirmPassword === "" ||  checkPassword(newPassword)}>
+        <button id="changePasswordBtn" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handlePasswordChange} disabled={currentPassword === "" || newPassword === "" || confirmPassword === "" || checkPassword(newPassword)}>
           Save
         </button>
       </div>

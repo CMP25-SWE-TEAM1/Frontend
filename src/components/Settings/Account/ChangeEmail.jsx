@@ -7,9 +7,10 @@ import Alert from "@mui/material/Alert"
 import { styles } from "../../../styles"
 import { changeEmail } from "../../../store/UserSlice"
 
+
 const ChangeEmail = () => {
   const [email, setEmail] = useState("")
-  const user = useSelector((state) => state.user.user)
+  const { user } = useSelector((state) => state.user)
   const [errorMsg, setErrorMsg] = useState("")
 
   const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
@@ -36,7 +37,8 @@ const ChangeEmail = () => {
         }
       })
       .catch((err) => {
-        setErrorMsg("Error changing email, please try again later")
+        if (err.response.status === 400) setErrorMsg("Email already exists")
+        else setErrorMsg("Error changing email, please try again later")
         console.log(err)
       })
   }
@@ -53,7 +55,7 @@ const ChangeEmail = () => {
 
       <div className="flex flex-col p-5">
         <div className="input-container">
-          <input type="text" name="email" id="email" value={user.email} className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
+          <input type="text" id="currentEmail"  className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
           <label className="input-label" htmlFor="email">
             Current email
           </label>
@@ -62,7 +64,7 @@ const ChangeEmail = () => {
 
       <div className="flex flex-col p-5">
         <div className="input-container mb-4">
-          <input className={email === "" ? "form-input" : "form-input filled-input"} type="text" name="email" id="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input className={email === "" ? "form-input" : "form-input filled-input"} type="text" id="newEmail" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} />
           <label className="input-label" htmlFor="password">
             New email
           </label>
@@ -76,7 +78,7 @@ const ChangeEmail = () => {
 
       <div className="flex p-5">
         <div className="text-red-600">{errorMsg}</div>
-        <button id="changeemailBtn" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleChangeEmail} disabled={email === "" || !validEmail(email)}>
+        <button id="changeEmailBtn" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleChangeEmail} disabled={email === "" || !validEmail(email)}>
           Save
         </button>
       </div>

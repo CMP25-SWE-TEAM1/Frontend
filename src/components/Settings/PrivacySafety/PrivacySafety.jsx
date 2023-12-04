@@ -1,9 +1,16 @@
 import { Link } from "react-router-dom"
+import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+
 
 const PrivacySafety = () => {
   return (
     <div>
-      <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Privacy and Safety</h1>
+      <div className="flex items-center pl-4">
+        <Link to="/settings">
+          <ArrowBackIcon className="hover:bg-lightHover dark:hover:bg-darkHover h-8 w-8 rounded-2xl p-[6px] lg:hidden"></ArrowBackIcon>
+        </Link>
+        <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Privacy and Safety</h1>
+      </div>
       <p className="mb-4 pl-4 text-xs text-secondary">Manage what information you see and share on Gigachat.</p>
       <Link to="/settings/blocked">
         <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover">

@@ -63,6 +63,7 @@ const AccountInformation = () => {
         })
         .catch((err) => {
           setErrorMsg("Incorrect password")
+          console.log(err)
         })
     }
 

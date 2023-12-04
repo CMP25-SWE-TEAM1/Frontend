@@ -6,6 +6,7 @@ import Login from "./components/Login/Login"
 import PasswordReset from "./components/PasswordReset/PasswordReset"
 import Landing from "./components/landing-page/Landing"
 import Settings from "./components/Settings/Settings"
+import MobileSettings from "./components/Settings/MobileSettings"
 import { useState, useEffect } from "react"
 import SignUp from "./components/Signup/SignUp"
 import Account from "./components/Settings/Account/Account"
@@ -22,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode, setLightMode } from "./store/ThemeSlice"
 import PostPage from "./components/PostPage/PostPage"
 import Messages from "./components/messages-page/Messages"
+import NotFound from "./components/NotFound"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
@@ -85,6 +87,8 @@ const App = () => {
           <Route path="/home" element={<Home />}></Route>
           <Route path="/messages" element={<Messages />}></Route>
           <Route path="/settings" element={<Settings />}>
+
+            <Route path="" element={<MobileSettings />}></Route>
             <Route path="account" element={<Account />}></Route>
             <Route path="account_information" element={<AccountInformation />}></Route>
             <Route path="change_username" element={<ChangeUsername />}></Route>
@@ -101,7 +105,7 @@ const App = () => {
 
           <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/replies" element={<PostPage post={testPost} />}></Route>
-          <Route path="*" element={<Home />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
       {/* {user && <Widgets />} */}

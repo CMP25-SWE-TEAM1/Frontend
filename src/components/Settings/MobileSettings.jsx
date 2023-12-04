@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom"
-import { Outlet } from "react-router-dom"
 
-const Settings = () => {
+const MobileSettings = () => {
   const [selectedSettings, setSelectedSettings] = useState("")
 
   function handleSelect(e){
@@ -13,8 +12,8 @@ const Settings = () => {
   }
 
   return (
-    <div className="flex h-screen dark:bg-black dark:text-white ">
-      <div className="flex h-full w-[320px] flex-col border-r border-lightBorder dark:border-darkBorder max-lg:hidden">
+    <div className="flex h-screen dark:bg-black dark:text-white lg:hidden">
+      <div className="flex h-full w-[600px] flex-col border-lightBorder dark:border-darkBorder">
         <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Settings</h1>
 
         <Link to="/settings/account">
@@ -36,12 +35,8 @@ const Settings = () => {
           </div>
         </Link>
       </div>
-
-      <div className="flex h-full w-[600px] flex-col border-r border-lightBorder dark:border-darkBorder">
-        <Outlet />
-      </div>
     </div>
   )
 }
 
-export default Settings
+export default MobileSettings
