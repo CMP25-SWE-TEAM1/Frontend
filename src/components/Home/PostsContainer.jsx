@@ -10,7 +10,7 @@ const PostsContainer = ({ posts }) => {
     <div className="post-container">
       {posts.map((p) => (
         <Post
-          userProfilePicture={profilePicTest}
+          userProfilePicture={p.tweetDetails.tweet_owner.profile_image}
           userName={p.tweetDetails.tweet_owner.nickname}
           userTag={p.tweetDetails.tweet_owner.username}
           date={p.tweetDetails.createdAt}

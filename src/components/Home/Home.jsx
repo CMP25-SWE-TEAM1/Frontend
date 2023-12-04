@@ -11,8 +11,8 @@ import axios from "axios"
 import { useSelector } from "react-redux"
 
 const Home = () => {
+  const user = useSelector((state) => state.user.user)
   const userToken = useSelector((state) => state.user.token)
-  const [user, setUser] = useState(getUser())
   const [tweets, setTweets] = useState([])
   const homeNavLinks = [
     { title: "For you", location: "foryou" },
@@ -32,15 +32,21 @@ const Home = () => {
     if(response.status === 200)
     {
       console.log("in then ");
-      console.log(response.data.tweetList);
-      setTweets(response.data.tweetList);
+      if(response.data.tweetList){
+        console.log(response.data.tweetList);
+        setTweets(response.data.tweetList);
+      }
+      else
+      setTweets([]);
     }
   }).catch(error=>{
     console.log(error);
   })},[])
 
   const handleNewTweet = (newTweet) => {
-    setTweets([newTweet, ...tweets])
+    setTweets([{tweetDetails:newTweet.data}, ...tweets])
+    console.log("handle new tweet")
+    console.log(tweets) 
   }
 
   const postsTst = [
