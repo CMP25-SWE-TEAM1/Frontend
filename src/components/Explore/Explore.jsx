@@ -6,6 +6,7 @@ import { useState } from "react"
 import CustomTabPanel from "./CustomTabPanel"
 import CustomTabs from "./CustomTabs"
 import TrendComponent from "./TrendComponent"
+import TrendsContainer from "./TrendsContainer"
 
 const Explore = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
@@ -24,49 +25,19 @@ const Explore = () => {
           <CustomTabs tabValue={tabValue} handleChangeTabValue={handleChangeTabValue} />
         </div>
         <CustomTabPanel value={tabValue} index={0}>
-          <TrendComponent index={1} categoray={"Egypt"} name={"For you"} numberOfPosts={"125k"} />
-          <TrendComponent index={2} categoray={"Egypt"} name={"For you"} numberOfPosts={"125k"} />
-          <TrendComponent index={3} categoray={"Egypt"} name={"For you"} numberOfPosts={"125k"} />
-          <TrendComponent index={4} categoray={"Egypt"} name={"For you"} numberOfPosts={"125k"} />
-          <TrendComponent index={5} categoray={"Egypt"} name={"For you"} numberOfPosts={"125k"} />
-          <TrendComponent index={6} categoray={"Egypt"} name={"For you"} numberOfPosts={"125k"} />
-          <TrendComponent index={7} categoray={"Egypt"} name={"For you"} numberOfPosts={"125k"} />
+          <TrendsContainer type={"For you"} />
         </CustomTabPanel>
         <CustomTabPanel value={tabValue} index={1}>
-          <TrendComponent index={1} categoray={"Egypt"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={2} categoray={"Egypt"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={3} categoray={"Egypt"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={4} categoray={"Egypt"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={5} categoray={"Egypt"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={6} categoray={"Egypt"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={7} categoray={"Egypt"} name={"Trending"} numberOfPosts={"125k"} />
+          <TrendsContainer type={"For you"} />
         </CustomTabPanel>
         <CustomTabPanel value={tabValue} index={2}>
-          <TrendComponent index={1} categoray={"News"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={2} categoray={"News"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={3} categoray={"News"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={4} categoray={"News"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={5} categoray={"News"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={6} categoray={"News"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={7} categoray={"News"} name={"Trending"} numberOfPosts={"125k"} />
+          <TrendsContainer type={"For you"} />
         </CustomTabPanel>
         <CustomTabPanel value={tabValue} index={3}>
-          <TrendComponent index={1} categoray={"Sports"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={2} categoray={"Sports"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={3} categoray={"Sports"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={4} categoray={"Sports"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={5} categoray={"Sports"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={6} categoray={"Sports"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={7} categoray={"Sports"} name={"Trending"} numberOfPosts={"125k"} />
+          <TrendsContainer type={"For you"} />
         </CustomTabPanel>
         <CustomTabPanel value={tabValue} index={4}>
-          <TrendComponent index={1} categoray={"Entertainment"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={2} categoray={"Entertainment"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={3} categoray={"Entertainment"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={4} categoray={"Entertainment"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={5} categoray={"Entertainment"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={6} categoray={"Entertainment"} name={"Trending"} numberOfPosts={"125k"} />
-          <TrendComponent index={7} categoray={"Entertainment"} name={"Trending"} numberOfPosts={"125k"} />
+          <TrendsContainer type={"For you"} />
         </CustomTabPanel>
       </div>
 

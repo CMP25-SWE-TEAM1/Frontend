@@ -1,11 +1,16 @@
-const TrendComponent = ({ index, categoray, name, numberOfPosts }) => {
+const TrendComponent = ({ index, categoray, name, numberOfPosts, fetchTrendTweets }) => {
   return (
-    <div className="h-52 w-full">
-      <div>
+    <div
+      className="flex min-h-[100px] w-full flex-col justify-between p-4 hover:bg-darkHover cursor-pointer"
+      onClick={() => {
+        fetchTrendTweets(name.substring(1))
+      }}
+    >
+      <div className="text-xs text-secondary">
         {index}. Trending in {categoray}
-        <br /> #{name}
-        <br /> {numberOfPosts}
       </div>
+      <div className="self-end">{name}</div>
+      <div className="text-xs text-secondary">{numberOfPosts} posts</div>
     </div>
   )
 }
