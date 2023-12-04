@@ -43,7 +43,7 @@ function SwitchAccount({ userName, userTag, link, handleLogout,openMenu,anchorMe
             <div className="truncate text-secondary" id="mahmoud_username">@{user.username}</div>
           </div>
 
-          <div title="moreIcon" className="w-[10%]">
+          <div title="moreIcon" className="w-[10%]" id="mahmoud_account_options">
             <MoreHorizOutlinedIcon id="demo-positioned-button" aria-controls={openMenu ? "demo-positioned-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleClickMenu} />
 
             <Menu
