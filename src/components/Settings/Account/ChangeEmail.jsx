@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import axios from "axios"
 import Alert from "@mui/material/Alert"
 import { styles } from "../../../styles"
+import { changeEmail } from "../../../store/UserSlice"
 
 const ChangeEmail = () => {
   const [email, setEmail] = useState("")
@@ -13,12 +14,14 @@ const ChangeEmail = () => {
 
   const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 
-  function validEmail(emeil) {
-    return emailRegex.test(emeil)
+  function validEmail(email) {
+    return emailRegex.test(email)
   }
 
+  const dispatch = useDispatch()
+
   const APIs = {
-    mock: { ChangeEmailAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/changeEmail" },
+    mock: { ChangeEmailAPI: "http://localhost:3001/changeEmail" },
     actual: { ChangeEmailAPI: "" },
   }
 
@@ -28,13 +31,13 @@ const ChangeEmail = () => {
       .patch(APIs.mock.ChangeEmailAPI, { email: email })
       .then((res) => {
         if (res.status == 200) {
+          dispatch(changeEmail(email))
           window.location.href = "/settings/account"
         }
       })
       .catch((err) => {
-        if (err.response.status == 401 || err.response.status == 404) {
-          setErrorMsg("Error changing email, please try again later")
-        } else console.log(err)
+        setErrorMsg("Error changing email, please try again later")
+        console.log(err)
       })
   }
 
@@ -73,7 +76,7 @@ const ChangeEmail = () => {
 
       <div className="flex p-5">
         <div className="text-red-600">{errorMsg}</div>
-        <button id="changeemailBtn" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleChangeEmail} disabled={email === ""}>
+        <button id="changeemailBtn" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleChangeEmail} disabled={email === "" || !validEmail(email)}>
           Save
         </button>
       </div>

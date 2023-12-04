@@ -8,7 +8,6 @@ import { useSelector } from "react-redux"
 const AccountInformation = () => {
   const [passwordIsConfirmed, setPasswordIsConfirmed] = useState(sessionStorage.getItem("passwordIsConfirmed"))
   const user = useSelector((state) => state.user.user)
-  const [rerender, setRerender] = useState(false)
 
   const Information = () => {
     return (
@@ -24,7 +23,7 @@ const AccountInformation = () => {
           <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover">
             <div className="flex h-[57px] flex-col justify-center p-[11px]">
               <div className="w-[90%] text-sm">Username</div>
-              <p className="text-xs text-secondary">{user.name}</p>
+              <p className="text-xs text-secondary">{user.username}</p>
             </div>
             <div className="m-auto mr-3 text-2xl">&gt;</div>
           </div>
@@ -48,7 +47,7 @@ const AccountInformation = () => {
     const [errorMsg, setErrorMsg] = useState("")
 
     const APIs = {
-      mock: { confirmPasswordAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/ckeckPassword" },
+      mock: { confirmPasswordAPI: "http://localhost:3001/checkPassword" },
       actual: { confirmPasswordAPI: "" },
     }
 
@@ -63,9 +62,7 @@ const AccountInformation = () => {
           }
         })
         .catch((err) => {
-          if (err.response.status == 401 || err.response.status == 404) {
-            setErrorMsg("Incorrect password")
-          } else console.log(err)
+          setErrorMsg("Incorrect password")
         })
     }
 

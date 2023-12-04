@@ -41,7 +41,7 @@ const ChangePassword = () => {
   }
 
   const APIs = {
-    mock: { changePasswordAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/changePassword" },
+    mock: { changePasswordAPI: "http://localhost:3001/changePassword" },
     actual: { changePasswordAPI: "" },
   }
 
@@ -57,9 +57,8 @@ const ChangePassword = () => {
           }
         })
         .catch((err) => {
-          if (err.response.status === 401 || err.response.status === 404) {
-            setErrorMsg("Incorrect password")
-          } else console.log(err)
+          setErrorMsg("Incorrect password")
+          console.log(err)
         })
     } else {
       // error new passwords don't match

@@ -21,6 +21,8 @@ import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
 const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostCount, likeCount, viewCount, description, media }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
 
+  const descriptionLines = description.split("\n");
+
   const openMenu = Boolean(anchorPostMenu)
 
   const handleMenuButtonClick = (event) => {
@@ -51,105 +53,103 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
 
   return (
     <Link className="" to={`/${userTag}/status/tweetId`}>
-    <div className=" border-lightBorder dark:border-darkBorder flex h-fit border border-l-0 border-r-0 p-3" data-testid="postId">
-      <div className=" h-60 w-10 sm:mr-3">
-        <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
-      </div>
-      <div className=" sm:mr-2">
-        <div className="post-header flex items-center justify-between">
-          <div className="flex items-center">
-            <Link className="hover:underline" to="/mohamedsamir">
-              {userName}
-              <VerifiedIcon className="pl-1 text-primary" sx={{ fontSize: "22px" }} />
-            </Link>
-            <Link className="ml-1 text-sm text-ternairy dark:text-secondary">@{userTag}</Link>
-            <div className="m-1 h-[2px] w-[2px] rounded-full bg-ternairy dark:bg-secondary"></div>
-            <Link className="text-sm text-ternairy dark:text-secondary" to="/postid">
-              {finalDate}
-            </Link>
-          </div>
-          <div>
-            <Button target={"_blank"} variant="text" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent">
-              <MoreHorizIcon className="text-secondary" />
-            </Button>
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorPostMenu}
-              open={openMenu}
-              onClose={handleMenuClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-              sx={
-                htmlElement.classList.contains("dark")
-                  ? {
-                      "& .MuiMenu-paper": {
-                        background: "black",
-                        borderRadius: "20px",
-                        boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #333435",
-                        border: "solid 1px #333435",
-                      },
-                    }
-                  : {
-                      "& .MuiMenu-paper": {
-                        borderRadius: "20px",
-                        boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #767C86",
-                      },
-                    }
-              }
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-            >
-              <MenuItem onClick={handleMenuClose} className="flex items-center">
-                <SentimentVeryDissatisfiedIcon className="mr-3 text-base dark:text-white" />
-                <span className="text-[15px] dark:text-white">Not interested in this post</span>
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
-                <PersonAddAltIcon className="mr-3 text-base dark:text-white" />
-                <span className="text-[15px] dark:text-white">Follow @{userTag}</span>
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
-                <VolumeOffOutlinedIcon className="mr-3 text-base dark:text-white" />
-                <span className="text-[15px] dark:text-white">Mute @{userTag}</span>
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
-                <BlockOutlinedIcon className="mr-3 text-base dark:text-white" />
-                <span className="text-[15px] dark:text-white">Block @{userTag}</span>
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
-                <QueryStatsOutlinedIcon className="mr-3 text-base dark:text-white" />
-                <span className="text-[15px] dark:text-white">View post engagements</span>
-              </MenuItem>
-            </Menu>
-          </div>
+      <div className=" flex h-fit border border-l-0 border-r-0 border-lightBorder p-3 dark:border-darkBorder" data-testid="postId">
+        <div className=" h-fit w-10 sm:mr-3">
+          <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
         </div>
-        <div className="post-text">
-          <div className="max-h-[100px] overflow-hidden text-start dark:text-gray-300" data-testid="post-text-id">
-          {description}
-          </div>
-          {/* <div>show more</div> */}
-        </div>
-        <div className="mt-3">
-          <Link>
-            <img src={media} alt="" className="rounded-xl" />
-          </Link>
-        </div>
-        <div className="mt-3 flex max-w-full justify-between text-ternairy dark:text-secondary">
-          <div className="group -ml-2 flex cursor-pointer items-center transition-colors  duration-300 hover:text-primary" title="Reply">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900 ">
-              <ChatBubbleOutlineOutlinedIcon
-                sx={{
-                  width: 16,
-                  height: 16,
-                }}
-              />
+        <div className=" sm:mr-2 w-full">
+          <div className="post-header flex items-center justify-between">
+            <div className="flex items-center">
+              <Link className="hover:underline" to="/mohamedsamir">
+                {userName}
+                <VerifiedIcon className="pl-1 text-primary" sx={{ fontSize: "22px" }} />
+              </Link>
+              <Link className="ml-1 text-sm text-ternairy dark:text-secondary">@{userTag}</Link>
+              <div className="m-1 h-[2px] w-[2px] rounded-full bg-ternairy dark:bg-secondary"></div>
+              <Link className="text-sm text-ternairy dark:text-secondary" to="/postid">
+                {finalDate}
+              </Link>
             </div>
+            <div>
+              <MoreHorizIcon target={"_blank"} variant="text" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent text-secondary" />
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorPostMenu}
+                open={openMenu}
+                onClose={handleMenuClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+                sx={
+                  htmlElement.classList.contains("dark")
+                    ? {
+                        "& .MuiMenu-paper": {
+                          background: "black",
+                          borderRadius: "20px",
+                          boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #333435",
+                          border: "solid 1px #333435",
+                        },
+                      }
+                    : {
+                        "& .MuiMenu-paper": {
+                          borderRadius: "20px",
+                          boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #767C86",
+                        },
+                      }
+                }
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+              >
+                <MenuItem onClick={handleMenuClose} className="flex items-center">
+                  <SentimentVeryDissatisfiedIcon className="mr-3 text-base dark:text-white" />
+                  <span className="text-[15px] dark:text-white">Not interested in this post</span>
+                </MenuItem>
+                <MenuItem onClick={handleMenuClose}>
+                  <PersonAddAltIcon className="mr-3 text-base dark:text-white" />
+                  <span className="text-[15px] dark:text-white">Follow @{userTag}</span>
+                </MenuItem>
+                <MenuItem onClick={handleMenuClose}>
+                  <VolumeOffOutlinedIcon className="mr-3 text-base dark:text-white" />
+                  <span className="text-[15px] dark:text-white">Mute @{userTag}</span>
+                </MenuItem>
+                <MenuItem onClick={handleMenuClose}>
+                  <BlockOutlinedIcon className="mr-3 text-base dark:text-white" />
+                  <span className="text-[15px] dark:text-white">Block @{userTag}</span>
+                </MenuItem>
+                <MenuItem onClick={handleMenuClose}>
+                  <QueryStatsOutlinedIcon className="mr-3 text-base dark:text-white" />
+                  <span className="text-[15px] dark:text-white">View post engagements</span>
+                </MenuItem>
+              </Menu>
+            </div>
+          </div>
+          <div className="post-text">
+            <div className="max-h-[100px] overflow-hidden text-start dark:text-gray-300" data-testid="post-text-id">
+              {descriptionLines.map(line => <p>{line}<br/></p>)}
+            </div>
+            {/* <div>show more</div> */}
+          </div>
+          <div className="mt-3">
+            <Link>
+              <img src={media} alt="" className="rounded-xl w-full" />
+            </Link>
+          </div>
+          <div className="mt-3 flex max-w-full justify-between text-ternairy dark:text-secondary">
+            <div className="group -ml-2 flex cursor-pointer items-center transition-colors  duration-300 hover:text-primary" title="Reply">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900 ">
+                <ChatBubbleOutlineOutlinedIcon
+                  sx={{
+                    width: 16,
+                    height: 16,
+                  }}
+                />
+              </div>
 
               <span className="text-sm">{replyCount}</span>
             </div>
@@ -187,33 +187,33 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
                 />
               </div>
 
-            <span className="text-sm">{viewCount}</span>
-          </div>
-          <div className="bookmarkUpload flex">
-          <div className={`group flex cursor-pointer items-center transition-colors duration-300 hover:text-primary`} title="Bookmark">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900">
-              <BookmarkBorderOutlinedIcon
-                sx={{
-                  width: 16,
-                  height: 16,
-                }}
-              />
+              <span className="text-sm">{viewCount}</span>
             </div>
-          </div>
-          <div className="  group flex cursor-pointer items-center transition-colors duration-300 hover:text-primary" title="Share">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900">
-              <FileUploadOutlinedIcon
-                sx={{
-                  width: 16,
-                  height: 16,
-                }}
-              />
+            <div className="bookmarkUpload flex">
+              <div className={`group flex cursor-pointer items-center transition-colors duration-300 hover:text-primary`} title="Bookmark">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900">
+                  <BookmarkBorderOutlinedIcon
+                    sx={{
+                      width: 16,
+                      height: 16,
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="  group flex cursor-pointer items-center transition-colors duration-300 hover:text-primary" title="Share">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900">
+                  <FileUploadOutlinedIcon
+                    sx={{
+                      width: 16,
+                      height: 16,
+                    }}
+                  />
+                </div>
+              </div>
             </div>
-          </div>
           </div>
         </div>
       </div>
-    </div>
     </Link>
   )
 }

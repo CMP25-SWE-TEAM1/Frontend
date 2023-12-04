@@ -3,7 +3,7 @@ import Sidebar from "./components/Sidebar/Sidebar"
 import Widgets from "./components/Widgets"
 import Home from "./components/Home/Home"
 import Login from "./components/Login/Login"
-import PasswordReset from "./components/Login/PasswordReset"
+import PasswordReset from "./components/PasswordReset/PasswordReset"
 import Landing from "./components/landing-page/Landing"
 import Settings from "./components/Settings/Settings"
 import { useState, useEffect } from "react"
@@ -13,8 +13,7 @@ import AccountInformation from "./components/Settings/Account/AccountInformation
 import ChangeUsername from "./components/Settings/Account/ChangeUsername"
 import ChangeEmail from "./components/Settings/Account/ChangeEmail"
 import ChangePassword from "./components/Settings/Account/ChangePassword"
-import AccessibilityDisplayLanguages from "./components/Settings/AccessibilityDisplayLanguages/AccessibilityDisplayLanguages"
-import Accessibility from "./components/Settings/AccessibilityDisplayLanguages/Accessibility"
+import AccessibilityDisplayLanguages from './components/Settings/AccessibilityDisplayLanguages/AccessibilityDisplayLanguages'
 import Display from "./components/Settings/AccessibilityDisplayLanguages/Display"
 import PrivacySafety from "./components/Settings/PrivacySafety/PrivacySafety"
 import Blocked from "./components/Settings/PrivacySafety/Blocked"
@@ -22,8 +21,7 @@ import Muted from "./components/Settings/PrivacySafety/Muted"
 import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode, setLightMode } from "./store/ThemeSlice"
 import PostPage from "./components/PostPage/PostPage"
-import ProfilePage from "./components/ProfilePage/ProfilePage"
-import FollowPage  from "./components/ProfilePage/FollowPage/FollowPage"
+import Messages from "./components/messages-page/Messages"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
@@ -37,7 +35,7 @@ const App = () => {
     } else {
       dispatch(setLightMode())
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const [openLoginModal, setOpenLoginModal] = useState(false)
@@ -56,11 +54,9 @@ const App = () => {
     setLocation(window.location.pathname)
   }
 
-
-
   const user = useSelector((state) => state.user.user)
   // console.log(location)
-  const testPost={
+  const testPost = {
     userName: "Mohamed Samir",
     userTag: "MSamir245",
     date: "Thu Oct 26 2023 2:28:01 GMT+0200 (Eastern European Standard Time)",
@@ -70,10 +66,9 @@ const App = () => {
     viewCount: "1M",
   }
   return (
-    <div className="app flex h-[100vh] bg-white text-black dark:bg-black dark:text-white">
+    <div className="app relative flex max-xs:max-w-[475px] xs:w-full flex-col-reverse bg-white text-black dark:bg-black dark:text-white xs:h-[100vh] xs:flex-row">
       <BrowserRouter>
         {user && location !== "/password_reset" && <Sidebar />}
-
         {/* {location !== "/login" && location !== "/password_reset" && <Sidebar />} */}
         {/* true will be replaced by authorization*/}
         <Routes>
@@ -85,10 +80,10 @@ const App = () => {
               </>
             }
           ></Route>
-          <Route path="login" element={<Login openModal={true} handleCloseModal={handleCloseLoginModal} location={location} setLocation={setLocation} />}></Route>
+          <Route path="login" element={<Login openModal={true} handleCloseModal={handleCloseLoginModal} setLocation={setLocation} />}></Route>
           <Route path="password_reset" element={<PasswordReset />}></Route>
           <Route path="/home" element={<Home />}></Route>
-
+          <Route path="/messages" element={<Messages />}></Route>
           <Route path="/settings" element={<Settings />}>
             <Route path="account" element={<Account />}></Route>
             <Route path="account_information" element={<AccountInformation />}></Route>
@@ -101,13 +96,8 @@ const App = () => {
             <Route path="muted" element={<Muted />}></Route>
 
             <Route path="accessibility_display_and_languages" element={<AccessibilityDisplayLanguages />}></Route>
-            <Route path="accessibility" element={<Accessibility />}></Route>
             <Route path="display" element={<Display />}></Route>
           </Route>
-
-          <Route path={`/${user.name}`} element={<ProfilePage/>}></Route>
-          <Route path={`/${user.name}/following`} element={<FollowPage type={true} />}></Route>
-          <Route path={`/${user.name}/followers`} element={<FollowPage type={false} />}></Route>
 
           <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/replies" element={<PostPage post={testPost} />}></Route>
