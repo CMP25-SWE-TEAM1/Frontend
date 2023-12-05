@@ -11,7 +11,7 @@ import axios from "axios"
 import { PASSWORD_REGEX, UPPER_CASE_LETTER_REGEX, LOWER_CASE_LETTER_REGEX, SPECIAL_CHARACTER_REGEX, NUMBER_REGEX, LENGTH_REGEX, EMAIL_REGEX, APIs } from "../../constants/signupConstants.js"
 import { styles } from "../../styles.js"
 
-const FifthStep = ({ mock, user, setUser, setUserTag, userToken, setOriginalUsername, nextShow, password, setPassword }) => {
+const FifthStep = ({ setUser, mock, userToken, userTag, nextShow, password, setPassword }) => {
   const [showPassword, setShowPassword] = useState(false)
 
   const togglePasswordVisibility = () => {
@@ -38,6 +38,14 @@ const FifthStep = ({ mock, user, setUser, setUserTag, userToken, setOriginalUser
   }
 
   const handleAssignPassword = () => {
+    // console.log({
+    //   headers: {
+    //     authorization: "Bearer " + userToken,
+    //   },
+    // })
+    // console.log({
+    //   password: password,
+    // })
     axios
       .patch(
         mock ? APIs.mock.assignPassword : APIs.actual.assignPassword,
@@ -50,12 +58,23 @@ const FifthStep = ({ mock, user, setUser, setUserTag, userToken, setOriginalUser
           },
         }
       )
+
       .then((res) => {
-        setUser(res.data.data.currentUser)
-        setUserTag(user.username)
-        setOriginalUsername(user.username)
+        // console.log(res)
         nextShow(5)
-        console.log(res)
+      })
+      .then(() => {
+        // console.log(APIs.actual.getProfile + userTag)
+        axios
+          .get(mock ? APIs.mock.getProfile : APIs.actual.getProfile + userTag, {
+            headers: {
+              authorization: "Bearer " + userToken,
+            },
+          })
+          .then((res) => {
+            console.log(res)
+            setUser(res.data.user)
+          })
       })
       .catch((err) => {
         console.log(err)
@@ -63,8 +82,8 @@ const FifthStep = ({ mock, user, setUser, setUserTag, userToken, setOriginalUser
   }
 
   return (
-    <div id="Fifth Step" className="-mt-10 hidden">
-      <div>
+    <div id="Fifth Step" className="m-auto -mt-10 hidden w-[320px]">
+      <div className="!h-fit">
         <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 5 of 5</p>
         <h1>You'll need a Password</h1>
         <p className="date-text">Make sure it's 8 characters or more</p>

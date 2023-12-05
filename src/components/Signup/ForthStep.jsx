@@ -8,7 +8,7 @@ import { useState, useRef, useEffect } from "react"
 
 import { useSelector } from "react-redux"
 
-const ForthStep = ({ setUser, setUserToken, nextShow, handleOpenBirthdateError, mock, email }) => {
+const ForthStep = ({  setUserTag, setOriginalUsername, setUser, setUserToken, nextShow, handleOpenBirthdateError, mock, email }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
 
   const [verficationCode, setVerficationCode] = useState("")
@@ -27,10 +27,12 @@ const ForthStep = ({ setUser, setUserToken, nextShow, handleOpenBirthdateError, 
         email: email,
       })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         setUserToken(res.data.token)
-        setUser(res.data.data.user)
+        setUserTag(res.data.data.suggestedUsername)
+        setOriginalUsername(res.data.data.suggestedUsername)
         nextShow(4)
+        // return res.data.data.suggestedUsername
       })
       .catch((err) => {
         console.log(err)
@@ -73,15 +75,14 @@ const ForthStep = ({ setUser, setUserToken, nextShow, handleOpenBirthdateError, 
       setCountdown(30)
       resendCode.current.disabled = false
       resendCodeSpan.current.style.color = "#1d9bf0"
-      
     }
 
     return () => clearTimeout(timer)
   }, [countdown, isResending])
 
   return (
-    <div id="Forth Step" className="-mt-10 hidden">
-      <div>
+    <div id="Forth Step" className="m-auto -mt-10 hidden w-[320px]">
+      <div className="!h-fit">
         <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 4 of 5</p>
         <h1 className="">We sent you a code</h1>
         <p className="text-xs text-secondary">Enter it below to verify {email}.</p>

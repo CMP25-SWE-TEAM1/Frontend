@@ -55,8 +55,8 @@ const TagStep = ({ mock, userTag, setUserTag, originalUsername, userToken, user,
   }
 
   return (
-    <div id="Tag Step" className="-mt-10 hidden">
-      <div>
+    <div id="Tag Step" className="m-auto -mt-10 hidden w-[320px]">
+      <div className="!h-fit">
         <h1>What should we call you?</h1>
         <p className="text-xs text-secondary">Your @username is unique. You can always change it later.</p>
 
