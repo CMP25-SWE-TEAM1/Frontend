@@ -5,7 +5,6 @@ import { BrowserRouter } from "react-router-dom"
 import user from "@testing-library/user-event"
 import { Provider } from "react-redux"
 import store from "../../../store"
-import axios from "axios"
 
 describe("Content", () => {
   test("main header", () => {

@@ -7,12 +7,13 @@ import { changeUsername } from "../../../store/UserSlice"
 
 const ChangeUsername = () => {
   const [userName, setUserName] = useState("")
-  const user = useSelector((state) => state.user.user)
+  const { user, token } = useSelector((state) => state.user)
   const [errorMsg, setErrorMsg] = useState("")
+  const [successMsg, setSuccessMsg] = useState("")
 
   const APIs = {
     mock: { ChangeUsernameAPI: "http://localhost:3001/changeUsername" },
-    actual: { ChangeUsernameAPI: "" },
+    actual: { ChangeUsernameAPI: "http://backend.gigachat.cloudns.org/api/user/updateusername" },
   }
 
   const dispatch = useDispatch()
@@ -20,16 +21,27 @@ const ChangeUsername = () => {
   const handleChangeUsername = () => {
     setErrorMsg("")
     axios
-      .patch(APIs.mock.ChangeUsernameAPI, { newUsername: userName })
+      .patch(
+        APIs.actual.ChangeUsernameAPI,
+        { newUsername: userName },
+        {
+          headers: {
+            authorization: "Bearer " + token,
+          },
+        }
+      )
       .then((res) => {
         if (res.status == 200) {
           dispatch(changeUsername(userName))
-          window.location.href = "/settings/account"
+          setSuccessMsg(res.data.data.message)
+          setTimeout(() => {
+            //window.location.href = "/settings/account"
+          }, 2000);
         }
       })
       .catch((err) => {
-        if (err.response.status === 400) setErrorMsg("Username already exists")
-        else setErrorMsg("Error changing username, please try again later")
+        if (err.response.data.message) setErrorMsg(err.response.data.message)
+        else setErrorMsg("Internal server error, please try again later")
         console.log(err)
       })
   }
@@ -46,7 +58,7 @@ const ChangeUsername = () => {
 
       <div className="flex flex-col p-5">
         <div className="input-container">
-          <input type="text" id="currentUsername" className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
+          <input type="text" id="currentUsername" value={user && user.username} className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
           <label className="input-label" htmlFor="username">
             Current Username
           </label>
@@ -66,6 +78,7 @@ const ChangeUsername = () => {
 
       <div className="flex p-5">
         <div className="text-red-600">{errorMsg}</div>
+        <div className="text-green-600">{successMsg}</div>
         <button id="changeUsernameBtn" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleChangeUsername} disabled={userName === ""}>
           Save
         </button>
