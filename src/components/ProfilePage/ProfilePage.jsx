@@ -18,10 +18,9 @@ import { useParams } from "react-router-dom";
 const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
     
     const user = useSelector((state)=> state.user.user)
-    const userToken = useSelector((state) => state.user.token)
-    console.log(userToken)
+    const {token} = useSelector((state) => state.user)
     const [profileres, setProfile] = useState([])
-    const mock = true;
+    const mock = false;
     const [windowWidth, setWindowWidth] = useState(window.innerWidth) //todo: for responsiveness
     const [profilePicURL, setProfilePicURL] = useState()
     const [bannerPicURL, setCoverPicURL] = useState()
@@ -29,7 +28,7 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
     const APIs = {
       
         mock: { getProfileAPI:   `http://localhost:3001/api/profile/` },
-        actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/moa_ded_inside` },
+        actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/` },
       }
       let usertag=undefined;
      const Fetch =()=>{
@@ -37,10 +36,10 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
     if(usertag){
         axios.get(
 
-            mock? APIs.mock.getProfileAPI+`${usertag}` : APIs.actual.getProfileAPI+`${usertag}`,
+            mock? APIs.mock.getProfileAPI+`${usertag}` : APIs.actual.getProfileAPI+`${tag}`,
             {
                 headers:{
-                    authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NmI0MjQ2Y2UxODFlMDkxZjQ0ZWQ2OCIsImlhdCI6MTcwMTgwMTIwMiwiZXhwIjoxNzA5NTc3MjAyfQ.5emT53Vi6WpT4rLC0qpixNCNLWSxjWwBpjPLTJQNTMw",
+                    authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NmI0MjQ2Y2UxODFlMDkxZjQ0ZWQ2OCIsImlhdCI6MTcwMTgwMTIwMiwiZXhwIjoxNzA5NTc3MjAyfQ.5emT53Vi6WpT4rLC0qpixNCNLWSxjWwBpjPLTJQNTMw` 
                 }
             }
         ).then(res =>{
