@@ -46,7 +46,7 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
             if(res.status=== 200)
             {  
                 setProfile((res.data.user));
-                console.log(profileres.is_curr_user)
+              
             }
         }).catch((err)=>
         {
@@ -57,11 +57,11 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
        usertag=tag;
     Fetch();
     }
-    },500
+    },100
    )
 }
     useEffect(Fetch,[])
-    
+    console.log(profileres.is_curr_user)
     return (
         <div id ="Profile" className="flex flex-col md:w-[100%] lg:w-[42%] h-[100%] 
         border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder">
@@ -70,7 +70,7 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
                <CoverImage coverimage = {profileres.banner_image}></CoverImage>
             <div className="flex flex-row">
                 <ProfileImage profileimage = {profilePic} profileimageURL ={profilePicURL}></ProfileImage>
-               <FollowButton handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openModal} handleCloseModal={handleCloseModal} buttonName = {profileres.is_curr_user? `Edit Profile` : profileres.is_wanted_user_followed? `Following` : `Follow`}></FollowButton>
+               <FollowButton usertag= {usertag} buttonName = {profileres.is_curr_user? `Edit Profile` : profileres.is_wanted_user_followed? `Following` : `Follow`}></FollowButton>
             </div>
            <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
         </div>

@@ -1,30 +1,83 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-
+import axios from 'axios'
+import { useParams } from 'react-router-dom'
+import { render } from '@testing-library/react'
+import ProfilePage from './ProfilePage'
 const FollowButton = (props) => {
     const darkMode= useSelector((state) => (state.theme.darkMode))
+    const userToken = useSelector((state)=>(state.user.token))
+    const mock = true;
+    let tag = props.usertag;
+    let buttonstate = props.buttonName;
+    //const [buttonstate,setbuttonstate]=useState(buttonName)
     // there should be a conditional rendering by back
-    const buttonName = props.buttonName;
-    console.log(buttonName)
-
+    const APIsf = {
+      
+        mock: { postfollowProfileAPI:   `http://localhost:3001/api/user/${tag}/follow` },
+        actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/profile/` },
+      }
+    const APIsuf = {
+      
+        mock: { postfollowProfileAPI:   `http://localhost:3001/api/user/${tag}/unfollow` },
+        actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/profile/` },
+      }
+    function HandleClick()
+    {
+        if(buttonstate ==="Edit Profile")
+        {
+            //Open Modal
+        }
+        else if(buttonstate === "Follow")
+        {
+            axios.post(
+                mock? APIsf.mock.postfollowProfileAPI : APIsf.actual.postfollowProfileAPI,
+                {
+                    header:{
+                        authorization : "bearer" + userToken,
+                    },
+                }
+            ).then((res)=>{
+                if(res.status ===  204)
+                {
+                 //  setbuttonstate("Following")
+                }
+            }).catch((err)=>{
+                console.log(err)
+            });
+        }
+        else{
+            axios.post(
+                mock? APIsuf.mock.postfollowProfileAPI : APIsuf.actual.postfollowProfileAPI,
+                {
+                    header:{
+                        authorization : "bearer" + userToken,
+                    },
+                }
+            ).then((res)=>{
+                if(res.status ===  204)
+                {
+                 //  setbuttonstate("Follow")
+                }
+            }).catch((err)=>{
+                console.log(err)
+            });
+        }
+    }
+    
   return (
     <div id="follow-buttonDiv" className={`md:ml-[35%] lg:ml-[calc(100%/2)] mt-[2%]`}>
-        <button id="follow-button" onClick={()=>{
-            if(buttonName === "Edit Profile")
-            {
-                console.log("I'm here")
-               props.ModalHandler(true)
-            }
-        }} className={` ${darkMode? buttonName==="Follow"? `bg-white text-black
+        <button id="follow-button" onClick={()=>{HandleClick()
+        }} className={` ${darkMode? buttonstate==="Follow"? `bg-white text-black
                 hover:bg-darkHover dark:hover:bg-lightHover` : 
-                buttonName === "Following"? 
-                `` /* on hover turn red */
-                :`bg-black text-white hover:bg-lightHover dark:hover:bg-darkHover `
-                :`bg-black text-white hover:bg-lightHover dark:hover:bg-darkHover`} 
+                `bg-black text-white hover:bg-lightHover dark:hover:bg-darkHover `
+                :`bg-white text-black hover:bg-lightHover dark:hover:bg-darkHover`} 
                 text-center font-semibold rounded-full w-[110px] h-[35px] 
                 border border-b-1 border-t- border-lightBorder dark:border-darkBorder
-                }`}>
-                    {buttonName}
+                }
+                ${buttonstate==="Following"? `hover:border-[red] hover:text-[red]  bt
+                ` :`` }`}>
+                    <span>{buttonstate}</span>
          </button> {/*todo: conditional rendering white for follow black for unfollow*/}                    
     </div>
   )

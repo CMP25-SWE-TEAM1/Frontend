@@ -28,7 +28,6 @@ const user = useSelector((state)=>state.user.user)
   {
 
   }
-  console.log(openModal)
     return (
     <div id="Edit-Profile" className="place-content-center">
        <Modal open={false} onClose = {handleCloseModal} data-testid="ProfileEditModal" >
