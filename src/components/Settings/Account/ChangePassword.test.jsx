@@ -2,12 +2,16 @@ import { screen, render, within, act } from "@testing-library/react"
 import ChangePassword from "./ChangePassword"
 import { BrowserRouter } from "react-router-dom"
 import user from "@testing-library/user-event"
+import { Provider } from "react-redux"
+import store from "../../../store"
 
 describe("Content", () => {
   test("main header", () => {
     render(
       <BrowserRouter>
-        <ChangePassword />
+        <Provider store={store}>
+          <ChangePassword />
+        </Provider>
       </BrowserRouter>
     )
     expect(screen.getByRole("heading", { name: /change your password/i })).toBeInTheDocument()
@@ -15,7 +19,9 @@ describe("Content", () => {
   test("main paragragh", () => {
     render(
       <BrowserRouter>
-        <ChangePassword />
+        <Provider store={store}>
+          <ChangePassword />
+        </Provider>
       </BrowserRouter>
     )
     expect(screen.getByText(/change your password at any time\./i)).toBeInTheDocument()
@@ -23,7 +29,9 @@ describe("Content", () => {
   test("input fields", () => {
     render(
       <BrowserRouter>
-        <ChangePassword />
+        <Provider store={store}>
+          <ChangePassword />
+        </Provider>
       </BrowserRouter>
     )
     expect(document.querySelector("#currentPassword")).toBeInTheDocument()
@@ -33,7 +41,9 @@ describe("Content", () => {
   test("password checks", () => {
     render(
       <BrowserRouter>
-        <ChangePassword />
+        <Provider store={store}>
+          <ChangePassword />
+        </Provider>
       </BrowserRouter>
     )
     expect(screen.getByText(/require uppercase letter/i)).toBeInTheDocument()
@@ -49,7 +59,9 @@ describe("Interaction", () => {
     user.setup()
     render(
       <BrowserRouter>
-        <ChangePassword />
+        <Provider store={store}>
+          <ChangePassword />
+        </Provider>
       </BrowserRouter>
     )
     const link = screen.getByRole("link", { name: /forgot password\?/i })
@@ -62,7 +74,9 @@ describe("Interaction", () => {
     user.setup()
     render(
       <BrowserRouter>
-        <ChangePassword />
+        <Provider store={store}>
+          <ChangePassword />
+        </Provider>
       </BrowserRouter>
     )
     const currentPassword = document.querySelector("#currentPassword")
@@ -73,17 +87,19 @@ describe("Interaction", () => {
     expect(btn).toBeDisabled()
 
     await act(async () => {
-        await user.type(currentPassword, "123")
-        await user.type(newPassword, "1234")
-        await user.type(confirmPassword, "1234")
-      })
-      expect(btn).toBeDisabled()
+      await user.type(currentPassword, "123")
+      await user.type(newPassword, "1234")
+      await user.type(confirmPassword, "1234")
+    })
+    expect(btn).toBeDisabled()
   })
   test("confirm doesn't match the new password", async () => {
     user.setup()
     render(
       <BrowserRouter>
-        <ChangePassword />
+        <Provider store={store}>
+          <ChangePassword />
+        </Provider>
       </BrowserRouter>
     )
     const currentPassword = document.querySelector("#currentPassword")
@@ -94,22 +110,23 @@ describe("Interaction", () => {
     expect(btn).toBeDisabled()
 
     await act(async () => {
-        await user.type(currentPassword, "123")
-        await user.type(newPassword, "#Ea12345")
-        await user.type(confirmPassword, "1234")
-      })
-      expect(btn).toBeEnabled()
-      await act(async () => {
-        await user.click(btn)
-      })
-      expect(screen.getByText(/new password doesn't match confirmation/i)).toBeInTheDocument()
-  
+      await user.type(currentPassword, "123")
+      await user.type(newPassword, "#Ea12345")
+      await user.type(confirmPassword, "1234")
+    })
+    expect(btn).toBeEnabled()
+    await act(async () => {
+      await user.click(btn)
+    })
+    expect(screen.getByText(/new password doesn't match confirmation/i)).toBeInTheDocument()
   })
   test("working example", async () => {
     user.setup()
     render(
       <BrowserRouter>
-        <ChangePassword />
+        <Provider store={store}>
+          <ChangePassword />
+        </Provider>
       </BrowserRouter>
     )
     const currentPassword = document.querySelector("#currentPassword")
