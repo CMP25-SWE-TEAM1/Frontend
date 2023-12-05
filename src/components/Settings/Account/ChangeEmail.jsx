@@ -1,40 +1,83 @@
 import { Link } from "react-router-dom"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import axios from "axios"
 import Alert from "@mui/material/Alert"
 import { styles } from "../../../styles"
+import { changeEmail } from "../../../store/UserSlice"
 
 const ChangeEmail = () => {
   const [email, setEmail] = useState("")
-  const user = useSelector((state) => state.user.user)
+  const { user, token } = useSelector((state) => state.user)
   const [errorMsg, setErrorMsg] = useState("")
+  const [successMsg, setSuccessMsg] = useState("")
+  const [verificationCode, setVerificationCode] = useState("")
+  const [emailChosen, setEmailChosen] = useState(false)
 
   const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 
-  function validEmail(emeil) {
-    return emailRegex.test(emeil)
+  function validEmail(email) {
+    return emailRegex.test(email)
   }
 
+  const dispatch = useDispatch()
+
   const APIs = {
-    mock: { ChangeEmailAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/changeEmail" },
-    actual: { ChangeEmailAPI: "" },
+    mock: { ChangeEmailAPI: "http://localhost:3001/changeEmail", VerifyEmailAPI: "http://localhost:3001/verifyEmail" },
+    actual: { ChangeEmailAPI: "http://backend.gigachat.cloudns.org/api/user/updateEmail", VerifyEmailAPI: "http://backend.gigachat.cloudns.org/api/user/verifyEmail" },
   }
 
   const handleChangeEmail = () => {
     setErrorMsg("")
     axios
-      .patch(APIs.mock.ChangeEmailAPI, { email: email })
+      .post(
+        APIs.actual.ChangeEmailAPI,
+        { email: email },
+        {
+          headers: {
+            authorization: "Bearer " + token,
+          },
+        }
+      )
       .then((res) => {
         if (res.status == 200) {
-          window.location.href = "/settings/account"
+          setEmailChosen(true)
+          setSuccessMsg(res.data.data.message)
         }
       })
       .catch((err) => {
-        if (err.response.status == 401 || err.response.status == 404) {
-          setErrorMsg("Error changing email, please try again later")
-        } else console.log(err)
+        if (err.response.data.message) setErrorMsg(err.response.data.message)
+        else setErrorMsg("Internal server error, please try again later")
+        console.log(err)
+      })
+  }
+
+  const handleVerifyEmail = () => {
+    setErrorMsg("")
+    axios
+      .post(
+        APIs.actual.VerifyEmailAPI,
+        { verifyEmailCode:verificationCode, email: email },
+        {
+          headers: {
+            authorization: "Bearer " + token,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status == 200) {
+          dispatch(changeEmail(email))
+          setSuccessMsg(res.data.data.message)
+          setTimeout(() => {
+            //window.location.href = "/settings/account"
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        if (err.response.data.message) setErrorMsg(err.response.data.message)
+        else setErrorMsg("Internal server error, please try again later")
+        console.log(err)
       })
   }
 
@@ -50,7 +93,7 @@ const ChangeEmail = () => {
 
       <div className="flex flex-col p-5">
         <div className="input-container">
-          <input type="text" name="email" id="email" value={user.email} className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
+          <input type="text" id="currentEmail" value={user && user.email} className="form-input filled-input border-0 !bg-gray-100 !text-ternairy dark:!bg-gray-900" disabled />
           <label className="input-label" htmlFor="email">
             Current email
           </label>
@@ -58,8 +101,8 @@ const ChangeEmail = () => {
       </div>
 
       <div className="flex flex-col p-5">
-        <div className="input-container mb-4">
-          <input className={email === "" ? "form-input" : "form-input filled-input"} type="text" name="email" id="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <div className="input-container">
+          <input className={email === "" ? "form-input" : "form-input filled-input"} type="text" id="newEmail" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} />
           <label className="input-label" htmlFor="password">
             New email
           </label>
@@ -69,12 +112,24 @@ const ChangeEmail = () => {
         </div>
       </div>
 
-      <hr />
+      <div className="flex flex-col p-5">
+        <div className="input-container mb-4">
+          <input disabled={!emailChosen} className={ verificationCode === "" ? "form-input" : "form-input filled-input" } type="text" id="newEmail" autoComplete="off" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} />
+          <label className="input-label" htmlFor="password">
+            Verification code
+          </label>
+        </div>
+      </div>
 
+      <hr />
       <div className="flex p-5">
         <div className="text-red-600">{errorMsg}</div>
-        <button id="changeemailBtn" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleChangeEmail} disabled={email === ""}>
+        <div className="text-green-600">{successMsg}</div>
+        <button id="changeEmailBtn" hidden={emailChosen} className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleChangeEmail} disabled={email === "" || !validEmail(email)}>
           Save
+        </button>
+        <button id="verifyEmailBtn" hidden={!emailChosen} className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleVerifyEmail} disabled={verificationCode === ""}>
+          Verify
         </button>
       </div>
     </div>

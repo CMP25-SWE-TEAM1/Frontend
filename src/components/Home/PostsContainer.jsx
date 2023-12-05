@@ -1,10 +1,8 @@
 import Post from "./Post";
 
 const PostsContainer = ({ posts }) => {
-  const handlePostClick=(p)=>{
-    
-  }
-  
+  const handlePostClick = (p) => {}
+
   return (
     <div className="post-container">
       {posts.map((p) => (
@@ -23,7 +21,7 @@ const PostsContainer = ({ posts }) => {
         />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default PostsContainer;
+export default PostsContainer
