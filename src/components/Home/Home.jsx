@@ -13,7 +13,7 @@ import { useSelector } from "react-redux"
 const Home = () => {
   const user = useSelector((state) => state.user.user)
   const userToken = useSelector((state) => state.user.token)
-  const [tweets, setTweets] = useState([])
+  const [posts, setPosts] = useState([])
   const homeNavLinks = [
     { title: "For you", location: "foryou" },
     { title: "Following", location: "following" },
@@ -23,9 +23,11 @@ const Home = () => {
     actual: { getAllTweetsAPI: "http://backend.gigachat.cloudns.org/api/homepage/following" },
   }
   useEffect(()=>{
+    console.log('token')
+    console.log(userToken)
     axios.get(APIs.actual.getAllTweetsAPI, {
       headers: {
-        authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY",
+        authorization: "Bearer " + userToken,
       }
     })
     .then((response)=>{
@@ -34,19 +36,19 @@ const Home = () => {
       console.log("in then ");
       if(response.data.tweetList){
         console.log(response.data.tweetList);
-        setTweets(response.data.tweetList);
+        setPosts(response.data.tweetList);
       }
       else
-      setTweets([]);
+      setPosts([]);
     }
   }).catch(error=>{
     console.log(error);
   })},[])
 
-  const handleNewTweet = (newTweet) => {
-    setTweets([{tweetDetails:newTweet.data}, ...tweets])
-    console.log("handle new tweet")
-    console.log(tweets) 
+  const handleNewPost = (newPost) => {
+    setPosts([{tweetDetails:newPost.data}, ...posts])
+    console.log("handle new post")
+    console.log(posts) 
   }
 
   const postsTst = [
@@ -222,8 +224,8 @@ const Home = () => {
             <HorizontalNavbar urls={homeNavLinks} originalUrl={"/home"} />
           </div>
         </div>
-        <ComposePost handleNewTweet={(newTweet) => handleNewTweet(newTweet)} />
-        <PostsContainer posts={tweets} />
+        <ComposePost handleNewPost={(newPost) => handleNewPost(newPost)} />
+        <PostsContainer posts={posts} />
       </div>
       {/* <div>
         <p>name: {user.name}</p>

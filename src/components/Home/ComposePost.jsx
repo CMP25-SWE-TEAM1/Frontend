@@ -5,6 +5,7 @@ import { Avatar } from "@mui/material"
 import { Container } from '@mui/material';
 import profilePicTest from "../../assets/profilePicTest.JPG"
 import GeneralButton from "../Sidebar/Button"
+import DisplayMedia from "./DisplayMedia"
 
 import Button from "@mui/material/Button"
 import Menu from "@mui/material/Menu"
@@ -32,7 +33,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ReactHtmlParser from "react-html-parser";
 
-function ComposePost({ handleNewTweet }) {
+function ComposePost({ handleNewPost }) {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
   const [description, setDescription] = useState("")
   const [replyPermissionIndex, setReplyPermissionIndex] = useState(0)
@@ -68,11 +69,12 @@ function ComposePost({ handleNewTweet }) {
       return {
       description:`${runningMock?"ismail ramadan":description}`,
       media: media.map((item,index)=>{
-        return {type: item.type, data: mediaUrls[index]}
+        return {data: mediaUrls[index],type: item.type==="video/mp4" ? "mp4" : "jpg" }
       }),
       type: "tweet"
     }
   });
+    const getMediaTypes = ()=> media.map((item)=>item.type.match(/image/)?"jpg":"mp4");
   const openMenu = Boolean(anchorPostMenu)
 
   const handleMenuButtonClick = (event) => {
@@ -119,7 +121,7 @@ function ComposePost({ handleNewTweet }) {
           console.log('running mock')
           console.log(post);
         }
-        handleNewTweet(post)
+        handleNewPost(post)
       })
       .catch((error) => {
         console.log('error in handleSubmit')
@@ -159,7 +161,7 @@ function ComposePost({ handleNewTweet }) {
       })
       .then(response=>{
         console.log("in upload media");
-        // console.log(response.data);
+        console.log(response.data);
         setMediaUrls([...mediaUrls,...response.data.data.usls]);
         console.log(response.data.data.usls);
       }).catch(error =>{
@@ -220,18 +222,7 @@ function ComposePost({ handleNewTweet }) {
             },
           }}
         />
-        <div className={`mb-1.5 h-[250px] w-full flex flex-wrap ${mediaUrls.length===0? "hidden": ""}`} >
-        {mediaUrls.map((item,index)=>(
-          <div className={`m-1 min-w-[46%] min-h-[46%] grow `}>
-            <img
-              src= {item}
-              className={`${(mediaUrls.length>2)? "h-[124px]":"h-[248px]"} h-min-[124px] w-full rounded-lg`}
-              alt={`media${index}`}
-              loading="lazy"
-          />
-          </div>)
-          )}
-        </div>
+        <DisplayMedia mediaUrls={mediaUrls} mediaTypes={getMediaTypes()} margin={1.5}/>
         <div>
           <Button target={"_blank"} color="text-[#1D9BF0]" size="sm" variant="plain" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="my-3 rounded-full bg-transparent py-0 hover:bg-[#e7f5fd] dark:bg-transparent dark:hover:bg-[#031018]">
             <GeneralButton name={permissionOptions[replyPermissionIndex].icon2} color="text-[#1D9BF0]" backgroundColor="bg-transparent" height="h-6" width="w-6"></GeneralButton>
@@ -305,7 +296,7 @@ function ComposePost({ handleNewTweet }) {
             <GeneralButton name={<GifBoxOutlinedIcon fontSize="small" />} title="GIF" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={GIFDisabled} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]"/>
             <GeneralButton name={<BallotOutlinedIcon fontSize="small" />} title="Poll" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={pollDisabled} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]"/>
             <GeneralButton name={<SentimentSatisfiedOutlinedIcon fontSize="small" />} title="Emoji" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-            <GeneralButton name={<EditCalendarIcon fontSize="small" />} title="Schedule"color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]" />
+            <GeneralButton name={<EditCalendarIcon fontSize="small" />} title="Schedule"color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={false} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]" />
             <GeneralButton name={<LocationOnOutlinedIcon fontSize="small" />} title="Location" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]" />
           </div>
           <div className="flex items-center">

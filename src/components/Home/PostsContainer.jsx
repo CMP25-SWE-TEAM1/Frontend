@@ -1,5 +1,4 @@
 import Post from "./Post";
-import profilePicTest from "../../assets/profilePicTest.JPG"
 
 const PostsContainer = ({ posts }) => {
   const handlePostClick=(p)=>{
@@ -14,7 +13,7 @@ const PostsContainer = ({ posts }) => {
           userName={p.tweetDetails.tweet_owner.nickname}
           userTag={p.tweetDetails.tweet_owner.username}
           date={p.tweetDetails.createdAt}
-          media={profilePicTest}
+          media={[...p.tweetDetails.media]}
           description={p.tweetDetails.description}
           replyCount={p.tweetDetails.repliesNum}
           repostCount={p.tweetDetails.repostsNum}
