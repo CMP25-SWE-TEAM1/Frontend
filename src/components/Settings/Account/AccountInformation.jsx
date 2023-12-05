@@ -48,13 +48,22 @@ const AccountInformation = () => {
 
     const APIs = {
       mock: { confirmPasswordAPI: "http://localhost:3001/checkPassword" },
-      actual: { confirmPasswordAPI: "" },
+      actual: { confirmPasswordAPI: "http://backend.gigachat.cloudns.org/api/user/confirmPassword" },
     }
 
     const handleConfirmPassword = () => {
+      console.log(user.token)
       setErrorMsg("")
       axios
-        .post(APIs.mock.confirmPasswordAPI, { password: password })
+        .post(
+          APIs.actual.confirmPasswordAPI,
+          { password: password },
+          {
+            headers: {
+              authorization: "Bearer " + user.token,
+            },
+          }
+        )
         .then((res) => {
           if (res.status == 200) {
             sessionStorage.setItem("passwordIsConfirmed", "true")

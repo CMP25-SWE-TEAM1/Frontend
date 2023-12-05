@@ -26,7 +26,6 @@ const Blocked = () => {
 
   function handleUnblock(e) {
     const element = e.currentTarget
-    console.log(element)
     const userId = e.currentTarget.dataset.id
     const blocked = e.currentTarget.dataset.blocked
     if (userId) {
@@ -36,6 +35,7 @@ const Blocked = () => {
         .then((res) => {
           if (res.status === 200) {
             console.log("user unblocked successfully")
+            element.classList.remove("text-red-600")
             element.classList.add("text-blue-600")
             element.querySelector("title").innerHTML = "Block"
             element.dataset.blocked = false
@@ -52,6 +52,7 @@ const Blocked = () => {
           if (res.status === 200) {
             console.log("user blocked successfully")
             element.classList.remove("text-blue-600")
+            element.classList.add("text-red-600")
             element.querySelector("title").innerHTML = "Unblock"
             element.dataset.blocked = true
           }
