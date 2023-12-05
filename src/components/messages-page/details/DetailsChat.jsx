@@ -3,6 +3,11 @@ import Message from "./message/Message"
 import MessageInput from "./message/MessageInput"
 import { useState, useEffect, useRef } from "react"
 
+// API
+import { APIs } from "./MessagesConstants"
+import { useSelector } from "react-redux"
+import axios from "axios"
+
 // Socket.io
 import io from "socket.io-client"
 import { SOCKET_ON, SOCKET_IO } from "./MessagesConstants"
@@ -30,12 +35,12 @@ const DetailsChat = () => {
       // messageMedia: "https://assetsio.reedpopcdn.com/Rocket-League-(header-suggestion).jpg?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp",
       // mediaType: "Img",
     },
-    {
-      id: msgIdCounter++,
-      direction: "L",
-      // messageMedia: "https://assetsio.reedpopcdn.com/Rocket-League-(header-suggestion).jpg?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp",
-      // mediaType: "Img",
-    },
+    // {
+    //   id: msgIdCounter++,
+    //   direction: "L",
+    //   // messageMedia: "https://assetsio.reedpopcdn.com/Rocket-League-(header-suggestion).jpg?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp",
+    //   // mediaType: "Img",
+    // },
     {
       id: msgIdCounter++,
       direction: "L",
@@ -76,16 +81,16 @@ const DetailsChat = () => {
     {
       id: msgIdCounter++,
       direction: "R",
-      messageText: "Encrypted message to Hagag",
-      // messageMedia: "https://media.tenor.com/yI2pVgK-is0AAAPo/sad-face.mp4",
-      // mediaType: "GIF",
-    },
-    {
-      id: msgIdCounter++,
-      direction: "R",
-      messageMedia: "https://media.tenor.com/EA3DP8gowdoAAAPo/idk.mp4",
+      messageText: "Encrypted message to Hefeny",
+      messageMedia: "https://media.tenor.com/JJquxnSAmJwAAAPo/seal-hibo-heart.mp4",
       mediaType: "GIF",
     },
+    // {
+    //   id: msgIdCounter++,
+    //   direction: "R",
+    //   messageMedia: "https://media.tenor.com/4jKA6Zc7GAcAAAPo/i-love-you-minions-the-rise-of-gru.mp4",
+    //   mediaType: "GIF",
+    // },
   ])
   const [msgIdCounterS, setMsgIdCounterS] = useState(messagesData.length)
   // const [msgData, setMsgData] = useState({
@@ -153,6 +158,16 @@ const DetailsChat = () => {
   const sendMessage_toServer = (message) => {
     // console.log("message sending...", message)
     socket.emit("send_message", { message })
+  }
+
+  // Handle get chat of specific user
+  const userToken = useSelector((state) => state.user.token)
+
+  const handleGetChat = (chatUserId) => {
+    const formData = new FormData()
+    formData.append("id", chatUserId)
+
+    // axios
   }
 
   return (
