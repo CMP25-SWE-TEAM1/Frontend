@@ -70,7 +70,7 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
                <CoverImage coverimage = {profileres.banner_image}></CoverImage>
             <div className="flex flex-row">
                 <ProfileImage profileimage = {profilePic} profileimageURL ={profilePicURL}></ProfileImage>
-               <FollowButton usertag= {usertag} buttonName = {profileres.is_curr_user? `Edit Profile` : profileres.is_wanted_user_followed? `Following` : `Follow`}></FollowButton>
+               <FollowButton tag={tag} buttonName = {profileres.is_curr_user? `Edit Profile` : profileres.is_wanted_user_followed? `Following` : `Follow`}></FollowButton>
             </div>
            <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
         </div>

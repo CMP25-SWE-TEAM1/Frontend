@@ -1,25 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
-import { render } from '@testing-library/react'
 import ProfilePage from './ProfilePage'
 const FollowButton = (props) => {
     const darkMode= useSelector((state) => (state.theme.darkMode))
     const userToken = useSelector((state)=>(state.user.token))
     const mock = true;
-    let tag = props.usertag;
-    let buttonstate = props.buttonName;
-    //const [buttonstate,setbuttonstate]=useState(buttonName)
+    const [buttonstate,setbuttonstate]=useState(props.buttonName)
     // there should be a conditional rendering by back
+   useEffect(
+    ()=>{
+        setbuttonstate(props.buttonName)
+    },[props.buttonName])
     const APIsf = {
       
-        mock: { postfollowProfileAPI:   `http://localhost:3001/api/user/${tag}/follow` },
+        mock: { postfollowProfileAPI:   `http://localhost:3001/api/user/${props.tag}/follow` },
         actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/profile/` },
       }
     const APIsuf = {
       
-        mock: { postfollowProfileAPI:   `http://localhost:3001/api/user/${tag}/unfollow` },
+        mock: { postfollowProfileAPI:   `http://localhost:3001/api/user/${props.tag}/unfollow` },
         actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/profile/` },
       }
     function HandleClick()
@@ -40,7 +41,7 @@ const FollowButton = (props) => {
             ).then((res)=>{
                 if(res.status ===  204)
                 {
-                 //  setbuttonstate("Following")
+                  setbuttonstate("Following")
                 }
             }).catch((err)=>{
                 console.log(err)
@@ -57,7 +58,7 @@ const FollowButton = (props) => {
             ).then((res)=>{
                 if(res.status ===  204)
                 {
-                 //  setbuttonstate("Follow")
+                   setbuttonstate("Follow")
                 }
             }).catch((err)=>{
                 console.log(err)

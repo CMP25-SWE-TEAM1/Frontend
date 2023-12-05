@@ -3,7 +3,7 @@ import React from 'react'
 import { Modal, Box } from "@mui/material"
 import { useSelector } from "react-redux"
 const ProfilePageEdit = (openModal,handleCloseModal)=>{
-const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+/*const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 const user = useSelector((state)=>state.user.user)
   const modalStyle = {
     position: "absolute",
@@ -61,6 +61,6 @@ const user = useSelector((state)=>state.user.user)
         </Box>
        </Modal>
     </div>)
-}
+    */}
 
 export default ProfilePageEdit
