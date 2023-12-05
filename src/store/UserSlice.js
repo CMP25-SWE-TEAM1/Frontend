@@ -71,9 +71,9 @@ const userSlice = createSlice({
       state.token = action.payload.token
     },
     changeUsername: (state, action) => {
-      state.user.name = action.payload
+      state.user.username = action.payload
       let temp_user = JSON.parse(localStorage.getItem("user"))
-      temp_user.name = action.payload
+      temp_user.username = action.payload
       localStorage.setItem("user", JSON.stringify(temp_user))
     },
     changeEmail: (state, action) => {
