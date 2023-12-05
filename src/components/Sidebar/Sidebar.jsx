@@ -118,7 +118,7 @@ const Sidebar = () => {
         <Button name={shrink ? <HistoryEduOutlinedIcon /> : "Post"} color="text-white" backgroundColor="bg-[#1D9BF0]" height={shrink ? "h-14" : "h-12"} width={shrink ? "w-14" : "w-56"} link="/compose/tweet" alt="post" />
         {shrink ? (
           <a alt="" className="group mb-2 mt-auto box-border w-full cursor-pointer border-0">
-            <div title="switchAccountContainer" className=" flex w-full  items-center justify-around rounded-full p-3 group-hover:bg-lightHover dark:group-hover:bg-darkHover">
+            <div title="switchAccountContainer" className=" flex w-full  items-center justify-around rounded-full p-3 group-hover:bg-lightHover dark:group-hover:bg-darkHover" id="mahmoud_switch_account">
               <Avatar alt={user.nickname} src={user.profileImage} id="demo-positioned-button" aria-controls={openMenu ? "demo-positioned-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleClickMenu} />
               <Menu
                 id="demo-positioned-menu"
