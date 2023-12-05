@@ -27,6 +27,9 @@ import UploadProfilePicture from "../Signup/UploadProfilePicture"
 import { styles } from "../../styles"
 
 const Sidebar = () => {
+  
+  const user = useSelector((state) => state.user.user)
+  const userTag = "abdo";
   const darkMode = useSelector((state) => state.theme.darkMode)
   const [shrink, setShrink] = useState(window.innerWidth < 1278)
   const handleResize = () => {
@@ -35,7 +38,7 @@ const Sidebar = () => {
   }
   window.addEventListener("resize", handleResize)
 
-  const userTag = "ismail_sh02"
+  
   const moreIcon = <MoreHorizIcon />
   const imageIcon = (altName, image, radius) => {
     return <img src={image} alt={`${altName}ImageIcon`} className={`h-${radius} w-${radius} rounded-full`} />
@@ -46,7 +49,6 @@ const Sidebar = () => {
   const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}/communities`, `/${userTag}`, "/settings/account"]
   const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} alt="sidebarOption" />)
 
-  const user = useSelector((state) => state.user.user)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()

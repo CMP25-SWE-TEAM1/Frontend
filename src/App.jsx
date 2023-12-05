@@ -22,6 +22,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode, setLightMode } from "./store/ThemeSlice"
 import PostPage from "./components/PostPage/PostPage"
 import Messages from "./components/messages-page/Messages"
+import ProfilePage from "./components/ProfilePage/ProfilePage"
+import ProfilePageEdit from "./components/ProfilePage/ProfilePageEdit"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
@@ -53,7 +55,13 @@ const App = () => {
     setOpenSignupModal(false)
     setLocation(window.location.pathname)
   }
-
+  const [openProfileEditModal,SetProfileEditModal]  = useState(false);
+  const handleOpenProfileEditModal = () => {
+      SetProfileEditModal(true)
+  }
+  const handleCloseProfileModal = () => {
+      SetProfileEditModal(false)
+  }
   const user = useSelector((state) => state.user.user)
   // console.log(location)
   const testPost = {
@@ -98,8 +106,9 @@ const App = () => {
             <Route path="accessibility_display_and_languages" element={<AccessibilityDisplayLanguages />}></Route>
             <Route path="display" element={<Display />}></Route>
           </Route>
-
-          <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
+            <Route path={`/:tag`}  element={<ProfilePage  handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal}/>}></Route>
+            <Route path={`settings/profile`} element={<ProfilePageEdit openModal={true} handleCloseModal={handleCloseProfileModal} ></ProfilePageEdit>}></Route>
+          <Route path="/signup" element={<SignUp openModal={openProfileEditModal} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/replies" element={<PostPage post={testPost} />}></Route>
           <Route path="*" element={<Home />}></Route>
         </Routes>
