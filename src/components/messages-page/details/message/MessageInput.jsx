@@ -43,8 +43,9 @@ const MessageInput = (props) => {
       // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
       if (newMessageMedia) {
         if (newMessageMediaType === "Img") {
-          handleSendMessage(newMessageText)
-          handleUploadMedia(newMessageMedia)
+          handleSendMessage(newMessageText, "https://t3.ftcdn.net/jpg/05/14/75/82/360_F_514758236_i8rnB85PVdEaK19yGaK0TpaYEYMyxOL5.jpg", newMessageMediaType)
+          // handleSendMessage(newMessageText)
+          // handleUploadMedia(newMessageMedia)
         } else handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
       } else handleSendMessage(newMessageText)
     }
