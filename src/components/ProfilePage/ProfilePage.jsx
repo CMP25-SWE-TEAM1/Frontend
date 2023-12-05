@@ -19,16 +19,17 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
     
     const user = useSelector((state)=> state.user.user)
     const userToken = useSelector((state) => state.user.token)
+    console.log(userToken)
     const [profileres, setProfile] = useState([])
     const mock = true;
     const [windowWidth, setWindowWidth] = useState(window.innerWidth) //todo: for responsiveness
-    const [profilePic, setProfilePic] = useState(profileres ? profileres.profile_image : defaultProfilePic)
-    const [profilePicURL, setProfilePicURL] = useState(profileres ? profileres.profile_image : defaultProfilePic)
+    const [profilePicURL, setProfilePicURL] = useState()
+    const [bannerPicURL, setCoverPicURL] = useState()
     let {tag} = useParams();
     const APIs = {
       
         mock: { getProfileAPI:   `http://localhost:3001/api/profile/` },
-        actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/profile/` },
+        actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/moa_ded_inside` },
       }
       let usertag=undefined;
      const Fetch =()=>{
@@ -39,12 +40,15 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
             mock? APIs.mock.getProfileAPI+`${usertag}` : APIs.actual.getProfileAPI+`${usertag}`,
             {
                 headers:{
-                    authorization: "Bearer"+ userToken,
+                    authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NmI0MjQ2Y2UxODFlMDkxZjQ0ZWQ2OCIsImlhdCI6MTcwMTgwMTIwMiwiZXhwIjoxNzA5NTc3MjAyfQ.5emT53Vi6WpT4rLC0qpixNCNLWSxjWwBpjPLTJQNTMw",
                 }
             }
         ).then(res =>{
             if(res.status=== 200)
             {  
+                console.log(res)
+                setProfilePicURL(res.data.user.profile_image ? res.data.user.profile_image : defaultProfilePic)
+                setCoverPicURL(res.data.user.banner_image? res.data.user.banner_image : defaultProfilePic)
                 setProfile((res.data.user));
               
             }
@@ -67,9 +71,9 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
         border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder">
             <div id="Upperhalf" className="md:w-[100%] lg:w-[100%] h-[50%] mb-[10%]">
                 <Header profilename={profileres.nickname} postsnum={profileres.followers_num}></Header>
-               <CoverImage coverimage = {profileres.banner_image}></CoverImage>
+               <CoverImage coverimage = {bannerPicURL}></CoverImage>
             <div className="flex flex-row">
-                <ProfileImage profileimage = {profilePic} profileimageURL ={profilePicURL}></ProfileImage>
+                <ProfileImage profileimage = {profilePicURL} profileimageURL ={profilePicURL}></ProfileImage>
                <FollowButton tag={tag} buttonName = {profileres.is_curr_user? `Edit Profile` : profileres.is_wanted_user_followed? `Following` : `Follow`}></FollowButton>
             </div>
            <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>

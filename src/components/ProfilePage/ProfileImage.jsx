@@ -9,9 +9,10 @@ function ProfileImage(props) {
     {
         //will open a Modal
     }
+    console.log(props)
   return (
     <div id="profile-page"> 
-    <Avatar className={`md:w-[120px] md:h-[120px] lg:w-[140px] lg:h-[140px] ml-[20px]  mt-[-70px] mb-[12px] 
+    <Avatar src={props.profileimageURL} className={`md:w-[120px] md:h-[120px] lg:w-[140px] lg:h-[140px] ml-[20px]  mt-[-70px] mb-[12px] 
     ${darkMode? `border-black` : `border-white`} border-[5px] `} onClick={()=>{profilepagehandler()}}></Avatar>
     </div>
   )

@@ -1,6 +1,6 @@
 import { Box, Modal } from '@mui/material';
 import {React,useState,useEffect} from 'react'
-function CoverImage(banner_image) {
+function CoverImage(props) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
     function coverpagehandle()
     {
@@ -42,7 +42,7 @@ function CoverImage(banner_image) {
     
     <div id="cover-page" className={ `w-[100%] md:h-[50%] lg:h-[75%]   ` }>
     <img className="w-[100%] h-[100%] object-fill" 
-    src={require("../../assets/pexels-aphiwat-chuangchoem-358904.jpg")} alt="cover-page" onClick={()=>{coverpagehandle()}}></img>
+    src={props.coverimage} alt="cover-page" onClick={()=>{coverpagehandle()}}></img>
     {/*here should be banenr_image*/}
     </div>
   )
