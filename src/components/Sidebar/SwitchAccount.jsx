@@ -18,15 +18,8 @@ import { useSelector } from "react-redux"
 import darkLogo from "../../assets/imgs/gigachatLogoOne_dark-removebg-preview.png"
 import lightLogo from "../../assets/imgs/gigachatLogoOne_light_v2-removebg-preview.png"
 
-function SwitchAccount({ userName, userTag, link, handleLogout }) {
-  const [anchorMenu, setAnchorMenu] = useState(null)
-  const openMenu = Boolean(anchorMenu)
-  const handleClickMenu = (event) => {
-    setAnchorMenu(event.currentTarget)
-  }
-  const handleCloseMenu = () => {
-    setAnchorMenu(null)
-  }
+function SwitchAccount({ userName, userTag, link, handleLogout,openMenu,anchorMenu,handleCloseMenu,handleClickMenu }) {
+  
 
   const htmlElement = document.getElementById("htmlid")
 
@@ -46,11 +39,11 @@ function SwitchAccount({ userName, userTag, link, handleLogout }) {
         <div title="switchAccountContainer" className=" flex w-full items-center justify-around rounded-full group-hover:bg-lightHover dark:group-hover:bg-darkHover xs:!p-3">
           <Avatar alt={user.nickname} src={user.profileImage} />
           <div>
-            <div className="truncate font-semibold">{user.nickname}</div>
-            <div className="truncate text-secondary">@{user.username}</div>
+            <div className="truncate font-semibold" id="mahmoud_name">{user.nickname}</div>
+            <div className="truncate text-secondary" id="mahmoud_username">@{user.username}</div>
           </div>
 
-          <div title="moreIcon" className="w-[10%]">
+          <div title="moreIcon" className="w-[10%]" id="mahmoud_account_options">
             <MoreHorizOutlinedIcon id="demo-positioned-button" aria-controls={openMenu ? "demo-positioned-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleClickMenu} />
 
             <Menu

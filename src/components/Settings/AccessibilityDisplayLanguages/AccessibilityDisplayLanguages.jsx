@@ -12,7 +12,7 @@ const AccessibilityDisplayLanguages = () => {
       </div>
       <p className="mb-4 pl-4 text-xs text-secondary">Manage how Gigachat content is displayed to you.</p>
       <Link to="/settings/display">
-        <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover">
+        <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_display">
           {/* icon */}
           <div className="flex h-[57px] flex-col justify-center p-[11px]">
             <div className="w-[90%] text-sm">Display</div>

@@ -14,7 +14,7 @@ const Account = () => {
       
       <p className="mb-4 pl-4 pr-10 text-xs text-secondary">See information about your account, download an archive of your data, or learn about your account deactivation options</p>
       <Link to="/settings/account_information">
-        <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover">
+        <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_account_information">
           {/* icon */}
           <div className="flex h-[57px] flex-col justify-center p-[11px]">
             <div className="w-[90%] text-sm">Account information</div>
@@ -24,7 +24,7 @@ const Account = () => {
         </div>
       </Link>
       <Link to="/settings/change_password">
-        <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover">
+        <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_change_password">
           {/* icon */}
           <div className="flex h-[57px] flex-col justify-center p-[11px]">
             <div className="w-[90%] text-sm">Change your password</div>

@@ -21,6 +21,8 @@ import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
 const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostCount, likeCount, viewCount, description, media }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
 
+  const descriptionLines = description.split("\n");
+
   const openMenu = Boolean(anchorPostMenu)
 
   const handleMenuButtonClick = (event) => {
@@ -52,10 +54,10 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
   return (
     <Link className="" to={`/${userTag}/status/tweetId`}>
       <div className=" flex h-fit border border-l-0 border-r-0 border-lightBorder p-3 dark:border-darkBorder" data-testid="postId">
-        <div className=" h-60 w-10 sm:mr-3">
+        <div className=" h-fit w-10 sm:mr-3">
           <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
         </div>
-        <div className=" sm:mr-2">
+        <div className=" sm:mr-2 w-full">
           <div className="post-header flex items-center justify-between">
             <div className="flex items-center">
               <Link className="hover:underline" to="/mohamedsamir">
@@ -129,13 +131,13 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
           </div>
           <div className="post-text">
             <div className="max-h-[100px] overflow-hidden text-start dark:text-gray-300" data-testid="post-text-id">
-              {description}
+              {descriptionLines.map(line => <p>{line}<br/></p>)}
             </div>
             {/* <div>show more</div> */}
           </div>
           <div className="mt-3">
             <Link>
-              <img src={media} alt="" className="rounded-xl" />
+              <img src={media} alt="" className="rounded-xl w-full" />
             </Link>
           </div>
           <div className="mt-3 flex max-w-full justify-between text-ternairy dark:text-secondary">

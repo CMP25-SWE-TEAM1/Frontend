@@ -23,34 +23,43 @@ import BallotOutlinedIcon from "@mui/icons-material/BallotOutlined"
 import SentimentSatisfiedOutlinedIcon from "@mui/icons-material/SentimentSatisfiedOutlined"
 import EditCalendarIcon from "@mui/icons-material/EditCalendar"
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined"
+import CircularProgress from '@mui/material/CircularProgress';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
 
 function ComposePost({ handleNewTweet }) {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
   const [description, setDescription] = useState("")
   const [replyPermissionIndex, setReplyPermissionIndex] = useState(0)
+  const [runningMock,setRunningMock] = useState(false);
+  const [charsCount,setCharsCount] = useState(0);
+  const [charsProgressColor,setCharsProgressColor] = useState("#1D9BF0");
+  const [progressCircleSize,setProgressCircleSize] = useState(24);
+  const [progressCircleValue,setProgressCircleValue] = useState(null);
 
   const darkMode = useSelector((state) => state.theme.darkMode)
   const user = useSelector((state) => state.user.user)
   const userToken = useSelector((state) => state.user.token)
 
     const APIs = {
-      mock: { postTweetAPI: "https://bad9e0a6-fe2e-4d82-b68f-51c141e126d9.mock.pstmn.io/tweet/addTweet2" },
-      actual: { postTweetAPI: "http://13.48.45.126:3000/api/tweets/" },
+      mock: { postTweetAPI: "https://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/post/addPost" },
+      actual: { postTweetAPI: "http://backend.gigachat.cloudns.org/api/tweets/" },
     }
     const getTweetDescription = ()=>{
       return document.querySelector("#description").value;
     } 
     const getComposeTweet = (()=>{
       return {
-      referredTweetId: "",
-      description: getTweetDescription(),
+      description:`${runningMock?"ismail ramadan":getTweetDescription()}`,
       media: [
         {
           type: "jpg",
-          data: "www.photo.png",
+          data: "www.photo.png"
         },
       ],
-      type: "tweet",
+      type: "tweet"
     }
   });
   const openMenu = Boolean(anchorPostMenu)
@@ -70,20 +79,30 @@ function ComposePost({ handleNewTweet }) {
     event.preventDefault()
     console.log(getTweetDescription())
     console.log(userToken)
-    const composeTweet = getComposeTweet()
     axios
-      .post(APIs.actual.postTweetAPI, JSON.stringify(composeTweet), {
+      .post(APIs.actual.postTweetAPI,getComposeTweet(), {
         headers: {
-          authorization: "Bearer " + userToken,
-        },
+          authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY",
+        }
       })
       .then((response) => {
         console.log(response.data)
-        handleNewTweet(response.data)
+        const post = {...response.data};
+        if(runningMock){
+          post.data.description = getTweetDescription();
+          console.log(post);
+        }
+        handleNewTweet(post)
       })
       .catch((error) => {
         console.log(error)
       })
+  }
+  const handleDescriptionChange = e => {
+    setDescription(e.target.value);
+    setCharsCount(e.target.value.length*100/280);
+    setCharsProgressColor(e.target.value.length*100/280 <=80 ? "#1D9BF0" : e.target.value.length*100/280 <=100 ? "#fdd81f" : "#f4212e");
+    setProgressCircleSize(e.target.value.length*100/280 <=80 ? 24 : 32);
   }
   const permissionOptions = [
     {
@@ -124,7 +143,7 @@ function ComposePost({ handleNewTweet }) {
           }}
           placeholder="What is happening?!"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e)=>handleDescriptionChange(e)}
           multiline
           fullWidth
           maxRows={23}
@@ -196,16 +215,43 @@ function ComposePost({ handleNewTweet }) {
         <hr className="h-px border-0 bg-lightBorder dark:bg-darkBorder" />
         <div className="flex justify-between pt-3">
           <div className="flex bg-transparent">
-            <GeneralButton name={<InsertPhotoOutlinedIcon fontSize="small" />} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-            <GeneralButton name={<GifBoxOutlinedIcon fontSize="small" />} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-            <GeneralButton name={<BallotOutlinedIcon fontSize="small" />} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-            <GeneralButton name={<SentimentSatisfiedOutlinedIcon fontSize="small" />} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
-            <GeneralButton name={<EditCalendarIcon fontSize="small" />} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]" />
-            <GeneralButton name={<LocationOnOutlinedIcon fontSize="small" />} color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]" />
+            <GeneralButton name={<InsertPhotoOutlinedIcon fontSize="small" />} title="Media" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="" />
+            <GeneralButton name={<GifBoxOutlinedIcon fontSize="small" />} title="GIF" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
+            <GeneralButton name={<BallotOutlinedIcon fontSize="small" />} title="Poll" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
+            <GeneralButton name={<SentimentSatisfiedOutlinedIcon fontSize="small" />} title="Emoji" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" />
+            <GeneralButton name={<EditCalendarIcon fontSize="small" />} title="Schedule"color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]" />
+            <GeneralButton name={<LocationOnOutlinedIcon fontSize="small" />} title="Location" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="/compose/tweet" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]" />
+          </div>
+          <div className="flex items-center">
+          <Box sx={{ position: 'relative',top: '4px',border:'1.5px'}}>
+          <CircularProgress variant="determinate" sx={{ color:"grey.200"}} size={progressCircleSize} value={100} />
+          <CircularProgress variant="determinate" sx={{ position: 'absolute',
+          left: 0, color: charsProgressColor}} size={progressCircleSize} value={charsCount} />
+          <Box 
+        sx={{
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          // display: {progressCircleValue ? 'none' }
+        }}
+      >
+        <Typography variant="caption" component="div" color="text.secondary">
+          {progressCircleValue}
+        </Typography>
+      </Box>
+          </Box>
+          <div className="px-3 py-1 border-l ml-3 border-gray-300">
+          <GeneralButton name={<AddRoundedIcon fontSize="small" />} title="Add" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-6" width="w-6 border-[1.5px] border-gray-300 rounded-full" link="/compose/tweet" />
           </div>
           <button type="submit" className="rounded-full bg-[#1D9BF0] p-0">
             <GeneralButton name="Post" color="text-white" backgroundColor="bg-[#1D9BF0]" height="h-8" width="w-16" />
           </button>
+          </div>
         </div>
       </div>
     </form>
