@@ -14,7 +14,7 @@ import AccountInformation from "./components/Settings/Account/AccountInformation
 import ChangeUsername from "./components/Settings/Account/ChangeUsername"
 import ChangeEmail from "./components/Settings/Account/ChangeEmail"
 import ChangePassword from "./components/Settings/Account/ChangePassword"
-import AccessibilityDisplayLanguages from './components/Settings/AccessibilityDisplayLanguages/AccessibilityDisplayLanguages'
+import AccessibilityDisplayLanguages from "./components/Settings/AccessibilityDisplayLanguages/AccessibilityDisplayLanguages"
 import Display from "./components/Settings/AccessibilityDisplayLanguages/Display"
 import PrivacySafety from "./components/Settings/PrivacySafety/PrivacySafety"
 import Blocked from "./components/Settings/PrivacySafety/Blocked"
@@ -24,6 +24,7 @@ import { setDarkMode, setLightMode } from "./store/ThemeSlice"
 import PostPage from "./components/PostPage/PostPage"
 import Messages from "./components/messages-page/Messages"
 import NotFound from "./components/NotFound"
+import Explore from "./components/Explore/Explore"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
@@ -68,7 +69,7 @@ const App = () => {
     viewCount: "1M",
   }
   return (
-    <div className="app relative flex max-xs:max-w-[475px] xs:w-full flex-col-reverse bg-white text-black dark:bg-black dark:text-white xs:h-[100vh] xs:flex-row">
+    <div className="app relative flex flex-col-reverse bg-white text-black dark:bg-black dark:text-white max-xs:max-w-[475px] xs:h-[100vh] xs:w-full xs:flex-row">
       <BrowserRouter>
         {user && location !== "/password_reset" && <Sidebar />}
         {/* {location !== "/login" && location !== "/password_reset" && <Sidebar />} */}
@@ -85,6 +86,7 @@ const App = () => {
           <Route path="login" element={<Login openModal={true} handleCloseModal={handleCloseLoginModal} setLocation={setLocation} />}></Route>
           <Route path="password_reset" element={<PasswordReset />}></Route>
           <Route path="/home" element={<Home />}></Route>
+          <Route path="/explore" element={<Explore />} />
           <Route path="/messages" element={<Messages />}></Route>
           <Route path="/settings" element={<Settings />}>
 
