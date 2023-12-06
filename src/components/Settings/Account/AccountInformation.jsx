@@ -66,7 +66,7 @@ const AccountInformation = () => {
           }
         )
         .then((res) => {
-          if (res.status == 200) {
+          if (res.status === 200) {
             sessionStorage.setItem("passwordIsConfirmed", "true")
             setSuccessMsg(res.data.data.message)
             setTimeout(() => {
