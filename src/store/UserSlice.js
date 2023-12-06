@@ -18,7 +18,7 @@ export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredent
     google = true
     console.log(userCredentials)
     response = userCredentials
-    localStorage.setItem("user", JSON.stringify(userCredentials))
+    localStorage.setItem("user", JSON.stringify(userCredentials.data.user))
   } else {
     google = false
     const request = await axios.post(APIs.actual.loginAPI, userCredentials)

@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router"
 import { loginUser } from "../../store/UserSlice"
 
+import { APIs } from "../../constants/signupConstants"
+
 const GoogleLoginButton = ({ handleCloseModal }) => {
   const [user, setUser] = useState()
   const [profile, setProfile] = useState()
@@ -22,6 +24,8 @@ const GoogleLoginButton = ({ handleCloseModal }) => {
     },
     onError: (error) => console.log("Login Failed:", error),
   })
+
+  
 
   useEffect(() => {
     if (user) {
@@ -44,12 +48,23 @@ const GoogleLoginButton = ({ handleCloseModal }) => {
 
   useEffect(() => {
     if (profile) {
-      dispatch(loginUser({ userCredentials: profile, isgoogle: true })).then((result) => {
-        if (result.payload) {
-          navigate("/home")
-          handleCloseModal()
-        }
-      })
+      axios
+        .post(APIs.actual.googleAuth, {
+          access_token: user.access_token,
+          name: profile.name,
+          email: profile.email,
+          id: profile.id,
+          profile_image:profile.picture
+        })
+        .then((res) => {
+          console.log(res)
+          dispatch(loginUser({ userCredentials: res.data, isgoogle: true })).then((result) => {
+            if (result.payload) {
+              navigate("/home")
+              handleCloseModal()
+            }
+          })
+        })
     }
   }, [profile])
 

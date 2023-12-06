@@ -29,5 +29,9 @@ export const APIs = {
     assignUsername: "http://backend.gigachat.cloudns.org/api/user/AssignUsername",
     changeProfilePicture: "http://backend.gigachat.cloudns.org/api/user/profile/image",
     getProfile: "http://backend.gigachat.cloudns.org/api/user/profile/",
+    uploadMedia: "http://backend.gigachat.cloudns.org/api/media",
+    googleAuth: "http://backend.gigachat.cloudns.org/api/user/googleAuth",
+    forgotPassword: "http://backend.gigachat.cloudns.org/api/user/forgotpassword",
+    resetPassword: "http://backend.gigachat.cloudns.org/api/user/resetpassword",
   },
 }
