@@ -72,7 +72,8 @@ const FollowButton = (props) => {
         }} className={` ${darkMode? buttonstate==="Follow"? `bg-white text-black
                 hover:bg-darkHover dark:hover:bg-lightHover` : 
                 `bg-black text-white hover:bg-lightHover dark:hover:bg-darkHover `
-                :`bg-white text-black hover:bg-lightHover dark:hover:bg-darkHover`} 
+                : buttonstate==="Follow"? `bg-black text-white hover:bg-darkHover dark:hover:bg-lightHover`
+                : `bg-white text-black hover:bg-lightHover dark:hover:bg-darkHover`} 
                 text-center font-semibold rounded-full w-[110px] h-[35px] 
                 border border-b-1 border-t- border-lightBorder dark:border-darkBorder
                 }

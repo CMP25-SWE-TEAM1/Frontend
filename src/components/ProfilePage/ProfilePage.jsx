@@ -46,7 +46,7 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
             if(res.status=== 200)
             {  
                 console.log(res)
-                setProfilePicURL(res.data.user.profile_image ? res.data.user.profile_image : defaultProfilePic)
+                setProfilePicURL(res.data.user.profile_image)
                 setCoverPicURL(res.data.user.banner_image? res.data.user.banner_image : defaultProfilePic)
                 setProfile((res.data.user));
               
