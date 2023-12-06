@@ -93,7 +93,7 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false
-        state.user = google ? action.payload : action.payload.data.user
+        state.user =  action.payload.data.user
         state.error = null
         state.token = action.payload.token
       })

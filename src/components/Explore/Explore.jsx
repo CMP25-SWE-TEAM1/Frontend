@@ -5,8 +5,7 @@ import { useState } from "react"
 
 import CustomTabPanel from "./CustomTabPanel"
 import CustomTabs from "./CustomTabs"
-import TrendComponent from "./TrendComponent"
-import TrendsContainer from "./TrendsContainer"
+import WithConditionalDataFetching from "./WithDataFetching"
 
 const Explore = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
@@ -25,19 +24,19 @@ const Explore = () => {
           <CustomTabs tabValue={tabValue} handleChangeTabValue={handleChangeTabValue} />
         </div>
         <CustomTabPanel value={tabValue} index={0}>
-          <TrendsContainer type={"For you"} />
+          {WithConditionalDataFetching("trending")}
         </CustomTabPanel>
         <CustomTabPanel value={tabValue} index={1}>
-          <TrendsContainer type={"For you"} />
+          {WithConditionalDataFetching("trending")}
         </CustomTabPanel>
         <CustomTabPanel value={tabValue} index={2}>
-          <TrendsContainer type={"For you"} />
+          {WithConditionalDataFetching("news")}
         </CustomTabPanel>
         <CustomTabPanel value={tabValue} index={3}>
-          <TrendsContainer type={"For you"} />
+          {WithConditionalDataFetching("sports")}
         </CustomTabPanel>
         <CustomTabPanel value={tabValue} index={4}>
-          <TrendsContainer type={"For you"} />
+          {WithConditionalDataFetching("entertainment")}
         </CustomTabPanel>
       </div>
 

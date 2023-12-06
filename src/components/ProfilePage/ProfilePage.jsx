@@ -1,88 +1,90 @@
-import { useSelector } from "react-redux";
-import axios from "axios";
-import React from "react";
-import FollowButton from "./FollowButton";
-import ProfileMediabuttons from "./ProfileMediabuttons";
-import ProfileICons from "./ProfileICons";
-import ProfileBio from "./ProfileBio";
-import ProfileImage from "./ProfileImage";
-import CoverImage from "./CoverImage";
-import ProfileName from "./ProfileName";
-import Followers from "./Followers";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useSelector } from "react-redux"
+import axios from "axios"
+import React from "react"
+import FollowButton from "./FollowButton"
+import ProfileMediabuttons from "./ProfileMediabuttons"
+import ProfileICons from "./ProfileICons"
+import ProfileBio from "./ProfileBio"
+import ProfileImage from "./ProfileImage"
+import CoverImage from "./CoverImage"
+import ProfileName from "./ProfileName"
+import Followers from "./Followers"
+import { useEffect } from "react"
+import { useState } from "react"
 import defaultProfilePic from "../../assets/imgs/Default_Profile_Picture.png"
-import Header from "./Header";
-import ProfilePageEdit from "./ProfilePageEdit";
-import { useParams } from "react-router-dom";
-const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
-    
-    const user = useSelector((state)=> state.user.user)
-    const {token} = useSelector((state) => state.user)
-    const [profileres, setProfile] = useState([])
-    const mock = false;
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth) //todo: for responsiveness
-    const [profilePicURL, setProfilePicURL] = useState()
-    const [bannerPicURL, setCoverPicURL] = useState()
-    let {tag} = useParams();
-    const APIs = {
-      
-        mock: { getProfileAPI:   `http://localhost:3001/api/profile/` },
-        actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/` },
-      }
-      let usertag=undefined;
-     const Fetch =()=>{
-   setTimeout(()=>{
-    if(usertag){
-        axios.get(
+import Header from "./Header"
+import ProfilePageEdit from "./ProfilePageEdit"
+import { useParams } from "react-router-dom"
+const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) => {
+  const user = useSelector((state) => state.user.user)
+  const { token } = useSelector((state) => state.user)
+  const [profileres, setProfile] = useState([])
 
-            mock? APIs.mock.getProfileAPI+`${usertag}` : APIs.actual.getProfileAPI+`${tag}`,
-            {
-                headers:{
-                    authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NmI0MjQ2Y2UxODFlMDkxZjQ0ZWQ2OCIsImlhdCI6MTcwMTgwMTIwMiwiZXhwIjoxNzA5NTc3MjAyfQ.5emT53Vi6WpT4rLC0qpixNCNLWSxjWwBpjPLTJQNTMw` 
-                }
+  const mock = false
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth) //todo: for responsiveness
+  const [profilePicURL, setProfilePicURL] = useState()
+  const [bannerPicURL, setCoverPicURL] = useState()
+  let { tag } = useParams()
+  const APIs = {
+    mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
+    actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/` },
+  }
+  let usertag = undefined
+  const Fetch = () => {
+    setTimeout(() => {
+      if (usertag) {
+        axios
+          .get(mock ? APIs.mock.getProfileAPI + `${usertag}` : APIs.actual.getProfileAPI + `${tag}`, {
+            headers: {
+              authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NmI0MjQ2Y2UxODFlMDkxZjQ0ZWQ2OCIsImlhdCI6MTcwMTgwMTIwMiwiZXhwIjoxNzA5NTc3MjAyfQ.5emT53Vi6WpT4rLC0qpixNCNLWSxjWwBpjPLTJQNTMw`,
+            },
+          })
+          .then((res) => {
+            if (res.status === 200) {
+              console.log(res)
+              setProfilePicURL(res.data.user.profile_image)
+              setCoverPicURL(
+                res.data.user.banner_image
+                  ? res.data.user.banner_image
+                  : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWMAAACOCAMAAADTsZk7AAAAD1BMVEXr6+v39/f09PTu7u7w8PBHPc6pAAABSUlEQVR4nO3b0W6DIBSA4Qq8/zNP01admhYQZuK+73JX5g85B9Ls8QAAAAAAAAAAAAAAAAAAAAAAAHKkEEK6+iNuLYZhEuLVH3JfcXgRuZswzJGv/pS7mo/xyEHuI2ncXdC4O+f4DyyJXSx6WQ6yZ8gp8cMRfU9kV7dTxowfHstpquwxfU74NgpiSmbxKclK621eagZuL6vHssh9xPVDTuQu1onXey/acq2kX4mXG9p0vN3Wmtgkni8X0cOulbhN/BrJ0W2ulRj2jaew0fO5maPEY9jg56VmjhMfjA5q7fbdIXvvhLzEfvw44XDfidxUdmIjuVZ+YpEr5Q7jJ3uvQllikSvk77s3e69UcWIjuVR5YpELlQ7jJyO5QF1ikUtUJrb3ClQ3NpKzadzf9I9gG8P+TwcMZAAAAAAAAAAAAAAAAAAAAAAA/qcfVokFwcQV/cEAAAAASUVORK5CYII="
+              )
+              setProfile(res.data.user)
             }
-        ).then(res =>{
-            if(res.status=== 200)
-            {  
-                console.log(res)
-                setProfilePicURL(res.data.user.profile_image ? res.data.user.profile_image : defaultProfilePic)
-                setCoverPicURL(res.data.user.banner_image? res.data.user.banner_image : defaultProfilePic)
-                setProfile((res.data.user));
-              
-            }
-        }).catch((err)=>
-        {
+          })
+          .catch((err) => {
             console.log(usertag)
             console.log(err)
-        })}
-    else{
-       usertag=tag;
-    Fetch();
-    }
-    },100
-   )
-}
-    useEffect(Fetch,[])
-    console.log(profileres.is_curr_user)
-    return (
-        <div id ="Profile" className="flex flex-col md:w-[100%] lg:w-[42%] h-[100%] 
-        border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder">
-            <div id="Upperhalf" className="md:w-[100%] lg:w-[100%] h-[50%] mb-[10%]">
-                <Header profilename={profileres.nickname} postsnum={profileres.followers_num}></Header>
-               <CoverImage coverimage = {bannerPicURL}></CoverImage>
-            <div className="flex flex-row">
-                <ProfileImage profileimage = {profilePicURL} profileimageURL ={profilePicURL}></ProfileImage>
-               <FollowButton tag={tag} buttonName = {profileres.is_curr_user? `Edit Profile` : profileres.is_wanted_user_followed? `Following` : `Follow`}></FollowButton>
-            </div>
-           <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
+          })
+      } else {
+        usertag = tag
+        Fetch()
+      }
+    }, 100)
+  }
+  useEffect(Fetch, [])
+  console.log(profileres.is_curr_user)
+  return (
+    <div
+      id="Profile"
+      className="flex h-[100%] flex-col border border-b-0 
+        border-t-0 border-lightBorder dark:border-darkBorder md:w-[100%] lg:w-[42%]"
+    >
+      <div id="Upperhalf" className="mb-[10%] h-[50%] md:w-[100%] lg:w-[100%]">
+        <Header profilename={profileres.nickname} postsnum={profileres.followers_num}></Header>
+        <CoverImage coverimage={bannerPicURL}></CoverImage>
+        <div className="flex flex-row">
+          <ProfileImage profileimage={profilePicURL} profileimageURL={profilePicURL}></ProfileImage>
+          <FollowButton tag={tag} buttonName={profileres.is_curr_user ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
         </div>
-        <ProfileBio profilebio={profileres.bio}></ProfileBio>
-        <ProfileICons profilelocation={profileres.location} profilewebsite={profileres.website} profilejoindate= {profileres.joined_date}></ProfileICons>
-        <Followers followers={profileres.followers_num} following ={profileres.following_num}></Followers>
-        <ProfileMediabuttons ></ProfileMediabuttons>
-        <ProfilePageEdit openModal={false} handleCloseModal={handleCloseModal} ></ProfilePageEdit>
-        </div>
-    )
+        <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
+      </div>
+      <ProfileBio profilebio={profileres.bio}></ProfileBio>
+      <ProfileICons profilelocation={profileres.location} profilewebsite={profileres.website} profilejoindate={profileres.joined_date}></ProfileICons>
+      <Followers followers={profileres.followers_num} following={profileres.following_num}></Followers>
+      <ProfileMediabuttons></ProfileMediabuttons>
+      <ProfilePageEdit openModal={false} handleCloseModal={handleCloseModal}></ProfilePageEdit>
+    </div>
+  )
 }
 export default ProfilePage
