@@ -6,8 +6,8 @@
   .pop-up {
     width: 600px;
     height: 650px;
-    padding-left: 100px;
-    padding-right: 100px;
+    /* padding-left: auto;
+    padding-right: auto; */
   }
 
   .pop-up > div > div {
@@ -30,7 +30,7 @@
     @apply text-3xl font-semibold;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 700px) {
     .app {
       padding: 0 !important;
     }
@@ -41,8 +41,8 @@
     }
 
     .pop-up > div > div {
-      padding-top: 100px;
-      margin: auto;
+      margin-top: 50px;
+      /* margin: auto; */
     }
   }
 
@@ -51,7 +51,7 @@
   }
 
   .btn {
-    @apply mb-2 mt-auto h-[45px] w-full border border-lightHover dark:border-darkHover rounded-3xl font-semibold bg-black dark:bg-white text-white dark:text-black hover:bg-darkHover dark:hover:bg-lightHover disabled:pointer-events-none disabled:brightness-50;
+    @apply mb-2 mt-auto h-[45px] min-h-[45px] w-full border !border-lightHover dark:!border-darkHover rounded-3xl font-semibold !bg-black dark:!bg-white !text-white dark:!text-black hover:!bg-darkHover dark:hover:!bg-lightHover disabled:pointer-events-none disabled:brightness-50;
   }
 
   .form-input {

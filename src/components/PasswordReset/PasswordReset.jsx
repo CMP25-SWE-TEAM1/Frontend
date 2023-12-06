@@ -163,14 +163,14 @@ const PasswordReset = () => {
 
   return (
     <div className="flex h-[100vh] w-full bg-[#242d34]">
-      <div className="pop-up m-auto bg-white dark:bg-black md:rounded-2xl">
+      <div className="pop-up m-auto min-w-[350px] bg-white dark:bg-black md:rounded-2xl">
         <Link to="/" className="!text-white">
-          <button className="relative left-[-80px] top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover">x</button>
+          <button className="relative  top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover">x</button>
         </Link>
         <img src={lightLogo} alt="GigaChat Logo" className="-mt-4 ml-[45%] w-[40px]" />
 
         {/* --------------------------------------First Password Reset Page------------------------------------- */}
-        <div id="page1">
+        <div id="page1" className="m-auto w-[320px]">
           <div>
             <h1>Find your Gigachat account</h1>
             <p className="text-sm text-zinc-600 ">Enter the email, phone number, or username associated with your account to change your password.</p>

@@ -10,7 +10,7 @@ module.exports = {
     extend: {
       colors: {
         primary: "#1d9bf0",
-        secondary: "#9aa1ad",
+        secondary: "#71767b",
         ternairy: "#767C86",
         forth: "#67b6d0",
         fifth: "#00030e",
@@ -29,16 +29,17 @@ module.exports = {
       },
       screens: {
         xs: "475px",
-        smallSidebar:"max-width: 200px"
+        xxs: "400px",
+        smallSidebar: "max-width: 200px",
       },
       backgroundImage: {
         "hero-pattern": "url('/src/assets/bgs/herobg.jpg')",
         "phone-pattern": "url('/src/assets/phone_pattern.jpg')",
       },
-      width:{
-        110: "440px"
-      }
+      width: {
+        110: "440px",
+      },
     },
   },
   plugins: [],
-};
+}

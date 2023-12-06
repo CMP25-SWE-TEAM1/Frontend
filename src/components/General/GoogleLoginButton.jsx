@@ -6,12 +6,14 @@ import googleLogo from "../../assets/imgs/search.png"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router"
 import { loginUser } from "../../store/UserSlice"
+import { APIs } from "../../constants/signupConstants"
 
 import { APIs } from "../../constants/signupConstants"
 
 const GoogleLoginButton = ({ handleCloseModal }) => {
   const [user, setUser] = useState()
   const [profile, setProfile] = useState()
+  const [accessToken, setAccessToken] = useState()
 
   const dispatch = useDispatch()
 
@@ -19,6 +21,7 @@ const GoogleLoginButton = ({ handleCloseModal }) => {
 
   const login = useGoogleLogin({
     onSuccess: (res) => {
+      console.log(res)
       setUser(res)
       logOut()
     },

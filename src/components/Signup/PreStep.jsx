@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 const PreStep = ({handleCloseModal,nextShow}) => {
   return (
     <div id="Join GigaChat">
-      <div className="m-auto max-w-[300px]">
+      <div className="m-auto max-w-[350px]">
         <h1 className="mb-4 mt-3">Join GigaChat today</h1>
         <GoogleLoginButton handleCloseModal={handleCloseModal} />
         <div className="flex h-10 items-center justify-center">
@@ -19,7 +19,7 @@ const PreStep = ({handleCloseModal,nextShow}) => {
           </div>
         </div>
         <button
-          className="mb-2 h-10 w-full rounded-3xl font-semibold text-white hover:bg-darkHover dark:bg-primary dark:text-white dark:hover:bg-[#1a8cd8]"
+          className="mb-2 h-10 w-full rounded-3xl font-semibold !text-white !bg-black hover:!bg-darkHover dark:!bg-primary dark:!text-white dark:hover:!bg-[#1a8cd8]"
           onClick={() => {
             nextShow(0)
           }}

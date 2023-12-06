@@ -2,17 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base{
+/* @layer base{
     button, [type='button'], [type='reset'], [type='submit']{
       @apply bg-black dark:bg-white text-white dark:text-black;
     }
-  }
+  } */
 
 @layer components {
 
     /* Color palette-dark */
     .landing.dark {
-        --bg-color: #000000;
+        --bg-color: #000;
         --main-color: #E7E9EA;
         --second-color: #1d9bf0;
         --second-color-alt: #1A8CD8;
