@@ -65,7 +65,7 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
         <div className=" h-fit w-10 sm:mr-3">
           <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
         </div>
-        <div className=" sm:mr-2 grow">
+        <div className=" sm:mr-2 w-full">
           <div className="post-header flex items-center justify-between">
             <div className="flex items-center">
               <Link className="hover:underline" to="/mohamedsamir">
