@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import axios from "axios"
 import { useSelector } from "react-redux"
 
 const AccountInformation = () => {
   const [passwordIsConfirmed, setPasswordIsConfirmed] = useState(sessionStorage.getItem("passwordIsConfirmed"))
-  const user = useSelector((state) => state.user.user)
+  const { user, token } = useSelector((state) => state.user)
 
   const Information = () => {
     return (
@@ -23,7 +23,7 @@ const AccountInformation = () => {
           <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover">
             <div className="flex h-[57px] flex-col justify-center p-[11px]">
               <div className="w-[90%] text-sm">Username</div>
-              <p className="text-xs text-secondary">{user.username}</p>
+              <p className="text-xs text-secondary">{user && user.username}</p>
             </div>
             <div className="m-auto mr-3 text-2xl">&gt;</div>
           </div>
@@ -32,7 +32,7 @@ const AccountInformation = () => {
           <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover">
             <div className="flex h-[57px] flex-col justify-center p-[11px]">
               <div className="w-[90%] text-sm">Email</div>
-              <p className="text-xs text-secondary">{user.email}</p>
+              <p className="text-xs text-secondary">{user && user.email}</p>
             </div>
             <div className="m-auto mr-3 text-2xl">&gt;</div>
           </div>
@@ -45,24 +45,39 @@ const AccountInformation = () => {
     const [password, setPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
+    const [successMsg, setSuccessMsg] = useState("")
 
     const APIs = {
       mock: { confirmPasswordAPI: "http://localhost:3001/checkPassword" },
-      actual: { confirmPasswordAPI: "" },
+      actual: { confirmPasswordAPI: "http://backend.gigachat.cloudns.org/api/user/confirmPassword" },
     }
 
     const handleConfirmPassword = () => {
+      console.log(token)
       setErrorMsg("")
       axios
-        .post(APIs.mock.confirmPasswordAPI, { password: password })
+        .post(
+          APIs.actual.confirmPasswordAPI,
+          { password: password },
+          {
+            headers: {
+              authorization: "Bearer " + token,
+            },
+          }
+        )
         .then((res) => {
-          if (res.status == 200) {
+          if (res.status === 200) {
             sessionStorage.setItem("passwordIsConfirmed", "true")
-            setPasswordIsConfirmed("true")
+            setSuccessMsg(res.data.data.message)
+            setTimeout(() => {
+              setPasswordIsConfirmed("true")
+            }, 2000)
           }
         })
         .catch((err) => {
-          setErrorMsg("Incorrect password")
+          if (err.response.data.message) setErrorMsg(err.response.data.message)
+          else setErrorMsg("Internal server error, please try again later")
+          console.log(err)
         })
     }
 
@@ -100,6 +115,7 @@ const AccountInformation = () => {
         <hr />
         <div className="flex p-5">
           <div className="text-red-600">{errorMsg}</div>
+          <div className="text-green-600">{successMsg}</div>
           <button id="confirmPassword" className="btn ml-auto mt-6 w-24 !bg-primary !text-white hover:brightness-90" onClick={handleConfirmPassword} disabled={password === ""}>
             Confirm
           </button>

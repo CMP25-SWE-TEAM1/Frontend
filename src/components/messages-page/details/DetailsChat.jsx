@@ -1,8 +1,18 @@
 import { useNavigate } from "react-router-dom"
 import Message from "./message/Message"
 import MessageInput from "./message/MessageInput"
-import { useState, useRef } from "react"
-import { useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
+
+// API
+import { APIs } from "./MessagesConstants"
+import { useSelector } from "react-redux"
+import axios from "axios"
+
+// Socket.io
+import io from "socket.io-client"
+import { SOCKET_ON, SOCKET_IO } from "./MessagesConstants"
+
+const socket = SOCKET_ON ? io.connect(SOCKET_IO.mock) : ""
 
 const DetailsChat = () => {
   const one = true
@@ -25,12 +35,12 @@ const DetailsChat = () => {
       // messageMedia: "https://assetsio.reedpopcdn.com/Rocket-League-(header-suggestion).jpg?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp",
       // mediaType: "Img",
     },
-    {
-      id: msgIdCounter++,
-      direction: "L",
-      // messageMedia: "https://assetsio.reedpopcdn.com/Rocket-League-(header-suggestion).jpg?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp",
-      // mediaType: "Img",
-    },
+    // {
+    //   id: msgIdCounter++,
+    //   direction: "L",
+    //   // messageMedia: "https://assetsio.reedpopcdn.com/Rocket-League-(header-suggestion).jpg?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp",
+    //   // mediaType: "Img",
+    // },
     {
       id: msgIdCounter++,
       direction: "L",
@@ -71,16 +81,16 @@ const DetailsChat = () => {
     {
       id: msgIdCounter++,
       direction: "R",
-      messageText: "Encrypted message to Hagag",
-      // messageMedia: "https://media.tenor.com/yI2pVgK-is0AAAPo/sad-face.mp4",
-      // mediaType: "GIF",
-    },
-    {
-      id: msgIdCounter++,
-      direction: "R",
-      messageMedia: "https://media.tenor.com/EA3DP8gowdoAAAPo/idk.mp4",
+      messageText: "Encrypted message to Hefeny",
+      messageMedia: "https://media.tenor.com/JJquxnSAmJwAAAPo/seal-hibo-heart.mp4",
       mediaType: "GIF",
     },
+    // {
+    //   id: msgIdCounter++,
+    //   direction: "R",
+    //   messageMedia: "https://media.tenor.com/4jKA6Zc7GAcAAAPo/i-love-you-minions-the-rise-of-gru.mp4",
+    //   mediaType: "GIF",
+    // },
   ])
   const [msgIdCounterS, setMsgIdCounterS] = useState(messagesData.length)
   // const [msgData, setMsgData] = useState({
@@ -107,17 +117,57 @@ const DetailsChat = () => {
     event.currentTarget.scrollHeight - event.currentTarget.scrollTop <= event.currentTarget.clientHeight + 44 ? setChatBtnDwnAppear(false) : setChatBtnDwnAppear(true)
   }
   const handleSendMessage = (messageText, messageMedia, messageMediaType) => {
+    setScrollToBottomFlag(true)
     // TODO:send message
-    console.log("Sent message:", messageText)
+    // console.log("Sent message:", messageText)
     // Add message to the chat
     setMessagesData([...messagesData, { id: msgIdCounterS, direction: "R", messageText, messageMedia, mediaType: messageMediaType }])
     setMsgIdCounterS(msgIdCounterS + 1)
-    scrollToBottom()
+    // scrollToBottom()
     // Send message in BackEnd
+    const message = { messageText, messageMedia, messageMediaType }
+    // console.log("message will be sent", message)
+    if (SOCKET_ON) sendMessage_toServer(message)
   }
   const handleDeleteMsg = (msgId) => {
+    setScrollToBottomFlag(false)
     let newMessagesData = messagesData.filter((msg) => msg.id !== msgId)
     setMessagesData(newMessagesData)
+  }
+
+  // Scroll to bottom (with new messages)
+  const [scrollToBottomFlag, setScrollToBottomFlag] = useState(true)
+  useEffect(() => {
+    if (scrollToBottomFlag) scrollToBottom()
+  }, [messagesData, scrollToBottomFlag])
+
+  // Connect to Socket.io
+  useEffect(() => {
+    if (SOCKET_ON) {
+      socket.on("receive_message", (data) => {
+        // console.log("received_message:", data.message)
+        setScrollToBottomFlag(true)
+        const message = data.message
+        setMessagesData([...messagesData, { id: msgIdCounterS, messageText: message.messageText, messageMedia: message.messageMedia, mediaType: message.messageMediaType }])
+        setMsgIdCounterS(msgIdCounterS + 1)
+        // scrollToBottom()
+      })
+    }
+  }, [messagesData, msgIdCounterS])
+  // Send message to socket sercer
+  const sendMessage_toServer = (message) => {
+    // console.log("message sending...", message)
+    socket.emit("send_message", { message })
+  }
+
+  // Handle get chat of specific user
+  const userToken = useSelector((state) => state.user.token)
+
+  const handleGetChat = (chatUserId) => {
+    const formData = new FormData()
+    formData.append("id", chatUserId)
+
+    // axios
   }
 
   return (
@@ -130,7 +180,7 @@ const DetailsChat = () => {
             </a>
             <h2>Mickey Mouse</h2>
           </div>
-          <a href="/info" title="Details">
+          <a href="/info" title="Details" id="mahmoud_info">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <g>
                 <path d="M13.5 8.5c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5S11.17 7 12 7s1.5.67 1.5 1.5zM13 17v-5h-2v5h2zm-1 5.25c5.66 0 10.25-4.59 10.25-10.25S17.66 1.75 12 1.75 1.75 6.34 1.75 12 6.34 22.25 12 22.25zM20.25 12c0 4.56-3.69 8.25-8.25 8.25S3.75 16.56 3.75 12 7.44 3.75 12 3.75s8.25 3.69 8.25 8.25z"></path>

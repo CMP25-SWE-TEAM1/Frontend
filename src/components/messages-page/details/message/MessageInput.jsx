@@ -4,24 +4,12 @@ import { createTheme } from "@mui/material"
 import ReactEmojiPicker from "./ReactEmojiPicker"
 import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
-import Grid from "@mui/material/Grid"
 import GifPicker, { ContentFilter } from "gif-picker-react"
-
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  minWidth: 400,
-  maxWidth: "80%",
-  maxHeight: "80vh",
-  overflowY: "auto",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-}
-const Tenor_API_KEY = "AIzaSyDBlLa0hsL-R9uO6LO46bK8uEH-S4sxiEQ"
+import { TENOR_API_KEY } from "../MessagesConstants"
+// API
+import { APIs } from "../MessagesConstants"
+import { useSelector } from "react-redux"
+import axios from "axios"
 
 const MessageInput = (props) => {
   // Message input
@@ -54,8 +42,11 @@ const MessageInput = (props) => {
     if (newMessageText !== "" || newMessageMedia !== undefined) {
       // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
       if (newMessageMedia) {
-        if (newMessageMediaType === "Img") handleSendMessage(newMessageText, "https://www.harrisburgu.edu/wp-content/uploads/189dce017fb19e3ca1b94b2095d519cc514df22c.jpg", newMessageMediaType)
-        else handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
+        if (newMessageMediaType === "Img") {
+          handleSendMessage(newMessageText, "https://t3.ftcdn.net/jpg/05/14/75/82/360_F_514758236_i8rnB85PVdEaK19yGaK0TpaYEYMyxOL5.jpg", newMessageMediaType)
+          // handleSendMessage(newMessageText)
+          // handleUploadMedia(newMessageMedia)
+        } else handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
       } else handleSendMessage(newMessageText)
     }
     // Reset values
@@ -74,31 +65,62 @@ const MessageInput = (props) => {
   const [newMessageMedia, setNewMessageMedia] = useState()
   const [newMessageMediaType, setNewMessageMediaType] = useState()
   const [mediaInputPreview, setMediaInputPreview] = useState()
-  const handleMediaUpload = (e, MediaType) => {
-    // Check file type
-    // Load file and render it
-    const file = new FileReader()
-    file.onload = function () {
-      setMediaInputPreview(file.result)
-    }
-    if (e.target.files[0] === undefined) {
+
+  const userToken = useSelector((state) => state.user.token)
+  // handleUploadMedia: Uploads media to server and get its URL
+  const handleUploadMedia = (mediaFile) => {
+    const formData = new FormData()
+    formData.append("media", mediaFile)
+
+    axios
+      .post(APIs.actual.postMedia, formData, {
+        headers: {
+          authorization: "Bearer " + userToken,
+        },
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const handleMediaUpload = (event, MediaType) => {
+    const file = event.target.files[0]
+
+    // Validate if file is an image file
+    if (file && isImageFile(file)) {
+      // Load file and render it
+      const image = new FileReader()
+      image.onload = function () {
+        setMediaInputPreview(image.result)
+      }
+
+      // Change state
+      setNewMessageMedia(file)
+      setNewMessageMediaType(MediaType)
+      setSndMsgActv("active")
+      console.log(file)
+    } else {
       setNewMessageMedia()
       setNewMessageMediaType()
       setMediaInputPreview()
       return
     }
-
-    file.readAsDataURL(e.target.files[0])
-    // Change state
-    setNewMessageMedia(e.target.files[0])
-    setNewMessageMediaType(MediaType)
-    setSndMsgActv("active")
-    console.log(e.target.files[0])
   }
+
   const handleMediaCancel = () => {
     setNewMessageMedia()
     setNewMessageMediaType()
     setMediaInputPreview()
+  }
+  const isImageFile = (file) => {
+    // Get the file's MIME type
+    const mimeType = file.type
+
+    // Check if the MIME type starts with "image/"
+    return mimeType.startsWith("image/")
   }
   const getImgURL = () => {}
   // Media input - Upload image
@@ -107,7 +129,8 @@ const MessageInput = (props) => {
   const [GIFsModalOpen, setGIFsModalOpen] = useState(false)
   const handleGIFsModalOpen = () => setGIFsModalOpen(true)
   const handleGIFsModalClose = () => setGIFsModalOpen(false)
-  // GIF Input
+
+  // GIF selection
   const handleGIFSelect = (e, MediaURL, MediaType) => {
     setNewMessageMedia(MediaURL)
     setMediaInputPreview(MediaURL)
@@ -138,7 +161,7 @@ const MessageInput = (props) => {
         {!mediaInputPreview && (
           <div className="icons">
             <div className="media-icon" title="Media">
-              <input type="file" accept="image/*" onChange={(e) => handleMediaUpload(e, "Img")} />
+              <input type="file" id="mahmoud_file_upload" accept="image/*" onChange={(e) => handleMediaUpload(e, "Img")} />
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <g>
                   <path d="M3 5.5C3 4.119 4.119 3 5.5 3h13C19.881 3 21 4.119 21 5.5v13c0 1.381-1.119 2.5-2.5 2.5h-13C4.119 21 3 19.881 3 18.5v-13zM5.5 5c-.276 0-.5.224-.5.5v9.086l3-3 3 3 5-5 3 3V5.5c0-.276-.224-.5-.5-.5h-13zM19 15.414l-3-3-5 5-3-3-3 3V18.5c0 .276.224.5.5.5h13c.276 0 .5-.224.5-.5v-3.086zM9.75 7C8.784 7 8 7.784 8 8.75s.784 1.75 1.75 1.75 1.75-.784 1.75-1.75S10.716 7 9.75 7z"></path>
@@ -167,6 +190,7 @@ const MessageInput = (props) => {
                   handleEmojiPickerVisibilty()
                 }}
                 title="Emoji"
+                id="mahmoud_emoji_picker"
               >
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <g>
@@ -223,7 +247,7 @@ const MessageInput = (props) => {
           </div>
         </div>
         {/* Send message icon */}
-        <div className={`send-message ${sndMsgActv}`}>
+        <div className={`send-message ${sndMsgActv}`} id="mahmoud_send_message">
           <div
             className="send-icon"
             onClick={() => {
@@ -241,12 +265,27 @@ const MessageInput = (props) => {
       <Modal open={GIFsModalOpen} onClose={handleGIFsModalClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box sx={modalStyle}>
           <div>
-            <GifPicker tenorApiKey={Tenor_API_KEY} ContentFilter={ContentFilter.HIGH} onGifClick={onGifClick} />
+            <GifPicker tenorApiKey={TENOR_API_KEY} ContentFilter={ContentFilter.HIGH} onGifClick={onGifClick} />
           </div>
         </Box>
       </Modal>
     </div>
   )
+}
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  minWidth: 400,
+  maxWidth: "80%",
+  maxHeight: "80vh",
+  overflowY: "auto",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
 }
 
 export default MessageInput

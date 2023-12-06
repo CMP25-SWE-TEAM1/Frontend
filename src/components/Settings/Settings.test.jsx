@@ -65,4 +65,19 @@ describe("Interaction", () => {
         })
         expect(window.location.pathname).toBe('/settings/accessibility_display_and_languages');
     })
+    test("select when already selected", async () => {
+      user.setup()
+      render(
+        <BrowserRouter>
+          <Settings />
+        </BrowserRouter>
+      )
+      const link = screen.getByText(/privacy and safety/i)
+      const link2 = screen.getByText(/accessibility, display, and languages/i)
+      await act(async () => {
+        await user.click(link)
+        await user.click(link2)
+      })
+      expect(window.location.pathname).toBe("/settings/accessibility_display_and_languages")
+    })
   })
