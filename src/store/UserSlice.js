@@ -19,11 +19,13 @@ export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredent
     console.log(userCredentials)
     response = userCredentials
     localStorage.setItem("user", JSON.stringify(userCredentials.data.user))
+    localStorage.setItem("token", JSON.stringify(userCredentials.token))
   } else {
     google = false
     const request = await axios.post(APIs.actual.loginAPI, userCredentials)
     response = await request.data
     localStorage.setItem("user", JSON.stringify(response.data.user))
+    localStorage.setItem("token", JSON.stringify(response.token))
   }
 
   return response
@@ -45,6 +47,7 @@ const userSlice = createSlice({
       state.user = null
       state.loading = false
       state.error = null
+      state.token = null
     },
     signupUser: (state, action) => {
       console.log(action.payload)
@@ -93,7 +96,7 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false
-        state.user =  action.payload.data.user
+        state.user = action.payload.data.user
         state.error = null
         state.token = action.payload.token
       })

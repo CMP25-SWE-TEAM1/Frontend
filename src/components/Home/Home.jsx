@@ -12,7 +12,9 @@ import { useSelector } from "react-redux"
 
 const Home = () => {
   const user = useSelector((state) => state.user.user)
-  const userToken = useSelector((state) => state.user.token)
+  // const userToken = useSelector((state) => state.user.token)
+  const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY"
+
   const [posts, setPosts] = useState([])
   const homeNavLinks = [
     { title: "For you", location: "foryou" },
@@ -30,7 +32,8 @@ const Home = () => {
         authorization: "Bearer " + userToken,
       }
     })
-    .then((response)=>{
+      .then((response) => {
+      console.log(response)
     if(response.status === 200)
     {
       console.log("in then ");

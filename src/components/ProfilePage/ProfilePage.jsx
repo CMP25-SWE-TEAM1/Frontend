@@ -19,8 +19,11 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
     
     const user = useSelector((state)=> state.user.user)
     const {token} = useSelector((state) => state.user)
-    const [profileres, setProfile] = useState([])
-    const mock = false;
+  const [profileres, setProfile] = useState([])
+  
+  const mock = false;
+  
+  
     const [windowWidth, setWindowWidth] = useState(window.innerWidth) //todo: for responsiveness
     const [profilePicURL, setProfilePicURL] = useState()
     const [bannerPicURL, setCoverPicURL] = useState()
