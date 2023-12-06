@@ -8,8 +8,6 @@ import { useNavigate } from "react-router"
 import { loginUser } from "../../store/UserSlice"
 import { APIs } from "../../constants/signupConstants"
 
-import { APIs } from "../../constants/signupConstants"
-
 const GoogleLoginButton = ({ handleCloseModal }) => {
   const [user, setUser] = useState()
   const [profile, setProfile] = useState()
@@ -27,8 +25,6 @@ const GoogleLoginButton = ({ handleCloseModal }) => {
     },
     onError: (error) => console.log("Login Failed:", error),
   })
-
-  
 
   useEffect(() => {
     if (user) {
@@ -57,7 +53,7 @@ const GoogleLoginButton = ({ handleCloseModal }) => {
           name: profile.name,
           email: profile.email,
           id: profile.id,
-          profile_image:profile.picture
+          profile_image: profile.picture,
         })
         .then((res) => {
           console.log(res)
