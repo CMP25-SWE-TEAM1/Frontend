@@ -1,18 +1,15 @@
 import { Cancel } from "@mui/icons-material"
 import CropIcon from "@mui/icons-material/Crop"
-import { Box, Button, DialogActions, DialogContent, Slider, Typography } from "@mui/material"
-import React, { useEffect, useState } from "react"
+import { Box, Button, DialogActions, DialogContent, Slider } from "@mui/material"
+import React, {  useState } from "react"
 import Cropper from "react-easy-crop"
 import getCroppedImg from "./utils/CropImage"
-import { useSelector } from "react-redux"
 
-const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect }) => {
+const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect, originalPhoto }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [rotation, setRotation] = useState(0)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
-
-  const user = useSelector((state) => state.user.user)
 
   const cropComplete = (croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels)
@@ -75,7 +72,7 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect }) => {
               variant="outlined"
               startIcon={<Cancel />}
               onClick={() => {
-                setPhotoURL(user.profileImage)
+                setPhotoURL(originalPhoto)
                 setOpenCrop(false)
               }}
               className="mr-5"
