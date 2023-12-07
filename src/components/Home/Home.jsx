@@ -29,7 +29,7 @@ const Home = () => {
     console.log(userToken)
     axios.get(APIs.actual.getAllTweetsAPI, {
       headers: {
-        authorization: "Bearer " + userToken,
+        authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY",
       }
     })
       .then((response) => {

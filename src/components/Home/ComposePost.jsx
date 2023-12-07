@@ -57,7 +57,7 @@ function ComposePost({ handleNewPost }) {
   const userToken = useSelector((state) => state.user.token)
     
   useEffect(()=>{
-    setPostDisabled((description.length===0 || (description.match(/\s/g) && description.match(/\s/g).length===description.length)) && media.length===0);
+    setPostDisabled((description.length===0 || description.length>280 || (description.match(/\s/g) && description.match(/\s/g).length===description.length)) && media.length===0);
   },[description,media]);
 
     const APIs = {
@@ -69,7 +69,7 @@ function ComposePost({ handleNewPost }) {
       return {
       description:`${runningMock?"ismail ramadan":description}`,
       media: media.map((item,index)=>{
-        return {data: mediaUrls[index],type: item.type==="video/mp4" ? "mp4" : "jpg" }
+        return {data: mediaUrls[index],type: item.type.match(/mp4/) ? "mp4" : "jpg" }
       }),
       type: "tweet"
     }
@@ -91,8 +91,8 @@ function ComposePost({ handleNewPost }) {
   const handleSubmit = (event) => {
     event.preventDefault()
     console.log("handleSubmit")
-    console.log(description)
-    console.log(userToken)
+    console.log("description " ,description)
+    console.log("userToken " ,userToken)
     setDescription("");
     setCharsCount(0);
     setCharsProgressColor("#1D9BF0");
@@ -103,7 +103,7 @@ function ComposePost({ handleNewPost }) {
     setMediaDisabled(false);
     setGIFDisabled(false);
     setpollDisabled(false);
-    console.log(getComposeTweet());
+    console.log("getComposeTweet ",getComposeTweet());
     axios
       .post(APIs.actual.postTweetAPI,getComposeTweet(), {
         headers: {
@@ -112,12 +112,11 @@ function ComposePost({ handleNewPost }) {
       })
       .then((response) => {
         console.log('success in handleSubmit')
-        console.log(response.data)
+        console.log("response.data ",response.data)
         const post = {...response.data};
-        console.log(post.data);
         if(runningMock){
           post.data.description = description;
-          post.data.media=media.map((item,index)=>{return {type: item.type, data: mediaUrls[index]}});
+          post.data.media=media.map((item,index)=>{return {type: item.type.match(/mp4/) ? "mp4" : "jpg", data: mediaUrls[index]}});
           console.log('running mock')
           console.log(post);
         }
@@ -134,27 +133,18 @@ function ComposePost({ handleNewPost }) {
     setCharsProgressColor(e.target.value.length <260 ? "#1D9BF0" : e.target.value.length <280 ? "#fdd81f" : "#f4212e");
     setProgressCircleSize(e.target.value.length <260 ? 24 : 32);
     setProgressCircleValue(e.target.value.length >= 260 ? 280-e.target.value.length:null);
-    console.log(description.slice(0,2));
   }
   const handleUploadMediaClick = (e)=>{
     e.preventDefault();
     hiddenUploadMediaInput.current.click();
   }
   const handleUploadMedia = uploadedMedia =>{
-    console.log(uploadedMedia.target.files[0]);
+    //console.log(uploadedMedia.target.files[0]);
     // setMedia([uploadedMedia.target.files[0],...media]);
     if(uploadedMedia.target.files[0]){
-      setMedia([...media,uploadedMedia.target.files[0]]);
-      if(media.length > 2)
-      setMediaDisabled(true);
-    else
-      setMediaDisabled(false);
-    setGIFDisabled(true);
-    setpollDisabled(true);
-    const mediaFormData = new FormData();
-    mediaFormData.append("media", uploadedMedia.target.files[0]);
-    console.log(mediaFormData);
-    axios.post(APIs.actual.uploadMedia, mediaFormData, {
+      const mediaFormData = new FormData();
+      mediaFormData.append("media", uploadedMedia.target.files[0]);
+      axios.post(APIs.actual.uploadMedia, mediaFormData, {
         headers: {
           authorization: "Bearer " + userToken,
         },
@@ -162,8 +152,16 @@ function ComposePost({ handleNewPost }) {
       .then(response=>{
         console.log("in upload media");
         console.log(response.data);
+        console.log('media',uploadedMedia.target.files[0]);
+        setMedia([...media,uploadedMedia.target.files[0]]);
+        if(media.length > 2)
+        setMediaDisabled(true);
+      else
+        setMediaDisabled(false);
+      setGIFDisabled(true);
+      setpollDisabled(true);
         setMediaUrls([...mediaUrls,...response.data.data.usls]);
-        console.log(response.data.data.usls);
+        //console.log(response.data.data.usls);
       }).catch(error =>{
         console.log(error);
       })

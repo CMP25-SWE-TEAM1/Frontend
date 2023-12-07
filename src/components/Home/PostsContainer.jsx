@@ -10,7 +10,7 @@ const PostsContainer = ({ posts }) => {
           userProfilePicture={p.tweetDetails ? p.tweetDetails.tweet_owner.profile_image : p.tweet_owner.profile_image}
           userName={p.tweetDetails ? p.tweetDetails.tweet_owner.nickname : p.tweet_owner.nickname}
           userTag={p.tweetDetails ? p.tweetDetails.tweet_owner.username : p.tweet_owner.username}
-          date={p.tweetDetails ? p.tweetDetails.createdAt : p.createdAt}
+          date={p.tweetDetails ? p.tweetDetails.creation_time : p.creation_time}
           media={p.tweetDetails ? [...p.tweetDetails.media] : [...p.media]}
           description={p.tweetDetails ? p.tweetDetails.description : p.description}
           replyCount={p.tweetDetails ? p.tweetDetails.repliesNum : p.repliesNum}

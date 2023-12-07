@@ -27,9 +27,11 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
   useEffect(()=>{
     const urls = media.map((item)=>item.data);
     const types = media.map((item)=>item.type);
+    console.log("urls from post comp",urls);
+    console.log("types from post comp",types);
     setMediaUrls(urls);
     setMediaTypes(types);
-  },[])
+  },[media])
   
   const openMenu = Boolean(anchorPostMenu)
 
