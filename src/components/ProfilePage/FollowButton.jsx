@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom'
 import ProfilePage from './ProfilePage'
 const FollowButton = (props) => {
     const darkMode= useSelector((state) => (state.theme.darkMode))
-    const userToken = useSelector((state)=>(state.user.token))
-    const mock = true;
+    const {token} = useSelector((state)=>(state.user))
+    const mock = false;
     const [buttonstate,setbuttonstate]=useState(props.buttonName)
     // there should be a conditional rendering by back
    useEffect(
@@ -16,12 +16,12 @@ const FollowButton = (props) => {
     const APIsf = {
       
         mock: { postfollowProfileAPI:   `http://localhost:3001/api/user/${props.tag}/follow` },
-        actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/profile/` },
+        actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
       }
     const APIsuf = {
       
         mock: { postfollowProfileAPI:   `http://localhost:3001/api/user/${props.tag}/unfollow` },
-        actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/profile/` },
+        actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
       }
     function HandleClick()
     {
@@ -35,7 +35,7 @@ const FollowButton = (props) => {
                 mock? APIsf.mock.postfollowProfileAPI : APIsf.actual.postfollowProfileAPI,
                 {
                     header:{
-                        authorization : "bearer" + userToken,
+                        authorization : "bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NmI0MjQ2Y2UxODFlMDkxZjQ0ZWQ2OCIsImlhdCI6MTcwMTgwMTIwMiwiZXhwIjoxNzA5NTc3MjAyfQ.5emT53Vi6WpT4rLC0qpixNCNLWSxjWwBpjPLTJQNTMw",
                     },
                 }
             ).then((res)=>{
@@ -52,7 +52,7 @@ const FollowButton = (props) => {
                 mock? APIsuf.mock.postfollowProfileAPI : APIsuf.actual.postfollowProfileAPI,
                 {
                     header:{
-                        authorization : "bearer" + userToken,
+                        authorization : "bearer" + token,
                     },
                 }
             ).then((res)=>{
