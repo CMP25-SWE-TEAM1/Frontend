@@ -23,7 +23,7 @@ const Notifications = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="flex flex-1 flex-grow-[8] max-xs:w-fit max-xs:max-w-[475]">
+    <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
       <div className="no-scrollbar ml-0 mr-1 max-w-[620px] md:shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-fit">
         <div className="sticky top-0 z-50 mb-0 border-0 border-b border-lightBorder bg-white backdrop-blur-md dark:border-darkBorder dark:bg-inherit dark:backdrop-brightness-[30%]">
           <div className="flex items-center">
