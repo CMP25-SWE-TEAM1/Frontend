@@ -56,7 +56,7 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
             }
         }).catch((err)=>
         {
-            console.log(usertag)
+            // console.log(usertag)
             console.log(err)
           })
       } else {
@@ -66,7 +66,7 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
     }, 100)
   }
   useEffect(Fetch, [])
-  console.log(profileres.is_curr_user)
+  // console.log(profileres.is_curr_user)
   return (
     <div
       id="Profile"
