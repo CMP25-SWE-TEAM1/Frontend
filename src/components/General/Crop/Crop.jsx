@@ -4,6 +4,7 @@ import { Box, Button, DialogActions, DialogContent, Slider, Typography } from "@
 import React, { useEffect, useState } from "react"
 import Cropper from "react-easy-crop"
 import getCroppedImg from "./utils/CropImage"
+import { useSelector } from "react-redux"
 
 const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
@@ -11,20 +12,10 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect }) => {
   const [rotation, setRotation] = useState(0)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
 
+  const user = useSelector((state) => state.user.user)
+
   const cropComplete = (croppedArea, croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels)
-  }
-
-  const cropImage = async () => {
-    try {
-      const { file, url } = await getCroppedImg(photoURL, croppedAreaPixels, rotation)
-      setPhotoURL(url)
-      setFile(file)
-      setOpenCrop(false)
-      console.log(photoURL)
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   const handleCropImage = () => {
@@ -43,7 +34,7 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect }) => {
   return (
     <>
       <DialogContent
-        // dividers
+        dividers
         sx={{
           position: "relative",
           width: "auto",
@@ -80,7 +71,15 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect }) => {
               flexWrap: "wrap",
             }}
           >
-            <Button variant="outlined" startIcon={<Cancel />} onClick={() => setOpenCrop(false)} className="mr-5">
+            <Button
+              variant="outlined"
+              startIcon={<Cancel />}
+              onClick={() => {
+                setPhotoURL(user.profileImage)
+                setOpenCrop(false)
+              }}
+              className="mr-5"
+            >
               Cancel
             </Button>
             <Button variant="contained" startIcon={<CropIcon />} onClick={handleCropImage}>
