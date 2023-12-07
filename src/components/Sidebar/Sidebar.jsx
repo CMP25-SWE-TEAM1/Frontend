@@ -116,7 +116,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className=" flex items-center justify-between  border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white max-xs:!sticky max-xs:bottom-0 max-xs:bg-black max-xs:bg-opacity-50 xs:max-w-[400px] xs:justify-end md:flex-grow">
+    <div className=" flex items-center justify-between  border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white max-xs:!sticky max-xs:bottom-0 max-xs:bg-black max-xs:bg-opacity-50 max-xs:backdrop-brightness-[30%] max-xs:backdrop-blur-sm  xs:max-w-[400px] xs:justify-end md:flex-grow">
       <div className={`flex h-full w-full flex-row  max-[1278px]:items-end xs:flex-col xs:pl-[30%]`} id="mahmoud_navigate_pre">
         <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" alt="gigaChatIcon" />
         {options}
