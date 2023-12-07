@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react"
 import Cropper from "react-easy-crop"
 import getCroppedImg from "./utils/CropImage"
 
-const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile }) => {
+const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [rotation, setRotation] = useState(0)
@@ -32,15 +32,14 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile }) => {
       .then((res) => {
         // console.log(res)
         setFile(res.file)
-          setPhotoURL(res.url)
-          setOpenCrop(false)
+        setPhotoURL(res.url)
+        setOpenCrop(false)
       })
       .catch((err) => {
         console.log(err)
       })
   }
 
-  
   return (
     <>
       <DialogContent
@@ -56,7 +55,7 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile }) => {
         }}
       >
         <div className="!mt-0 !h-fit">
-          <Cropper image={photoURL} crop={crop} zoom={zoom} rotation={rotation} aspect={1} onZoomChange={setZoom} onRotationChange={setRotation} onCropChange={setCrop} onCropComplete={cropComplete} />
+          <Cropper image={photoURL} crop={crop} zoom={zoom} rotation={rotation} aspect={aspect} onZoomChange={setZoom} onRotationChange={setRotation} onCropChange={setCrop} onCropComplete={cropComplete} />
         </div>
       </DialogContent>
 
