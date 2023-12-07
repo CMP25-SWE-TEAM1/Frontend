@@ -13,6 +13,10 @@ import { changeProfilePicture } from "../../store/UserSlice"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 
+import Crop from "../General/Crop/Crop"
+
+import "../../styles/signup.css"
+
 const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleCloseModal, fromSwitch }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const user = useSelector((state) => state.user.user)
@@ -27,6 +31,8 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
   const [profilePic, setProfilePic] = useState(user ? user.profileImage : defaultProfilePic)
   const [profilePicURL, setProfilePicURL] = useState(user ? user.profileImage : defaultProfilePic)
 
+  const [openCrop, setOpenCrop] = useState(false)
+
   // const [mediaUrls, setMediaUrls] = useState([])
 
   const handlePictureClick = (event) => {
@@ -37,7 +43,10 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
     const fileUploaded = event.target.files[0]
 
     setProfilePic(fileUploaded)
-    setProfilePicURL(URL.createObjectURL(event.target.files[0]))
+    setProfilePicURL(URL.createObjectURL(fileUploaded))
+
+    setOpenCrop(true)
+
     skipForNowButton.current.style.display = "none"
     completeSignupButton.current.style.display = "block"
   }
@@ -124,11 +133,11 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
       const PictureStep = document.getElementById("Picture Step")
       PictureStep.style.display = "block"
     }
-  })
+  }, [])
 
   return (
-    <div id="Picture Step" className="m-auto -mt-10 hidden w-[320px]">
-      <div className="!h-fit">
+    <div id="Picture Step" className={`hidden ${openCrop ? "" : "m-auto -mt-10 w-[320px]"} `}>
+      <div className={`!h-fit ${openCrop ? "!hidden" : ""}`}>
         <h1>Pick a profile picture</h1>
 
         <p className="-mt-1 text-xs text-secondary">Have a favorite selfie? Upload it now.</p>
@@ -168,6 +177,9 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
         >
           Complete sign up
         </button>
+      </div>
+      <div className={`${openCrop ? "!block" : "!hidden"}  !mt-0`}>
+        <Crop photoURL={profilePicURL} setOpenCrop={setOpenCrop} setPhotoURL={setProfilePicURL} setFile={setProfilePic} />
       </div>
     </div>
   )
