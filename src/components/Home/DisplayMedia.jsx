@@ -1,7 +1,7 @@
 import React from 'react'
 
 function DisplayMedia({mediaUrls, mediaTypes, margin}) {
-  console.log(mediaTypes)
+  // console.log(mediaTypes)
   return (
     <div className={`mb-1.5 h-fit w-full flex flex-wrap ${mediaUrls.length===0? "hidden": ""}`} >
         {mediaUrls.map((item,index)=>{

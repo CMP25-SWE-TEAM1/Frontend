@@ -9,7 +9,7 @@ function ProfileImage(props) {
     {
         //will open a Modal
     }
-    console.log(props)
+    // console.log(props)
   return (
     <div id="profile-page"> 
     <Avatar src={props.profileimageURL} className={`md:w-[120px] md:h-[120px] lg:w-[140px] lg:h-[140px] ml-[20px]  mt-[-70px] mb-[12px] 

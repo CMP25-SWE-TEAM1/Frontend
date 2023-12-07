@@ -33,6 +33,7 @@ const CustomTabs = ({ tabValue, handleChangeTabValue }) => {
           value={tabValue}
           onChange={handleChangeTabValue}
           aria-label="basic tabs example"
+          variant="scrollable"
         >
           <Tab
             label="For you"
