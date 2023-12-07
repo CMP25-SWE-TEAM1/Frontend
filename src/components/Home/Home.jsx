@@ -8,34 +8,49 @@ import getUser from "../../constants/index"
 import RepliesContainer from "../PostPage/RepliesContainer"
 import ComposePost from "./ComposePost"
 import axios from "axios"
+import { useSelector } from "react-redux"
 
 const Home = () => {
-  const [user, setUser] = useState(getUser())
-  const [tweets, setTweets] = useState([])
+  const user = useSelector((state) => state.user.user)
+  // const userToken = useSelector((state) => state.user.token)
+  const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY"
+
+  const [posts, setPosts] = useState([])
   const homeNavLinks = [
     { title: "For you", location: "foryou" },
     { title: "Following", location: "following" },
   ]
   const APIs = {
-    mock: { getAllTweetsAPI: "https://d93f6897-d144-47d7-9946-fe63b27f73ea.mock.pstmn.io/testAPIs/tweets" },
-    actual: { getAllTweetsAPI: "" },
+    mock: { getAllTweetsAPI: "https://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/posts" },
+    actual: { getAllTweetsAPI: "http://backend.gigachat.cloudns.org/api/homepage/following" },
   }
   useEffect(()=>{
-    axios.get(APIs.mock.getAllTweetsAPI).then((response)=>{
-    if(response.status === 200)
-    {
-      console.log(response.data[0].data.tweet_owner.nickname)
-      console.log(response.data)
-      setTweets(response.data);
-    }
-  }).catch(error=>{
-    console.log(error);
-  })},[])
+    console.log('token')
+    console.log(userToken)
+    axios.get(APIs.actual.getAllTweetsAPI, {
+      headers: {
+        authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY",
+      }
+    })
+      .then((response) => {
+        console.log(response)
+        if (response.status === 200) {
+          // console.log("in then ");
+          if (response.data.tweetList) {
+            console.log(response.data.tweetList)
+            setPosts(response.data.tweetList)
+          } else setPosts([])
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
 
-  const handleNewTweet = (newTweet) => {
-    console.log("handleNewTweet")
-    setTweets([newTweet, ...tweets])
-    console.log(tweets)
+  const handleNewPost = (newPost) => {
+    setPosts([{ tweetDetails: newPost.data }, ...posts])
+    console.log("handle new post")
+    console.log(posts)
   }
 
   const postsTst = [
@@ -197,11 +212,11 @@ const Home = () => {
   ]
 
   return (
-    <div className="flex flex-1 max-xs:w-fit max-xs:max-w-[475]">
+    <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
       {/* {user && <Sidebar user={user} setUser={setUser} />} */}
 
       <div className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-[600px]">
-        <div className="sticky top-0 z-50 mb-0 border-0 border-b border-lightBorder bg-white bg-opacity-[87%] backdrop-blur-sm dark:border-darkBorder dark:bg-inherit dark:bg-opacity-[99%] ">
+        <div className="sticky top-0 z-50 mb-0 border-0 border-b border-lightBorder bg-white backdrop-blur-md dark:border-darkBorder dark:bg-inherit dark:backdrop-brightness-[40%]">
           {/* <div className="h-[53px] flex justify-start items-center">
           <h2 className="font-semibold text-xl text-gray-800 pl-6 dark:text-white">
             Home
@@ -211,8 +226,8 @@ const Home = () => {
             <HorizontalNavbar urls={homeNavLinks} originalUrl={"/home"} />
           </div>
         </div>
-        <ComposePost handleNewTweet={(newTweet) => handleNewTweet(newTweet)} />
-        <PostsContainer posts={postsTst} />
+        <ComposePost handleNewPost={(newPost) => handleNewPost(newPost)} />
+        <PostsContainer posts={posts} />
       </div>
       {/* <div>
         <p>name: {user.name}</p>

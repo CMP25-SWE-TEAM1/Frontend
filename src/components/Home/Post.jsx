@@ -1,6 +1,5 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-
 import { Avatar } from "@mui/material"
 import VerifiedIcon from "@mui/icons-material/Verified"
 import Button from "@mui/material/Button"
@@ -17,10 +16,23 @@ import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutline
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
+import DisplayMedia from "./DisplayMedia"
+
 
 const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostCount, likeCount, viewCount, description, media }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
-
+  const [mediaUrls,setMediaUrls] = useState([]);
+  const [mediaTypes, setMediaTypes] = useState([]);
+  const descriptionLines = description.split("\n"); //need check for writing \n in description
+  useEffect(()=>{
+    const urls = media.map((item)=>item.data);
+    const types = media.map((item)=>item.type);
+    console.log("urls from post comp",urls);
+    console.log("types from post comp",types);
+    setMediaUrls(urls);
+    setMediaTypes(types);
+  },[media])
+  
   const openMenu = Boolean(anchorPostMenu)
 
   const handleMenuButtonClick = (event) => {
@@ -50,12 +62,12 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
   const finalDate = intDifferenceInHours > 24 ? Math.floor(intDifferenceInHours / 24) + "d" : intDifferenceInHours ? intDifferenceInHours + "h" : intDifferenceInMinutes ? intDifferenceInMinutes + "m" : intDifferenceInSeconds + "s"
 
   return (
-    <Link className="" to={`/${userTag}/status/tweetId`}>
+    // <Link className="w-full" to={`/${userTag}/status/tweetId`}>
       <div className=" flex h-fit border border-l-0 border-r-0 border-lightBorder p-3 dark:border-darkBorder" data-testid="postId">
-        <div className=" h-60 w-10 sm:mr-3">
+        <div className=" h-fit w-10 sm:mr-3">
           <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
         </div>
-        <div className=" sm:mr-2">
+        <div className=" sm:mr-2 w-full">
           <div className="post-header flex items-center justify-between">
             <div className="flex items-center">
               <Link className="hover:underline" to="/mohamedsamir">
@@ -129,16 +141,14 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
           </div>
           <div className="post-text">
             <div className="max-h-[100px] overflow-hidden text-start dark:text-gray-300" data-testid="post-text-id">
-              {description}
+              {descriptionLines.map(line => <p>{line}<br/></p>)}
             </div>
             {/* <div>show more</div> */}
           </div>
-          <div className="mt-3">
-            <Link>
-              <img src={media} alt="" className="rounded-xl" />
-            </Link>
+          <div className="post-media mt-3">
+            <DisplayMedia mediaUrls={mediaUrls} mediaTypes={mediaTypes} margin={1}/>
           </div>
-          <div className="mt-3 flex max-w-full justify-between text-ternairy dark:text-secondary">
+          <div className="post-footer mt-3 flex max-w-full justify-between text-ternairy dark:text-secondary">
             <div className="group -ml-2 flex cursor-pointer items-center transition-colors  duration-300 hover:text-primary" title="Reply">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900 ">
                 <ChatBubbleOutlineOutlinedIcon
@@ -212,7 +222,7 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
           </div>
         </div>
       </div>
-    </Link>
+    // </Link>
   )
 }
 

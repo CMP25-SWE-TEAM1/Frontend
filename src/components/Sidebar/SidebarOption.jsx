@@ -1,25 +1,17 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { logoutUser } from "../../store/UserSlice"
-
 
 function SidebarOption({ icon, name, link }) {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   return (
     <div
       data-testid="link"
+      title={name}
       className="group my-1 box-border cursor-pointer border-0 max-[1278px]:w-fit"
       onClick={() => {
-        if (name === "Communities") {
-          localStorage.removeItem("user")
-          dispatch(logoutUser())
-          navigate("/")
-        } else {
-          navigate(link)
-        }
+        navigate(link)
+        
       }}
     >
       <div className="flex w-fit content-center items-start rounded-full p-0.5 group-hover:bg-lightHover dark:group-hover:bg-darkHover">

@@ -15,7 +15,7 @@ const Messages = () => {
           <div className="header">
             <h2>Messages</h2>
             <div>
-              <a href="/messages/settings" title="Settings">
+              <a href="/messages/settings" title="Settings" id="mahmoud_settings">
                 {/* Setting  icon */}
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <g>
@@ -23,7 +23,7 @@ const Messages = () => {
                   </g>
                 </svg>
               </a>
-              <a href="/messages/compose" title="New message">
+              <a href="/messages/compose" title="New message" id="mahmoud_new_message">
                 {/* Compose icon */}
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <g>

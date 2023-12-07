@@ -18,19 +18,21 @@ export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredent
     google = true
     console.log(userCredentials)
     response = userCredentials
-    localStorage.setItem("user", JSON.stringify(userCredentials))
+    localStorage.setItem("user", JSON.stringify(userCredentials.data.user))
+    localStorage.setItem("token", JSON.stringify(userCredentials.token))
   } else {
     google = false
     const request = await axios.post(APIs.actual.loginAPI, userCredentials)
     response = await request.data
     localStorage.setItem("user", JSON.stringify(response.data.user))
+    localStorage.setItem("token", JSON.stringify(response.token))
   }
 
   return response
 })
 
 const initialUser = localStorage.getItem("user")
-const initialToken=localStorage.getItem('token')
+const initialToken = localStorage.getItem("token")
 
 const userSlice = createSlice({
   name: "user",
@@ -45,6 +47,7 @@ const userSlice = createSlice({
       state.user = null
       state.loading = false
       state.error = null
+      state.token = null
     },
     signupUser: (state, action) => {
       console.log(action.payload)
@@ -57,9 +60,8 @@ const userSlice = createSlice({
       state.loading = false
       state.error = null
       state.token = action.payload.token
-      
-      action.payload.navigate("/home")
 
+      action.payload.navigate("/home")
     },
     changeProfilePicture: (state, action) => {
       state.user = action.payload.user
@@ -67,12 +69,22 @@ const userSlice = createSlice({
       localStorage.setItem("user", JSON.stringify(action.payload.user))
       localStorage.setItem("token", JSON.stringify(action.payload.token))
 
-
       state.loading = false
       state.error = null
       state.token = action.payload.token
-
-    }
+    },
+    changeUsername: (state, action) => {
+      state.user.username = action.payload
+      let temp_user = JSON.parse(localStorage.getItem("user"))
+      temp_user.username = action.payload
+      localStorage.setItem("user", JSON.stringify(temp_user))
+    },
+    changeEmail: (state, action) => {
+      state.user.email = action.payload
+      let temp_user = JSON.parse(localStorage.getItem("user"))
+      temp_user.email = action.payload
+      localStorage.setItem("user", JSON.stringify(temp_user))
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -84,11 +96,9 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false
-        state.user = google ? action.payload : action.payload.data.user
+        state.user = action.payload.data.user
         state.error = null
         state.token = action.payload.token
-
-        
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false
@@ -110,6 +120,7 @@ const userSlice = createSlice({
 export const logoutUser = userSlice.actions.logoutUser
 export const signupUser = userSlice.actions.signupUser
 export const changeProfilePicture = userSlice.actions.changeProfilePicture
-
+export const changeUsername = userSlice.actions.changeUsername
+export const changeEmail = userSlice.actions.changeEmail
 
 export default userSlice.reducer

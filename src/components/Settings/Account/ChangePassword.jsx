@@ -5,13 +5,15 @@ import axios from "axios"
 import Alert from "@mui/material/Alert"
 import Stack from "@mui/material/Stack"
 import { styles } from "../../../styles"
-
+import { useSelector } from "react-redux"
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [errorMsg, setErrorMsg] = useState("")
+  const [successMsg, setSuccessMsg] = useState("")
+  const { token }  = useSelector((state) => state.user)
 
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{8,}$/
   const upperCaseLetterRegex = /^(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*()]{1,}$/
@@ -41,8 +43,8 @@ const ChangePassword = () => {
   }
 
   const APIs = {
-    mock: { changePasswordAPI: "https://ca224727-23e8-4fb6-b73e-dc8eac260c2d.mock.pstmn.io/changePassword" },
-    actual: { changePasswordAPI: "" },
+    mock: { changePasswordAPI: "http://localhost:3001/changePassword" },
+    actual: { changePasswordAPI: "http://backend.gigachat.cloudns.org/api/user/updatePassword" },
   }
 
   const handlePasswordChange = () => {
@@ -50,16 +52,27 @@ const ChangePassword = () => {
     // call password check api to compare the actual password
     if (newPassword === confirmPassword) {
       axios
-        .patch(APIs.mock.changePasswordAPI, { currentPassword: currentPassword, newPassword: newPassword })
+        .patch(
+          APIs.actual.changePasswordAPI,
+          { oldPassword: currentPassword, newPassword: newPassword },
+          {
+            headers: {
+              authorization: "Bearer " + token,
+            },
+          }
+        )
         .then((res) => {
           if (res.status === 200) {
-            window.location.href = "/settings/account"
+            setSuccessMsg(res.data.data.message)
+            setTimeout(() => {
+              //window.location.href = "/settings/account"
+            }, 2000);
           }
         })
         .catch((err) => {
-          if (err.response.status === 401 || err.response.status === 404) {
-            setErrorMsg("Incorrect password")
-          } else console.log(err)
+          if (err.response.data.message) setErrorMsg(err.response.data.message)
+          else setErrorMsg("Internal server error, please try again later")
+          console.log(err)
         })
     } else {
       // error new passwords don't match
@@ -127,7 +140,8 @@ const ChangePassword = () => {
 
       <div className="flex p-5">
         <div className="text-red-600">{errorMsg}</div>
-        <button id="changePasswordBtn" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handlePasswordChange} disabled={currentPassword === "" || newPassword === "" || confirmPassword === "" ||  checkPassword(newPassword)}>
+        <div className="text-green-600">{successMsg}</div>
+        <button id="changePasswordBtn" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handlePasswordChange} disabled={currentPassword === "" || newPassword === "" || confirmPassword === "" || checkPassword(newPassword)}>
           Save
         </button>
       </div>
