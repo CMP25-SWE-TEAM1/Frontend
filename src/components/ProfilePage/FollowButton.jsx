@@ -7,8 +7,6 @@ const FollowButton = (props) => {
     const darkMode= useSelector((state) => (state.theme.darkMode))
     const {token} = useSelector((state)=>(state.user))
     const mock = false;
-    const {token} = useSelector((state)=>(state.user))
-    const mock = false;
     const [buttonstate,setbuttonstate]=useState(props.buttonName)
     // there should be a conditional rendering by back
    useEffect(

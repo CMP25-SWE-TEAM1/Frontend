@@ -41,7 +41,7 @@ const Settings = () => {
 
   return (
     <div className="flex h-screen dark:bg-black dark:text-white ">
-      <div className="flex h-full w-[450px] flex-col border-r border-lightBorder dark:border-darkBorder max-lg:hidden">
+      <div className="flex h-full w-[400px] flex-col border-r border-lightBorder dark:border-darkBorder max-lg:hidden">
         <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Settings</h1>
 
         <div className="flex w-full">
@@ -99,7 +99,7 @@ const Settings = () => {
           )}
         </div>
 
-        <Link to="/settings/display" className="settings-option hidden">
+        <Link to="/settings/account_information" className="settings-option hidden">
           <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_accessibility" onClick={handleSelect}>
             <div className="mb-auto mt-auto pl-4 text-sm">Account information</div>
             <div className="m-auto mr-3 text-2xl">&gt;</div>
@@ -114,14 +114,14 @@ const Settings = () => {
           </Link>
         )}
         {passwordIsConfirmed === "true" && (
-          <Link to="/settings/change_password" className="settings-option hidden">
+          <Link to="/settings/change_email" className="settings-option hidden">
             <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_accessibility" onClick={handleSelect}>
               <div className="mb-auto mt-auto pl-4 text-sm">Email</div>
               <div className="m-auto mr-3 text-2xl">&gt;</div>
             </div>
           </Link>
         )}
-        <Link to="/settings/display" className="settings-option hidden">
+        <Link to="/settings/change_password" className="settings-option hidden">
           <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_accessibility" onClick={handleSelect}>
             <div className="mb-auto mt-auto pl-4 text-sm">Change your password</div>
             <div className="m-auto mr-3 text-2xl">&gt;</div>
@@ -149,7 +149,7 @@ const Settings = () => {
         </Link>
       </div>
 
-      <div className="flex h-full w-[600px] flex-col border-r border-lightBorder dark:border-darkBorder">
+      <div className="flex h-full w-[600px] max-lg:w-[85vw] max-xs:w-screen flex-col border-r border-lightBorder dark:border-darkBorder">
         <Outlet />
       </div>
     </div>
