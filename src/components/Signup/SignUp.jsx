@@ -1,5 +1,5 @@
-import { useState,useEffect } from "react"
-import {  useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 import { Modal, Box } from "@mui/material"
 
@@ -12,7 +12,6 @@ import FirstStep from "./FirstStep.jsx"
 import SecondStep from "./SecondStep.jsx"
 import ThirdStep from "./ThirdStep.jsx"
 
-import { styles } from "../../styles.js"
 import lightLogo from "../../assets/imgs/logo-light.jpg"
 import darkLogo from "../../assets/imgs/logo-dark.jpg"
 
@@ -114,21 +113,21 @@ const SignUp = ({ openModal, handleCloseModal }) => {
   const handleCompleteSignup = (user) => {
     handleCloseModal()
 
-    let userCredentials = {
-      email: email,
-      password: password,
-    }
-    // dispatch(signupUser({ user: user, token: userToken, navigate }))
+    // let userCredentials = {
+    //   email: email,
+    //   password: password,
+    // }
+    dispatch(signupUser({ user: user, token: userToken, navigate }))
 
-    dispatch(loginUser({ userCredentials, isgoogle: null })).then((result) => {
-      // console.log(result)
-      if (result.payload) {
-        setEmail("")
-        setPassword("")
-        handleCloseModal()
-        navigate("/home")
-      }
-    })
+    // dispatch(loginUser({ userCredentials, isgoogle: null })).then((result) => {
+    //   // console.log(result)
+    //   if (result.payload) {
+    //     setEmail("")
+    //     setPassword("")
+    //     handleCloseModal()
+    //     navigate("/home")
+    //   }
+    // })
   }
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -169,7 +168,7 @@ const SignUp = ({ openModal, handleCloseModal }) => {
   }
   return (
     <>
-      <Modal open={openModal} onClose={handleCloseModal} data-testid="signupModal" className="w-[90%]" disableEscapeKeyDown disablePortal>
+      <Modal open={openModal} onClose={handleCloseModal} data-testid="signupModal" disableEscapeKeyDown disablePortal>
         <Box style={modalStyle}>
           <div className="pop-up m-auto min-w-[350px] bg-white dark:bg-black md:rounded-2xl">
             <button className="relative  top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>
@@ -192,7 +191,7 @@ const SignUp = ({ openModal, handleCloseModal }) => {
 
             <TagStep mock={mock} userTag={userTag} setUserTag={setUserTag} originalUsername={originalUsername} userToken={userToken} user={user} setUser={setUser} nextShow={nextShow} />
 
-            <UploadProfilePicture userR={user} setUser={setUser} handleCompleteSignup={handleCompleteSignup} handleCloseModal={handleCloseModal} fromSwitch={false} />
+            <UploadProfilePicture userR={user} setUser={setUser} handleCompleteSignup={handleCompleteSignup} handleCloseModal={handleCloseModal} fromSwitch={false} email={email} password={password} />
 
             <ErrorPage setDay={setDay} setMonth={setMonth} setYear={setYear} setNickName={setNickName} setEmail={setEmail} openBirthdateErrorModal={openBirthdateErrorModal} handleCloseBirthdateErrorModal={handleCloseBirthdateErrorModal} />
           </div>

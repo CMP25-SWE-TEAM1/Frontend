@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import lightLogo from "../../assets/imgs/giga-chat-logo-dark-removebg-preview.png"
+import { styles } from "../../styles.js"
 
 import { Alert } from "@mui/material"
 
@@ -13,14 +14,29 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import FormControl from "@mui/material/FormControl"
 import FormLabel from "@mui/material/FormLabel"
 
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router"
+
+import { loginUser } from "../../store/UserSlice"
+
+import { PASSWORD_REGEX, UPPER_CASE_LETTER_REGEX, LOWER_CASE_LETTER_REGEX, SPECIAL_CHARACTER_REGEX, NUMBER_REGEX, LENGTH_REGEX } from "../../constants/signupConstants.js"
+
+import Stack from "@mui/material/Stack"
+import VisibilityIcon from "@mui/icons-material/Visibility"
+
 const PasswordReset = () => {
   const mock = false
 
-  const [userName, setUserName] = useState("")
   const [email, setEmail] = useState("")
   const [maskedEmail, setMaskedEmail] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const [password, setPassword] = useState("")
+  const [code, setCode] = useState("")
+  const [changedSuccessfully, setChangedSuccessfully] = useState(false)
 
   const [emailExistError, setEmailExistError] = useState(false)
+
+  const navigate = useNavigate()
 
   const [choosed, setChoosed] = useState("email")
   const handleOptionChange = (event) => {
@@ -68,6 +84,29 @@ const PasswordReset = () => {
       })
   }
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
+
+  function checkPassword(password) {
+    return !PASSWORD_REGEX.test(password)
+  }
+  function hasUpperCaseLetter(password) {
+    return UPPER_CASE_LETTER_REGEX.test(password)
+  }
+  function hasLowerCaseLetter(password) {
+    return LOWER_CASE_LETTER_REGEX.test(password)
+  }
+  function hasSpecialCharachter(password) {
+    return SPECIAL_CHARACTER_REGEX.test(password)
+  }
+  function hasNumber(password) {
+    return NUMBER_REGEX.test(password)
+  }
+  function hasCorrectLength(password) {
+    return LENGTH_REGEX.test(password)
+  }
+
   function maskEmail() {
     // Split the email address into local and domain parts
     const [localPart, domainPart] = email.split("@")
@@ -84,25 +123,43 @@ const PasswordReset = () => {
     return maskedEmail
   }
 
-  // function handleNext1() {
-  //   const page1 = document.getElementById("page1")
-  //   const page2 = document.getElementById("page2")
+  const handleForgotPassword = () => {
+    console.log({
+      query: email,
+    })
+    axios
+      .post(APIs.actual.forgotPassword, {
+        query: email,
+      })
+      .then((res) => {
+        console.log(res)
+        nextShow(2)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
-  //   page1.style.display = "none"
-  //   page2.style.display = "block"
-  // }
-
-  // function handleNext2() {
-  //   const page2 = document.getElementById("page2")
-  //   const page3 = document.getElementById("page3")
-
-  //   page2.style.display = "none"
-  //   page3.style.display = "block"
-  // }
-
-  // function handleNext3() {
-  //   //Send the confirmation email to the email input by the user then proceed
-  // }
+  const handleResetPassword = () => {
+    console.log({
+      password: password,
+      passwordResetToken: code,
+    })
+    axios
+      .patch(APIs.actual.resetPassword, {
+        password: password,
+        passwordResetToken: code,
+      })
+      .then((res) => {
+        setChangedSuccessfully(true)
+        setTimeout(() => {
+          navigate("/login")
+        }, 3000)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   return (
     <div className="flex h-[100vh] w-full bg-[#242d34]">
@@ -134,31 +191,6 @@ const PasswordReset = () => {
 
         {/* --------------------------------------Second Password Reset Page------------------------------------- */}
         <div id="page2" className="m-auto hidden w-[320px]">
-          <div>
-            <h1>Confirm your username</h1>
-            <p className="text-sm text-zinc-600 ">Verify your identity by entering the username associated with your X account.</p>
-            <div className="input-container">
-              <input className={userName === "" ? "form-input" : "form-input filled-input"} type="email" name="email" id="email" autoComplete="off" value={userName} onChange={(e) => setUserName(e.target.value)} />
-              <label className="input-label" htmlFor="email">
-                Username
-              </label>
-            </div>
-            <button
-              type="button"
-              id="next2"
-              className="btn"
-              onClick={() => {
-                nextShow(2)
-              }}
-              disabled={userName === ""}
-            >
-              Next
-            </button>
-          </div>
-        </div>
-
-        {/* --------------------------------------Third Password Reset Page------------------------------------- */}
-        <div id="page3" className="m-auto hidden w-[320px]">
           <div id="mahmoud_signature">
             <h1>Where should we send a confirmation code?</h1>
             <p className="text-sm text-zinc-600 ">Before you can change your password, we need to make sure it&apos;s really you.</p>
@@ -205,11 +237,62 @@ const PasswordReset = () => {
               id="next3"
               className="btn"
               onClick={() => {
-                nextShow(3)
+                handleForgotPassword()
+                // nextShow(2)
               }}
             >
               Next
             </button>
+          </div>
+        </div>
+        {/* --------------------------------------Third Password Reset Page------------------------------------- */}
+
+        <div id="page3" className="m-auto hidden w-[320px]">
+          <div>
+            <h1>We sent a code to you email</h1>
+            {/* <p className="text-sm text-zinc-600 ">Verify your identity by entering the username associated with your X account.</p> */}
+            <div className="input-container">
+              <input className={code === "" ? "form-input" : "form-input filled-input"} name="code" id="code" autoComplete="off" value={code} onChange={(e) => setCode(e.target.value)} />
+              <label className="input-label" htmlFor="code">
+                Code
+              </label>
+            </div>
+            <div className="relative">
+              <div className="input-container">
+                <input className={password === "" ? "form-input" : "form-input filled-input"} type={showPassword ? "text" : "password"} name="password" id="password" autoComplete="off" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <label className="input-label" htmlFor="password">
+                  New Password
+                </label>
+              </div>
+              <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}>
+                <VisibilityIcon className="text-primary" />
+              </span>
+            </div>
+            <div>
+              <Stack severity={`${checkPassword(password) ? "error" : "success"}`}>
+                <Alert severity={`${hasUpperCaseLetter(password) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleTop}>
+                  Require uppercase letter
+                </Alert>
+                <Alert severity={`${hasLowerCaseLetter(password) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+                  Require lowercase letter
+                </Alert>
+                <Alert severity={`${hasSpecialCharachter(password) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+                  Require special character !@#$%^&*()
+                </Alert>
+                <Alert severity={`${hasNumber(password) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+                  Require number
+                </Alert>
+                <Alert severity={`${hasCorrectLength(password) ? "success" : "error"}`} sx={styles.signupPasswordCheckStyleBottom}>
+                  Require at least 8 characters
+                </Alert>
+              </Stack>
+              <Alert severity="success" className={`${changedSuccessfully ? "" : "hidden"} mt-2 -mb-9 text-xs`}>
+                Password Changed Successfully, Navigating to Login...
+              </Alert>
+              <button className="btn mt-16" disabled={checkPassword(password) || code === ""} onClick={handleResetPassword}>
+                Confirm
+              </button>
+            </div>
           </div>
         </div>
       </div>

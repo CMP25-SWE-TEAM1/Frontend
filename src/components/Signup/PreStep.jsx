@@ -19,7 +19,7 @@ const PreStep = ({handleCloseModal,nextShow}) => {
           </div>
         </div>
         <button
-          className="mb-2 h-10 w-full rounded-3xl font-semibold text-white hover:bg-darkHover dark:bg-primary dark:text-white dark:hover:bg-[#1a8cd8]"
+          className="mb-2 h-10 w-full rounded-3xl font-semibold !text-white !bg-black hover:!bg-darkHover dark:!bg-primary dark:!text-white dark:hover:!bg-[#1a8cd8]"
           onClick={() => {
             nextShow(0)
           }}

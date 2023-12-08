@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+
+.bt:hover::before{
+    content:"Unfollow"
+}
+
+.bt:hover span{
+    display: none;
+}
+}
