@@ -33,5 +33,7 @@ export const APIs = {
     googleAuth: "http://backend.gigachat.cloudns.org/api/user/googleAuth",
     forgotPassword: "http://backend.gigachat.cloudns.org/api/user/forgotpassword",
     resetPassword: "http://backend.gigachat.cloudns.org/api/user/resetpassword",
+    getNotifications: "http://backend.gigachat.cloudns.org/api/notification/all",
+    loginAPI: "http://backend.gigachat.cloudns.org/api/user/login",
   },
 }
