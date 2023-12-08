@@ -11,6 +11,7 @@ import ListItemText from "@mui/material/ListItemText"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import FaceIcon from "@mui/icons-material/Face"
 import CheckIcon from "@mui/icons-material/Check"
+import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined"
 
 import "./message-compose.css"
 
@@ -47,6 +48,19 @@ const MessageCompose = () => {
             <div className="message-compose-search"></div>
             <div className="message-compose-list">
               <List dense={false}>
+                {/* Search */}
+                {/* Creat a group */}
+                <ListItem disablePadding sx={{ borderBottom: "1px solid #eee" }}>
+                  <ListItemButton>
+                    <ListItemAvatar>
+                      <Avatar sx={{ backgroundColor: "transparent", border: "1px solid #ddd" }}>
+                        <GroupsOutlinedIcon sx={{ color: "#1976D2" }} />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary="Create a group" primaryTypographyProps={{ fontSize: 15, fontWeight: "600", color: "#1976D2" }} />
+                  </ListItemButton>
+                </ListItem>
+                {/* Contacts */}
                 {generate(
                   <ListItem disablePadding>
                     <ListItemButton>
