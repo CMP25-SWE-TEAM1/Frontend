@@ -18,18 +18,61 @@ import SearchIcon from "@mui/icons-material/Search"
 
 import "./message-compose.css"
 
-function generate(element) {
-  return [0, 1, 2].map((value) =>
-    cloneElement(element, {
-      key: value,
-    })
-  )
-}
-
 const MessageCompose = () => {
   const [composeModalOpen, setComposeModalOpen] = useState(true)
   const handleComposeModalOpen = () => setComposeModalOpen(true)
   const handleComposeModalClose = () => setComposeModalOpen(false)
+
+  const [contacts, setContacts] = useState([
+    {
+      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U74",
+      name: "Khaled",
+      id: 3,
+      selected: false,
+    },
+    {
+      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U66",
+      name: "Moaz",
+      id: 6,
+      selected: false,
+    },
+    {
+      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U55",
+      name: "Ali",
+      id: 5,
+      selected: false,
+    },
+    {
+      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U44",
+      name: "Hamza",
+      id: 4,
+      selected: false,
+    },
+    {
+      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U77",
+      name: "Abd El-Rahman",
+      id: 7,
+      selected: false,
+    },
+  ])
+  const handleContactSelection = (index) => {
+    const nextContacts = contacts.map((contact, i) => {
+      if (i === index) {
+        // Increment the clicked counter
+        contact["selected"] = !contact["selected"]
+        return contact
+      } else {
+        // The rest haven't changed
+        return contact
+      }
+    })
+    setContacts(nextContacts)
+  }
 
   const [searchIconColor, setSearchIconColor] = useState("")
   const handleSearchIcon = (focused) => {
@@ -73,22 +116,28 @@ const MessageCompose = () => {
                   </ListItemButton>
                 </ListItem>
                 {/* Contacts */}
-                {generate(
-                  <ListItem disablePadding>
-                    <ListItemButton>
+                {contacts.map((contact, index) => (
+                  <ListItem disablePadding key={index}>
+                    <ListItemButton
+                      onClick={() => {
+                        handleContactSelection(index)
+                      }}
+                    >
                       <ListItemAvatar>
                         {/* <Avatar>
-                          <FaceIcon color="secondary" />
-                        </Avatar> */}
-                        <Avatar alt="Remy Sharp" src="https://64.media.tumblr.com/avatar_f71055191601_128.pnj" />
+                        <FaceIcon color="secondary" />
+                      </Avatar> */}
+                        <Avatar alt={contact.name} src={contact.avatrLink} />
                       </ListItemAvatar>
-                      <ListItemText primary="User Name" secondary={true ? "@username" : null} />
-                      <ListItemIcon>
-                        <CheckIcon color="primary" fontSize="small" />
-                      </ListItemIcon>
+                      <ListItemText primary={contact.name} secondary={`@${contact.userName}`} />
+                      {contact.selected && (
+                        <ListItemIcon>
+                          <CheckIcon color="primary" fontSize="small" />
+                        </ListItemIcon>
+                      )}
                     </ListItemButton>
                   </ListItem>
-                )}
+                ))}
               </List>
             </div>
           </div>
