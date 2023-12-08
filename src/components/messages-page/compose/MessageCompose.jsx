@@ -33,35 +33,35 @@ const MessageCompose = () => {
       userName: "U74",
       name: "Khaled",
       id: 3,
-      selected: true,
+      selected: false,
     },
     {
       avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U66",
       name: "Moaz",
       id: 6,
-      selected: true,
+      selected: false,
     },
     {
       avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U55",
       name: "Ali",
       id: 5,
-      selected: true,
+      selected: false,
     },
     {
       avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U44",
       name: "Hamza",
       id: 4,
-      selected: true,
+      selected: false,
     },
     {
       avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U77",
       name: "Abd El-Rahman",
       id: 7,
-      selected: true,
+      selected: false,
     },
   ])
   const handleContactSelection = (index) => {
@@ -84,47 +84,20 @@ const MessageCompose = () => {
     setContacts(nextContacts)
   }
 
-  const [selectedContacts, setSelectedContacts] = useState([
-    {
-      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U74",
-      name: "Khaled",
-      id: 3,
-      key: 100,
-    },
-    {
-      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U66",
-      name: "Moaz",
-      id: 6,
-      key: 101,
-    },
-    {
-      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U55",
-      name: "Ali",
-      id: 5,
-      key: 102,
-    },
-    {
-      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U44",
-      name: "Hamza",
-      id: 4,
-      key: 103,
-    },
-    {
-      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U77",
-      name: "Abd El-Rahman",
-      id: 7,
-      key: 104,
-    },
-  ])
+  const [selectedContacts, setSelectedContacts] = useState([])
   const handleDelete = (chipToDelete) => () => {
     setSelectedContacts((chips) => chips.filter((chip) => chip.key !== chipToDelete.key))
     // Updated boolean "selection" in contacts
-    // TODO
+    const nextContacts = contacts.map((contact) => {
+      if (contact.id === chipToDelete.id) {
+        contact["selected"] = false
+        return contact
+      } else {
+        // The rest haven't changed
+        return contact
+      }
+    })
+    setContacts(nextContacts)
   }
 
   const [searchIconColor, setSearchIconColor] = useState("")
@@ -172,9 +145,9 @@ const MessageCompose = () => {
                       }}
                       component="ul"
                     >
-                      {selectedContacts.map((contact) => {
+                      {selectedContacts.map((contact, index) => {
                         return (
-                          <ListItem key={contact.key} sx={{ paddingTop: "4px", paddingBottom: "4px", paddingLeft: "4px", paddingRight: "4px", width: "fit-content" }}>
+                          <ListItem key={index} sx={{ paddingTop: "4px", paddingBottom: "4px", paddingLeft: "4px", paddingRight: "4px", width: "fit-content" }}>
                             <Chip variant="outlined" color="primary" onClick={handleDelete(contact)} onDelete={handleDelete(contact)} label={contact.name} avatar={<Avatar src={contact.avatrLink} />} />
                           </ListItem>
                         )
