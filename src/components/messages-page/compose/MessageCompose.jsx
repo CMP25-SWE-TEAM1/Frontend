@@ -13,6 +13,9 @@ import FaceIcon from "@mui/icons-material/Face"
 import CheckIcon from "@mui/icons-material/Check"
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined"
 
+import InputBase from "@mui/material/InputBase"
+import SearchIcon from "@mui/icons-material/Search"
+
 import "./message-compose.css"
 
 function generate(element) {
@@ -24,10 +27,15 @@ function generate(element) {
 }
 
 const MessageCompose = () => {
-  // GIFs modal
   const [composeModalOpen, setComposeModalOpen] = useState(true)
   const handleComposeModalOpen = () => setComposeModalOpen(true)
   const handleComposeModalClose = () => setComposeModalOpen(false)
+
+  const [searchIconColor, setSearchIconColor] = useState("")
+  const handleSearchIcon = (focused) => {
+    if (focused) setSearchIconColor("primary")
+    else setSearchIconColor("")
+  }
 
   return (
     <Modal open={composeModalOpen} onClose={handleComposeModalClose} aria-labelledby="compose message">
@@ -49,6 +57,10 @@ const MessageCompose = () => {
             <div className="message-compose-list">
               <List dense={false}>
                 {/* Search */}
+                <ListItem sx={{ paddingLeft: "24px", borderBottom: "1px solid #eee" }}>
+                  <SearchIcon sx={{ width: "20px", height: "20px" }} color={searchIconColor} />
+                  <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search people" onFocus={() => handleSearchIcon(true)} onBlur={() => handleSearchIcon(false)} inputProps={{ "aria-label": "search people" }} />
+                </ListItem>
                 {/* Creat a group */}
                 <ListItem disablePadding sx={{ borderBottom: "1px solid #eee" }}>
                   <ListItemButton>
@@ -97,10 +109,7 @@ const modalStyle = {
   borderRadius: "16px",
   overflowY: "auto",
   bgcolor: "background.paper",
-  // border: "2px solid #000",
   boxShadow: 24,
-  // py: 0,
-  // px: 2,
 }
 
 export default MessageCompose
