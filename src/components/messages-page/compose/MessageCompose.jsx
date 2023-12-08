@@ -33,41 +33,47 @@ const MessageCompose = () => {
       userName: "U74",
       name: "Khaled",
       id: 3,
-      selected: false,
+      selected: true,
     },
     {
       avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U66",
       name: "Moaz",
       id: 6,
-      selected: false,
+      selected: true,
     },
     {
       avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U55",
       name: "Ali",
       id: 5,
-      selected: false,
+      selected: true,
     },
     {
       avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U44",
       name: "Hamza",
       id: 4,
-      selected: false,
+      selected: true,
     },
     {
       avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U77",
       name: "Abd El-Rahman",
       id: 7,
-      selected: false,
+      selected: true,
     },
   ])
   const handleContactSelection = (index) => {
     const nextContacts = contacts.map((contact, i) => {
       if (i === index) {
-        // Increment the clicked counter
+        if (contact["selected"]) {
+          // deselect -> remove from selectedContacts
+          setSelectedContacts((chips) => chips.filter((chip) => chip.id !== contact.id))
+        } else {
+          // select -> add to selectedContacts
+          setSelectedContacts([...selectedContacts, contact])
+        }
         contact["selected"] = !contact["selected"]
         return contact
       } else {
@@ -78,52 +84,47 @@ const MessageCompose = () => {
     setContacts(nextContacts)
   }
 
-  const [chipData, setChipData] = useState([
-    { key: 0, label: "Angular" },
-    { key: 1, label: "jQuery" },
-    { key: 2, label: "Polymer" },
-    { key: 3, label: "React" },
-    { key: 4, label: "Vue.js" },
-  ])
   const [selectedContacts, setSelectedContacts] = useState([
     {
       avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U74",
       name: "Khaled",
       id: 3,
-      key: 0,
+      key: 100,
     },
     {
       avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U66",
       name: "Moaz",
       id: 6,
-      key: 1,
+      key: 101,
     },
     {
       avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U55",
       name: "Ali",
       id: 5,
-      key: 2,
+      key: 102,
     },
     {
       avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U44",
       name: "Hamza",
       id: 4,
-      key: 3,
+      key: 103,
     },
     {
       avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U77",
       name: "Abd El-Rahman",
       id: 7,
-      key: 4,
+      key: 104,
     },
   ])
   const handleDelete = (chipToDelete) => () => {
     setSelectedContacts((chips) => chips.filter((chip) => chip.key !== chipToDelete.key))
+    // Updated boolean "selection" in contacts
+    // TODO
   }
 
   const [searchIconColor, setSearchIconColor] = useState("")
