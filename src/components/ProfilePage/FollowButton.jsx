@@ -4,71 +4,66 @@ import axios from "axios"
 import { useParams } from "react-router-dom"
 import ProfilePage from "./ProfilePage"
 const FollowButton = (props) => {
-    const darkMode= useSelector((state) => (state.theme.darkMode))
-    const {token} = useSelector((state)=>(state.user))
-    const mock = false;
-    const [buttonstate,setbuttonstate]=useState(props.buttonName)
-    // there should be a conditional rendering by back
-   useEffect(
-    ()=>{
-        setbuttonstate(props.buttonName)
-    },[props.buttonName])
-    const APIsf = {
-      
-        mock: { postfollowProfileAPI:   `http://localhost:3001/api/user/${props.tag}/follow` },
-        actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
-        actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
-      }
-    const APIsuf = {
-      
-        mock: { postfollowProfileAPI:   `http://localhost:3001/api/user/${props.tag}/unfollow` },
-        actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
-        actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
-      }
-    function HandleClick()
-    {
-        if(buttonstate ==="Edit Profile")
-        {
-            //Open Modal
-        }
-        else if(buttonstate === "Follow")
-        {
-            axios.post(
-                mock? APIsf.mock.postfollowProfileAPI : APIsf.actual.postfollowProfileAPI,
-                {},
-                {
-                    headers:{
-                        authorization: `Bearer ${token}` 
-                    },
-                }
-            ).then((res)=>{
-                if(res.status ===  204)
-                {
-                  setbuttonstate("Following")
-                }
-            }).catch((err)=>{
-                console.log(err)
-                console.log(props.tag)
-            });
-        }
-        else{
-            axios.post(
-                mock? APIsuf.mock.postfollowProfileAPI : APIsuf.actual.postfollowProfileAPI,
-                {},
-                {
-                    headers:{
-                        authorization : "Bearer " + token,
-                    },
-                }
-            ).then((res)=>{
-                if(res.status ===  204)
-                {
-                   setbuttonstate("Follow")
-                }
-            }).catch((err)=>{
-                console.log(APIsuf.actual.postfollowProfileAPI)
-            });
-        }
+  const darkMode = useSelector((state) => state.theme.darkMode)
+  const { token } = useSelector((state) => state.user)
+  const mock = false
+  const [buttonstate, setbuttonstate] = useState(props.buttonName)
+  // there should be a conditional rendering by back
+  useEffect(() => {
+    setbuttonstate(props.buttonName)
+  }, [props.buttonName])
+  const APIsf = {
+    mock: { postfollowProfileAPI: `http://localhost:3001/api/user/${props.tag}/follow` },
+    actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
+    actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
+  }
+  const APIsuf = {
+    mock: { postfollowProfileAPI: `http://localhost:3001/api/user/${props.tag}/unfollow` },
+    actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
+    actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
+  }
+  function HandleClick() {
+    if (buttonstate === "Edit Profile") {
+      //Open Modal
+    } else if (buttonstate === "Follow") {
+      axios
+        .post(
+          mock ? APIsf.mock.postfollowProfileAPI : APIsf.actual.postfollowProfileAPI,
+          {},
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          if (res.status === 204) {
+            setbuttonstate("Following")
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+          console.log(props.tag)
+        })
+    } else {
+      axios
+        .post(
+          mock ? APIsuf.mock.postfollowProfileAPI : APIsuf.actual.postfollowProfileAPI,
+          {},
+          {
+            headers: {
+              authorization: "Bearer " + token,
+            },
+          }
+        )
+        .then((res) => {
+          if (res.status === 204) {
+            setbuttonstate("Follow")
+          }
+        })
+        .catch((err) => {
+          console.log(APIsuf.actual.postfollowProfileAPI)
+        })
     }
   }
 
