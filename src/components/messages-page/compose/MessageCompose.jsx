@@ -16,6 +16,10 @@ import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined"
 import InputBase from "@mui/material/InputBase"
 import SearchIcon from "@mui/icons-material/Search"
 
+import Paper from "@mui/material/Paper"
+import TagFacesIcon from "@mui/icons-material/TagFaces"
+import Chip from "@mui/material/Chip"
+
 import "./message-compose.css"
 
 const MessageCompose = () => {
@@ -74,6 +78,54 @@ const MessageCompose = () => {
     setContacts(nextContacts)
   }
 
+  const [chipData, setChipData] = useState([
+    { key: 0, label: "Angular" },
+    { key: 1, label: "jQuery" },
+    { key: 2, label: "Polymer" },
+    { key: 3, label: "React" },
+    { key: 4, label: "Vue.js" },
+  ])
+  const [selectedContacts, setSelectedContacts] = useState([
+    {
+      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U74",
+      name: "Khaled",
+      id: 3,
+      key: 0,
+    },
+    {
+      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U66",
+      name: "Moaz",
+      id: 6,
+      key: 1,
+    },
+    {
+      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U55",
+      name: "Ali",
+      id: 5,
+      key: 2,
+    },
+    {
+      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U44",
+      name: "Hamza",
+      id: 4,
+      key: 3,
+    },
+    {
+      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U77",
+      name: "Abd El-Rahman",
+      id: 7,
+      key: 4,
+    },
+  ])
+  const handleDelete = (chipToDelete) => () => {
+    setSelectedContacts((chips) => chips.filter((chip) => chip.key !== chipToDelete.key))
+  }
+
   const [searchIconColor, setSearchIconColor] = useState("")
   const handleSearchIcon = (focused) => {
     if (focused) setSearchIconColor("primary")
@@ -104,17 +156,44 @@ const MessageCompose = () => {
                   <SearchIcon sx={{ width: "20px", height: "20px" }} color={searchIconColor} />
                   <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search people" onFocus={() => handleSearchIcon(true)} onBlur={() => handleSearchIcon(false)} inputProps={{ "aria-label": "search people" }} />
                 </ListItem>
+                {/* Selected Contacts */}
+                {selectedContacts.length > 0 && (
+                  <ListItem sx={{ paddingLeft: "24px", borderBottom: "1px solid #eee" }}>
+                    <List
+                      dense={false}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        flexWrap: "wrap",
+                        listStyle: "none",
+                        p: 0,
+                        m: 0,
+                      }}
+                      component="ul"
+                    >
+                      {selectedContacts.map((contact) => {
+                        return (
+                          <ListItem key={contact.key} sx={{ paddingTop: "4px", paddingBottom: "4px", paddingLeft: "4px", paddingRight: "4px", width: "fit-content" }}>
+                            <Chip variant="outlined" color="primary" onClick={handleDelete(contact)} onDelete={handleDelete(contact)} label={contact.name} avatar={<Avatar src={contact.avatrLink} />} />
+                          </ListItem>
+                        )
+                      })}
+                    </List>
+                  </ListItem>
+                )}
                 {/* Creat a group */}
-                <ListItem disablePadding sx={{ borderBottom: "1px solid #eee" }}>
-                  <ListItemButton>
-                    <ListItemAvatar>
-                      <Avatar sx={{ backgroundColor: "transparent", border: "1px solid #ddd" }}>
-                        <GroupsOutlinedIcon sx={{ color: "#1976D2" }} />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Create a group" primaryTypographyProps={{ fontSize: 15, fontWeight: "600", color: "#1976D2" }} />
-                  </ListItemButton>
-                </ListItem>
+                {selectedContacts.length === 0 && (
+                  <ListItem disablePadding sx={{ borderBottom: "1px solid #eee" }}>
+                    <ListItemButton>
+                      <ListItemAvatar>
+                        <Avatar sx={{ backgroundColor: "transparent", border: "1px solid #ddd" }}>
+                          <GroupsOutlinedIcon sx={{ color: "#1976D2" }} />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary="Create a group" primaryTypographyProps={{ fontSize: 15, fontWeight: "600", color: "#1976D2" }} />
+                    </ListItemButton>
+                  </ListItem>
+                )}
                 {/* Contacts */}
                 {contacts.map((contact, index) => (
                   <ListItem disablePadding key={index}>
