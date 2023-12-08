@@ -1,8 +1,8 @@
-import React, { useState,useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import axios from 'axios'
-import { useParams } from 'react-router-dom'
-import ProfilePage from './ProfilePage'
+import React, { useState, useEffect } from "react"
+import { useSelector } from "react-redux"
+import axios from "axios"
+import { useParams } from "react-router-dom"
+import ProfilePage from "./ProfilePage"
 const FollowButton = (props) => {
     const darkMode= useSelector((state) => (state.theme.darkMode))
     const {token} = useSelector((state)=>(state.user))
@@ -70,22 +70,38 @@ const FollowButton = (props) => {
             });
         }
     }
-    
+  }
+
   return (
-    <div id="follow-buttonDiv" className={`md:ml-[35%] lg:ml-[calc(100%/3)] mt-[2%]`}>
-        <button id="follow-button" onClick={()=>{HandleClick()
-        }} className={` ${darkMode? buttonstate==="Follow"? `bg-white text-black
-                hover:bg-darkHover dark:hover:bg-lightHover` : 
-                `bg-black text-white hover:bg-lightHover dark:hover:bg-darkHover `
-                : buttonstate==="Follow"? `bg-black text-white hover:bg-darkHover dark:hover:bg-lightHover`
-                : `bg-white text-black hover:bg-lightHover dark:hover:bg-darkHover`} 
-                text-center font-semibold rounded-full w-[110px] h-[35px] 
-                border border-b-1 border-t- border-lightBorder dark:border-darkBorder
-                }
-                ${buttonstate==="Following"? `hover:border-[red] hover:text-[red]  bt
-                ` :`` }`}>
-                    <span>{buttonstate}</span>
-         </button> {/*todo: conditional rendering white for follow black for unfollow*/}                    
+    <div id="follow-buttonDiv" className={`mt-[2%] md:ml-[35%] lg:ml-[calc(100%/3)]`}>
+      <button
+        id="follow-button"
+        onClick={() => {
+          HandleClick()
+        }}
+        className={` ${
+          darkMode
+            ? buttonstate === "Follow"
+              ? `bg-white text-black
+                hover:bg-darkHover dark:hover:bg-lightHover`
+              : `bg-black text-white hover:bg-lightHover dark:hover:bg-darkHover `
+            : buttonstate === "Follow"
+            ? `bg-black text-white hover:bg-darkHover dark:hover:bg-lightHover`
+            : `bg-white text-black hover:bg-lightHover dark:hover:bg-darkHover`
+        } 
+                border-b-1 border-t- } h-[35px] w-[110px] 
+                rounded-full border border-lightBorder text-center font-semibold
+                dark:border-darkBorder
+                ${
+                  buttonstate === "Following"
+                    ? `bt hover:border-[red]  hover:text-[red]
+                `
+                    : ``
+                }`}
+      >
+        <span>{buttonstate}</span>
+      </button>{" "}
+      {/*todo: conditional rendering white for follow black for unfollow*/}
     </div>
   )
 }

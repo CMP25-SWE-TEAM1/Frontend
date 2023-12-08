@@ -2,15 +2,9 @@ version: '3'
 services:
   gigachat-react-app:
     container_name: gigachat-frontend-container
+    image: amreux1/my_public_registry
     build: 
       context: .
       target: development
-  gigachat-app-loadbalancer:
-    container_name: nginx-app-container
-    image: nginx:stable-alpine
-    volumes:
-    - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
-    - "80:80"
-    depends_on:
-      - gigachat-react-app
+    - "5500:3000"
