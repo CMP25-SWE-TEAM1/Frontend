@@ -7,6 +7,8 @@ const FollowButton = (props) => {
     const darkMode= useSelector((state) => (state.theme.darkMode))
     const {token} = useSelector((state)=>(state.user))
     const mock = false;
+    const {token} = useSelector((state)=>(state.user))
+    const mock = false;
     const [buttonstate,setbuttonstate]=useState(props.buttonName)
     // there should be a conditional rendering by back
    useEffect(
@@ -17,10 +19,12 @@ const FollowButton = (props) => {
       
         mock: { postfollowProfileAPI:   `http://localhost:3001/api/user/${props.tag}/follow` },
         actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
+        actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
       }
     const APIsuf = {
       
         mock: { postfollowProfileAPI:   `http://localhost:3001/api/user/${props.tag}/unfollow` },
+        actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
         actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
       }
     function HandleClick()
@@ -33,9 +37,10 @@ const FollowButton = (props) => {
         {
             axios.post(
                 mock? APIsf.mock.postfollowProfileAPI : APIsf.actual.postfollowProfileAPI,
+                {},
                 {
-                    header:{
-                        authorization : "bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NmI0MjQ2Y2UxODFlMDkxZjQ0ZWQ2OCIsImlhdCI6MTcwMTgwMTIwMiwiZXhwIjoxNzA5NTc3MjAyfQ.5emT53Vi6WpT4rLC0qpixNCNLWSxjWwBpjPLTJQNTMw",
+                    headers:{
+                        authorization: `Bearer ${token}` 
                     },
                 }
             ).then((res)=>{
@@ -45,14 +50,16 @@ const FollowButton = (props) => {
                 }
             }).catch((err)=>{
                 console.log(err)
+                console.log(props.tag)
             });
         }
         else{
             axios.post(
                 mock? APIsuf.mock.postfollowProfileAPI : APIsuf.actual.postfollowProfileAPI,
+                {},
                 {
-                    header:{
-                        authorization : "bearer" + token,
+                    headers:{
+                        authorization : "Bearer " + token,
                     },
                 }
             ).then((res)=>{
@@ -61,13 +68,13 @@ const FollowButton = (props) => {
                    setbuttonstate("Follow")
                 }
             }).catch((err)=>{
-                console.log(err)
+                console.log(APIsuf.actual.postfollowProfileAPI)
             });
         }
     }
     
   return (
-    <div id="follow-buttonDiv" className={`md:ml-[35%] lg:ml-[calc(100%/2)] mt-[2%]`}>
+    <div id="follow-buttonDiv" className={`md:ml-[35%] lg:ml-[calc(100%/3)] mt-[2%]`}>
         <button id="follow-button" onClick={()=>{HandleClick()
         }} className={` ${darkMode? buttonstate==="Follow"? `bg-white text-black
                 hover:bg-darkHover dark:hover:bg-lightHover` : 

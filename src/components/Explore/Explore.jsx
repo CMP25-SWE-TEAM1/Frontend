@@ -7,6 +7,7 @@ import CustomTabPanel from "./CustomTabPanel"
 import CustomTabs from "./CustomTabs"
 import WithConditionalDataFetching from "./WithDataFetching"
 
+
 const Explore = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const user = useSelector((state) => state.user.user)
@@ -18,10 +19,10 @@ const Explore = () => {
   }
 
   return (
-    <div className="flex flex-1 max-xs:w-fit max-xs:max-w-[475]">
-      <div className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-[600px]">
+    <div className="flex flex-1 flex-grow-[8] max-xs:max-w-[475]">
+      <div className="no-scrollbar ml-0 mr-1 max-w-[620px] flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-fit md:shrink-0">
         <div className="sticky top-0 z-50 mb-0 border-0 border-b border-lightBorder bg-white bg-opacity-[87%] backdrop-blur-sm dark:border-darkBorder dark:bg-inherit dark:bg-opacity-[99%] ">
-          <CustomTabs tabValue={tabValue} handleChangeTabValue={handleChangeTabValue} />
+          <CustomTabs tabValue={tabValue} handleChangeTabValue={handleChangeTabValue}/>
         </div>
         <CustomTabPanel value={tabValue} index={0}>
           {WithConditionalDataFetching("trending")}
