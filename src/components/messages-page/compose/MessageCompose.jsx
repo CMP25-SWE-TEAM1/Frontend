@@ -90,10 +90,8 @@ const MessageCompose = () => {
   const [selectedContacts, setSelectedContacts] = useState([])
   const handleDelete = (chipToDelete) => () => {
     setSelectedContacts((chips) => chips.filter((chip) => chip.key !== chipToDelete.key))
-    if(selectedContacts.length === 0)
-      setActiveNextBtn("")
-    else
-      setActiveNextBtn("active")
+    if (selectedContacts.length === 0) setActiveNextBtn("")
+    else setActiveNextBtn("active")
     // Updated boolean "selection" in contacts
     const nextContacts = contacts.map((contact) => {
       if (contact.id === chipToDelete.id) {
@@ -114,6 +112,11 @@ const MessageCompose = () => {
   }
 
   const [activeNextBtn, setActiveNextBtn] = useState("")
+
+  const [searchValue, setSearchValue] = useState("")
+  const handleSearchValueChange = (event) => {
+    setSearchValue(event.target.value)
+  }
 
   return (
     <Modal open={composeModalOpen} onClose={handleComposeModalClose} aria-labelledby="compose message">
@@ -136,8 +139,8 @@ const MessageCompose = () => {
               <List dense={false}>
                 {/* Search */}
                 <ListItem sx={{ paddingLeft: "24px", borderBottom: "1px solid #eee" }}>
-                  <SearchIcon sx={{ width: "20px", height: "20px" }} color={searchIconColor} />
-                  <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search people" onFocus={() => handleSearchIcon(true)} onBlur={() => handleSearchIcon(false)} inputProps={{ "aria-label": "search people" }} />
+                  <SearchIcon sx={{ width: "20px", height: "20px" }} color={searchIconColor} value={searchValue} onChange={handleSearchValueChange} />
+                  <InputBase sx={{ ml: 1, flex: 1 }} value={searchValue} onChange={handleSearchValueChange} placeholder="Search people" onFocus={() => handleSearchIcon(true)} onBlur={() => handleSearchIcon(false)} inputProps={{ "aria-label": "search people" }} />
                 </ListItem>
                 {/* Selected Contacts */}
                 {selectedContacts.length > 0 && (
@@ -165,28 +168,30 @@ const MessageCompose = () => {
                   </ListItem>
                 )}
                 {/* Contacts */}
-                {contacts.map((contact, index) => (
-                  <ListItem disablePadding key={index}>
-                    <ListItemButton
-                      onClick={() => {
-                        handleContactSelection(index)
-                      }}
-                    >
-                      <ListItemAvatar>
-                        {/* <Avatar>
+                {contacts
+                  .filter((contact) => contact.name.toUpperCase().includes(searchValue.toUpperCase()) || contact.userName.toUpperCase().includes(searchValue.toUpperCase()))
+                  .map((contact, index) => (
+                    <ListItem disablePadding key={index}>
+                      <ListItemButton
+                        onClick={() => {
+                          handleContactSelection(index)
+                        }}
+                      >
+                        <ListItemAvatar>
+                          {/* <Avatar>
                         <FaceIcon color="secondary" />
                       </Avatar> */}
-                        <Avatar alt={contact.name} src={contact.avatrLink} />
-                      </ListItemAvatar>
-                      <ListItemText primary={contact.name} secondary={`@${contact.userName}`} />
-                      {contact.selected && (
-                        <ListItemIcon>
-                          <CheckIcon color="primary" fontSize="small" />
-                        </ListItemIcon>
-                      )}
-                    </ListItemButton>
-                  </ListItem>
-                ))}
+                          <Avatar alt={contact.name} src={contact.avatrLink} />
+                        </ListItemAvatar>
+                        <ListItemText primary={contact.name} secondary={`@${contact.userName}`} />
+                        {contact.selected && (
+                          <ListItemIcon>
+                            <CheckIcon color="primary" fontSize="small" />
+                          </ListItemIcon>
+                        )}
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
               </List>
             </div>
           </div>
