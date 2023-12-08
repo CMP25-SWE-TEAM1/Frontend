@@ -17,6 +17,8 @@ const PostsContainer = ({ posts }) => {
           repostCount={p.tweetDetails ? p.tweetDetails.repostsNum : p.repostsNum}
           likeCount={p.tweetDetails ? p.tweetDetails.likesNum : p.likesNum}
           viewCount={p.tweetDetails ? p.tweetDetails.viewsNum : p.viewsNum}
+          isLiked={p.isLiked? p.isLiked : false}
+          isReposted={p.isRtweeted? p.isRtweeted : false}
           key={p.tweetDetails ? p.tweetDetails.tweet_owner.username : p.tweet_owner.username}
         />
       ))}

@@ -12,6 +12,7 @@ import VolumeOffOutlinedIcon from "@mui/icons-material/VolumeOffOutlined"
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined"
 import QueryStatsOutlinedIcon from "@mui/icons-material/QueryStatsOutlined"
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined"
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined"
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
@@ -19,10 +20,15 @@ import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
 import DisplayMedia from "./DisplayMedia"
 
 
-const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostCount, likeCount, viewCount, description, media }) => {
+const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
   const [mediaUrls,setMediaUrls] = useState([]);
   const [mediaTypes, setMediaTypes] = useState([]);
+  const [liked, setLiked] = useState(isLiked);
+  const [likesNum, setLikesNum] = useState(likeCount);
+  const [reposted, setReposted] = useState(isReposted);
+  const [repostsNum, setRepostsNum] = useState(repostCount);
+
   const descriptionLines = description.split("\n"); //need check for writing \n in description
   useEffect(()=>{
     const urls = media.map((item)=>item.data);
@@ -40,8 +46,15 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
   }
   const handleMenuClose = () => {
     setAnchorPostMenu(null)
+  } 
+  const handleLikeClick = () => {
+    setLikesNum(liked? likesNum - 1 : likesNum + 1 );
+    setLiked(!liked);
   }
-
+  const handleRepostClick = () => {
+    setRepostsNum(reposted? repostsNum - 1 : repostsNum + 1 );
+    setReposted(!reposted);
+  }
   //"Thu Oct 26 2023 23:18:01 GMT+0200 (Eastern European Standard Time)" we need date in this format
 
   const htmlElement = document.getElementById("htmlid")
@@ -161,8 +174,8 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
 
               <span className="text-sm">{replyCount}</span>
             </div>
-            <div className="  group flex cursor-pointer items-center transition-colors duration-300 hover:text-green-500" title="Repost">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900 ">
+            <div className={`  group flex cursor-pointer items-center transition-colors duration-300 ${reposted? "text-green-500" : ""} hover:text-green-500`} title="Repost">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900 " onClick={handleRepostClick}>
                 <CachedOutlinedIcon
                   sx={{
                     width: 16,
@@ -171,19 +184,27 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
                 />
               </div>
 
-              <span className="text-sm">{repostCount}</span>
+              <span className="text-sm">{repostsNum}</span>
             </div>
-            <div className="  group flex cursor-pointer items-center transition-colors duration-300 hover:text-pink-600" title="Like">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900">
-                <FavoriteBorderOutlinedIcon
+            <div className={`  group flex cursor-pointer items-center transition-colors duration-300 ${liked? "text-pink-600" : ""} hover:text-pink-600`} title="Like">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900" onClick={handleLikeClick}>
+                {liked? <FavoriteOutlinedIcon
                   sx={{
                     width: 16,
                     height: 16,
                   }}
                 />
+                : 
+                <FavoriteBorderOutlinedIcon
+                  sx={{
+                    width: 16,
+                    height: 16,
+                  }}
+                />}
+                
               </div>
 
-              <span className="text-sm">{likeCount}</span>
+              <span className="text-sm">{likesNum}</span>
             </div>
             <div className="  group flex cursor-pointer  items-center transition-colors duration-300 hover:text-primary" title="Views">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900 ">
