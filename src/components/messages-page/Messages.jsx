@@ -1,3 +1,4 @@
+import MessageCompose from "./compose/MessageCompose"
 import DetailsChat from "./details/DetailsChat"
 import DetailsNoChat from "./details/DetailsNoChat"
 import "./messages.css"
@@ -39,6 +40,8 @@ const Messages = () => {
         {two && <DetailsNoChat />}
         {!two && <DetailsChat />}
       </div>
+
+      <MessageCompose />
     </>
   )
 }
