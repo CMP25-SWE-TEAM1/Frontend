@@ -70,14 +70,17 @@ const MessageCompose = () => {
         if (contact["selected"]) {
           // deselect -> remove from selectedContacts
           setSelectedContacts((chips) => chips.filter((chip) => chip.id !== contact.id))
+          setActiveNextBtn("")
         } else {
           // select -> add to selectedContacts
-          setSelectedContacts([...selectedContacts, contact])
+          setSelectedContacts([contact])
+          setActiveNextBtn("active")
         }
         contact["selected"] = !contact["selected"]
         return contact
       } else {
-        // The rest haven't changed
+        // The rest is not selected
+        contact["selected"] = false
         return contact
       }
     })
@@ -87,6 +90,10 @@ const MessageCompose = () => {
   const [selectedContacts, setSelectedContacts] = useState([])
   const handleDelete = (chipToDelete) => () => {
     setSelectedContacts((chips) => chips.filter((chip) => chip.key !== chipToDelete.key))
+    if(selectedContacts.length === 0)
+      setActiveNextBtn("")
+    else
+      setActiveNextBtn("active")
     // Updated boolean "selection" in contacts
     const nextContacts = contacts.map((contact) => {
       if (contact.id === chipToDelete.id) {
@@ -106,6 +113,8 @@ const MessageCompose = () => {
     else setSearchIconColor("")
   }
 
+  const [activeNextBtn, setActiveNextBtn] = useState("")
+
   return (
     <Modal open={composeModalOpen} onClose={handleComposeModalClose} aria-labelledby="compose message">
       <Box sx={modalStyle}>
@@ -119,7 +128,7 @@ const MessageCompose = () => {
               </svg>
             </div>
             <div className="message-compose-title">New message</div>
-            <div className="message-compose-next">Next</div>
+            <div className={`message-compose-next ${activeNextBtn}`}>Next</div>
           </div>
           <div className="message-compose-body">
             <div className="message-compose-search"></div>
@@ -153,19 +162,6 @@ const MessageCompose = () => {
                         )
                       })}
                     </List>
-                  </ListItem>
-                )}
-                {/* Creat a group */}
-                {selectedContacts.length === 0 && (
-                  <ListItem disablePadding sx={{ borderBottom: "1px solid #eee" }}>
-                    <ListItemButton>
-                      <ListItemAvatar>
-                        <Avatar sx={{ backgroundColor: "transparent", border: "1px solid #ddd" }}>
-                          <GroupsOutlinedIcon sx={{ color: "#1976D2" }} />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText primary="Create a group" primaryTypographyProps={{ fontSize: 15, fontWeight: "600", color: "#1976D2" }} />
-                    </ListItemButton>
                   </ListItem>
                 )}
                 {/* Contacts */}
