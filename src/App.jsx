@@ -34,6 +34,7 @@ import Mentions from "./components/Notifications/Mentions"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
+  const [passwordIsConfirmed] = useState(sessionStorage.getItem("passwordIsConfirmed"))
 
   const darkMode = useSelector((state) => state.theme.darkMode)
   const dispatch = useDispatch()
@@ -110,9 +111,9 @@ const App = () => {
             <Route path="" element={<MobileSettings />}></Route>
             <Route path="account" element={<Account />}></Route>
             <Route path="account_information" element={<AccountInformation />}></Route>
-            <Route path="change_username" element={<ChangeUsername />}></Route>
-            <Route path="change_email" element={<ChangeEmail />}></Route>
-            <Route path="change_password" element={<ChangePassword />}></Route>
+            {passwordIsConfirmed === "true" && <Route path="change_username" element={<ChangeUsername />}></Route>}
+            {passwordIsConfirmed === "true" && <Route path="change_email" element={<ChangeEmail />}></Route>}
+             <Route path="change_password" element={<ChangePassword />}></Route>
 
             <Route path="privacy_and_safety" element={<PrivacySafety />}></Route>
             <Route path="blocked" element={<Blocked />}></Route>
