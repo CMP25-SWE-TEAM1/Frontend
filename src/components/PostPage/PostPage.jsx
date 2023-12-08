@@ -2,7 +2,7 @@ import React from 'react'
 import HorizontalNavbar from '../General/HorizontalNavbar';
 import RepliesContainer from './RepliesContainer';
 import Widgets from '../Widgets';
-import Post from '../Home/Post';
+import Post from '../Home/Posts/Post';
 import WestIcon from '@mui/icons-material/West';
 function PostPage({post}) {
     const postNavLink = [{title :<WestIcon/> , location:""},{ title: "Post", location: "" }];

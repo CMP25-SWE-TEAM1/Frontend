@@ -1,5 +1,5 @@
 import "../../styles/home.css"
-import PostsContainer from "./PostsContainer"
+import PostsContainer from "./Posts/PostsContainer"
 import HorizontalNavbar from "../General/HorizontalNavbar"
 import { useState, useEffect } from "react"
 import Widgets from "../Widgets"

@@ -4,7 +4,7 @@ import TrendComponent from "./TrendComponent"
 import axios from "axios"
 
 import { useSelector } from "react-redux"
-import PostsContainer from "../Home/PostsContainer"
+import PostsContainer from "../Home/Posts/PostsContainer"
 
 import CircularProgress from "@mui/material/CircularProgress"
 import Box from "@mui/material/Box"

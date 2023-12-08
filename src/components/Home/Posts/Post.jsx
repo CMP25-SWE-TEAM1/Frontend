@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { Avatar } from "@mui/material"
 import VerifiedIcon from "@mui/icons-material/Verified"
-import Button from "@mui/material/Button"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz"
@@ -11,14 +10,8 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 import VolumeOffOutlinedIcon from "@mui/icons-material/VolumeOffOutlined"
 import BlockOutlinedIcon from "@mui/icons-material/BlockOutlined"
 import QueryStatsOutlinedIcon from "@mui/icons-material/QueryStatsOutlined"
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined"
-import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined"
-import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
-import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
-import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
-import DisplayMedia from "./DisplayMedia"
-
+import DisplayMedia from "../DisplayMedia"
+import PostFooter from "./PostFooter"
 
 const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
@@ -156,91 +149,11 @@ const Post = ({ userProfilePicture, userName, userTag, date, replyCount, repostC
             <div className="max-h-[100px] overflow-hidden text-start dark:text-gray-300" data-testid="post-text-id">
               {descriptionLines.map(line => <p>{line}<br/></p>)}
             </div>
-            {/* <div>show more</div> */}
           </div>
           <div className="post-media mt-3">
             <DisplayMedia mediaUrls={mediaUrls} mediaTypes={mediaTypes} margin={1}/>
           </div>
-          <div className="post-footer mt-3 flex max-w-full justify-between text-ternairy dark:text-secondary">
-            <div className="group -ml-2 flex cursor-pointer items-center transition-colors  duration-300 hover:text-primary" title="Reply">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900 ">
-                <ChatBubbleOutlineOutlinedIcon
-                  sx={{
-                    width: 16,
-                    height: 16,
-                  }}
-                />
-              </div>
-
-              <span className="text-sm">{replyCount}</span>
-            </div>
-            <div className={`  group flex cursor-pointer items-center transition-colors duration-300 ${reposted? "text-green-500" : ""} hover:text-green-500`} title="Repost">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900 " onClick={handleRepostClick}>
-                <CachedOutlinedIcon
-                  sx={{
-                    width: 16,
-                    height: 16,
-                  }}
-                />
-              </div>
-
-              <span className="text-sm">{repostsNum}</span>
-            </div>
-            <div className={`  group flex cursor-pointer items-center transition-colors duration-300 ${liked? "text-pink-600" : ""} hover:text-pink-600`} title="Like">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900" onClick={handleLikeClick}>
-                {liked? <FavoriteOutlinedIcon
-                  sx={{
-                    width: 16,
-                    height: 16,
-                  }}
-                />
-                : 
-                <FavoriteBorderOutlinedIcon
-                  sx={{
-                    width: 16,
-                    height: 16,
-                  }}
-                />}
-                
-              </div>
-
-              <span className="text-sm">{likesNum}</span>
-            </div>
-            <div className="  group flex cursor-pointer  items-center transition-colors duration-300 hover:text-primary" title="Views">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900 ">
-                <QueryStatsOutlinedIcon
-                  sx={{
-                    width: 16,
-                    height: 16,
-                  }}
-                />
-              </div>
-
-              <span className="text-sm">{viewCount}</span>
-            </div>
-            <div className="bookmarkUpload flex">
-              <div className={`group flex cursor-pointer items-center transition-colors duration-300 hover:text-primary`} title="Bookmark">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900">
-                  <BookmarkBorderOutlinedIcon
-                    sx={{
-                      width: 16,
-                      height: 16,
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="  group flex cursor-pointer items-center transition-colors duration-300 hover:text-primary" title="Share">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900">
-                  <FileUploadOutlinedIcon
-                    sx={{
-                      width: 16,
-                      height: 16,
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          <PostFooter replyCount={replyCount} reposted={reposted} repostsNum={repostsNum} liked={liked} likesNum={likesNum} viewCount={viewCount} handleRepostClick={handleRepostClick} handleLikeClick={handleLikeClick}/>
         </div>
       </div>
     // </Link>
