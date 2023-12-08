@@ -64,9 +64,9 @@ const MessageCompose = () => {
       selected: false,
     },
   ])
-  const handleContactSelection = (index) => {
-    const nextContacts = contacts.map((contact, i) => {
-      if (i === index) {
+  const handleContactSelection = (choosenContact) => {
+    const nextContacts = contacts.map((contact) => {
+      if (choosenContact.id === contact.id) {
         if (contact["selected"]) {
           // deselect -> remove from selectedContacts
           setSelectedContacts((chips) => chips.filter((chip) => chip.id !== contact.id))
@@ -89,7 +89,7 @@ const MessageCompose = () => {
 
   const [selectedContacts, setSelectedContacts] = useState([])
   const handleDelete = (chipToDelete) => () => {
-    setSelectedContacts((chips) => chips.filter((chip) => chip.key !== chipToDelete.key))
+    setSelectedContacts((chips) => chips.filter((chip) => chip.id !== chipToDelete.id))
     if (selectedContacts.length === 0) setActiveNextBtn("")
     else setActiveNextBtn("active")
     // Updated boolean "selection" in contacts
@@ -174,7 +174,7 @@ const MessageCompose = () => {
                     <ListItem disablePadding key={index}>
                       <ListItemButton
                         onClick={() => {
-                          handleContactSelection(index)
+                          handleContactSelection(contact)
                         }}
                       >
                         <ListItemAvatar>
