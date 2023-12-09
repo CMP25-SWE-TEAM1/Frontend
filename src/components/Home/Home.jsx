@@ -30,6 +30,8 @@ const Home = () => {
   useEffect(() => {
     // console.log("token")
     // console.log(userToken)
+    let tmpPosts
+
     axios
       .get(APIs.actual.getAllTweetsAPI, {
         headers: {
@@ -43,6 +45,7 @@ const Home = () => {
           if (response.data.tweetList) {
             console.log(response.data.tweetList)
             setPosts(response.data.tweetList)
+            tmpPosts = response.data.tweetList
           } else setPosts([])
 
           return axios.get(APIs.actual.getUserTweets, {
@@ -62,7 +65,8 @@ const Home = () => {
           // console.log("in then ");
           if (res.data.posts) {
             // console.log(res)
-            setPosts([...posts, ...res.data.posts])
+            const contacPosts = tmpPosts.concat(res.data.posts)
+            setPosts(contacPosts)
           }
         }
       })
@@ -241,14 +245,14 @@ const Home = () => {
 
       <div className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-[600px]">
         {/* <div className="sticky top-0 z-50 mb-0 border-0 border-b border-lightBorder bg-white backdrop-blur-md dark:border-darkBorder dark:bg-inherit dark:backdrop-brightness-[40%]"> */}
-          {/* <div className="h-[53px] flex justify-start items-center">
+        {/* <div className="h-[53px] flex justify-start items-center">
           <h2 className="font-semibold text-xl text-gray-800 pl-6 dark:text-white">
             Home
           </h2>
         </div> */}
-          {/* <div className="flex h-[53px] items-center"> */}
-            {/* <HorizontalNavbar urls={homeNavLinks} originalUrl={"/home"} /> */}
-          {/* </div> */}
+        {/* <div className="flex h-[53px] items-center"> */}
+        {/* <HorizontalNavbar urls={homeNavLinks} originalUrl={"/home"} /> */}
+        {/* </div> */}
         {/* </div> */}
         <ComposePost handleNewPost={(newPost) => handleNewPost(newPost)} />
         <PostsContainer posts={posts} />
