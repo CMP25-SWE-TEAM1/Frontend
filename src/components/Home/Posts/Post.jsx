@@ -14,45 +14,46 @@ import DisplayMedia from "../DisplayMedia"
 import PostFooter from "./PostFooter"
 import axios from "axios"
 import { useSelector } from "react-redux"
-
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined"
 
 const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
-  const [mediaUrls,setMediaUrls] = useState([]);
-  const [mediaTypes, setMediaTypes] = useState([]);
-  const [liked, setLiked] = useState(isLiked);
-  const [likesNum, setLikesNum] = useState(likeCount);
-  const [reposted, setReposted] = useState(isReposted);
-  const [repostsNum, setRepostsNum] = useState(repostCount);
+  const [mediaUrls, setMediaUrls] = useState([])
+  const [mediaTypes, setMediaTypes] = useState([])
+  const [liked, setLiked] = useState(isLiked)
+  const [likesNum, setLikesNum] = useState(likeCount)
+  const [reposted, setReposted] = useState(isReposted)
+  const [repostsNum, setRepostsNum] = useState(repostCount)
 
   const darkMode = useSelector((state) => state.theme.darkMode)
   const user = useSelector((state) => state.user.user)
   const userToken = useSelector((state) => state.user.token)
 
   const APIs = {
-    mock : {
-      like : `/api/tweets/like/${id}`,
-      unlike : `/api/tweets/unlike/${id}`,
-      repost : `/api/tweets/retweet/${id}`,
-      deleteRepost : `/api/tweets/${id}`
+    mock: {
+      like: `/api/tweets/like/${id}`,
+      unlike: `/api/tweets/unlike/${id}`,
+      repost: `/api/tweets/retweet/${id}`,
+      deleteRepost: `/api/tweets/${id}`,
     },
-    actual : {
-      like : `http://backend.gigachat.cloudns.org/api/tweets/like/${id}`,
-      unlike : `http://backend.gigachat.cloudns.org/api/tweets/unlike/${id}`,
-      repost : `http://backend.gigachat.cloudns.org/api/tweets/retweet/${id}`,
-      deleteRepost : `http://backend.gigachat.cloudns.org/api/tweets/${id}`
+    actual: {
+      like: `http://backend.gigachat.cloudns.org/api/tweets/like/${id}`,
+      unlike: `http://backend.gigachat.cloudns.org/api/tweets/unlike/${id}`,
+      repost: `http://backend.gigachat.cloudns.org/api/tweets/retweet/${id}`,
+      deleteRepost: `http://backend.gigachat.cloudns.org/api/tweets/${id}`,
     },
   }
-  const descriptionLines = description.split("\n"); //need check for writing \n in description
-  useEffect(()=>{
-    const urls = media.map((item)=>item.data);
-    const types = media.map((item)=>item.type);
-    // console.log("urls from post comp",urls);
-    // console.log("types from post comp",types);
-    setMediaUrls(urls);
-    setMediaTypes(types);
-  },[media])
-  
+  const descriptionLines = description.split("\n") //need check for writing \n in description
+  useEffect(() => {
+    const urls = media.map((item) => item.data)
+    const types = media.map((item) => item.type)
+
+    // console.log("urls from post comp", urls)
+    // console.log("types from post comp", types)
+    setMediaUrls(urls)
+    setMediaTypes(types)
+  }, [media])
+
   const openMenu = Boolean(anchorPostMenu)
 
   const handleMenuButtonClick = (event) => {
@@ -60,66 +61,92 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
   }
   const handleMenuClose = () => {
     setAnchorPostMenu(null)
-  } 
+  }
   const handleLikeClick = () => {
-    if(liked){
-      console.log(userToken);
-      console.log(id);
-      setLikesNum(likesNum - 1);
-      axios.post(APIs.actual.unlike,{},{
-        headers: {
-          authorization: "Bearer " + userToken,
-        }
-      }).then((response)=>{
-        console.log('unlike success',response);
-      }).catch((error)=>{
-        console.log('unlike fail',error);
-      })
-       
-    }else{
-      console.log(id);
-      setLikesNum(likesNum + 1);
-      axios.post(APIs.actual.like,{},{
-        headers: {
-          authorization: "Bearer " + userToken,
-        }
-      }).then((response)=>{
-        console.log('like success',response);
-      }).catch((error)=>{
-        console.log('like fail',error);
-      })  
+    if (liked) {
+      console.log(userToken)
+      console.log(id)
+      setLikesNum(likesNum - 1)
+      axios
+        .post(
+          APIs.actual.unlike,
+          {},
+          {
+            headers: {
+              authorization: "Bearer " + userToken,
+            },
+          }
+        )
+        .then((response) => {
+          console.log("unlike success", response)
+        })
+        .catch((error) => {
+          console.log("unlike fail", error)
+        })
+    } else {
+      console.log(id)
+      setLikesNum(likesNum + 1)
+      axios
+        .post(
+          APIs.actual.like,
+          {},
+          {
+            headers: {
+              authorization: "Bearer " + userToken,
+            },
+          }
+        )
+        .then((response) => {
+          console.log("like success", response)
+        })
+        .catch((error) => {
+          console.log("like fail", error)
+        })
     }
-    setLiked(!liked);
+    setLiked(!liked)
   }
   const handleRepostClick = () => {
-    if(reposted){
-      console.log(userToken);
-      console.log(id);
-      setRepostsNum(repostsNum - 1);
-      axios.delete(APIs.actual.deleteRepost,{},{
-        headers: {
-          authorization: "Bearer " + userToken,
-        }
-      }).then((response)=>{
-        console.log('delete repost success',response);
-      }).catch((error)=>{
-        console.log('delete repost fail',error);
-      })
-       
-    }else{
-      console.log(id);
-      setRepostsNum(repostsNum + 1);
-      axios.patch(APIs.actual.repost,{},{
-        headers: {
-          authorization: "Bearer " + userToken,
-        }
-      }).then((response)=>{
-        console.log('repost success',response);
-      }).catch((error)=>{
-        console.log('repost fail',error);
-      })  
+    if (reposted) {
+      console.log(userToken)
+      console.log(id)
+      setRepostsNum(repostsNum - 1)
+      axios
+        .delete(
+          APIs.actual.deleteRepost,
+          {},
+          {
+            headers: {
+              authorization: "Bearer " + userToken,
+            },
+          }
+        )
+        .then((response) => {
+          console.log("delete repost success", response)
+        })
+        .catch((error) => {
+          console.log("delete repost fail", error)
+        })
+    } else {
+      console.log(id)
+      setRepostsNum(repostsNum + 1)
+      axios
+        .patch(
+          APIs.actual.repost,
+          {},
+          {
+            headers: {
+              authorization: "Bearer " + userToken,
+            },
+          }
+        )
+        .then((response) => {
+          console.log("repost success", response)
+        })
+        .catch((error) => {
+          console.log("repost fail", error)
+        })
     }
-    setReposted(!reposted);
+    setReposted(!reposted)
   }
   //"Thu Oct 26 2023 23:18:01 GMT+0200 (Eastern European Standard Time)" we need date in this format
 
@@ -142,13 +169,13 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
 
   return (
     <Link className="w-full" to={`/${userTag}/status/${id}`}>
-      <div className=" flex h-fit border border-l-0 border-r-0 border-lightBorder p-3 dark:border-darkBorder hover:bg-lightHover dark:hover:bg-darkHover" data-testid="postId">
+      <div className=" flex h-fit border border-l-0 border-r-0 border-lightBorder p-3 hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover" data-testid="postId">
         <div className=" h-fit w-10 sm:mr-3">
-        <Link className="hover:underline" to={`/${userTag}`}>
-          <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
-        </Link>
+          <Link className="hover:underline" to={`/${userTag}`}>
+            <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
+          </Link>
         </div>
-        <div className=" sm:mr-2 w-full">
+        <div className=" w-full sm:mr-2">
           <div className="post-header flex items-center justify-between">
             <div className="flex items-center">
               <Link className="hover:underline" to={`/${userTag}`}>
@@ -157,69 +184,69 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
               </Link>
               <Link className="ml-1 text-sm text-ternairy dark:text-secondary">@{userTag}</Link>
               <div className="m-1 h-[2px] w-[2px] rounded-full bg-ternairy dark:bg-secondary"></div>
-              <Link className="hover:underline text-sm text-ternairy dark:text-secondary" to={`/${userTag}/status/${id}`}>
+              <Link className="text-sm text-ternairy hover:underline dark:text-secondary" to={`/${userTag}/status/${id}`}>
                 {finalDate}
               </Link>
             </div>
             <Link>
-            <div className="h-10 w-10 flex items-center justify-center hover:bg-[#e7f5fd] dark:hover:bg-[#031018] text-secondary hover:text-primary rounded-full">
-              <MoreHorizIcon target={"_blank"} variant="text" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent" />
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorPostMenu}
-                open={openMenu}
-                onClose={handleMenuClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-                sx={
-                  htmlElement.classList.contains("dark")
-                    ? {
-                        "& .MuiMenu-paper": {
-                          background: "black",
-                          borderRadius: "20px",
-                          boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #333435",
-                          border: "solid 1px #333435",
-                        },
-                      }
-                    : {
-                        "& .MuiMenu-paper": {
-                          borderRadius: "20px",
-                          boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #767C86",
-                        },
-                      }
-                }
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-              >
-                <MenuItem onClick={handleMenuClose} className="flex items-center">
-                  <SentimentVeryDissatisfiedIcon className="mr-3 text-base dark:text-white" />
-                  <span className="text-[15px] dark:text-white">Not interested in this post</span>
-                </MenuItem>
-                <MenuItem onClick={handleMenuClose}>
-                  <PersonAddAltIcon className="mr-3 text-base dark:text-white" />
-                  <span className="text-[15px] dark:text-white">Follow @{userTag}</span>
-                </MenuItem>
-                <MenuItem onClick={handleMenuClose}>
-                  <VolumeOffOutlinedIcon className="mr-3 text-base dark:text-white" />
-                  <span className="text-[15px] dark:text-white">Mute @{userTag}</span>
-                </MenuItem>
-                <MenuItem onClick={handleMenuClose}>
-                  <BlockOutlinedIcon className="mr-3 text-base dark:text-white" />
-                  <span className="text-[15px] dark:text-white">Block @{userTag}</span>
-                </MenuItem>
-                <MenuItem onClick={handleMenuClose}>
-                  <QueryStatsOutlinedIcon className="mr-3 text-base dark:text-white" />
-                  <span className="text-[15px] dark:text-white">View post engagements</span>
-                </MenuItem>
-              </Menu>
-            </div>
+              <div className="flex h-10 w-10 items-center justify-center rounded-full text-secondary hover:bg-[#e7f5fd] hover:text-primary dark:hover:bg-[#031018]">
+                <MoreHorizIcon target={"_blank"} variant="text" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent" />
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorPostMenu}
+                  open={openMenu}
+                  onClose={handleMenuClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                  sx={
+                    htmlElement.classList.contains("dark")
+                      ? {
+                          "& .MuiMenu-paper": {
+                            background: "black",
+                            borderRadius: "20px",
+                            boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #333435",
+                            border: "solid 1px #333435",
+                          },
+                        }
+                      : {
+                          "& .MuiMenu-paper": {
+                            borderRadius: "20px",
+                            boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #767C86",
+                          },
+                        }
+                  }
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                >
+                  <MenuItem onClick={handleMenuClose} className="flex items-center">
+                    <SentimentVeryDissatisfiedIcon className="mr-3 text-base dark:text-white" />
+                    <span className="text-[15px] dark:text-white">Not interested in this post</span>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <PersonAddAltIcon className="mr-3 text-base dark:text-white" />
+                    <span className="text-[15px] dark:text-white">Follow @{userTag}</span>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <VolumeOffOutlinedIcon className="mr-3 text-base dark:text-white" />
+                    <span className="text-[15px] dark:text-white">Mute @{userTag}</span>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <BlockOutlinedIcon className="mr-3 text-base dark:text-white" />
+                    <span className="text-[15px] dark:text-white">Block @{userTag}</span>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <QueryStatsOutlinedIcon className="mr-3 text-base dark:text-white" />
+                    <span className="text-[15px] dark:text-white">View post engagements</span>
+                  </MenuItem>
+                </Menu>
+              </div>
             </Link>
           </div>
           {/* <div>show more</div> */}
@@ -239,12 +266,12 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
             </div>
           </div>
           <div className="post-media mt-3">
-            <DisplayMedia mediaUrls={mediaUrls} mediaTypes={mediaTypes} margin={1}/>
+            <DisplayMedia mediaUrls={mediaUrls} mediaTypes={mediaTypes} margin={1} />
           </div>
-          <PostFooter replyCount={replyCount} reposted={reposted} repostsNum={repostsNum} liked={liked} likesNum={likesNum} viewCount={viewCount} handleRepostClick={handleRepostClick} handleLikeClick={handleLikeClick}/>
+          <PostFooter replyCount={replyCount} reposted={reposted} repostsNum={repostsNum} liked={liked} likesNum={likesNum} viewCount={viewCount} handleRepostClick={handleRepostClick} handleLikeClick={handleLikeClick} />
         </div>
       </div>
-     </Link>
+    </Link>
   )
 }
 

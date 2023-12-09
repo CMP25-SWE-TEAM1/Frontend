@@ -27,14 +27,15 @@ const Home = () => {
       getUserTweets: `http://backend.gigachat.cloudns.org/api/profile/${user.username}/tweets`,
     },
   }
-  useEffect(()=>{
-    console.log('token')
+  useEffect(() => {
+    console.log("token")
     console.log(userToken)
-    axios.get(APIs.actual.getAllTweetsAPI, {
-      headers: {
-        authorization: "Bearer " + userToken,
-      }
-    })
+    axios
+      .get(APIs.actual.getAllTweetsAPI, {
+        headers: {
+          authorization: "Bearer " + userToken,
+        },
+      })
       .then((response) => {
         console.log(response)
         if (response.status === 200) {
@@ -61,7 +62,7 @@ const Home = () => {
           // console.log("in then ");
           if (res.data.posts) {
             setPosts((prevState) => [...prevState, ...res.data.posts])
-            // console.log(res)
+            console.log(res)
           }
         }
       })

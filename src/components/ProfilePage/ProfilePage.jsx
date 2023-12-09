@@ -16,6 +16,8 @@ import Header from "./Header"
 import ProfilePageEdit from "./ProfilePageEdit"
 import { useParams } from "react-router-dom"
 import Details from "./Details"
+import Widgets from "../Widgets"
+
 const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) => {
   const { user } = useSelector((state) => state.user)
   const { token } = useSelector((state) => state.user)
@@ -80,29 +82,35 @@ const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) =>
     }, 100)
   }
   useEffect(Fetch, [])
- 
+
   // console.log(profileres.is_curr_user)
   return (
-    <div
-      id="Profile"
-      className="flex h-[100%] flex-col border border-b-0 
-        border-t-0 border-lightBorder dark:border-darkBorder md:w-[100%] lg:w-[42%]"
-    >
-      <div id="Upperhalf" className="mb-[10%] h-[50%] md:w-[100%] lg:w-[100%]">
-        <Header profilename={profileres.nickname} postsnum={profileres.followers_num}></Header>
-        <CoverImage coverimage={bannerPicURL}></CoverImage>
-        <div className="flex flex-row">
-          <ProfileImage profileimage={profilePicURL} profileimageURL={profilePicURL}></ProfileImage>
-          <Details display={profileres.is_curr_user === "Edit Profile" ? `hidden` : `inline-block`}></Details>
-          <FollowButton tag={tag} buttonName={profileres.is_curr_user ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
+    <div className=" flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
+      <div className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-[600px]">
+        <div
+          id="Profile"
+          className="flex h-[100%] flex-col border border-b-0 
+        border-t-0 border-lightBorder dark:border-darkBorder md:w-[100%]"
+        >
+          <div id="Upperhalf" className="mb-[10%] h-[50%] md:w-[100%] lg:w-[100%]">
+            <Header profilename={profileres.nickname} postsnum={profileres.followers_num}></Header>
+            <CoverImage coverimage={bannerPicURL}></CoverImage>
+            <div className="flex flex-row">
+              <ProfileImage profileimage={profilePicURL} profileimageURL={profilePicURL}></ProfileImage>
+              <Details display={profileres.is_curr_user === "Edit Profile" ? `hidden` : `inline-block`}></Details>
+              <FollowButton tag={tag} buttonName={profileres.is_curr_user ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
+            </div>
+            <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
+          </div>
+          <ProfileBio profilebio={profileres.bio}></ProfileBio>
+          <ProfileICons profilelocation={profileres.location} profilewebsite={profileres.website} profilejoindate={profileres.joined_date}></ProfileICons>
+          <Followers followers={profileres.followers_num} following={profileres.following_num}></Followers>
+          <ProfilePageEdit openModal={false} handleCloseModal={handleCloseModal}></ProfilePageEdit>
+          <ProfileMediabuttons ></ProfileMediabuttons>
         </div>
-        <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
       </div>
-      <ProfileBio profilebio={profileres.bio}></ProfileBio>
-      <ProfileICons profilelocation={profileres.location} profilewebsite={profileres.website} profilejoindate={profileres.joined_date}></ProfileICons>
-      <Followers followers={profileres.followers_num} following={profileres.following_num}></Followers>
-      <ProfileMediabuttons></ProfileMediabuttons>
-      <ProfilePageEdit openModal={false} handleCloseModal={handleCloseModal}></ProfilePageEdit>
+
+      {user && <Widgets />}
     </div>
   )
 }

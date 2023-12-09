@@ -31,6 +31,10 @@ import Notifications from "./components/Notifications/Notifications"
 import All from "./components/Notifications/All"
 import Verified from "./components/Notifications/Verified"
 import Mentions from "./components/Notifications/Mentions"
+import ProfilePosts from "./components/ProfilePage/ProfilePosts"
+import ProfileReplies from "./components/ProfilePage/ProfileReplies"
+import ProfileMedia from "./components/ProfilePage/ProfileMedia"
+import ProfileLikes from "./components/ProfilePage/ProfileLikes"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
@@ -82,7 +86,7 @@ const App = () => {
     viewCount: "1M",
   }
   return (
-    <div className="app relative flex flex-col-reverse bg-white text-black dark:bg-black dark:text-white max-xs:max-w-[475px] min-h-[100vh] xs:h-[100vh] xs:w-full xs:flex-row">
+    <div className="app relative flex min-h-[100vh] flex-col-reverse bg-white text-black dark:bg-black dark:text-white max-xs:max-w-[475px] xs:h-[100vh] xs:w-full xs:flex-row">
       <BrowserRouter>
         {user && location !== "/password_reset" && <Sidebar />}
         {/* {location !== "/login" && location !== "/password_reset" && <Sidebar />} */}
@@ -113,7 +117,7 @@ const App = () => {
             <Route path="account_information" element={<AccountInformation />}></Route>
             {passwordIsConfirmed === "true" && <Route path="change_username" element={<ChangeUsername />}></Route>}
             {passwordIsConfirmed === "true" && <Route path="change_email" element={<ChangeEmail />}></Route>}
-             <Route path="change_password" element={<ChangePassword />}></Route>
+            <Route path="change_password" element={<ChangePassword />}></Route>
 
             <Route path="privacy_and_safety" element={<PrivacySafety />}></Route>
             <Route path="blocked" element={<Blocked />}></Route>
@@ -122,7 +126,13 @@ const App = () => {
             <Route path="accessibility_display_and_languages" element={<AccessibilityDisplayLanguages />}></Route>
             <Route path="display" element={<Display />}></Route>
           </Route>
-          <Route path={`/:tag`} element={<ProfilePage handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal} />}></Route>
+          <Route path={`/:tag`} element={<ProfilePage handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal} />}>
+            <Route path="posts" element={<ProfilePosts />}></Route>
+            <Route path="replies" element={<ProfileReplies />}></Route>
+            <Route path="media" element={<ProfileMedia />}></Route>
+            <Route path="likes" element={<ProfileLikes />}></Route>
+            <Route path="" element={<ProfilePosts />}></Route>
+          </Route>
           <Route path={`settings/profile`} element={<ProfilePageEdit openModal={true} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
           <Route path="/signup" element={<SignUp openModal={openProfileEditModal} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/replies" element={<PostPage post={testPost} />}></Route>

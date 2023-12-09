@@ -15,13 +15,13 @@ const clientId = "341526416859-a1u3gf1rl41o6vj5nvl0bs3ac00sljue.apps.googleuserc
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <GoogleOAuthProvider clientId={clientId}>
-    {/* <React.StrictMode> */}
+    <React.StrictMode>
       <StyledEngineProvider injectFirst>
         <Provider store={store}>
           <App />
         </Provider>
       </StyledEngineProvider>
-    {/* </React.StrictMode> */}
+    </React.StrictMode>
   </GoogleOAuthProvider>
 )
 

@@ -36,7 +36,7 @@ import axios from 'axios';
 
   }
   ,[])
-  console.log(props)
+  // console.log(props)
   const APIs = {
       
     blockmock: { Block:   `http://localhost:3001/api/profile/` },

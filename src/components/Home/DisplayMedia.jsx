@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-function DisplayMedia({mediaUrls, mediaTypes, margin}) {
+function DisplayMedia({ mediaUrls, mediaTypes, margin }) {
+  
+  // useEffect(() => {
+  //   console.log(mediaUrls)
+  // },[mediaUrls])
   
   return (
     <div className={`my-1.5 h-[250px] w-full flex flex-wrap ${mediaUrls.length===0? "hidden": ""}`} >
