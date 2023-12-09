@@ -20,7 +20,6 @@ const FollowButton = (props) => {
   const APIsuf = {
     mock: { postfollowProfileAPI: `http://localhost:3001/api/user/${props.tag}/unfollow` },
     actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
-    actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
   }
   function HandleClick() {
     if (buttonstate === "Edit Profile") {

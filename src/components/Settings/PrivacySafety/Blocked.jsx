@@ -15,6 +15,7 @@ const Blocked = () => {
   }
 
   useEffect(() => {
+    console.log(token)
     axios
       .get(APIs.actual.BlockedAccountsAPI + "?page=1&count=1000", {
         headers: {

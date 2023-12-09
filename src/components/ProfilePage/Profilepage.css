@@ -12,3 +12,11 @@
     display: none;
 }
 }
+
+.Detailsbt{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: calc(100%/2);
+    margin-left: -50px;
+}
