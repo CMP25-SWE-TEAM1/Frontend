@@ -12,8 +12,8 @@ import { useSelector } from "react-redux"
 
 const Home = () => {
   const user = useSelector((state) => state.user.user)
-  // const userToken = useSelector((state) => state.user.token)
-  const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY"
+  const userToken = useSelector((state) => state.user.token)
+  // const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY"
 
   const [posts, setPosts] = useState([])
   const homeNavLinks = [
@@ -22,16 +22,20 @@ const Home = () => {
   ]
   const APIs = {
     mock: { getAllTweetsAPI: "https://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/posts" },
-    actual: { getAllTweetsAPI: "http://backend.gigachat.cloudns.org/api/homepage/following" },
+    actual: {
+      getAllTweetsAPI: "http://backend.gigachat.cloudns.org/api/homepage/following",
+      getUserTweets: `http://backend.gigachat.cloudns.org/api/profile/${user.username}/tweets`,
+    },
   }
-  useEffect(()=>{
-    console.log('token')
-    console.log(userToken)
-    axios.get(APIs.actual.getAllTweetsAPI, {
-      headers: {
-        authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY",
-      }
-    })
+  useEffect(() => {
+    // console.log("token")
+    // console.log(userToken)
+    axios
+      .get(APIs.actual.getAllTweetsAPI, {
+        headers: {
+          authorization: "Bearer " + userToken,
+        },
+      })
       .then((response) => {
         console.log(response)
         if (response.status === 200) {
@@ -40,6 +44,26 @@ const Home = () => {
             console.log(response.data.tweetList)
             setPosts(response.data.tweetList)
           } else setPosts([])
+
+          return axios.get(APIs.actual.getUserTweets, {
+            params: {
+              page: 1,
+              count: 5,
+              username: user.username,
+            },
+            headers: {
+              authorization: "Bearer " + userToken,
+            },
+          })
+        }
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          // console.log("in then ");
+          if (res.data.posts) {
+            // console.log(res)
+            setPosts([...posts, ...res.data.posts])
+          }
         }
       })
       .catch((error) => {
@@ -216,16 +240,16 @@ const Home = () => {
       {/* {user && <Sidebar user={user} setUser={setUser} />} */}
 
       <div className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-[600px]">
-        <div className="sticky top-0 z-50 mb-0 border-0 border-b border-lightBorder bg-white backdrop-blur-md dark:border-darkBorder dark:bg-inherit dark:backdrop-brightness-[40%]">
+        {/* <div className="sticky top-0 z-50 mb-0 border-0 border-b border-lightBorder bg-white backdrop-blur-md dark:border-darkBorder dark:bg-inherit dark:backdrop-brightness-[40%]"> */}
           {/* <div className="h-[53px] flex justify-start items-center">
           <h2 className="font-semibold text-xl text-gray-800 pl-6 dark:text-white">
             Home
           </h2>
         </div> */}
-          <div className="flex h-[53px] items-center">
-            <HorizontalNavbar urls={homeNavLinks} originalUrl={"/home"} />
-          </div>
-        </div>
+          {/* <div className="flex h-[53px] items-center"> */}
+            {/* <HorizontalNavbar urls={homeNavLinks} originalUrl={"/home"} /> */}
+          {/* </div> */}
+        {/* </div> */}
         <ComposePost handleNewPost={(newPost) => handleNewPost(newPost)} />
         <PostsContainer posts={posts} />
       </div>
