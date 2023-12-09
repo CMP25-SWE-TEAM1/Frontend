@@ -8,7 +8,7 @@ const AccessibilityDisplayLanguages = () => {
         <Link to="/settings">
           <ArrowBackIcon className="hover:bg-lightHover dark:hover:bg-darkHover h-8 w-8 rounded-2xl p-[6px] lg:hidden"></ArrowBackIcon>
         </Link>
-        <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Display</h1>
+        <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Accessibility, display, and languages</h1>
       </div>
       <p className="mb-4 pl-4 text-xs text-secondary">Manage how Gigachat content is displayed to you.</p>
       <Link to="/settings/display">

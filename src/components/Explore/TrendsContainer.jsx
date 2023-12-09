@@ -48,7 +48,7 @@ const TrendsContainer = ({ data, loading, type }) => {
         },
       })
       .then((res) => {
-        //   console.log(res.data.data)
+          console.log(res.data.data)
         setTrendTweets(res.data.data)
       })
       .catch((err) => {
