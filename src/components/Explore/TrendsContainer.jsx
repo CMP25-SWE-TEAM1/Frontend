@@ -6,6 +6,10 @@ import axios from "axios"
 import { useSelector } from "react-redux"
 import PostsContainer from "../Home/PostsContainer"
 
+import CircularProgress from "@mui/material/CircularProgress"
+import Box from "@mui/material/Box"
+
+
 const tst = [
   {
     categoray: "Egypt",
@@ -43,7 +47,7 @@ const TrendsContainer = ({ type }) => {
         },
       })
       .then((res) => {
-        //   console.log(res.data.data)
+          console.log(res.data.data)
         setTrendTweets(res.data.data)
       })
       .catch((err) => {
