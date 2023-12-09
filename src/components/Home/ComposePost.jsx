@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useSelector } from "react-redux"
 import TextField from "@mui/material/TextField"
+import { Link } from "react-router-dom"
 import { Avatar } from "@mui/material"
 import DisplayMedia from "./DisplayMedia"
 import axios from "axios"
@@ -181,7 +182,9 @@ function ComposePost({ handleNewPost }) {
   return (
     <div className="ComposePost flex h-fit border border-l-0 border-r-0 border-lightBorder p-3 text-black dark:border-darkBorder dark:text-white" data-testid="postId">
       <div className=" h-10 w-10 sm:mr-3">
+      <Link className="hover:underline" to={`/${user.userTag}`}>
         <Avatar alt="Remy Sharp" src={user.profileImage} sx={{ width: 40, height: 40 }} />
+        </Link>
       </div>
       <div className="mt-1.5 w-full">
         <TextField
