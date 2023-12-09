@@ -6,6 +6,7 @@ import Login from "./components/Login/Login"
 import PasswordReset from "./components/PasswordReset/PasswordReset"
 import Landing from "./components/landing-page/Landing"
 import Settings from "./components/Settings/Settings"
+import MobileSettings from "./components/Settings/MobileSettings"
 import { useState, useEffect } from "react"
 import SignUp from "./components/Signup/SignUp"
 import Account from "./components/Settings/Account/Account"
@@ -22,10 +23,18 @@ import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode, setLightMode } from "./store/ThemeSlice"
 import PostPage from "./components/PostPage/PostPage"
 import Messages from "./components/messages-page/Messages"
+import ProfilePage from "./components/ProfilePage/ProfilePage"
+import ProfilePageEdit from "./components/ProfilePage/ProfilePageEdit"
+import NotFound from "./components/NotFound"
 import Explore from "./components/Explore/Explore"
+import Notifications from "./components/Notifications/Notifications"
+import All from "./components/Notifications/All"
+import Verified from "./components/Notifications/Verified"
+import Mentions from "./components/Notifications/Mentions"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
+  const [passwordIsConfirmed] = useState(sessionStorage.getItem("passwordIsConfirmed"))
 
   const darkMode = useSelector((state) => state.theme.darkMode)
   const dispatch = useDispatch()
@@ -54,7 +63,13 @@ const App = () => {
     setOpenSignupModal(false)
     setLocation(window.location.pathname)
   }
-
+  const [openProfileEditModal, SetProfileEditModal] = useState(false)
+  const handleOpenProfileEditModal = () => {
+    SetProfileEditModal(true)
+  }
+  const handleCloseProfileModal = () => {
+    SetProfileEditModal(false)
+  }
   const user = useSelector((state) => state.user.user)
   // console.log(location)
   const testPost = {
@@ -67,7 +82,7 @@ const App = () => {
     viewCount: "1M",
   }
   return (
-    <div className="app relative flex flex-col-reverse bg-white text-black dark:bg-black dark:text-white max-xs:max-w-[475px] xs:h-[100vh] xs:w-full xs:flex-row">
+    <div className="app relative flex flex-col-reverse bg-white text-black dark:bg-black dark:text-white max-xs:max-w-[475px] min-h-[100vh] xs:h-[100vh] xs:w-full xs:flex-row">
       <BrowserRouter>
         {user && location !== "/password_reset" && <Sidebar />}
         {/* {location !== "/login" && location !== "/password_reset" && <Sidebar />} */}
@@ -85,13 +100,20 @@ const App = () => {
           <Route path="password_reset" element={<PasswordReset />}></Route>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/explore" element={<Explore />} />
+          <Route path="/notifications" element={<Notifications />}>
+            <Route path="all" element={<All />}></Route>
+            <Route path="verified" element={<Verified />}></Route>
+            <Route path="mentions" element={<Mentions />}></Route>
+            <Route path="" element={<All />}></Route>
+          </Route>
           <Route path="/messages" element={<Messages />}></Route>
           <Route path="/settings" element={<Settings />}>
+            <Route path="" element={<MobileSettings />}></Route>
             <Route path="account" element={<Account />}></Route>
             <Route path="account_information" element={<AccountInformation />}></Route>
-            <Route path="change_username" element={<ChangeUsername />}></Route>
-            <Route path="change_email" element={<ChangeEmail />}></Route>
-            <Route path="change_password" element={<ChangePassword />}></Route>
+            {passwordIsConfirmed === "true" && <Route path="change_username" element={<ChangeUsername />}></Route>}
+            {passwordIsConfirmed === "true" && <Route path="change_email" element={<ChangeEmail />}></Route>}
+             <Route path="change_password" element={<ChangePassword />}></Route>
 
             <Route path="privacy_and_safety" element={<PrivacySafety />}></Route>
             <Route path="blocked" element={<Blocked />}></Route>
@@ -100,10 +122,11 @@ const App = () => {
             <Route path="accessibility_display_and_languages" element={<AccessibilityDisplayLanguages />}></Route>
             <Route path="display" element={<Display />}></Route>
           </Route>
-
-          <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
+          <Route path={`/:tag`} element={<ProfilePage handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal} />}></Route>
+          <Route path={`settings/profile`} element={<ProfilePageEdit openModal={true} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
+          <Route path="/signup" element={<SignUp openModal={openProfileEditModal} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/replies" element={<PostPage post={testPost} />}></Route>
-          <Route path="*" element={<Home />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
       {/* {user && <Widgets />} */}

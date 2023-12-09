@@ -18,7 +18,6 @@ const CustomTabs = ({ tabValue, handleChangeTabValue }) => {
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
-          textColor="white"
           sx={{
             "& .MuiTabs-indicator": {
               marginLeft: "4.3%",
@@ -29,10 +28,10 @@ const CustomTabs = ({ tabValue, handleChangeTabValue }) => {
               backgroundColor: "#1d9bf0",
             },
           }}
-          centered
           value={tabValue}
           onChange={handleChangeTabValue}
           aria-label="basic tabs example"
+          variant="scrollable"
         >
           <Tab
             label="For you"

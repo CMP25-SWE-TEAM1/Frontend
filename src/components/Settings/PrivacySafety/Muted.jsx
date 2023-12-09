@@ -8,13 +8,13 @@ const Muted = () => {
   const [userData, setUserData] = useState([])
 
   const APIs = {
-    mock: { BlockedAccountsAPI: "http://localhost:3001/blockedAccounts", UnblockUserAPI: "http://localhost:3001/unblockUser" },
-    actual: { BlockedAccountsAPI: "", UnblockUserAPI: "" },
+    mock: { mutedAccountsAPI: "http://localhost:3001/blockedAccounts", UnmuteUserAPI: "http://localhost:3001/unblockUser", muteUserAPI: "http://localhost:3001/blockUser"  },
+    actual: { mutedAccountsAPI: "", UnmuteUserAPI: "" },
   }
 
   useEffect(() => {
     axios
-      .get(APIs.mock.BlockedAccountsAPI)
+      .get(APIs.mock.mutedAccountsAPI)
       .then((res) => {
         console.log(res.data)
         setUserData(res.data)
@@ -25,18 +25,41 @@ const Muted = () => {
   }, [])
 
   function handleUnmute(e) {
+    const element = e.currentTarget
     const userId = e.target.dataset.id
+    const muted = e.target.dataset.muted
     if (userId) {
-      axios
-        .delete(APIs.mock.UnblockUserAPI + `/${userId}`)
+      if(muted == "true"){
+        axios
+        .delete(APIs.mock.UnmuteUserAPI + `?id=${userId}`)
         .then((res) => {
           if (res.status === 200) {
-            console.log("user unblocked successfully")
+            console.log("user unmuted successfully")
+            element.classList.add("text-blue-600")
+            element.querySelector("title").innerHTML = "mute"
+            element.dataset.muted = false
           }
         })
         .catch((err) => {
           console.log(err)
         })
+      }
+      else{
+        axios
+        .post(APIs.mock.muteUserAPI + `?id=${userId}`)
+        .then((res) => {
+          if (res.status === 200) {
+            console.log("user muted successfully")
+            element.classList.remove("text-blue-600")
+            element.querySelector("title").innerHTML = "Unmute"
+            element.dataset.muted = true
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+     
     }
   }
 
@@ -66,7 +89,7 @@ const Muted = () => {
               </Link>
             </div>
             <div className="m-auto w-[10%]">
-              <VolumeOffIcon data-id={user.id} titleAccess="Unmute" className="text-3xl text-red-600 hover:cursor-pointer" onClick={handleUnmute}></VolumeOffIcon>
+              <VolumeOffIcon data-id={user.id} data-muted={true} titleAccess="Unmute" className="text-3xl text-red-600 hover:cursor-pointer hover:brightness-150" onClick={handleUnmute}></VolumeOffIcon>
             </div>
           </div>
         ))}
