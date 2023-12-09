@@ -13,9 +13,10 @@ import { useSelector } from "react-redux"
 const Home = () => {
   const user = useSelector((state) => state.user.user)
   const userToken = useSelector((state) => state.user.token)
-  const KareemUserToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY"
+  // const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY"
 
   const [posts, setPosts] = useState([])
+  
   const homeNavLinks = [
     { title: "For you", location: "foryou" },
     { title: "Following", location: "following" },
@@ -28,8 +29,9 @@ const Home = () => {
     },
   }
   useEffect(() => {
-    console.log("token")
-    console.log(userToken)
+    // console.log("token")
+    // console.log(userToken)
+
     axios
       .get(APIs.actual.getAllTweetsAPI, {
         headers: {
@@ -62,7 +64,7 @@ const Home = () => {
           // console.log("in then ");
           if (res.data.posts) {
             setPosts((prevState) => [...prevState, ...res.data.posts])
-            console.log(res)
+            // console.log(res)
           }
         }
       })

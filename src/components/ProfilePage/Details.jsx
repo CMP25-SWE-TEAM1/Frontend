@@ -119,7 +119,7 @@ import axios from 'axios';
     {
       event=window.event;
     }
-    console.log(event.target)
+    // console.log(event.target)
     let target = event.target;
     if(target.id=== 'show-details-button' || target.id ==='show-details-div' ||target.id ==='details-div')
     {

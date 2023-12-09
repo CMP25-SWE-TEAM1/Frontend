@@ -169,26 +169,27 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
 
   return (
     <Link className="w-full" to={`/${userTag}/status/${id}`}>
-      <div className=" flex h-fit border border-l-0 border-r-0 border-lightBorder p-3 hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover" data-testid="postId">
-        <div className=" h-fit w-10 sm:mr-3">
-          <Link className="hover:underline" to={`/${userTag}`}>
+      <div className=" h-fit border border-l-0 border-r-0 border-lightBorder p-3 hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover" data-testid="postId">
+        <div className="flex">
+          <div className=" h-fit w-10 sm:mr-3">
+            {/* <Link className="hover:underline" to={`/${userTag}`}> */}
             <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
-          </Link>
-        </div>
-        <div className=" w-full sm:mr-2">
-          <div className="post-header flex items-center justify-between">
-            <div className="flex items-center">
-              <Link className="hover:underline" to={`/${userTag}`}>
-                {userName}
-                <VerifiedIcon className="pl-1 text-primary" sx={{ fontSize: "22px" }} />
-              </Link>
-              <Link className="ml-1 text-sm text-ternairy dark:text-secondary">@{userTag}</Link>
-              <div className="m-1 h-[2px] w-[2px] rounded-full bg-ternairy dark:bg-secondary"></div>
-              <Link className="text-sm text-ternairy hover:underline dark:text-secondary" to={`/${userTag}/status/${id}`}>
-                {finalDate}
-              </Link>
-            </div>
-            <Link>
+            {/* </Link> */}
+          </div>
+          <div className=" w-full sm:mr-2">
+            <div className="post-header flex items-center justify-between">
+              <div className="flex items-center">
+                <Link className=" flex hover:underline" to={`/${userTag}`}>
+                  {userName}
+                  <VerifiedIcon className="pl-1 text-primary" sx={{ fontSize: "22px" }} />
+                </Link>
+                <Link className="ml-1 text-sm text-ternairy dark:text-secondary">@{userTag}</Link>
+                <div className="m-1 h-[2px] w-[2px] rounded-full bg-ternairy dark:bg-secondary"></div>
+                <Link className="text-sm text-ternairy hover:underline dark:text-secondary" to={`/${userTag}/status/${id}`}>
+                  {finalDate}
+                </Link>
+              </div>
+              {/* <Link> */}
               <div className="flex h-10 w-10 items-center justify-center rounded-full text-secondary hover:bg-[#e7f5fd] hover:text-primary dark:hover:bg-[#031018]">
                 <MoreHorizIcon target={"_blank"} variant="text" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent" />
                 <Menu
@@ -247,29 +248,16 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
                   </MenuItem>
                 </Menu>
               </div>
-            </Link>
+              {/* </Link> */}
+            </div>
+            {/* <div>show more</div> */}
           </div>
-          {/* <div>show more</div> */}
         </div>
+
         <div className="post-media mt-3">
           <DisplayMedia mediaUrls={mediaUrls} mediaTypes={mediaTypes} margin={1} />
         </div>
-        <div className="post-footer mt-3 flex max-w-full justify-between text-ternairy dark:text-secondary">
-          <div className="group -ml-2 flex cursor-pointer items-center transition-colors  duration-300 hover:text-primary" title="Reply">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900 ">
-              <ChatBubbleOutlineOutlinedIcon
-                sx={{
-                  width: 16,
-                  height: 16,
-                }}
-              />
-            </div>
-          </div>
-          <div className="post-media mt-3">
-            <DisplayMedia mediaUrls={mediaUrls} mediaTypes={mediaTypes} margin={1} />
-          </div>
-          <PostFooter replyCount={replyCount} reposted={reposted} repostsNum={repostsNum} liked={liked} likesNum={likesNum} viewCount={viewCount} handleRepostClick={handleRepostClick} handleLikeClick={handleLikeClick} />
-        </div>
+        <PostFooter replyCount={replyCount} reposted={reposted} repostsNum={repostsNum} liked={liked} likesNum={likesNum} viewCount={viewCount} handleRepostClick={handleRepostClick} handleLikeClick={handleLikeClick} />
       </div>
     </Link>
   )
