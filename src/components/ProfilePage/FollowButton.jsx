@@ -7,8 +7,6 @@ const FollowButton = (props) => {
     const darkMode= useSelector((state) => (state.theme.darkMode))
     const {token} = useSelector((state)=>(state.user))
     const mock = false;
-    const {token} = useSelector((state)=>(state.user))
-    const mock = false;
     const [buttonstate,setbuttonstate]=useState(props.buttonName)
     // there should be a conditional rendering by back
    useEffect(
@@ -19,12 +17,10 @@ const FollowButton = (props) => {
       
         mock: { postfollowProfileAPI:   `http://localhost:3001/api/user/${props.tag}/follow` },
         actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
-        actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
       }
     const APIsuf = {
       
         mock: { postfollowProfileAPI:   `http://localhost:3001/api/user/${props.tag}/unfollow` },
-        actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
         actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
       }
     function HandleClick()
@@ -74,9 +70,9 @@ const FollowButton = (props) => {
     }
     
   return (
-    <div id="follow-buttonDiv" className={`md:ml-[35%] lg:ml-[calc(100%/3)] mt-[2%]`}>
+    <div id="follow-buttonDiv" className={ `ml-[5%] mt-[2%]`}>
         <button id="follow-button" onClick={()=>{HandleClick()
-        }} className={` ${darkMode? buttonstate==="Follow"? `bg-white text-black
+        }} className={` z-0 ${darkMode? buttonstate==="Follow"? `bg-white text-black
                 hover:bg-darkHover dark:hover:bg-lightHover` : 
                 `bg-black text-white hover:bg-lightHover dark:hover:bg-darkHover `
                 : buttonstate==="Follow"? `bg-black text-white hover:bg-darkHover dark:hover:bg-lightHover`

@@ -49,7 +49,7 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
         ).then(res =>{
             if(res.status=== 200)
             {  
-                console.log(`Bearer ${token}` )
+                console.log(res.data )
                 setProfilePicURL(res.data.user.profile_image)
                 setCoverPicURL(res.data.user.banner_image )
                 setProfile((res.data.user));
@@ -94,6 +94,7 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
   }, 100)
   }
   useEffect(Fetch, [])
+ 
   // console.log(profileres.is_curr_user)
   return (
     <div
@@ -106,7 +107,7 @@ const ProfilePage=(handleOpenProfileEditModal,openModal,handleCloseModal) => {
         <CoverImage coverimage={bannerPicURL}></CoverImage>
         <div className="flex flex-row">
           <ProfileImage profileimage={profilePicURL} profileimageURL={profilePicURL}></ProfileImage>
-          <Details display= {profileres.is_curr_user ==="Edit Profile"? `hidden` : `inline-block`}></Details>
+          <Details  display= {profileres.is_curr_user? `hidden` : `block`} isblocked={profileres.is_wanted_user_blocked} ismuted={profileres.is_wanted_user_muted} tag={tag}></Details>
           <FollowButton tag={tag} buttonName={profileres.is_curr_user ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
         </div>
         <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>

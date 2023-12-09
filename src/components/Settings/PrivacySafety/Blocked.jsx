@@ -3,18 +3,24 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import BlockIcon from "@mui/icons-material/Block"
 import axios from "axios"
 import { useState, useEffect } from "react"
+import { useSelector } from "react-redux"
 
 const Blocked = () => {
   const [userData, setUserData] = useState([])
-
+  const {token} = useSelector((state)=>(state.user))
   const APIs = {
     mock: { BlockedAccountsAPI: "http://localhost:3001/blockedAccounts", UnblockUserAPI: "http://localhost:3001/unblockUser", blockUserAPI: "http://localhost:3001/blockUser" },
-    actual: { BlockedAccountsAPI: "", UnblockUserAPI: "" },
+    actual: { BlockedAccountsAPI: "http://backend.gigachat.cloudns.org/api/user/blockList", UnblockUserAPI: "" },
   }
 
   useEffect(() => {
+    console.log(token)
     axios
-      .get(APIs.mock.BlockedAccountsAPI)
+      .get(APIs.actual.BlockedAccountsAPI,
+        {
+          headers : 
+          {authorization: "Bearer "+ token,}
+        })
       .then((res) => {
         console.log(res.data)
         setUserData(res.data)
