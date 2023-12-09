@@ -1,23 +1,28 @@
 import { Link } from "react-router-dom"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import VolumeOffIcon from '@mui/icons-material/VolumeOff';
+import VolumeOffIcon from "@mui/icons-material/VolumeOff"
 import axios from "axios"
 import { useState, useEffect } from "react"
+import { useSelector } from "react-redux"
 
 const Muted = () => {
   const [userData, setUserData] = useState([])
+  const { token } = useSelector((state) => state.user)
 
   const APIs = {
-    mock: { mutedAccountsAPI: "http://localhost:3001/blockedAccounts", UnmuteUserAPI: "http://localhost:3001/unblockUser", muteUserAPI: "http://localhost:3001/blockUser"  },
-    actual: { mutedAccountsAPI: "", UnmuteUserAPI: "" },
+    mock: { mutedAccountsAPI: "http://localhost:3001/blockedAccounts", UnmuteUserAPI: "http://localhost:3001/unblockUser", muteUserAPI: "http://localhost:3001/blockUser" },
+    actual: { mutedAccountsAPI: "http://backend.gigachat.cloudns.org/api/user/mutedList", UnmuteUserAPI: `http://backend.gigachat.cloudns.org/api/user/`, muteUserAPI: `http://backend.gigachat.cloudns.org/api/user/` },
   }
 
   useEffect(() => {
     axios
-      .get(APIs.mock.mutedAccountsAPI)
+      .get(APIs.actual.mutedAccountsAPI + "?page=1&count=1000", {
+        headers: {
+          authorization: "Bearer " + token,
+        },
+      })
       .then((res) => {
-        console.log(res.data)
-        setUserData(res.data)
+        setUserData(res.data.data)
       })
       .catch((err) => {
         console.log(err)
@@ -26,15 +31,24 @@ const Muted = () => {
 
   function handleUnmute(e) {
     const element = e.currentTarget
-    const userId = e.target.dataset.id
-    const muted = e.target.dataset.muted
-    if (userId) {
-      if(muted == "true"){
-        axios
-        .delete(APIs.mock.UnmuteUserAPI + `?id=${userId}`)
+    const username = element.dataset.username
+    const muted = element.dataset.muted
+
+    if (muted == "true") {
+      axios
+        .patch(
+          APIs.actual.UnmuteUserAPI + username + "/unmute",
+          {},
+          {
+            headers: {
+              authorization: "Bearer " + token,
+            },
+          }
+        )
         .then((res) => {
-          if (res.status === 200) {
-            console.log("user unmuted successfully")
+          if (res.status === 204) {
+            console.log(username + "unmuted successfully")
+            element.classList.remove("text-red-600")
             element.classList.add("text-blue-600")
             element.querySelector("title").innerHTML = "mute"
             element.dataset.muted = false
@@ -43,14 +57,22 @@ const Muted = () => {
         .catch((err) => {
           console.log(err)
         })
-      }
-      else{
-        axios
-        .post(APIs.mock.muteUserAPI + `?id=${userId}`)
+    } else {
+      axios
+        .patch(
+          APIs.actual.muteUserAPI + username + "/mute",
+          {},
+          {
+            headers: {
+              authorization: "Bearer " + token,
+            },
+          }
+        )
         .then((res) => {
-          if (res.status === 200) {
-            console.log("user muted successfully")
+          if (res.status === 204) {
+            console.log(username + "muted successfully")
             element.classList.remove("text-blue-600")
+            element.classList.add("text-red-600")
             element.querySelector("title").innerHTML = "Unmute"
             element.dataset.muted = true
           }
@@ -58,8 +80,6 @@ const Muted = () => {
         .catch((err) => {
           console.log(err)
         })
-      }
-     
     }
   }
 
@@ -67,18 +87,18 @@ const Muted = () => {
     <div>
       <div className="flex items-center pl-4">
         <Link to="../privacy_and_safety">
-          <ArrowBackIcon className="hover:bg-lightHover dark:hover:bg-darkHover h-8 w-8 rounded-2xl p-[6px]"></ArrowBackIcon>
+          <ArrowBackIcon className="h-8 w-8 rounded-2xl p-[6px] hover:bg-lightHover dark:hover:bg-darkHover"></ArrowBackIcon>
         </Link>
         <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Muted Accounts</h1>
       </div>
       <p className="mb-4 pl-4 text-xs text-secondary">Here&apos;s everyone you muted. You can add or remove them from this list.</p>
-    
+
       <div>
         {userData.map((user) => (
           <div key={user.id} className="flex h-[85px] w-[600px] hover:bg-lightHover dark:hover:bg-darkHover">
             <div className="w-[10%] pl-2">
               <Link to={`/${user.username}`}>
-                <img src="https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg" alt="Profile Image" className="mt-1 h-10 w-10 rounded-3xl" />
+                <img src={user.profile_image} alt="Profile Image" className="h-10 w-10 rounded-3xl" />
               </Link>
             </div>
             <div className="w-[70%] overflow-hidden">
@@ -89,7 +109,7 @@ const Muted = () => {
               </Link>
             </div>
             <div className="m-auto w-[10%]">
-              <VolumeOffIcon data-id={user.id} data-muted={true} titleAccess="Unmute" className="text-3xl text-red-600 hover:cursor-pointer hover:brightness-150" onClick={handleUnmute}></VolumeOffIcon>
+              <VolumeOffIcon data-username={user.username} data-muted={true} titleAccess="Unmute" className="text-3xl text-red-600 hover:cursor-pointer hover:brightness-150" onClick={handleUnmute}></VolumeOffIcon>
             </div>
           </div>
         ))}

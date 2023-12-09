@@ -39,7 +39,7 @@ const useDataFetching = (type) => {
             setLoading(false)
           })
           .catch((err) => {
-            console.log(err)
+            if (err.message !== "Network Error") console.log(err)
           })
         break
       case "sports":
@@ -55,7 +55,7 @@ const useDataFetching = (type) => {
             setLoading(false)
           })
           .catch((err) => {
-            console.log(err)
+            if (err.message !== "Network Error") console.log(err)
           })
         break
       case "entertainment":
@@ -71,7 +71,7 @@ const useDataFetching = (type) => {
             setLoading(false)
           })
           .catch((err) => {
-            console.log(err)
+            if (err.message !== "Network Error") console.log(err)
           })
         break
       default:

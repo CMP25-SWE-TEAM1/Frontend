@@ -222,9 +222,20 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
             </div>
             </Link>
           </div>
-          <div className="post-text">
-            <div className="max-h-[100px] overflow-hidden text-start dark:text-gray-300" data-testid="post-text-id">
-              {descriptionLines.map(line => <p>{line}<br/></p>)}
+          {/* <div>show more</div> */}
+        </div>
+        <div className="post-media mt-3">
+          <DisplayMedia mediaUrls={mediaUrls} mediaTypes={mediaTypes} margin={1} />
+        </div>
+        <div className="post-footer mt-3 flex max-w-full justify-between text-ternairy dark:text-secondary">
+          <div className="group -ml-2 flex cursor-pointer items-center transition-colors  duration-300 hover:text-primary" title="Reply">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-gray-100 dark:group-hover:bg-gray-900 ">
+              <ChatBubbleOutlineOutlinedIcon
+                sx={{
+                  width: 16,
+                  height: 16,
+                }}
+              />
             </div>
           </div>
           <div className="post-media mt-3">
