@@ -30,7 +30,6 @@ const Home = () => {
   useEffect(() => {
     // console.log("token")
     // console.log(userToken)
-    let tmpPosts
 
     axios
       .get(APIs.actual.getAllTweetsAPI, {
@@ -45,7 +44,6 @@ const Home = () => {
           if (response.data.tweetList) {
             console.log(response.data.tweetList)
             setPosts(response.data.tweetList)
-            tmpPosts = response.data.tweetList
           } else setPosts([])
 
           return axios.get(APIs.actual.getUserTweets, {
@@ -64,9 +62,8 @@ const Home = () => {
         if (res.status === 200) {
           // console.log("in then ");
           if (res.data.posts) {
+            setPosts((prevState) => [...prevState, ...res.data.posts])
             // console.log(res)
-            const contacPosts = tmpPosts.concat(res.data.posts)
-            setPosts(contacPosts)
           }
         }
       })
