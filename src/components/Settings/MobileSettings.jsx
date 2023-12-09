@@ -99,14 +99,14 @@ const MobileSettings = () => {
         </div>
 
         <Link to="/settings/display" className="settings-option hidden">
-          <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_accessibility" onClick={handleSelect}>
+          <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_account_information" onClick={handleSelect}>
             <div className="mb-auto mt-auto pl-4 text-sm">Account information</div>
             <div className="m-auto mr-3 text-2xl">&gt;</div>
           </div>
         </Link>
         {passwordIsConfirmed === "true" && (
           <Link to="/settings/change_username" className="settings-option hidden">
-            <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_accessibility" onClick={handleSelect}>
+            <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_change_username" onClick={handleSelect}>
               <div className="mb-auto mt-auto pl-4 text-sm">Username</div>
               <div className="m-auto mr-3 text-2xl">&gt;</div>
             </div>
@@ -114,34 +114,34 @@ const MobileSettings = () => {
         )}
         {passwordIsConfirmed === "true" && (
           <Link to="/settings/change_password" className="settings-option hidden">
-            <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_accessibility" onClick={handleSelect}>
+            <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_change_email" onClick={handleSelect}>
               <div className="mb-auto mt-auto pl-4 text-sm">Email</div>
               <div className="m-auto mr-3 text-2xl">&gt;</div>
             </div>
           </Link>
         )}
         <Link to="/settings/display" className="settings-option hidden">
-          <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_accessibility" onClick={handleSelect}>
+          <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_change_password" onClick={handleSelect}>
             <div className="mb-auto mt-auto pl-4 text-sm">Change your password</div>
             <div className="m-auto mr-3 text-2xl">&gt;</div>
           </div>
         </Link>
 
         <Link to="/settings/blocked" className="settings-option hidden">
-          <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_accessibility" onClick={handleSelect}>
+          <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_blocked" onClick={handleSelect}>
             <div className="mb-auto mt-auto pl-4 text-sm">Blocked accounts</div>
             <div className="m-auto mr-3 text-2xl">&gt;</div>
           </div>
         </Link>
         <Link to="/settings/muted" className="settings-option hidden">
-          <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_accessibility" onClick={handleSelect}>
+          <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_muted" onClick={handleSelect}>
             <div className="mb-auto mt-auto pl-4 text-sm">Muted accounts</div>
             <div className="m-auto mr-3 text-2xl">&gt;</div>
           </div>
         </Link>
 
         <Link to="/settings/display" className="settings-option hidden">
-          <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_accessibility" onClick={handleSelect}>
+          <div className="flex h-11 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_display" onClick={handleSelect}>
             <div className="mb-auto mt-auto pl-4 text-sm">Display</div>
             <div className="m-auto mr-3 text-2xl">&gt;</div>
           </div>
