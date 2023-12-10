@@ -1,9 +1,11 @@
+import SearchComponent from "./Explore/SearchComponent"
+
 const Widgets = () => {
   return (
-    <div className="flex-1 text-center max-w-[400px] hidden lg:block">
-      Widgets
+    <div className="hidden max-w-[400px] flex-1 text-center lg:block">
+      <SearchComponent />
     </div>
-  );
-};
+  )
+}
 
-export default Widgets;
+export default Widgets
