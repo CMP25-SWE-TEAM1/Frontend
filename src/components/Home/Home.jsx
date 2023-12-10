@@ -265,7 +265,7 @@ const Home = () => {
         <p>email: {user.email}</p>
         <img src={user.picture} alt="profile" />
       </div> */}
-      {user && <Widgets />}
+      {user && <Widgets parent={"home"}/>}
     </div>
   )
 }

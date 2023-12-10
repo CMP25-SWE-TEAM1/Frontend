@@ -1,9 +1,11 @@
 import SearchComponent from "./Explore/SearchComponent"
 
-const Widgets = () => {
+const Widgets = ({ parent }) => {
   return (
     <div className="hidden max-w-[400px] flex-1 text-center lg:block">
-      <SearchComponent />
+      <div className={`${parent === "explore" ? "hidden" : ""}`}>
+        <SearchComponent />
+      </div>
     </div>
   )
 }
