@@ -72,7 +72,7 @@ const TrendsContainer = ({ data, loading, type }) => {
       </Box>
       {data.map((trend, index) => {
         return (
-          <div>
+          <div key={trend}>
             <TrendComponent key={index} index={index + 1} categoray={type} name={trend.title} numberOfPosts={trend.count} fetchTrendTweets={fetchTrendTweets} />
             <div>
               <PostsContainer posts={trendTweets} />

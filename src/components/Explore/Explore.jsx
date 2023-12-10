@@ -104,6 +104,13 @@ const Explore = () => {
         })
     else setSearchUsers([])
   }
+
+  const handleEnterKeyPress = (e) => {
+    if (e.key === "Enter") {
+      console.log("Enter key pressed", userSearch)
+    }
+  }
+
   return (
     <div className="flex flex-1 flex-grow-[8] max-xs:max-w-[475]">
       <div className="no-scrollbar ml-0 mr-1 max-w-[620px] flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-fit md:shrink-0">
@@ -114,9 +121,10 @@ const Explore = () => {
                 <Autocomplete
                   freeSolo
                   disableClearable
+                  getOptionLabel={(option) => option?.username || userSearch}
                   options={searchUsers}
-                  getOptionLabel={(option) => `${option.username} ${option.nickname}`}
-                  renderOption={(props, option) => <UserSearchComponent option={option} />}
+                  noOptionsText={"No options found"}
+                  renderOption={(props, option) => <UserSearchComponent {...props} option={option} />}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -124,10 +132,19 @@ const Explore = () => {
                       InputProps={{
                         ...params.InputProps,
                         type: "search",
+                        onKeyDown: handleEnterKeyPress,
                       }}
                       onChange={(e) => {
-                        setUserSearch(e.target.value)
-                        handleSearchUsers(e.target.value)
+                        const value = e.target.value
+                        setUserSearch(value)
+                        handleSearchUsers(value)
+                      }}
+                      sx={{
+                        "& .MuiInputLabel-root": { color: darkMode ? "#71767b" : "black" },
+                        "& .MuiInputBase-root": { border: "1px solid gray !important" },
+                        "& .MuiInputBase-input": {
+                          color: darkMode ? "#71767b" : "black",
+                        },
                       }}
                     />
                   )}
