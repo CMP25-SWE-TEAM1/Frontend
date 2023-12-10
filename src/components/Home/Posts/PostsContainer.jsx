@@ -4,9 +4,9 @@ import Post from "./Post"
 const PostsContainer = ({ posts, setPosts }) => {
   const handlePostClick = (p) => {}
 
-  useEffect(() => {
-    console.log(posts)
-  }, [posts])
+  // useEffect(() => {
+  //   console.log(posts)
+  // }, [posts])
 
   return (
     <div className="post-container">

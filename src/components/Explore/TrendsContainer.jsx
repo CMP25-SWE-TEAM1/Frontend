@@ -57,8 +57,8 @@ const TrendsContainer = ({ data, loading, type }) => {
   }
 
   // useEffect(() => {
-  //   fetchTrends()
-  // }, [])
+  //   console.log(trendTweets)
+  // }, [trendTweets])
 
   return (
     <div className={`${loading ? "flex justify-center" : ""}`}>
