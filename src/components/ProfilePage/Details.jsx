@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import BlockIcon from '@mui/icons-material/Block';
 import VolumeOffOutlinedIcon from '@mui/icons-material/VolumeOffOutlined';
 import VolumeMuteOutlinedIcon from '@mui/icons-material/VolumeMuteOutlined';
-import { CgUnblock } from "react-icons/cg";
+// import { CgUnblock } from "react-icons/cg";
 import axios from 'axios';
  const Details = (props)=> {
   const darkmode = useSelector((state)=>(state.theme.darkMode))
@@ -140,7 +140,7 @@ import axios from 'axios';
        <BlockIcon></BlockIcon> Block This User 
       </button>
       <button id='mute' className= {`Detailsbt ${notblocked}`} onClick={unblockhandle}>
-        <CgUnblock></CgUnblock> <span>Unblock This User </span>
+        {/* <CgUnblock></CgUnblock> <span>Unblock This User </span> */}
       </button>
       <button id='mute' className= {` Detailsbt hidden`} onClick={mutehandle}>
         <VolumeOffOutlinedIcon  ></VolumeOffOutlinedIcon>   <span>Mute This User </span>

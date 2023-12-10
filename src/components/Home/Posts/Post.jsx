@@ -40,7 +40,7 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
       like: `http://backend.gigachat.cloudns.org/api/tweets/like/${id}`,
       unlike: `http://backend.gigachat.cloudns.org/api/tweets/unlike/${id}`,
       repost: `http://backend.gigachat.cloudns.org/api/tweets/retweet/${id}`,
-      deleteRepost: `http://backend.gigachat.cloudns.org/api/tweets/${id}`,
+      unrepost: `http://backend.gigachat.cloudns.org/api/tweets/unretweet/${id}`,
     },
   }
   const descriptionLines = description.split("\n") //need check for writing \n in description
@@ -111,8 +111,8 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
       console.log(id)
       setRepostsNum(repostsNum - 1)
       axios
-        .delete(
-          APIs.actual.deleteRepost,
+        .patch(
+          APIs.actual.unrepost,
           {},
           {
             headers: {
@@ -121,10 +121,10 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
           }
         )
         .then((response) => {
-          console.log("delete repost success", response)
+          console.log("unrepost success", response)
         })
         .catch((error) => {
-          console.log("delete repost fail", error)
+          console.log("unrepost fail", error)
         })
     } else {
       console.log(id)
@@ -254,9 +254,14 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
           </div>
         </div>
 
-        <div className="post-media mt-3">
-          <DisplayMedia mediaUrls={mediaUrls} mediaTypes={mediaTypes} margin={1} />
-        </div>
+        <div className="post-text">
+            <div className="max-h-[100px] overflow-hidden text-start dark:text-gray-300" data-testid="post-text-id">
+              {descriptionLines.map(line => <p>{line}<br/></p>)}
+            </div>
+          </div>
+          <div className="post-media mt-3">
+            <DisplayMedia mediaUrls={mediaUrls} mediaTypes={mediaTypes} margin={1}/>
+          </div>
         <PostFooter replyCount={replyCount} reposted={reposted} repostsNum={repostsNum} liked={liked} likesNum={likesNum} viewCount={viewCount} handleRepostClick={handleRepostClick} handleLikeClick={handleLikeClick} />
       </div>
     </Link>

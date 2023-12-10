@@ -61,9 +61,9 @@ const Home = () => {
       })
       .then((res) => {
         if (res.status === 200) {
-          // console.log("in then ");
+          console.log("user posts ",res.data);
           if (res.data.posts) {
-            setPosts((prevState) => [...prevState, ...res.data.posts])
+            setPosts((prevState) => [...prevState, ...res.data.posts.map((post)=>({tweetDetails:post}))])
             // console.log(res)
           }
         }
