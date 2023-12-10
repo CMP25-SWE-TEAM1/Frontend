@@ -14,9 +14,12 @@ import DisplayMedia from "../DisplayMedia"
 import PostFooter from "./PostFooter"
 import axios from "axios"
 import { useSelector } from "react-redux"
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined"
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
+import { Box } from "@mui/material"
+import FollowButton from "../../ProfilePage/FollowButton"
+import moment from "moment"
 
-const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted }) => {
+const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, followingUser, setPosts, posts }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
   const [mediaUrls, setMediaUrls] = useState([])
   const [mediaTypes, setMediaTypes] = useState([])
@@ -25,9 +28,10 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
   const [reposted, setReposted] = useState(isReposted)
   const [repostsNum, setRepostsNum] = useState(repostCount)
 
-  const darkMode = useSelector((state) => state.theme.darkMode)
-  const user = useSelector((state) => state.user.user)
-  const userToken = useSelector((state) => state.user.token)
+  const [isVisible, setIsVisible] = useState(false)
+  const [timeoutRef, setTimeoutRef] = useState(null)
+
+  const [hoveredProfile, setHoveredProfile] = useState([])
 
   const APIs = {
     mock: {
@@ -41,8 +45,54 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
       unlike: `http://backend.gigachat.cloudns.org/api/tweets/unlike/${id}`,
       repost: `http://backend.gigachat.cloudns.org/api/tweets/retweet/${id}`,
       unrepost: `http://backend.gigachat.cloudns.org/api/tweets/unretweet/${id}`,
+      delete: `http://backend.gigachat.cloudns.org/api/tweets/${id}`,
+      getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/`,
     },
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (userTag) {
+        if (user.username !== userTag) {
+          axios
+            .get(APIs.actual.getProfileAPI + `${userTag}`, {
+              headers: {
+                authorization: `Bearer ${userToken}`,
+              },
+            })
+            .then((res) => {
+              if (res.status === 200) {
+                // console.log(res.data.user)
+                setHoveredProfile(res.data.user)
+              }
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        }
+      }
+    }, 100)
+  }, [userTag])
+
+  useEffect(() => {
+    console.log(isLiked)
+  }, [isLiked])
+
+  const handleMouseEnter = () => {
+    clearTimeout(timeoutRef)
+    const timer = setTimeout(() => setIsVisible(true), 1000) // Change 1000 to desired delay
+    setTimeoutRef(timer)
+  }
+
+  const handleMouseLeave = () => {
+    clearTimeout(timeoutRef)
+    setIsVisible(false)
+  }
+
+  const darkMode = useSelector((state) => state.theme.darkMode)
+  const user = useSelector((state) => state.user.user)
+  const userToken = useSelector((state) => state.user.token)
+
   const descriptionLines = description.split("\n") //need check for writing \n in description
   useEffect(() => {
     const urls = media.map((item) => item.data)
@@ -64,8 +114,8 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
   }
   const handleLikeClick = () => {
     if (liked) {
-      console.log(userToken)
-      console.log(id)
+      // console.log(userToken)
+      // console.log(id)
       setLikesNum(likesNum - 1)
       axios
         .post(
@@ -78,13 +128,13 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
           }
         )
         .then((response) => {
-          console.log("unlike success", response)
+          // console.log("unlike success", response)
         })
         .catch((error) => {
           console.log("unlike fail", error)
         })
     } else {
-      console.log(id)
+      // console.log(id)
       setLikesNum(likesNum + 1)
       axios
         .post(
@@ -97,7 +147,7 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
           }
         )
         .then((response) => {
-          console.log("like success", response)
+          // console.log("like success", response)
         })
         .catch((error) => {
           console.log("like fail", error)
@@ -107,8 +157,8 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
   }
   const handleRepostClick = () => {
     if (reposted) {
-      console.log(userToken)
-      console.log(id)
+      // console.log(userToken)
+      // console.log(id)
       setRepostsNum(repostsNum - 1)
       axios
         .patch(
@@ -121,13 +171,13 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
           }
         )
         .then((response) => {
-          console.log("unrepost success", response)
+          // console.log("unrepost success", response)
         })
         .catch((error) => {
           console.log("unrepost fail", error)
         })
     } else {
-      console.log(id)
+      // console.log(id)
       setRepostsNum(repostsNum + 1)
       axios
         .patch(
@@ -140,13 +190,34 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
           }
         )
         .then((response) => {
-          console.log("repost success", response)
+          // console.log("repost success", response)
         })
         .catch((error) => {
           console.log("repost fail", error)
         })
     }
     setReposted(!reposted)
+  }
+
+  const handleDeletePost = () => {
+    axios
+      .delete(APIs.actual.delete, {
+        headers: {
+          authorization: "Bearer " + userToken,
+        },
+      })
+      .then((res) => {
+        // console.log(res)
+        console.log("Tweet Deleted")
+        const filteredPosts = posts.filter((p) => {
+          const thisId = p.tweetDetails ? (p.tweetDetails._id ? p.tweetDetails._id : p.tweetDetails.id) : p.id
+          return thisId !== id
+        })
+        setPosts(filteredPosts)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
   //"Thu Oct 26 2023 23:18:01 GMT+0200 (Eastern European Standard Time)" we need date in this format
 
@@ -170,20 +241,44 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
   return (
     <Link className="w-full" to={`/${userTag}/status/${id}`}>
       <div className=" h-fit border border-l-0 border-r-0 border-lightBorder p-3 hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover" data-testid="postId">
+        <div></div>
         <div className="flex">
           <div className=" h-fit w-10 sm:mr-3">
             <Link className="hover:brightness-90" to={`/${userTag}`}>
-            <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
+              <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
             </Link>
           </div>
           <div className=" w-full sm:mr-2">
             <div className="post-header flex items-center justify-between">
               <div className="flex items-center">
-                <Link className=" flex hover:underline" to={`/${userTag}`}>
+                <div className=" relative flex hover:underline" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                  {isVisible && (
+                    <Box className="transition-all" sx={{ zIndex: 5, position: "absolute", backgroundColor: darkMode ? "black" : "white", color: darkMode ? "white" : "black", padding: "10px", borderRadius: "10px", boxShadow: darkMode ? "0px 0px 1px 1px gray" : "0px 0px 1px 1px black", width: "250px" }}>
+                      <div className="flex ">
+                        <div className="w-fit">
+                          <Link className="hover:brightness-90" to={`/${userTag}`}>
+                            <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 50, height: 50 }} />
+                          </Link>
+                          <div className="text-secondary">{userName}</div>
+                          <div className="text-secondary">@{userTag}</div>
+                        </div>
+                        <div>{userTag !== user.username && <FollowButton tag={userTag} buttonName={hoveredProfile.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>}</div>
+                      </div>
+                      <div className="mt-6">
+                        <div className="text-sm text-secondary">{user.username !== userTag ? moment(hoveredProfile.birth_date).format("DD/MM/YYYY") : moment(user.birthDate).format("DD/MM/YYYY")}</div>
+                        <div className="mt-2 flex w-full justify-around">
+                          <span className="text-sm text-secondary">{user.username !== userTag ? hoveredProfile.followings_num : user.followings_num} Following</span>
+                          <span className="text-sm text-secondary">{user.username !== userTag ? hoveredProfile.followers_num : user.followers_num} Followers</span>
+                        </div>
+                      </div>
+                    </Box>
+                  )}
                   {userName}
                   <VerifiedIcon className="pl-1 text-primary" sx={{ fontSize: "22px" }} />
+                </div>
+                <Link className="ml-1 text-sm text-ternairy dark:text-secondary" to={`/${userTag}`}>
+                  @{userTag}
                 </Link>
-                <Link className="ml-1 text-sm text-ternairy dark:text-secondary" to={`/${userTag}`}>@{userTag}</Link>
                 <div className="m-1 h-[2px] w-[2px] rounded-full bg-ternairy dark:bg-secondary"></div>
                 <Link className="text-sm text-ternairy hover:underline dark:text-secondary" to={`/${userTag}/status/${id}`}>
                   {finalDate}
@@ -256,13 +351,18 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
         </div>
 
         <div className="post-text">
-            <div className="max-h-[100px] overflow-hidden text-start dark:text-gray-300" data-testid="post-text-id">
-              {descriptionLines.map(line => <p>{line}<br/></p>)}
-            </div>
+          <div className="max-h-[100px] overflow-hidden text-start dark:text-gray-300" data-testid="post-text-id">
+            {descriptionLines.map((line) => (
+              <p>
+                {line}
+                <br />
+              </p>
+            ))}
           </div>
-          <div className="post-media mt-3">
-            <DisplayMedia mediaUrls={mediaUrls} mediaTypes={mediaTypes} margin={1}/>
-          </div>
+        </div>
+        <div className="post-media mt-3">
+          <DisplayMedia mediaUrls={mediaUrls} mediaTypes={mediaTypes} margin={1} />
+        </div>
         <PostFooter replyCount={replyCount} reposted={reposted} repostsNum={repostsNum} liked={liked} likesNum={likesNum} viewCount={viewCount} handleRepostClick={handleRepostClick} handleLikeClick={handleLikeClick} />
       </div>
     </Link>

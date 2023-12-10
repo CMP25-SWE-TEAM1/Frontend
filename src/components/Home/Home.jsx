@@ -16,7 +16,7 @@ const Home = () => {
   // const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY"
 
   const [posts, setPosts] = useState([])
-  
+
   const homeNavLinks = [
     { title: "For you", location: "foryou" },
     { title: "Following", location: "following" },
@@ -43,14 +43,13 @@ const Home = () => {
         if (response.status === 200) {
           // console.log("in then ");
           if (response.data.tweetList) {
-            console.log(response.data.tweetList)
             setPosts(response.data.tweetList)
           } else setPosts([])
 
           return axios.get(APIs.actual.getUserTweets, {
             params: {
               page: 1,
-              count: 5,
+              count: 10,
               username: user.username,
             },
             headers: {
@@ -61,9 +60,15 @@ const Home = () => {
       })
       .then((res) => {
         if (res.status === 200) {
-          console.log("user posts ",res.data);
+          console.log("user posts ", res.data)
           if (res.data.posts) {
-            setPosts((prevState) => [...prevState, ...res.data.posts.map((post)=>({tweetDetails:post}))])
+            setPosts((prevState) => [
+              ...prevState,
+              ...res.data.posts.map((post) => ({
+                tweetDetails: post,
+                followingUser: user,
+              })),
+            ])
             // console.log(res)
           }
         }
@@ -253,14 +258,14 @@ const Home = () => {
         {/* </div> */}
         {/* </div> */}
         <ComposePost handleNewPost={(newPost) => handleNewPost(newPost)} />
-        <PostsContainer posts={posts} />
+        <PostsContainer posts={posts} setPosts={setPosts} />
       </div>
       {/* <div>
         <p>name: {user.name}</p>
         <p>email: {user.email}</p>
         <img src={user.picture} alt="profile" />
       </div> */}
-      {user && <Widgets />}
+      {user && <Widgets parent={"home"}/>}
     </div>
   )
 }
