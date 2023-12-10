@@ -243,8 +243,10 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
                     <span className="text-[15px] dark:text-white">Block @{userTag}</span>
                   </MenuItem>
                   <MenuItem onClick={handleMenuClose}>
+                    <Link to={`/${userTag}/status/${id}/retweets`}>
                     <QueryStatsOutlinedIcon className="mr-3 text-base dark:text-white" />
                     <span className="text-[15px] dark:text-white">View post engagements</span>
+                    </Link>
                   </MenuItem>
                 </Menu>
               </div>
