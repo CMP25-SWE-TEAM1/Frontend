@@ -43,14 +43,14 @@ const Home = () => {
         if (response.status === 200) {
           // console.log("in then ");
           if (response.data.tweetList) {
-            console.log(response.data.tweetList)
+            // console.log(response.data.tweetList)
             setPosts(response.data.tweetList)
           } else setPosts([])
 
           return axios.get(APIs.actual.getUserTweets, {
             params: {
               page: 1,
-              count: 5,
+              count: 10,
               username: user.username,
             },
             headers: {
@@ -253,7 +253,7 @@ const Home = () => {
         {/* </div> */}
         {/* </div> */}
         <ComposePost handleNewPost={(newPost) => handleNewPost(newPost)} />
-        <PostsContainer posts={posts} />
+        <PostsContainer posts={posts} setPosts={setPosts}/>
       </div>
       {/* <div>
         <p>name: {user.name}</p>

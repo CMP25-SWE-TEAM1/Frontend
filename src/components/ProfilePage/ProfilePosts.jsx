@@ -58,7 +58,7 @@ const ProfilePosts = () => {
   }, [root])
   return (
     <div className="pt-5">
-      <PostsContainer posts={posts} />
+      <PostsContainer posts={posts} setPosts={setPosts}/>
     </div>
   )
 }
