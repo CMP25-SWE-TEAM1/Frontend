@@ -258,7 +258,7 @@ const Home = () => {
         {/* </div> */}
         {/* </div> */}
         <ComposePost handleNewPost={(newPost) => handleNewPost(newPost)} />
-        <PostsContainer posts={posts} setPosts={setPosts} repostingUser={user} />
+        <PostsContainer posts={posts} setPosts={setPosts} />
       </div>
       {/* <div>
         <p>name: {user.name}</p>
