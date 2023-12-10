@@ -25,8 +25,28 @@ const ProfilePosts = () => {
     actual: {
       getAllTweetsAPI: "http://backend.gigachat.cloudns.org/api/homepage/following",
       getUserTweets: `http://backend.gigachat.cloudns.org/api/profile/${root}/tweets`,
+      getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/`,
     },
   }
+
+  const [profile, setProfile] = useState()
+  useEffect(() => {
+    if (root !== "")
+      axios
+        .get(APIs.actual.getProfileAPI + `${root}`, {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            setProfile(res.data.user)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+  }, [root])
 
   const [posts, setPosts] = useState([])
 
@@ -36,7 +56,7 @@ const ProfilePosts = () => {
         .get(APIs.actual.getUserTweets, {
           params: {
             page: 1,
-            count: 5,
+            count: 10,
             username: user.username,
           },
           headers: {
@@ -47,8 +67,14 @@ const ProfilePosts = () => {
           // console.log("Here")
           if (res.status === 200) {
             if (res.data.posts) {
-              // console.log(res.data.posts)
-              setPosts((prevState) => [...prevState, ...res.data.posts])
+              console.log(res.data)
+              setPosts((prevState) => [
+                ...prevState,
+                ...res.data.posts.map((post) => ({
+                  tweetDetails: post,
+                  followingUser: post.tweet_owner,
+                })),
+              ])
             }
           }
         })
@@ -58,7 +84,7 @@ const ProfilePosts = () => {
   }, [root])
   return (
     <div className="pt-5">
-      <PostsContainer posts={posts} setPosts={setPosts}/>
+      <PostsContainer posts={posts} setPosts={setPosts} />
     </div>
   )
 }

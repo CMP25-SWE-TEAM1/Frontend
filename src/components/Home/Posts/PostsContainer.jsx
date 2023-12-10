@@ -4,9 +4,9 @@ import Post from "./Post"
 const PostsContainer = ({ posts, setPosts }) => {
   const handlePostClick = (p) => {}
 
-  // useEffect(() => {
-  //   if (posts[0] && posts[0].tweetDetails) console.log("con", posts[1].media)
-  // }, [posts])
+  useEffect(() => {
+    console.log(posts)
+  }, [posts])
 
   return (
     <div className="post-container">
@@ -25,9 +25,10 @@ const PostsContainer = ({ posts, setPosts }) => {
             repostCount={p.tweetDetails ? p.tweetDetails.repostsNum : p.repostsNum}
             likeCount={p.tweetDetails ? p.tweetDetails.likesNum : p.likesNum}
             viewCount={p.tweetDetails ? p.tweetDetails.viewsNum : p.viewsNum}
-            isLiked={p.isLiked ? p.isLiked : false}
-            isReposted={p.isRtweeted ? p.isRtweeted : false}
+            isLiked={p.isLiked ? p.isLiked : p.tweetDetails.isLiked}
+            isReposted={p.isRtweeted ? p.isRtweeted : p.tweetDetails.isRtweeted}
             key={p.tweetDetails ? p.tweetDetails.id : p.id}
+            followingUser={p.tweetDetails ? p.followingUser : p.repostingUser}
             setPosts={setPosts}
             posts={posts}
           />

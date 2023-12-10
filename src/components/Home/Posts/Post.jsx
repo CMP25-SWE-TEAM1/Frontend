@@ -19,8 +19,7 @@ import { Box } from "@mui/material"
 import FollowButton from "../../ProfilePage/FollowButton"
 import moment from "moment"
 
-
-const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, setPosts, posts }) => {
+const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, followingUser, setPosts, posts }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
   const [mediaUrls, setMediaUrls] = useState([])
   const [mediaTypes, setMediaTypes] = useState([])
@@ -74,6 +73,10 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
       }
     }, 100)
   }, [userTag])
+
+  useEffect(() => {
+    console.log(isLiked)
+  }, [isLiked])
 
   const handleMouseEnter = () => {
     clearTimeout(timeoutRef)
@@ -238,6 +241,7 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
   return (
     <Link className="w-full" to={`/${userTag}/status/${id}`}>
       <div className=" h-fit border border-l-0 border-r-0 border-lightBorder p-3 hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover" data-testid="postId">
+        <div></div>
         <div className="flex">
           <div className=" h-fit w-10 sm:mr-3">
             <Link className="hover:brightness-90" to={`/${userTag}`}>
@@ -247,9 +251,9 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
           <div className=" w-full sm:mr-2">
             <div className="post-header flex items-center justify-between">
               <div className="flex items-center">
-                <div className=" flex hover:underline relative"  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                <div className=" relative flex hover:underline" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                   {isVisible && (
-                    <Box className="transition-all" sx={{zIndex:5, position: "absolute", backgroundColor: darkMode ? "black" : "white", color: darkMode ? "white" : "black", padding: "10px", borderRadius: "10px", boxShadow: darkMode ? "0px 0px 1px 1px gray" : "0px 0px 1px 1px black", width: "250px" }}>
+                    <Box className="transition-all" sx={{ zIndex: 5, position: "absolute", backgroundColor: darkMode ? "black" : "white", color: darkMode ? "white" : "black", padding: "10px", borderRadius: "10px", boxShadow: darkMode ? "0px 0px 1px 1px gray" : "0px 0px 1px 1px black", width: "250px" }}>
                       <div className="flex ">
                         <div className="w-fit">
                           <Link className="hover:brightness-90" to={`/${userTag}`}>
