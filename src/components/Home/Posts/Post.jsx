@@ -285,74 +285,66 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
                 </Link>
               </div>
               <Link>
-                <div className="flex h-10 w-10 items-center justify-center rounded-full text-secondary hover:bg-[#e7f5fd] hover:text-primary dark:hover:bg-[#031018]">
-                  <MoreHorizIcon target={"_blank"} variant="text" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent" />
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorPostMenu}
-                    open={openMenu}
-                    onClose={handleMenuClose}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}
-                    sx={
-                      htmlElement.classList.contains("dark")
-                        ? {
-                            "& .MuiMenu-paper": {
-                              background: "black",
-                              borderRadius: "20px",
-                              boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #333435",
-                              border: "solid 1px #333435",
-                            },
-                          }
-                        : {
-                            "& .MuiMenu-paper": {
-                              borderRadius: "20px",
-                              boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #767C86",
-                            },
-                          }
-                    }
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "right",
-                    }}
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                  >
-                    <MenuItem
-                      onClick={() => {
-                        handleDeletePost()
-                        handleMenuClose()
-                      }}
-                      className={`flex items-center ${userTag === user.username ? "" : "hidden"}`}
-                    >
-                      <DeleteOutlineIcon className="mr-3 text-base text-red-600" />
-                      <span className="text-[15px] text-red-600">Delete Tweet</span>
-                    </MenuItem>
-                    <MenuItem onClick={handleMenuClose} className="flex items-center">
-                      <SentimentVeryDissatisfiedIcon className="mr-3 text-base dark:text-white" />
-                      <span className="text-[15px] dark:text-white">Not interested in this post</span>
-                    </MenuItem>
-                    <MenuItem onClick={handleMenuClose}>
-                      <PersonAddAltIcon className="mr-3 text-base dark:text-white" />
-                      <span className="text-[15px] dark:text-white">Follow @{userTag}</span>
-                    </MenuItem>
-                    <MenuItem onClick={handleMenuClose}>
-                      <VolumeOffOutlinedIcon className="mr-3 text-base dark:text-white" />
-                      <span className="text-[15px] dark:text-white">Mute @{userTag}</span>
-                    </MenuItem>
-                    <MenuItem onClick={handleMenuClose}>
-                      <BlockOutlinedIcon className="mr-3 text-base dark:text-white" />
-                      <span className="text-[15px] dark:text-white">Block @{userTag}</span>
-                    </MenuItem>
-                    <MenuItem onClick={handleMenuClose}>
-                      <QueryStatsOutlinedIcon className="mr-3 text-base dark:text-white" />
-                      <span className="text-[15px] dark:text-white">View post engagements</span>
-                    </MenuItem>
-                  </Menu>
-                </div>
+              <div className="flex h-10 w-10 items-center justify-center rounded-full text-secondary hover:bg-[#e7f5fd] hover:text-primary dark:hover:bg-[#031018]">
+                <MoreHorizIcon target={"_blank"} variant="text" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent" />
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorPostMenu}
+                  open={openMenu}
+                  onClose={handleMenuClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                  sx={
+                    htmlElement.classList.contains("dark")
+                      ? {
+                          "& .MuiMenu-paper": {
+                            background: "black",
+                            borderRadius: "20px",
+                            boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #333435",
+                            border: "solid 1px #333435",
+                          },
+                        }
+                      : {
+                          "& .MuiMenu-paper": {
+                            borderRadius: "20px",
+                            boxShadow: "0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #767C86",
+                          },
+                        }
+                  }
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                >
+                  <MenuItem onClick={handleMenuClose} className="flex items-center">
+                    <SentimentVeryDissatisfiedIcon className="mr-3 text-base dark:text-white" />
+                    <span className="text-[15px] dark:text-white">Not interested in this post</span>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <PersonAddAltIcon className="mr-3 text-base dark:text-white" />
+                    <span className="text-[15px] dark:text-white">Follow @{userTag}</span>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <VolumeOffOutlinedIcon className="mr-3 text-base dark:text-white" />
+                    <span className="text-[15px] dark:text-white">Mute @{userTag}</span>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <BlockOutlinedIcon className="mr-3 text-base dark:text-white" />
+                    <span className="text-[15px] dark:text-white">Block @{userTag}</span>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link to={`/${userTag}/status/${id}/retweets`}>
+                    <QueryStatsOutlinedIcon className="mr-3 text-base dark:text-white" />
+                    <span className="text-[15px] dark:text-white">View post engagements</span>
+                    </Link>
+                  </MenuItem>
+                </Menu>
+              </div>
               </Link>
             </div>
           </div>

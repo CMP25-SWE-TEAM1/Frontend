@@ -126,7 +126,7 @@ const SearchComponent = () => {
                 }}
                 sx={{
                   "& .MuiInputLabel-root": { color: darkMode ? "#71767b" : "black" },
-                  "& .MuiInputBase-root": { border: "1px solid gray !important" },
+                  "& .MuiInputBase-root": { border: "1px solid gray !important" ,borderRadius:100},
                   "& .MuiInputBase-input": {
                     color: darkMode ? "#71767b" : "black",
                   },

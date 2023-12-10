@@ -41,7 +41,7 @@ const Explore = () => {
         </CustomTabPanel>
       </div>
 
-      {user && <Widgets />}
+      {user && <Widgets parent={"explore"}/>}
     </div>
   )
 }

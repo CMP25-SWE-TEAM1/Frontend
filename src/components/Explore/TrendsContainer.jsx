@@ -48,8 +48,13 @@ const TrendsContainer = ({ data, loading, type }) => {
         },
       })
       .then((res) => {
-          console.log(res.data.data)
-        setTrendTweets(res.data.data)
+        console.log(res.data.data)
+        setTrendTweets([
+          ...res.data.data.map((post) => ({
+            tweetDetails: post,
+            followingUser: post.tweet_owner,
+          }))
+        ])
       })
       .catch((err) => {
         console.log(err)
@@ -74,9 +79,7 @@ const TrendsContainer = ({ data, loading, type }) => {
         return (
           <div key={trend}>
             <TrendComponent key={index} index={index + 1} categoray={type} name={trend.title} numberOfPosts={trend.count} fetchTrendTweets={fetchTrendTweets} />
-            <div>
-              <PostsContainer posts={trendTweets} />
-            </div>
+            <div><PostsContainer posts={trendTweets} setPosts={setTrendTweets}/></div>
           </div>
         )
       })}

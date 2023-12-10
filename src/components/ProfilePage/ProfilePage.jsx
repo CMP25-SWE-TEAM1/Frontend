@@ -110,7 +110,7 @@ const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) =>
         </div>
       </div>
 
-      {user && <Widgets />}
+      {user && <Widgets parent={"profile"}/>}
     </div>
   )
 }

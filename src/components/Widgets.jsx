@@ -1,9 +1,13 @@
-const Widgets = () => {
-  return (
-    <div className="flex-1 text-center max-w-[400px] hidden lg:block">
-      Widgets
-    </div>
-  );
-};
+import SearchComponent from "./Explore/SearchComponent"
 
-export default Widgets;
+const Widgets = ({ parent }) => {
+  return (
+    <div className="hidden max-w-[400px] flex-1 text-center lg:block">
+      <div className={`${parent === "explore" ? "hidden" : ""}`}>
+        <SearchComponent />
+      </div>
+    </div>
+  )
+}
+
+export default Widgets

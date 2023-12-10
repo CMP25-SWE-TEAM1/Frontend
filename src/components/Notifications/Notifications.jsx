@@ -48,7 +48,7 @@ const Notifications = () => {
         </div>
         <Outlet />
       </div>
-      {user && <Widgets />}
+      {user && <Widgets parent={"notification"}/>}
     </div>
   )
 }

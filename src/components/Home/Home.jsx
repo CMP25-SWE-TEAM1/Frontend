@@ -258,14 +258,14 @@ const Home = () => {
         {/* </div> */}
         {/* </div> */}
         <ComposePost handleNewPost={(newPost) => handleNewPost(newPost)} />
-        <PostsContainer posts={posts} setPosts={setPosts} repostingUser={user} />
+        <PostsContainer posts={posts} setPosts={setPosts} />
       </div>
       {/* <div>
         <p>name: {user.name}</p>
         <p>email: {user.email}</p>
         <img src={user.picture} alt="profile" />
       </div> */}
-      {user && <Widgets />}
+      {user && <Widgets parent={"home"}/>}
     </div>
   )
 }
