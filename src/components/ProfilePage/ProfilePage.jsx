@@ -64,7 +64,7 @@ const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) =>
             })
             .then((res) => {
               if (res.status === 200) {
-                console.log(`Bearer ${token}`)
+                // console.log(`Bearer ${token}`)
                 setProfilePicURL(res.data.user.profile_image)
                 setCoverPicURL(res.data.user.banner_image)
                 res.data.user.is_curr_user = true

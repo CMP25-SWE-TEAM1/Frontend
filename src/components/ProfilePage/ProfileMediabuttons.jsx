@@ -1,16 +1,12 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 
 import HorizontalNavbar from "../General/HorizontalNavbar"
 import { Outlet } from "react-router"
 import { useLocation } from "react-router"
 
-function ProfileMediabuttons({ tag }) {
+function ProfileMediabuttons() {
   const user = useSelector((state) => state.user.user)
-
-  useEffect(() => {
-    console.log(tag)
-  }, [])
 
   const profileNavLinks = [
     { title: "Posts", location: "posts" },
@@ -19,12 +15,16 @@ function ProfileMediabuttons({ tag }) {
     { title: "Likes", location: "Likes" },
   ]
   const location = useLocation()
+  const [root, setRoot] = useState("")
+  useEffect(() => {
+    setRoot(location.pathname.split("/")[1])
+  }, [])
 
   const darkMode = useSelector((state) => state.theme.darkMode)
   return (
     <div>
       <div id="profile-buttons-div" className={`flex w-[100%] `}>
-        <HorizontalNavbar urls={profileNavLinks} originalUrl={`/${location.pathname.substring(1)}`} />
+        <HorizontalNavbar urls={profileNavLinks} originalUrl={`/${root}`} />
       </div>
       <div>
         <Outlet />

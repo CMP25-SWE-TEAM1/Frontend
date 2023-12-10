@@ -10,7 +10,7 @@ const PostsContainer = ({ posts }) => {
 
   return (
     <div className="post-container">
-      {posts.map((p) => (
+      {posts.map((p, index) => (
         <Post
           userProfilePicture={p.tweetDetails ? p.tweetDetails.tweet_owner.profile_image : p.tweet_owner.profile_image}
           userName={p.tweetDetails ? p.tweetDetails.tweet_owner.nickname : p.tweet_owner.nickname}
@@ -25,7 +25,7 @@ const PostsContainer = ({ posts }) => {
           viewCount={p.tweetDetails ? p.tweetDetails.viewsNum : p.viewsNum}
           isLiked={p.isLiked ? p.isLiked : false}
           isReposted={p.isRtweeted ? p.isRtweeted : false}
-          key={p.tweetDetails ? p.tweetDetails.id : p.tweet_owner.username}
+          key={p.tweetDetails ? p.tweetDetails.id : p.id}
         />
       ))}
     </div>
