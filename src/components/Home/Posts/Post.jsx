@@ -172,9 +172,9 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
       <div className=" h-fit border border-l-0 border-r-0 border-lightBorder p-3 hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover" data-testid="postId">
         <div className="flex">
           <div className=" h-fit w-10 sm:mr-3">
-            {/* <Link className="hover:underline" to={`/${userTag}`}> */}
+            <Link className="hover:brightness-90" to={`/${userTag}`}>
             <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
-            {/* </Link> */}
+            </Link>
           </div>
           <div className=" w-full sm:mr-2">
             <div className="post-header flex items-center justify-between">
@@ -183,13 +183,13 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
                   {userName}
                   <VerifiedIcon className="pl-1 text-primary" sx={{ fontSize: "22px" }} />
                 </Link>
-                <Link className="ml-1 text-sm text-ternairy dark:text-secondary">@{userTag}</Link>
+                <Link className="ml-1 text-sm text-ternairy dark:text-secondary" to={`/${userTag}`}>@{userTag}</Link>
                 <div className="m-1 h-[2px] w-[2px] rounded-full bg-ternairy dark:bg-secondary"></div>
                 <Link className="text-sm text-ternairy hover:underline dark:text-secondary" to={`/${userTag}/status/${id}`}>
                   {finalDate}
                 </Link>
               </div>
-              {/* <Link> */}
+              <Link>
               <div className="flex h-10 w-10 items-center justify-center rounded-full text-secondary hover:bg-[#e7f5fd] hover:text-primary dark:hover:bg-[#031018]">
                 <MoreHorizIcon target={"_blank"} variant="text" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent" />
                 <Menu
@@ -248,9 +248,8 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
                   </MenuItem>
                 </Menu>
               </div>
-              {/* </Link> */}
+              </Link>
             </div>
-            {/* <div>show more</div> */}
           </div>
         </div>
 
