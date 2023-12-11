@@ -24,7 +24,7 @@ function ProfileMediabuttons() {
   return (
     <div>
       <div id="profile-buttons-div" className={`flex w-[100%] `}>
-        <HorizontalNavbar urls={profileNavLinks} originalUrl={`/${root}`} />
+        <HorizontalNavbar urls={profileNavLinks} originalUrl={`/${root}`} handlers={[]}/>
       </div>
       <div>
         <Outlet />

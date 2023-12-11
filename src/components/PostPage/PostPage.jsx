@@ -36,7 +36,7 @@ function PostPage({ post }) {
         </h2>
       </div> */}
           <div className="flex h-[53px] items-center">
-            <HorizontalNavbar urls={postNavLink} originalUrl={"/replies"} />
+            <HorizontalNavbar urls={postNavLink} originalUrl={"/replies"} handlers={[]}/>
           </div>
         </div>
         <Post userName={post.userName} userTag={post.userTag} date={post.date} replyCount={post.replyCount} repostCount={post.repostCount} likeCount={post.likeCount} viewCount={post.viewCount} key={post.userTag} />
