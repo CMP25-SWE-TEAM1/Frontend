@@ -4,6 +4,7 @@ import { Modal, Box } from "@mui/material"
 import { useSelector } from "react-redux"
 import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined"
 import defaultProfilePic from "../../assets/imgs/Default_Profile_Picture.png"
+import CoverImage from "./CoverImage"
 const ProfilePageEdit = (props)=>{
   const {darkMode} = useSelector((state)=> state.theme)
   function handleCloseModal()
@@ -60,7 +61,22 @@ const ProfilePageEdit = (props)=>{
             <button className="ml-[340px] bg-white text-black mt-[10px] w-[70px] h-[35px] font-medium text-lg rounded-full">Save</button>
         </div>
         <form className="flex flex-col space-y-10"> 
-        <div className="relative mt-[20%] ml-[5%] w-fit rounded-full border-2 border-black dark:border-white">
+        <div>
+        <CoverImage></CoverImage>
+        <button className="absolute left-[40%] top-[23%] m-auto h-[47px] w-[47px] -translate-x-[50%] -translate-y-[50%] rounded-full bg-darkHover hover:bg-darkBorder dark:bg-gray-600 dark:hover:bg-darkHover" onClick={()=>{}}>
+            <AddAPhotoOutlinedIcon className={`-ml-[3px] -mt-[5px] ${darkMode ? "text-white" : "text-black"}`} />
+            <input
+              type="file"
+              onChange={()=>{}}
+              ref={hiddenFileInput}
+              style={{ display: "none" }} // Make the file input element invisible
+            />
+          </button>
+          <button className="absolute font-medium text-xl left-[55%] top-[23%] m-auto h-[47px] w-[47px] -translate-x-[50%] -translate-y-[50%] rounded-full bg-darkHover hover:bg-darkBorder dark:bg-gray-600 dark:hover:bg-darkHover"  onClick={handleCloseModal}>
+              x
+            </button>
+        </div>
+        <div className="absolute top-[23%] ml-[5%] w-fit rounded-full border-2 border-black dark:border-white">
           <div className="w-fit rounded-full border border-white dark:border-black">
             <img src={profilePicURL ? profilePicURL : defaultProfilePic} alt="profile" className="h-[120px] w-[120px] rounded-full" />
           </div>
