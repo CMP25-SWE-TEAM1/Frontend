@@ -43,7 +43,7 @@ const Notifications = () => {
             </div>
           </div>
           <div className="flex h-[53px] items-center">
-            <HorizontalNavbar urls={notificationsNavLinks} originalUrl={"/notifications"} />
+            <HorizontalNavbar urls={notificationsNavLinks} originalUrl={"/notifications"} handlers={[]}/>
           </div>
         </div>
         <Outlet />
