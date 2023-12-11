@@ -85,7 +85,7 @@ const All = () => {
 
   return (
     <div>
-      <NotificationsContainer list={notTest} />
+      <NotificationsContainer list={notTest} type={"all"} />
     </div>
   )
 }
