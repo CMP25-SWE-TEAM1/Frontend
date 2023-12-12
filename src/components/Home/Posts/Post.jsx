@@ -187,26 +187,7 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
     setReposted(!reposted)
   }
 
-  const handleDeletePost = () => {
-    axios
-      .delete(APIs.actual.delete, {
-        headers: {
-          authorization: "Bearer " + userToken,
-        },
-      })
-      .then((res) => {
-        // console.log(res)
-        console.log("Tweet Deleted")
-        const filteredPosts = posts.filter((p) => {
-          const thisId = p.tweetDetails ? (p.tweetDetails._id ? p.tweetDetails._id : p.tweetDetails.id) : p.id
-          return thisId !== id
-        })
-        setPosts(filteredPosts)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
+  
   //"Thu Oct 26 2023 23:18:01 GMT+0200 (Eastern European Standard Time)" we need date in this format
 
   const htmlElement = document.getElementById("htmlid")
@@ -237,7 +218,7 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
             </Link>
           </div>
           <div className=" w-full sm:mr-2">
-            <PostHeader userTag={userTag} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick}/>
+            <PostHeader userTag={userTag} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={ followingUser} setPosts={setPosts} posts={posts} />
           </div>
         </div>
         <PostBody descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes}/>
