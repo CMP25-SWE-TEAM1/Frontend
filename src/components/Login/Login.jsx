@@ -13,6 +13,8 @@ import { loginUser } from "../../store/UserSlice"
 import GoogleLoginButton from "../General/GoogleLoginButton"
 import axios from "axios"
 
+import { EMAIL_REGEX } from "../../constants/signupConstants.js"
+
 const Login = ({ openModal, handleCloseModal, setLocation }) => {
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
@@ -121,10 +123,20 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
     setShowPassword(!showPassword)
   }
 
+  function validEmail(emeil) {
+    return EMAIL_REGEX.test(emeil)
+  }
+
   const handleEmailCheck = () => {
+    let userCredentials = { username: userName }
+
+    if (validEmail(userName)) {
+      userCredentials = { email: userName }
+    }
+
     let emailExist
     axios
-      .post(APIs.actual.emailExistAPI, { email: userName })
+      .post(APIs.actual.emailExistAPI, userCredentials)
       .then((res) => {
         emailExist = res.status === 200
       })
@@ -132,8 +144,9 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
         handleNext(emailExist)
       })
       .catch((err) => {
+        console.log(err)
         emailExist = !err.message === "Request failed with status code 404"
-        handleNext(emailExist) //this will be removed
+        handleNext(emailExist)
         // console.log(emailExist)
       })
   }
