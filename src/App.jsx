@@ -31,6 +31,7 @@ import Notifications from "./components/Notifications/Notifications"
 import All from "./components/Notifications/All"
 import Verified from "./components/Notifications/Verified"
 import Mentions from "./components/Notifications/Mentions"
+import SearchResults from "./components/Search/SearchResults"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
@@ -82,7 +83,7 @@ const App = () => {
     viewCount: "1M",
   }
   return (
-    <div className="app relative flex flex-col-reverse bg-white text-black dark:bg-black dark:text-white max-xs:max-w-[475px] min-h-[100vh] xs:h-[100vh] xs:w-full xs:flex-row">
+    <div className="app relative flex min-h-[100vh] flex-col-reverse bg-white text-black dark:bg-black dark:text-white max-xs:max-w-[475px] xs:h-[100vh] xs:w-full xs:flex-row">
       <BrowserRouter>
         {user && location !== "/password_reset" && <Sidebar />}
         {/* {location !== "/login" && location !== "/password_reset" && <Sidebar />} */}
@@ -100,6 +101,7 @@ const App = () => {
           <Route path="password_reset" element={<PasswordReset />}></Route>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/explore" element={<Explore />} />
+          <Route path="/search/*" element={<SearchResults />}></Route>
           <Route path="/notifications" element={<Notifications />}>
             <Route path="all" element={<All />}></Route>
             <Route path="verified" element={<Verified />}></Route>
@@ -113,7 +115,7 @@ const App = () => {
             <Route path="account_information" element={<AccountInformation />}></Route>
             {passwordIsConfirmed === "true" && <Route path="change_username" element={<ChangeUsername />}></Route>}
             {passwordIsConfirmed === "true" && <Route path="change_email" element={<ChangeEmail />}></Route>}
-             <Route path="change_password" element={<ChangePassword />}></Route>
+            <Route path="change_password" element={<ChangePassword />}></Route>
 
             <Route path="privacy_and_safety" element={<PrivacySafety />}></Route>
             <Route path="blocked" element={<Blocked />}></Route>
