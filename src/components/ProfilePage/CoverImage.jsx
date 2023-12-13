@@ -39,11 +39,16 @@ function CoverImage(props) {
     modalStyle.maxWidth = "none" // optional, to remove any max-width constraints
   }
   return (
-    
-    <div id="cover-page" className={ `w-[100%] md:h-[50%] lg:h-[75%]   ` }>
-    <img className="w-[100%] h-[100%] object-fill" 
-    src={props.coverimage} alt="cover-page" onClick={()=>{coverpagehandle()}}></img>
-    {/*here should be banenr_image*/}
+    <div id="cover-page" className={`w-[100%] md:h-[50%] lg:h-[75%]   `}>
+      <img
+        className="h-[100%] w-[100%] object-fill"
+        src={props.coverimage ? props.coverimage : "https://answers.flexsim.com/themes/base/admin/img/default-coverImage.png"}
+        alt="cover-page"
+        onClick={() => {
+          coverpagehandle()
+        }}
+      ></img>
+      {/*here should be banenr_image*/}
     </div>
   )
 }

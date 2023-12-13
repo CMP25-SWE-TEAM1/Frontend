@@ -1,12 +1,35 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+
+import HorizontalNavbar from "../General/HorizontalNavbar"
+import { Outlet } from "react-router"
+import { useLocation } from "react-router"
 
 function ProfileMediabuttons() {
-    const darkMode = useSelector((state)=>state.theme.darkMode)
+  const user = useSelector((state) => state.user.user)
+
+  const profileNavLinks = [
+    { title: "Posts", location: "posts" },
+    { title: "Replis", location: "replies" },
+    { title: "Media", location: "media" },
+    { title: "Likes", location: "Likes" },
+  ]
+  const location = useLocation()
+  const [root, setRoot] = useState("")
+  useEffect(() => {
+    setRoot(location.pathname.split("/")[1])
+  }, [])
+
+  const darkMode = useSelector((state) => state.theme.darkMode)
   return (
-    <div id="profile-buttons-div" className={`flex flex-row w-[100%] h-[7%] justify-center 
-    border border-b-1 border-t-0 border-lightBorder dark:border-darkBorder`}>
-       <div className="w-[calc(100%/4)] justify-center " >
+    <div>
+      <div id="profile-buttons-div" className={`flex w-[100%] `}>
+        <HorizontalNavbar urls={profileNavLinks} originalUrl={`/${root}`} handlers={[]}/>
+      </div>
+      <div>
+        <Outlet />
+      </div>
+      {/* <div className="w-[calc(100%/4)] justify-center " >
        <button className={` ${darkMode? `bg-black` : `bg-white`} hover:bg-lightHover dark:hover:bg-darkHover
            text-center font-bold  w-[100%] h-[100%] `}>
                Posts
@@ -29,7 +52,7 @@ function ProfileMediabuttons() {
            text-center font-bold w-[100%] h-[100%] `}>
                Likes
            </button>
-        </div> 
+        </div>  */}
     </div>
   )
 }

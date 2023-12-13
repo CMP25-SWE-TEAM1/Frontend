@@ -31,6 +31,11 @@ import Notifications from "./components/Notifications/Notifications"
 import All from "./components/Notifications/All"
 import Verified from "./components/Notifications/Verified"
 import Mentions from "./components/Notifications/Mentions"
+import ProfilePosts from "./components/ProfilePage/ProfilePosts"
+import ProfileReplies from "./components/ProfilePage/ProfileReplies"
+import ProfileMedia from "./components/ProfilePage/ProfileMedia"
+import ProfileLikes from "./components/ProfilePage/ProfileLikes"
+import PostEngagement from "./components/PostEngagement/PostEngagement"
 import SearchResults from "./components/Search/SearchResults"
 
 const App = () => {
@@ -124,10 +129,17 @@ const App = () => {
             <Route path="accessibility_display_and_languages" element={<AccessibilityDisplayLanguages />}></Route>
             <Route path="display" element={<Display />}></Route>
           </Route>
-          <Route path={`/:tag`} element={<ProfilePage handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal} />}></Route>
+          <Route path={`/:tag`} element={<ProfilePage handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal} />}>
+            <Route path="posts" element={<ProfilePosts />}></Route>
+            <Route path="replies" element={<ProfileReplies />}></Route>
+            <Route path="media" element={<ProfileMedia />}></Route>
+            <Route path="likes" element={<ProfileLikes />}></Route>
+            <Route path="" element={<ProfilePosts />}></Route>
+          </Route>
           <Route path={`settings/profile`} element={<ProfilePageEdit openModal={true} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
           <Route path="/signup" element={<SignUp openModal={openProfileEditModal} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/replies" element={<PostPage post={testPost} />}></Route>
+          <Route path="/:tag/status/:id/:NavbarLink" element={<PostEngagement />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>

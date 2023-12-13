@@ -1,5 +1,5 @@
 import React from 'react';
-import Post from '../Home/Post';
+import Post from '../Home/Posts/Post';
 
 function Reply(props) {
   return (

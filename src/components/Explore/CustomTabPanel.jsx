@@ -1,7 +1,5 @@
 import Box from "@mui/material/Box"
 
-import Typography from "@mui/material/Typography"
-
 import PropTypes from "prop-types"
 
 const CustomTabPanel = (props) => {
@@ -11,7 +9,7 @@ const CustomTabPanel = (props) => {
     <div role="tabpanel" className="h-[100vh]" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
       {value === index && (
         <Box sx={{}}>
-          <Typography>{children}</Typography>
+          <div>{children}</div>
         </Box>
       )}
     </div>
