@@ -97,7 +97,7 @@ const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) =>
             <CoverImage coverimage={bannerPicURL}></CoverImage>
             <div className="flex flex-row">
               <ProfileImage profileimage={profilePicURL} profileimageURL={profilePicURL}></ProfileImage>
-              <Details display={profileres.is_curr_user === "Edit Profile" ? `hidden` : `inline-block`}></Details>
+              <Details display={`${profileres.is_curr_user? `hidden`: `block`}`}></Details>
               <FollowButton tag={tag} buttonName={profileres.is_curr_user ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
             </div>
             <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>

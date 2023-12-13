@@ -67,7 +67,7 @@ const FollowButton = (props) => {
   }
 
   return (
-    <div id="follow-buttonDiv" className={`mt-[2%] md:ml-[35%] lg:ml-[calc(100%/3)]`}>
+    <div id="follow-buttonDiv" className={`relative mx-0 mt-[2%] left-[49%]`}>
       <button
         id="follow-button"
         onClick={() => {

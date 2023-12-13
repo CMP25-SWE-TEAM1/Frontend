@@ -130,12 +130,13 @@ import axios from 'axios';
     }
   }
   return (
-    <div id='show-details-div' className={`${props.display} w-[40px] h-[40px] ${darkmode? `bg-[black] text-white` : `bg-white text-black`} 
+    <div id='show-details-div' className={`relative left-[47%] ${props.display} w-[40px] h-[40px] 
+    ${darkmode? `bg-black text-white` : `bg-white text-black`} 
     border border-b-2 border-t- border-lightBorder dark:border-darkBorder hover:bg-lightHover 
-    dark:hover:bg-darkHover rounded-[50%] bg-[white] text-center ml-[40%] mt-[2%] `}>
+    dark:hover:bg-darkHover rounded-[50%] bg-[white] text-center mt-[2%] `}>
        <button id="show-details-button" className='text-[25px] mt-[-7px] '>...</button>
     
-    <div id='details-div' className={`z-100 flex flex-col rounded-xl bg-inherit text-black w-[250px] h-[100px] bg-white text-black ${detailsdisplay}` }>
+    <div id='details-div' className={`z-10 flex flex-col rounded-xl bg-inherit text-black w-[250px] h-[100px] bg-white text-black ${detailsdisplay}` }>
       <button id='block' className= {` Detailsbt ${blocked}`} onClick={blockhandle}>
        <BlockIcon></BlockIcon> Block This User 
       </button>
