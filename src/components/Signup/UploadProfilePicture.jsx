@@ -62,7 +62,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
     // console.log(fromSwitch)
     if (fromSwitch === false) {
       axios
-        .post(APIs.actual.loginAPI, { email: email, password: password })
+        .post(APIs.actual.loginAPI, { query: email, password: password })
         .then((res) => {
           console.log(res)
           tmpuser = res.data.data.user

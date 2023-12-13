@@ -36,5 +36,7 @@ export const APIs = {
     getNotifications: "http://backend.gigachat.cloudns.org/api/notification/all",
     loginAPI: "http://backend.gigachat.cloudns.org/api/user/login",
     searchUsers: "http://backend.gigachat.cloudns.org/api/user/search",
+    searchTweets: "http://backend.gigachat.cloudns.org/api/tweets/search/",
+    getTrends: "http://backend.gigachat.cloudns.org/api/trends/",
   },
 }
