@@ -5,7 +5,33 @@ import { useSelector } from "react-redux"
 import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined"
 import defaultProfilePic from "../../assets/imgs/Default_Profile_Picture.png"
 import CoverImage from "./CoverImage"
+import axios from "axios"
 const ProfilePageEdit = (props)=>{
+  const APIs = {
+    mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
+    actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/` },
+  }
+  const mock = false;
+  const {token} = useSelector((state)=>(state.user))
+  const [profile,setProfile] = useState();
+  useEffect(()=>{
+    axios
+    .get(mock ? APIs.mock.getProfileAPI : APIs.actual.getProfileAPI, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        // console.log(`Bearer ${token}`)
+        res.data.user.is_curr_user = true
+        setProfile(res.data.user)
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  },[])
   const {darkMode} = useSelector((state)=> state.theme)
   function handleCloseModal()
   {
@@ -50,7 +76,7 @@ const ProfilePageEdit = (props)=>{
   const hiddenFileInput = useRef(null)
   const profilePicURL = undefined;
     return(
-      <Modal open={true} onClose={handleCloseModal} data-testid="loginModal"  disableEscapeKeyDown disablePortal>
+      <Modal open={false} onClose={handleCloseModal} data-testid="loginModal"  disableEscapeKeyDown disablePortal>
         <Box style={modalStyle}>
       <div className="pop-up flex flex-col overflow-y-scroll no-scrollbar  ">
         <div className={`fixed w-[100%] h-[8%]  ${darkMode? `bg-black`:`bg-white`}  flex flex-row`}>
