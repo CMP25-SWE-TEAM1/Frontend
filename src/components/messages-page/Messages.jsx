@@ -4,9 +4,36 @@ import "./messages.css"
 import InfoChat from "./navigation/InfoChat"
 import InfoNoChat from "./navigation/InfoNoChat"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+
+import { APIs, BACKEND_ON, SERVER_ON } from "./MessagesConstants"
+import axios from "axios"
 
 const Messages = () => {
+  useEffect(() => {
+    if (BACKEND_ON) {
+      handleGetContacts().then((newContacts) => {
+        console.log("newContacts", newContacts)
+        setContacts(newContacts)
+      })
+    }
+  }, [])
+
+  const handleGetContacts = () => {
+    return axios
+      .get(SERVER_ON ? APIs.actual.getChatAll : APIs.mock.getChatAll)
+      .then((res) => {
+        // Handle the successful response
+        console.log(res.data)
+        return res.data
+      })
+      .catch((err) => {
+        // Handle errors
+        console.log(err)
+        return []
+      })
+  }
+
   const [contacts, setContacts] = useState([
     {
       avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",

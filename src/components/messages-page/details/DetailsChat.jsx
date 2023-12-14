@@ -4,13 +4,13 @@ import MessageInput from "./message/MessageInput"
 import { useState, useEffect, useRef } from "react"
 
 // API
-import { APIs } from "./MessagesConstants"
+import { APIs } from "../MessagesConstants"
 import { useSelector } from "react-redux"
 import axios from "axios"
 
 // Socket.io
 import io from "socket.io-client"
-import { SOCKET_ON, SOCKET_IO } from "./MessagesConstants"
+import { SOCKET_ON, SOCKET_IO } from "../MessagesConstants"
 
 const socket = SOCKET_ON ? io.connect(SOCKET_IO.mock) : ""
 

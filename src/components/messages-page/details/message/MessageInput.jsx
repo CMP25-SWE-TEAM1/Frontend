@@ -5,9 +5,9 @@ import ReactEmojiPicker from "./ReactEmojiPicker"
 import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
 import GifPicker, { ContentFilter } from "gif-picker-react"
-import { TENOR_API_KEY } from "../MessagesConstants"
+import { TENOR_API_KEY } from "../../MessagesConstants"
 // API
-import { APIs } from "../MessagesConstants"
+import { APIs } from "../../MessagesConstants"
 import { useSelector } from "react-redux"
 import axios from "axios"
 
