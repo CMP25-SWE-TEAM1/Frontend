@@ -1,19 +1,134 @@
-const InfoChat = () => {
-    return ( 
-        <div className="info chat">
-            <div className="search"></div>
-            <div className="contacts">
-                <div className="contact">
-                    <a href="#/username">
-                        <img src="" alt="profile img" />
-                    </a>
-                    <div>
-                        name, @username
-                    </div>
-                </div>
-            </div>
-        </div>
-     );
+import { useState } from "react"
+
+import List from "@mui/material/List"
+import ListItem from "@mui/material/ListItem"
+import ListItemButton from "@mui/material/ListItemButton"
+import ListItemAvatar from "@mui/material/ListItemAvatar"
+import Avatar from "@mui/material/Avatar"
+import ListItemText from "@mui/material/ListItemText"
+import ListItemIcon from "@mui/material/ListItemIcon"
+import FaceIcon from "@mui/icons-material/Face"
+import CheckIcon from "@mui/icons-material/Check"
+
+import InputBase from "@mui/material/InputBase"
+import SearchIcon from "@mui/icons-material/Search"
+
+const InfoChat = (props) => {
+  const [contacts, setContacts] = useState([
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U74",
+      name: "Khaled",
+      id: 103,
+      selected: false,
+    },
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U66",
+      name: "Moaz",
+      id: 106,
+      selected: false,
+    },
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U55",
+      name: "Ali",
+      id: 105,
+      selected: false,
+    },
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U44",
+      name: "Hamza",
+      id: 104,
+      selected: false,
+    },
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U77",
+      name: "Abd El-Rahman",
+      id: 107,
+      selected: false,
+    },
+  ])
+  const handleContactSelection = (index) => {
+    const nextContacts = contacts.map((contact, i) => {
+      if (i === index) {
+        if (contact["selected"]) {
+          // deselect -> remove from selectedContacts
+          setSelectedContact((chips) => chips.filter((chip) => chip.id !== contact.id))
+        } else {
+          // select -> add to selectedContacts
+          setSelectedContact([contact])
+        }
+        contact["selected"] = !contact["selected"]
+        return contact
+      } else {
+        // The rest is not selected
+        contact["selected"] = false
+        return contact
+      }
+    })
+    setContacts(nextContacts)
+  }
+
+  const setSelectedContact = props.setSelectedContact
+  const handleDelete = (chipToDelete) => () => {
+    setSelectedContact((chips) => chips.filter((chip) => chip.key !== chipToDelete.key))
+    // Updated boolean "selection" in contacts
+    const nextContacts = contacts.map((contact) => {
+      if (contact.id === chipToDelete.id) {
+        contact["selected"] = false
+        return contact
+      } else {
+        // The rest haven't changed
+        return contact
+      }
+    })
+    setContacts(nextContacts)
+  }
+
+  const [searchValue, setSearchValue] = useState("")
+  const handleSearchValueChange = (event) => {
+    setSearchValue(event.target.value)
+  }
+
+  return (
+    <div className="info chat">
+      <List dense={false}>
+        {/* Search */}
+        <ListItem sx={{ paddingLeft: "24px", borderBottom: "1px solid #eee" }}>
+          <SearchIcon sx={{ width: "20px", height: "20px" }} value={searchValue} onChange={handleSearchValueChange} />
+          <InputBase sx={{ ml: 1, flex: 1 }} value={searchValue} onChange={handleSearchValueChange} placeholder="Search people" inputProps={{ "aria-label": "search people" }} />
+        </ListItem>
+        {/* Contacts */}
+        {contacts
+          .filter((contact) => contact.name.toUpperCase().includes(searchValue.toUpperCase()) || contact.userName.toUpperCase().includes(searchValue.toUpperCase()))
+          .map((contact, index) => (
+            <ListItem disablePadding key={index}>
+              <ListItemButton
+                onClick={() => {
+                  handleContactSelection(index)
+                }}
+              >
+                <ListItemAvatar>
+                  {/* <Avatar>
+                        <FaceIcon color="secondary" />
+                      </Avatar> */}
+                  <Avatar alt={contact.name} src={contact.avatarLink} />
+                </ListItemAvatar>
+                <ListItemText primary={`${contact.name} [id=${contact.id}]`} secondary={`@${contact.userName}`} />
+                {contact.selected && (
+                  <ListItemIcon>
+                    <CheckIcon color="primary" fontSize="small" />
+                  </ListItemIcon>
+                )}
+              </ListItemButton>
+            </ListItem>
+          ))}
+      </List>
+    </div>
+  )
 }
- 
-export default InfoChat;
+
+export default InfoChat

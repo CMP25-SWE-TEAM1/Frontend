@@ -4,9 +4,23 @@ import "./messages.css"
 import InfoChat from "./navigation/InfoChat"
 import InfoNoChat from "./navigation/InfoNoChat"
 
+import { useEffect, useRef, useState } from "react"
+
 const Messages = () => {
-  const one = true
+  const one = false
   const two = false
+
+  const [selectedContact, setSelectedContact] = useState([])
+
+  // Testing sockets
+  let myID = useRef()
+  useEffect(() => {
+    let senderId = prompt("Please enter your id (103 : 107)", 103)
+    if (senderId == null || senderId == "") {
+    } else {
+      myID.current = senderId
+    }
+  }, [])
   return (
     <>
       {/* <div className="sidebar">Sidebar</div> */}
@@ -34,10 +48,10 @@ const Messages = () => {
             </div>
           </div>
           {one && <InfoNoChat />}
-          {!one && <InfoChat />}
+          {!one && <InfoChat setSelectedContact={setSelectedContact} />}
         </div>
-        {two && <DetailsNoChat />}
-        {!two && <DetailsChat />}
+        {selectedContact.length === 0 && <DetailsNoChat />}
+        {selectedContact.length > 0 && <DetailsChat selectedContact={selectedContact[0]} />}
       </div>
     </>
   )
