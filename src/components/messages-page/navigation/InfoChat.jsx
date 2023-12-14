@@ -10,8 +10,19 @@ import ListItemIcon from "@mui/material/ListItemIcon"
 import FaceIcon from "@mui/icons-material/Face"
 import CheckIcon from "@mui/icons-material/Check"
 
-import InputBase from "@mui/material/InputBase"
-import SearchIcon from "@mui/icons-material/Search"
+import PropTypes from "prop-types"
+import Tabs from "@mui/material/Tabs"
+import Tab from "@mui/material/Tab"
+import Typography from "@mui/material/Typography"
+import Box from "@mui/material/Box"
+import Search from "./Search"
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  }
+}
 
 const InfoChat = (props) => {
   const [contacts, setContacts] = useState([
@@ -20,37 +31,52 @@ const InfoChat = (props) => {
       userName: "U74",
       name: "Khaled",
       id: 103,
-      selected: false,
+      lastMessage: "last message",
+      lastMessageDate: "date",
     },
     {
       avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U66",
       name: "Moaz",
       id: 106,
-      selected: false,
+      lastMessage: "last message",
+      lastMessageDate: "date",
     },
     {
       avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U55",
       name: "Ali",
       id: 105,
-      selected: false,
+      lastMessage: "last message",
+      lastMessageDate: "date",
     },
     {
       avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U44",
       name: "Hamza",
       id: 104,
-      selected: false,
+      lastMessage: "last message",
+      lastMessageDate: "date",
     },
     {
       avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
       userName: "U77",
       name: "Abd El-Rahman",
       id: 107,
-      selected: false,
+      lastMessage: "last message",
+      lastMessageDate: "date",
     },
   ])
+
+  const [messages, setMessages] = useState([
+    {
+      message: "A message",
+      messageDate: "date",
+      contactId: 0,
+      sender: 0, // i or him?
+    },
+  ])
+
   const handleContactSelection = (index) => {
     const nextContacts = contacts.map((contact, i) => {
       if (i === index) {
@@ -73,6 +99,7 @@ const InfoChat = (props) => {
   }
 
   const setSelectedContact = props.setSelectedContact
+
   const handleDelete = (chipToDelete) => () => {
     setSelectedContact((chips) => chips.filter((chip) => chip.key !== chipToDelete.key))
     // Updated boolean "selection" in contacts
@@ -93,14 +120,38 @@ const InfoChat = (props) => {
     setSearchValue(event.target.value)
   }
 
+  const [value, setValue] = useState(0)
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue)
+  }
+
   return (
     <div className="info chat">
       <List dense={false}>
         {/* Search */}
-        <ListItem sx={{ paddingLeft: "24px", borderBottom: "1px solid #eee" }}>
-          <SearchIcon sx={{ width: "20px", height: "20px" }} value={searchValue} onChange={handleSearchValueChange} />
-          <InputBase sx={{ ml: 1, flex: 1 }} value={searchValue} onChange={handleSearchValueChange} placeholder="Search people" inputProps={{ "aria-label": "search people" }} />
+        <ListItem sx={{ paddingLeft: "24px" }}>
+          <Search searchValue={searchValue} handleSearchValueChange={handleSearchValueChange} setSearchValue={setSearchValue} />
         </ListItem>
+        {/* Tabs (All, people, messages) */}
+        {/* <ListItem sx={{ borderBottom: "1px solid #eee" }}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider", color: "red" }}>
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+              <Tab label="All" {...a11yProps(0)} />
+              <Tab label="People" {...a11yProps(1)} />
+              <Tab label="Messages" {...a11yProps(2)} />
+            </Tabs>
+          </Box>
+          <CustomTabPanel value={value} index={0}>
+            Item One
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={1}>
+            Item Two
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={2}>
+            Item Three
+          </CustomTabPanel> 
+        </ListItem> */}
         {/* Contacts */}
         {contacts
           .filter((contact) => contact.name.toUpperCase().includes(searchValue.toUpperCase()) || contact.userName.toUpperCase().includes(searchValue.toUpperCase()))
@@ -113,8 +164,8 @@ const InfoChat = (props) => {
               >
                 <ListItemAvatar>
                   {/* <Avatar>
-                        <FaceIcon color="secondary" />
-                      </Avatar> */}
+                          <FaceIcon color="secondary" />
+                        </Avatar> */}
                   <Avatar alt={contact.name} src={contact.avatarLink} />
                 </ListItemAvatar>
                 <ListItemText primary={`${contact.name} [id=${contact.id}]`} secondary={`@${contact.userName}`} />
