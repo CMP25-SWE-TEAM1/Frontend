@@ -45,6 +45,7 @@ const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) =>
             })
             .then((res) => {
               if (res.status === 200) {
+                console.log(res)
                 console.log(`Bearer ${token}`)
                 setProfilePicURL(res.data.user.profile_image)
                 setCoverPicURL(res.data.user.banner_image)
@@ -65,6 +66,7 @@ const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) =>
             .then((res) => {
               if (res.status === 200) {
                 // console.log(`Bearer ${token}`)
+                console.log(res)
                 setProfilePicURL(res.data.user.profile_image)
                 setCoverPicURL(res.data.user.banner_image)
                 res.data.user.is_curr_user = true
@@ -93,18 +95,18 @@ const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) =>
         border-t-0 border-lightBorder dark:border-darkBorder md:w-[100%]"
         >
           <div id="Upperhalf" className="mb-[10%] h-[50%] md:w-[100%] lg:w-[100%]">
-            <Header profilename={profileres.nickname} postsnum={profileres.followers_num}></Header>
+            <Header profilename={profileres.nickname} postsnum={profileres.num_of_posts}></Header>
             <CoverImage coverimage={bannerPicURL}></CoverImage>
             <div className="flex flex-row">
               <ProfileImage profileimage={profilePicURL} profileimageURL={profilePicURL}></ProfileImage>
-              <Details display={`${profileres.is_curr_user? `hidden`: `block`}`}></Details>
+              <Details ismuted={profileres.is_wanted_user_muted} isblocked={profileres.is_wanted_user_blocked} tag={tag} display={`${profileres.is_curr_user? `hidden`: `block`}`}></Details>
               <FollowButton tag={tag} buttonName={profileres.is_curr_user ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
             </div>
             <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
           </div>
           <ProfileBio profilebio={profileres.bio}></ProfileBio>
           <ProfileICons profilelocation={profileres.location} profilewebsite={profileres.website} profilejoindate={profileres.joined_date}></ProfileICons>
-          <Followers followers={profileres.followers_num} following={profileres.following_num}></Followers>
+          <Followers followers={profileres.followers_num} following={profileres.followings_num}></Followers>
           <ProfilePageEdit openModal={false} handleCloseModal={handleCloseModal}></ProfilePageEdit>
           <ProfileMediabuttons ></ProfileMediabuttons>
         </div>
