@@ -5,8 +5,6 @@ import ListItemButton from "@mui/material/ListItemButton"
 import ListItemAvatar from "@mui/material/ListItemAvatar"
 import Avatar from "@mui/material/Avatar"
 import ListItemText from "@mui/material/ListItemText"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import CheckIcon from "@mui/icons-material/Check"
 
 import HighlightedMessage from "./HighlightedMessage"
 

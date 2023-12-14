@@ -3,12 +3,12 @@ import Typography from "@mui/material/Typography"
 
 const HighlightedMessage = ({ mainText, subText }) => {
   return (
-    <Typography variant="body1" component="div">
+    <Typography variant="body1" component="div" className="text-gray-500 text-sm">
       {mainText.includes(subText) ? (
         <span>
-          {mainText.toUpperCase().split(subText.toUpperCase()).map((part, index) => (
+          {mainText.split(subText).map((part, index) => (
             <React.Fragment key={index}>
-              {index > 0 && <span className="MuiTypography-marked">{subText}</span>}
+              {index > 0 && <span className="bg-yellow-400">{subText}</span>}
               {part}
             </React.Fragment>
           ))}

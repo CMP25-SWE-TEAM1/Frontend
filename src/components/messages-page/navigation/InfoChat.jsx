@@ -67,7 +67,7 @@ const InfoChat = (props) => {
   const [messages, setMessages] = useState([
     {
       text: "A message",
-      Date: "date",
+      date: "date",
       id: 0,
 
       contactName: "Khaled",
@@ -76,7 +76,7 @@ const InfoChat = (props) => {
     },
     {
       text: "New message",
-      Date: "date",
+      date: "date",
       id: 0,
 
       contactName: "Khaled",
@@ -85,7 +85,7 @@ const InfoChat = (props) => {
     },
     {
       text: "Old message",
-      Date: "date",
+      date: "date",
       id: 0,
 
       contactName: "Khaled",
@@ -94,7 +94,7 @@ const InfoChat = (props) => {
     },
     {
       text: "Gold message",
-      Date: "date",
+      date: "date",
       id: 0,
 
       contactName: "Khaled",
