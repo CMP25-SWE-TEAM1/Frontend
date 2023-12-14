@@ -37,7 +37,7 @@ const SearchPeople = (props) => {
                   }}
                 >
                   <ListItemAvatar>
-                    <Avatar alt={contact.name} src={contact.avatarLink} />
+                    <Avatar alt={contact.name} src={contact.avatarLink || "https://64.media.tumblr.com/avatar_f71055191601_128.pnj"} />
                   </ListItemAvatar>
                   <ListItemText primary={contact.name} secondary={`@${contact.userName}`} />
                 </ListItemButton>

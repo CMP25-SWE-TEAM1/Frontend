@@ -113,8 +113,8 @@ const Messages = () => {
           {contacts.length === 0 && <InfoNoChat />}
           {contacts.length !== 0 && <InfoChat contacts={contacts} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />}
         </div>
-        {!selectedContact && <DetailsNoChat />}
-        {selectedContact && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} />}
+        {(!selectedContact || !contacts.filter((contact) => contact.id === selectedContact)[0]) && <DetailsNoChat />}
+        {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} />}
       </div>
     </>
   )
