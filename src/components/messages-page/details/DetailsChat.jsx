@@ -4,17 +4,19 @@ import MessageInput from "./message/MessageInput"
 import { useState, useEffect, useRef } from "react"
 
 // API
-import { APIs } from "./MessagesConstants"
+import { APIs } from "../MessagesConstants"
 import { useSelector } from "react-redux"
 import axios from "axios"
 
 // Socket.io
 import io from "socket.io-client"
-import { SOCKET_ON, SOCKET_IO } from "./MessagesConstants"
+import { SOCKET_ON, SOCKET_IO } from "../MessagesConstants"
 
 const socket = SOCKET_ON ? io.connect(SOCKET_IO.mock) : ""
 
-const DetailsChat = () => {
+const DetailsChat = (props) => {
+  const contact = props.contact
+
   const one = true
   const two = true
   const navigate = useNavigate()
@@ -176,9 +178,9 @@ const DetailsChat = () => {
         <div className="head">
           <div>
             <a href="#/username">
-              <img src={require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
+              <img src={contact.avatarLink || "https://64.media.tumblr.com/avatar_f71055191601_128.pnj"} alt="profile img" />
             </a>
-            <h2>Mickey Mouse</h2>
+            <h2>{contact.name || "Hamza"}</h2>
           </div>
           <a href="/info" title="Details">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -202,20 +204,20 @@ const DetailsChat = () => {
               {two && (
                 <div className="chatbox-content">
                   {/* User info */}
-                  <div className="contact-info" onClick={() => navigate("#/username")}>
+                  <div className="contact-info" onClick={() => navigate(`#/${contact.userName || "username"}`)}>
                     {/* Image */}
                     <div className="image">
-                      <img src={require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
+                      <img src={contact.avatarLink || "https://64.media.tumblr.com/avatar_f71055191601_128.pnj"} alt="profile img" />
                     </div>
                     {/* Name + contact name */}
                     <div className="contact-data">
-                      <a href="#/username">Mickey Mouse</a>
-                      <a href="#/username">@MickeyMouseEG</a>
+                      <a href="#/username">{contact.name || "Hamza"}</a>
+                      <a href="#/username">@{contact.userName || "hamza_xyz"}</a>
                     </div>
                     {/* Bio */}
-                    <div className="contact-bio">The Official Mickey Mouse - Egypt Account</div>
+                    <div className="contact-bio">{contact.bio || "I am the real batman"}</div>
                     {/* Info 1 (Joined + No. of followers) */}
-                    <div className="contact-xdata-1">Joined January 2011 · 268.8K Followers</div>
+                    <div className="contact-xdata-1">Joined January 2011 · {contact.followers_num || "268.8K"} Followers</div>
                     {/* Info 2 (common followers) */}
                     <div className="contact-xdata-2">Not followed by anyone you're following</div>
                   </div>
@@ -231,7 +233,7 @@ const DetailsChat = () => {
               <div className={`chat-scroll-down ${chatBtnDwnAppear ? "" : "hide"}`}>
                 {/* Note: onClick console error */}
                 <div onClick={() => handleBackToBottom()}>
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" style={{ fill: "#1D9BF0" }}>
                     <g>
                       <path d="M13 3v13.59l5.043-5.05 1.414 1.42L12 20.41l-7.457-7.45 1.414-1.42L11 16.59V3h2z"></path>
                     </g>
