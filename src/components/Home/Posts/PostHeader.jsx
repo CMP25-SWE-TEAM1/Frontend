@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import VerifiedIcon from "@mui/icons-material/Verified"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
@@ -15,7 +15,6 @@ import { Link } from "react-router-dom"
 import { Avatar } from "@mui/material"
 import { useSelector } from "react-redux"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
-
 
 import axios from "axios"
 
@@ -63,6 +62,9 @@ function PostHeader({ userTag, userProfilePicture, userName, finalDate, id, isVi
       })
   }
 
+  // useEffect(() => {
+  //   console.log(finalDate)
+  // }, [finalDate])
   return (
     <>
       <div className="post-header flex items-center justify-between">
