@@ -103,7 +103,7 @@ const ProfilePageEdit = (props)=>{
   const hiddenFileInput = useRef(null)
   const profilePicURL = undefined;
     return(
-      <Modal open={true} onClose={handleCloseModal} data-testid="loginModal"  disableEscapeKeyDown disablePortal>
+      <Modal open={false} onClose={handleCloseModal} data-testid="loginModal"  disableEscapeKeyDown disablePortal>
         <Box style={modalStyle} className={`${darkMode?  `bg-black`:`bg-white`}`}>
       <div className="pop-up flex flex-col overflow-y-scroll no-scrollbar   ">
         <div className={`absolute w-[100%] h-[10%]  top-0  z-10 backdrop-blur-sm  ${darkMode? `bg-black`:`bg-white`}  flex flex-row`}>
