@@ -9,18 +9,19 @@ import axios from "axios"
 const ProfilePageEdit = (props)=>{
   const APIs = {
     mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
-    actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/` },
+    actual: { EditProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/` },
   }
   const mock = false;
   const {user}  = useSelector((state) =>(state.user))
   const {token} = useSelector((state)=>(state.user))
-  const [name,setName]       = useState();
-  const [bio, setBio] = useState()
-  const [location, setLocation] = useState();
-  const [website, setWebsite] = useState();
-  const [birthdate, setBirthDate] = useState();
-  const [profileimage,setProfileimage] = useState();
-  const [coverpage, setCoverpage] = useState();
+  const [name,setName]       = useState(user.nickname);
+  const [bio, setBio] = useState(user.bio? user.bio:'')
+  const [location, setLocation] = useState(user.location? user.location:'');
+  const [website, setWebsite] = useState(user.website? user.website:'');
+  const [birthdate, setBirthDate] = useState(user.birth_date?user.birth_date:'');
+  const [profileimage,setProfileimage] = useState(user.profile_image);
+  const [coverpage, setCoverpage] = useState(user.banner_image);
+  
   useEffect(()=>{
     
         // console.log(`Bearer ${token}`)
@@ -52,11 +53,33 @@ const ProfilePageEdit = (props)=>{
       window.removeEventListener("resize", handleResize)
     }
   }, [])
-  function EditProfile()
-  {
-    if(name !== user.nickname || bio !== user.bio)
-    {
 
+  function EditProfile(e)
+  {
+    e.preventDefault()
+    console.log("I'm HERE")
+    if(name !== user.nickname || bio !== user.bio || location !== user.location 
+    || website !== user.website || birthdate !==user.birth_date)
+    {
+      console.log("HERE")
+      axios.patch(
+        APIs.actual.EditProfileAPI,{
+          bio: bio,
+          location: location,
+          website: website,
+          nickname: name,
+          birth_date: birthdate,
+        },{
+          headers: {
+            authorization: `Bearer + ${token}`,
+          }
+        }
+
+      ).then((res)=>{
+        console.log(res)
+      }).catch((err)=>{
+        console.log(err)
+      })
     } 
   }
   const modalStyle = {
@@ -89,15 +112,14 @@ const ProfilePageEdit = (props)=>{
             </button>
             <p className="mt-[15px] ml-[15px] text-xl font-semibold">Edit Profile</p>
         </div>
-        <form className="flex flex-col"> 
-        <button className=" absolute z-10 top-[12.5px] right-[12.5px] bg-white text-black w-[70px] h-[35px] font-medium text-lg rounded-full" onSubmit={()=>{EditProfile()}}>Save</button>
+        <form className="flex flex-col" onSubmit={(e)=>{EditProfile(e)}}> 
+        <input type="submit" value="Save" className=" absolute z-10 top-[12.5px] right-[12.5px] bg-white text-black w-[70px] h-[35px] font-medium text-lg rounded-full"></input>
         <div className="w-[100%] m-0">
         <CoverImage coverimage={coverpage} ></CoverImage>
-        <button className="relative  top-[-30%] m-auto h-[47px] w-[47px] -translate-x-[50%] -translate-y-[50%] rounded-full bg-darkHover hover:bg-darkBorder dark:bg-gray-600 dark:hover:bg-darkHover" onClick={()=>{}}>
-            <AddAPhotoOutlinedIcon className={`-ml-[3px] -mt-[5px] 
-            ${darkMode ? "text-white" : "text-black"}  ${coverpage === "https://answers.flexsim.com/themes/base/admin/img/default-coverImage.png"? `left-[50%]` :`left-[40%]`} `} />
+        <button className="relative left-[50%] top-[-30%]  m-auto h-[47px] w-[47px] -translate-x-[50%] -translate-y-[50%] rounded-full bg-darkHover hover:bg-darkBorder dark:bg-gray-600 dark:hover:bg-darkHover" onClick={(handlePictureClick)=>{}}>
+            <AddAPhotoOutlinedIcon className={`-ml-[3px] -mt-[5px] ${darkMode ? "text-white" : "text-black"}`} />
             <input
-              type="file" 
+              type="file"
               onChange={()=>{}}
               ref={hiddenFileInput}
               style={{ display: "none" }} // Make the file input element invisible
@@ -105,7 +127,7 @@ const ProfilePageEdit = (props)=>{
           </button>
           <button className={`relative font-medium text-xl left-[55%] top-[-30%] m-auto h-[47px] w-[47px] 
           -translate-x-[50%] -translate-y-[50%]  rounded-full bg-darkHover hover:bg-darkBorder 
-          dark:bg-gray-600 dark:hover:bg-darkHover ${coverpage === "https://answers.flexsim.com/themes/base/admin/img/default-coverImage.png"? `hidden` :``} `} >
+          dark:bg-gray-600 dark:hover:bg-darkHover ${coverpage === undefined? `hidden` :``} `} >
               x
             </button>
         </div>
