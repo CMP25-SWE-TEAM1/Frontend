@@ -70,7 +70,7 @@ const SearchComponent = () => {
   ]
 
   const handleSearchUsers = (word) => {
-    if (word !== "")
+    if (word !== "") {
       axios
         .get(APIs.actual.searchUsers, {
           params: {
@@ -85,13 +85,15 @@ const SearchComponent = () => {
         })
         .then((res) => {
           // console.log(res.data.users)
-          setSearchUsers(res.data.users)
+          setSearchUsers(res.data.results)
         })
-        .catch((err) => {
+        .catch((error) => {
           setSearchUsers([])
-          console.log(err)
+          if (error.response && error.response.status !== 404) {
+            console.error(error)
+          }
         })
-    else setSearchUsers([])
+    } else setSearchUsers([])
   }
 
   const handleEnterKeyPress = (e) => {
@@ -108,7 +110,7 @@ const SearchComponent = () => {
             freeSolo
             disableClearable
             getOptionLabel={(option) => option?.username || userSearch}
-            options={searchUsers?searchUsers:[]}
+            options={searchUsers ? searchUsers : []}
             noOptionsText={"No options found"}
             renderOption={(props, option) => <UserSearchComponent {...props} option={option} />}
             renderInput={(params) => (
@@ -127,7 +129,7 @@ const SearchComponent = () => {
                 }}
                 sx={{
                   "& .MuiInputLabel-root": { color: darkMode ? "#71767b" : "black" },
-                  "& .MuiInputBase-root": { border: "1px solid gray !important" ,borderRadius:100},
+                  "& .MuiInputBase-root": { border: "1px solid gray !important", borderRadius: 100 },
                   "& .MuiInputBase-input": {
                     color: darkMode ? "#71767b" : "black",
                   },
