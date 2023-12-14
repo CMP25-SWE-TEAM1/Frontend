@@ -62,9 +62,9 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
     }, 100)
   }, [userTag])
 
-  useEffect(() => {
-    console.log(isLiked)
-  }, [isLiked])
+  // useEffect(() => {
+  //   console.log(isLiked)
+  // }, [isLiked])
 
   const handleMouseEnter = () => {
     clearTimeout(timeoutRef)
@@ -207,6 +207,9 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
 
   const finalDate = intDifferenceInHours > 24 ? Math.floor(intDifferenceInHours / 24) + "d" : intDifferenceInHours ? intDifferenceInHours + "h" : intDifferenceInMinutes ? intDifferenceInMinutes + "m" : intDifferenceInSeconds + "s"
 
+  // useEffect(() => {
+  //   console.log(date)
+  // },[date])
   return (
     <Link className="w-full" to={`/${userTag}/status/${id}`}>
       <div className=" h-fit border border-l-0 border-r-0 border-lightBorder p-3 hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover" data-testid="postId">

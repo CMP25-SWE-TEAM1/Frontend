@@ -18,7 +18,7 @@ const PostsContainer = ({ posts, setPosts }) => {
             userName={p.tweetDetails ? p.tweetDetails.tweet_owner.nickname : p.tweet_owner.nickname}
             userTag={p.tweetDetails ? p.tweetDetails.tweet_owner.username : p.tweet_owner.username}
             id={p.tweetDetails ? (p.tweetDetails._id ? p.tweetDetails._id : p.tweetDetails.id) : p.id}
-            date={p.tweetDetails ? p.tweetDetails.creation_time : p.creation_time}
+            date={p.tweetDetails ? (p.tweetDetails.creation_time ? p.tweetDetails.creation_time : p.tweetDetails.createdAt) : p.creation_time}
             media={p.tweetDetails ? p.tweetDetails.media : p.media}
             description={p.tweetDetails ? p.tweetDetails.description : p.description}
             replyCount={p.tweetDetails ? p.tweetDetails.repliesNum : p.repliesNum}
