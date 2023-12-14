@@ -88,6 +88,7 @@ const SearchComponent = () => {
           setSearchUsers(res.data.users)
         })
         .catch((err) => {
+          setSearchUsers([])
           console.log(err)
         })
     else setSearchUsers([])
@@ -107,7 +108,7 @@ const SearchComponent = () => {
             freeSolo
             disableClearable
             getOptionLabel={(option) => option?.username || userSearch}
-            options={searchUsers}
+            options={searchUsers?searchUsers:[]}
             noOptionsText={"No options found"}
             renderOption={(props, option) => <UserSearchComponent {...props} option={option} />}
             renderInput={(params) => (
