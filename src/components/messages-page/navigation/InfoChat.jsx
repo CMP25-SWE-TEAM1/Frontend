@@ -16,9 +16,6 @@ import Tabs from "@mui/material/Tabs"
 import Tab from "@mui/material/Tab"
 import Box from "@mui/material/Box"
 
-import PersonIcon from "@mui/icons-material/Person"
-import EmailIcon from "@mui/icons-material/Email"
-
 import SearchPeople from "./SearchPeople"
 import SearchMessages from "./SearchMessages"
 import NoResultFound from "./NoResultFound"
@@ -71,30 +68,38 @@ const InfoChat = (props) => {
     {
       text: "A message",
       Date: "date",
-      contactId: 0,
-      sender: 0, // i or him?
       id: 0,
+
+      contactName: "Khaled",
+      contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      contactId: 0,
     },
     {
       text: "New message",
       Date: "date",
-      contactId: 0,
-      sender: 0, // i or him?
       id: 0,
+
+      contactName: "Khaled",
+      contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      contactId: 0,
     },
     {
       text: "Old message",
       Date: "date",
-      contactId: 0,
-      sender: 0, // i or him?
       id: 0,
+
+      contactName: "Khaled",
+      contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      contactId: 0,
     },
     {
       text: "Gold message",
       Date: "date",
-      contactId: 0,
-      sender: 0, // i or him?
       id: 0,
+
+      contactName: "Khaled",
+      contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      contactId: 0,
     },
   ])
 
