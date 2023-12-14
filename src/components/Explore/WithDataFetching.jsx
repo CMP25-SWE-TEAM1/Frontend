@@ -8,11 +8,18 @@ const useDataFetching = (type) => {
   const [loading, setLoading] = useState(true)
   const userToken = useSelector((state) => state.user.token)
 
+  const [pageNumber, setPageNumber] = useState(1)
+  const [finshed, setFinished] = useState(false)
+
   useEffect(() => {
     switch (type) {
       case "trending":
         axios
           .get("http://backend.gigachat.cloudns.org/api/trends/all", {
+            params: {
+              page: 1,
+              count: 1000,
+            },
             headers: {
               authorization: "Bearer " + userToken,
             },

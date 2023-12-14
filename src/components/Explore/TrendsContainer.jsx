@@ -22,24 +22,6 @@ const TrendsContainer = ({ data, loading, type }) => {
   const [trends, setTrends] = useState([])
   const [trendTweets, setTrendTweets] = useState([])
 
-  // console.log(data)
-
-  // const fetchTrends = () => {
-  //   axios
-  //     .get("http://backend.gigachat.cloudns.org/api/trends/all", {
-  //       headers: {
-  //         authorization: "Bearer " + userToken,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       // console.log(res.data.data)
-  //       setTrends(res.data.data)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }
-
   const fetchTrendTweets = (trend) => {
     axios
       .get(`http://backend.gigachat.cloudns.org/api/trends/${trend}`, {
@@ -48,12 +30,12 @@ const TrendsContainer = ({ data, loading, type }) => {
         },
       })
       .then((res) => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         setTrendTweets([
           ...res.data.data.map((post) => ({
             tweetDetails: post,
             followingUser: post.tweet_owner,
-          }))
+          })),
         ])
       })
       .catch((err) => {
@@ -77,12 +59,14 @@ const TrendsContainer = ({ data, loading, type }) => {
       </Box>
       {data.map((trend, index) => {
         return (
-          <div key={trend}>
+          <div key={index}>
             <TrendComponent key={index} index={index + 1} categoray={type} name={trend.title} numberOfPosts={trend.count} fetchTrendTweets={fetchTrendTweets} />
-            <div><PostsContainer posts={trendTweets} setPosts={setTrendTweets}/></div>
           </div>
         )
       })}
+      <div>
+        <PostsContainer posts={trendTweets} setPosts={setTrendTweets} />
+      </div>
     </div>
   )
 }
