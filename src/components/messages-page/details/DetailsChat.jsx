@@ -14,12 +14,10 @@ import { SOCKET_ON, SOCKET_IO } from "./MessagesConstants"
 
 const socket = SOCKET_ON ? io.connect(SOCKET_IO.mock) : ""
 
-const DetailsChat = (props) => {
+const DetailsChat = () => {
   const one = true
   const two = true
   const navigate = useNavigate()
-  const selectedContact = props.selectedContact
-  const reciverId = props.selectedContact.id
   // Messages mapping
   let msgIdCounter = 0
   const [messagesData, setMessagesData] = useState([
@@ -159,7 +157,7 @@ const DetailsChat = (props) => {
   // Send message to socket sercer
   const sendMessage_toServer = (message) => {
     // console.log("message sending...", message)
-    socket.emit("send_message", { message, reciverId })
+    socket.emit("send_message", { message })
   }
 
   // Handle get chat of specific user
@@ -178,9 +176,9 @@ const DetailsChat = (props) => {
         <div className="head">
           <div>
             <a href="#/username">
-              <img src={selectedContact.avatarLink} alt="profile img" />
+              <img src={require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
             </a>
-            <h2>{selectedContact.name}</h2>
+            <h2>Mickey Mouse</h2>
           </div>
           <a href="/info" title="Details">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -207,12 +205,12 @@ const DetailsChat = (props) => {
                   <div className="contact-info" onClick={() => navigate("#/username")}>
                     {/* Image */}
                     <div className="image">
-                      <img src={selectedContact.avatarLink} alt="profile img" />
+                      <img src={require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
                     </div>
                     {/* Name + contact name */}
                     <div className="contact-data">
-                      <a href="#/username">{selectedContact.name}</a>
-                      <a href="#/username">@{selectedContact.userName}</a>
+                      <a href="#/username">Mickey Mouse</a>
+                      <a href="#/username">@MickeyMouseEG</a>
                     </div>
                     {/* Bio */}
                     <div className="contact-bio">The Official Mickey Mouse - Egypt Account</div>
