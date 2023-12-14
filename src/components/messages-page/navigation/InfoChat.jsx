@@ -10,19 +10,12 @@ import ListItemIcon from "@mui/material/ListItemIcon"
 import FaceIcon from "@mui/icons-material/Face"
 import CheckIcon from "@mui/icons-material/Check"
 
-import PropTypes from "prop-types"
-import Tabs from "@mui/material/Tabs"
-import Tab from "@mui/material/Tab"
-import Typography from "@mui/material/Typography"
-import Box from "@mui/material/Box"
 import Search from "./Search"
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  }
-}
+import Tabs from "@mui/material/Tabs"
+import Tab from "@mui/material/Tab"
+import Box from "@mui/material/Box"
+import { grey } from "@mui/material/colors"
 
 const InfoChat = (props) => {
   const [contacts, setContacts] = useState([
@@ -120,7 +113,7 @@ const InfoChat = (props) => {
     setSearchValue(event.target.value)
   }
 
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState("all")
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
@@ -133,25 +126,20 @@ const InfoChat = (props) => {
         <ListItem sx={{ paddingLeft: "24px" }}>
           <Search searchValue={searchValue} handleSearchValueChange={handleSearchValueChange} setSearchValue={setSearchValue} />
         </ListItem>
+
         {/* Tabs (All, people, messages) */}
-        {/* <ListItem sx={{ borderBottom: "1px solid #eee" }}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider", color: "red" }}>
-            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab label="All" {...a11yProps(0)} />
-              <Tab label="People" {...a11yProps(1)} />
-              <Tab label="Messages" {...a11yProps(2)} />
-            </Tabs>
-          </Box>
-          <CustomTabPanel value={value} index={0}>
-            Item One
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
-            Item Two
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}>
-            Item Three
-          </CustomTabPanel> 
-        </ListItem> */}
+        {searchValue.length !== 0 && (
+          <ListItem>
+            <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
+              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" indicatorColor="primary">
+                <Tab value="all" label="All" id="simple-tab-0" sx={{ flex: 1, textTransform: "none", fontWeight: 600 }} />
+                <Tab value="people" label="People" id="simple-tab-1" sx={{ flex: 1, textTransform: "none", fontWeight: 600 }} />
+                <Tab value="messages" label="Messages" id="simple-tab-2" sx={{ flex: 1, textTransform: "none", fontWeight: 600 }} />
+              </Tabs>
+            </Box>
+          </ListItem>
+        )}
+
         {/* Contacts */}
         {contacts
           .filter((contact) => contact.name.toUpperCase().includes(searchValue.toUpperCase()) || contact.userName.toUpperCase().includes(searchValue.toUpperCase()))
