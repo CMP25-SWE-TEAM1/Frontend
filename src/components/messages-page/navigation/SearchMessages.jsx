@@ -11,8 +11,10 @@ import HighlightedMessage from "./HighlightedMessage"
 const SearchMessages = (props) => {
   const messages = props.messages
   const searchValue = props.searchValue
-  const handleMessageSelect = props.handleMessageSelect
   const tabValue = props.tabValue
+  const selectedContact = props.selectedContact
+  const setSelectedContact = props.setSelectedContact
+
   return (
     <>
       {messages.filter((message) => message.text.toUpperCase().includes(searchValue.toUpperCase())).length !== 0 && (
@@ -27,10 +29,10 @@ const SearchMessages = (props) => {
           {messages
             .filter((message) => message.text.toUpperCase().includes(searchValue.toUpperCase()))
             .map((message, index) => (
-              <ListItem disablePadding key={index}>
+              <ListItem disablePadding key={index} sx={selectedContact === message.contactId ? { backgroundColor: "#EFF3F4" } : {}}>
                 <ListItemButton
                   onClick={() => {
-                    handleMessageSelect(index)
+                    setSelectedContact(message.contactId)
                   }}
                 >
                   <div>

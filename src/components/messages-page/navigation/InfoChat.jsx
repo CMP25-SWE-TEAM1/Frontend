@@ -68,78 +68,36 @@ const InfoChat = (props) => {
     {
       text: "A message",
       date: "date",
-      id: 0,
 
       contactName: "Khaled",
       contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      contactId: 0,
+      contactId: 103,
     },
     {
       text: "New message",
       date: "date",
-      id: 0,
 
       contactName: "Khaled",
       contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      contactId: 0,
+      contactId: 103,
     },
     {
       text: "Old message",
       date: "date",
-      id: 0,
 
-      contactName: "Khaled",
+      contactName: "Hamza",
       contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      contactId: 0,
+      contactId: 104,
     },
     {
       text: "Gold message",
       date: "date",
-      id: 0,
 
-      contactName: "Khaled",
+      contactName: "Hamza",
       contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      contactId: 0,
+      contactId: 104,
     },
   ])
-
-  const handleContactSelection = (index) => {
-    const nextContacts = contacts.map((contact, i) => {
-      if (i === index) {
-        if (contact["selected"]) {
-          // deselect -> remove from selectedContacts
-          setSelectedContact((chips) => chips.filter((chip) => chip.id !== contact.id))
-        } else {
-          // select -> add to selectedContacts
-          setSelectedContact([contact])
-        }
-        contact["selected"] = !contact["selected"]
-        return contact
-      } else {
-        // The rest is not selected
-        contact["selected"] = false
-        return contact
-      }
-    })
-    setContacts(nextContacts)
-  }
-
-  const setSelectedContact = props.setSelectedContact
-
-  const handleDelete = (chipToDelete) => () => {
-    setSelectedContact((chips) => chips.filter((chip) => chip.key !== chipToDelete.key))
-    // Updated boolean "selection" in contacts
-    const nextContacts = contacts.map((contact) => {
-      if (contact.id === chipToDelete.id) {
-        contact["selected"] = false
-        return contact
-      } else {
-        // The rest haven't changed
-        return contact
-      }
-    })
-    setContacts(nextContacts)
-  }
 
   const [searchValue, setSearchValue] = useState("")
   const handleSearchValueChange = (event) => {
@@ -153,6 +111,8 @@ const InfoChat = (props) => {
   }
 
   const [searchActive, setSearchActive] = useState(false)
+
+  const [selectedContact, setSelectedContact] = useState()
 
   return (
     <div className="info chat">
@@ -180,29 +140,29 @@ const InfoChat = (props) => {
         {searchActive && searchValue.length !== 0 && tabValue === "all" && (
           <>
             {messages.filter((message) => message.text.toUpperCase().includes(searchValue.toUpperCase())).length === 0 && contacts.filter((contact) => contact.name.toUpperCase().includes(searchValue.toUpperCase()) || contact.userName.toUpperCase().includes(searchValue.toUpperCase())).length === 0 && <NoResultFound searchValue={searchValue} />}
-            <SearchPeople contacts={contacts} searchValue={searchValue} tabValue={tabValue} />
-            <SearchMessages messages={messages} searchValue={searchValue} tabValue={tabValue} />
+            <SearchPeople contacts={contacts} searchValue={searchValue} tabValue={tabValue} setSelectedContact={setSelectedContact} selectedContact={selectedContact} />
+            <SearchMessages messages={messages} searchValue={searchValue} tabValue={tabValue} setSelectedContact={setSelectedContact} selectedContact={selectedContact} />
           </>
         )}
         {searchActive && searchValue.length !== 0 && tabValue === "people" && (
           <>
             {contacts.filter((contact) => contact.name.toUpperCase().includes(searchValue.toUpperCase()) || contact.userName.toUpperCase().includes(searchValue.toUpperCase())).length === 0 && <NoResultFound searchValue={searchValue} />}
-            <SearchPeople contacts={contacts} searchValue={searchValue} tabValue={tabValue} />
+            <SearchPeople contacts={contacts} searchValue={searchValue} tabValue={tabValue} setSelectedContact={setSelectedContact} selectedContact={selectedContact} />
           </>
         )}
         {searchActive && searchValue.length !== 0 && tabValue === "messages" && (
           <>
             {messages.filter((message) => message.text.toUpperCase().includes(searchValue.toUpperCase())).length === 0 && <NoResultFound searchValue={searchValue} />}
-            <SearchMessages messages={messages} searchValue={searchValue} tabValue={tabValue} />
+            <SearchMessages messages={messages} searchValue={searchValue} tabValue={tabValue} setSelectedContact={setSelectedContact} selectedContact={selectedContact} />
           </>
         )}
         {/* Contacts */}
         {!searchActive &&
           contacts.map((contact, index) => (
-            <ListItem disablePadding key={index}>
+            <ListItem disablePadding key={index} sx={selectedContact === contact.id ? { backgroundColor: "#EFF3F4", borderRight: "4px solid #1D9BF0" } : {}}>
               <ListItemButton
                 onClick={() => {
-                  handleContactSelection(index)
+                  setSelectedContact(contact.id)
                 }}
               >
                 <ListItemAvatar>
