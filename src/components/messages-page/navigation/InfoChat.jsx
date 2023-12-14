@@ -125,12 +125,9 @@ const InfoChat = (props) => {
                 }}
               >
                 <ListItemAvatar>
-                  {/* <Avatar>
-                          <FaceIcon color="secondary" />
-                        </Avatar> */}
-                  <Avatar alt={contact.name} src={contact.avatarLink} />
+                  <Avatar alt={contact.name || "Hamza"} src={contact.avatarLink || "https://64.media.tumblr.com/avatar_f71055191601_128.pnj"} />
                 </ListItemAvatar>
-                <ListItemText primary={contact.name} secondary={`@${contact.userName}`} />
+                <ListItemText primary={contact.name || "Hamza"} secondary={`@${contact.userName || "hamza_xyz"}`} />
                 {contact.selected && (
                   <ListItemIcon>
                     <CheckIcon color="primary" fontSize="small" />

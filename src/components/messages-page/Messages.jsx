@@ -14,7 +14,20 @@ const Messages = () => {
     if (BACKEND_ON) {
       handleGetContacts().then((newContacts) => {
         console.log("newContacts", newContacts)
-        setContacts(newContacts)
+        setContacts(
+          newContacts.map((conatct) => ({
+            id: conatct.id,
+            userName: conatct.username,
+            name: conatct.nickname,
+            lastMessage: conatct.lastMessage,
+            lastMessageDate: conatct.time,
+
+            // Contact avatar is missing!!
+            // avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+            // bio: "I am the real batman",
+            lastMessageSeen: conatct.seen,
+          }))
+        )
       })
     }
   }, [])

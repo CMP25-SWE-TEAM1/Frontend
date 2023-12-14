@@ -178,9 +178,9 @@ const DetailsChat = (props) => {
         <div className="head">
           <div>
             <a href="#/username">
-              <img src={contact.avatarLink || require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
+              <img src={contact.avatarLink || "https://64.media.tumblr.com/avatar_f71055191601_128.pnj"} alt="profile img" />
             </a>
-            <h2>{contact.name || "Mickey Mouse"}</h2>
+            <h2>{contact.name || "Hamza"}</h2>
           </div>
           <a href="/info" title="Details">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -207,15 +207,15 @@ const DetailsChat = (props) => {
                   <div className="contact-info" onClick={() => navigate(`#/${contact.userName || "username"}`)}>
                     {/* Image */}
                     <div className="image">
-                      <img src={contact.avatarLink || require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
+                      <img src={contact.avatarLink || "https://64.media.tumblr.com/avatar_f71055191601_128.pnj"} alt="profile img" />
                     </div>
                     {/* Name + contact name */}
                     <div className="contact-data">
-                      <a href="#/username">{contact.name || "Mickey Mouse"}</a>
-                      <a href="#/username">@{contact.userName || "MickeyMouseEG"}</a>
+                      <a href="#/username">{contact.name || "Hamza"}</a>
+                      <a href="#/username">@{contact.userName || "hamza_xyz"}</a>
                     </div>
                     {/* Bio */}
-                    <div className="contact-bio">{contact.bio || "The Official Mickey Mouse - Egypt Account"}</div>
+                    <div className="contact-bio">{contact.bio || "I am the real batman"}</div>
                     {/* Info 1 (Joined + No. of followers) */}
                     <div className="contact-xdata-1">Joined January 2011 · {contact.followers_num || "268.8K"} Followers</div>
                     {/* Info 2 (common followers) */}
