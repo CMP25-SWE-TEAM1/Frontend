@@ -8,12 +8,16 @@ const SearchMessages = (props) => {
   const tabValue = props.tabValue
   return (
     <>
-      {tabValue === "all" && (
-        <ListItem sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <div style={{ fontSize: "20px", fontWeight: "600" }}>
-            <EmailIcon /> Messages
-          </div>
-        </ListItem>
+      {messages.filter((message) => message.text.toUpperCase().includes(searchValue.toUpperCase())).length !== 0 && (
+        <>
+          {tabValue === "all" && (
+            <ListItem sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <div style={{ fontSize: "20px", fontWeight: "600" }}>
+                <EmailIcon /> Messages
+              </div>
+            </ListItem>
+          )}
+        </>
       )}
     </>
   )

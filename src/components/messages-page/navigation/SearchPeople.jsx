@@ -17,37 +17,41 @@ const SearchPeople = (props) => {
 
   return (
     <>
-      {tabValue === "all" && (
-        <ListItem sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <div style={{ fontSize: "20px", fontWeight: "600" }}>
-            <PersonIcon /> People
-          </div>
-        </ListItem>
-      )}
-      {contacts
-        .filter((contact) => contact.name.toUpperCase().includes(searchValue.toUpperCase()) || contact.userName.toUpperCase().includes(searchValue.toUpperCase()))
-        .map((contact, index) => (
-          <ListItem disablePadding key={index}>
-            <ListItemButton
-              onClick={() => {
-                handleContactSelection(index)
-              }}
-            >
-              <ListItemAvatar>
-                {/* <Avatar>
+      {contacts.filter((contact) => contact.name.toUpperCase().includes(searchValue.toUpperCase()) || contact.userName.toUpperCase().includes(searchValue.toUpperCase())).length !== 0 && (
+        <>
+          {tabValue === "all" && (
+            <ListItem sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <div style={{ fontSize: "20px", fontWeight: "600" }}>
+                <PersonIcon /> People
+              </div>
+            </ListItem>
+          )}
+          {contacts
+            .filter((contact) => contact.name.toUpperCase().includes(searchValue.toUpperCase()) || contact.userName.toUpperCase().includes(searchValue.toUpperCase()))
+            .map((contact, index) => (
+              <ListItem disablePadding key={index}>
+                <ListItemButton
+                  onClick={() => {
+                    handleContactSelection(index)
+                  }}
+                >
+                  <ListItemAvatar>
+                    {/* <Avatar>
                         <FaceIcon color="secondary" />
                       </Avatar> */}
-                <Avatar alt={contact.name} src={contact.avatarLink} />
-              </ListItemAvatar>
-              <ListItemText primary={contact.name} secondary={`@${contact.userName}`} />
-              {contact.selected && (
-                <ListItemIcon>
-                  <CheckIcon color="primary" fontSize="small" />
-                </ListItemIcon>
-              )}
-            </ListItemButton>
-          </ListItem>
-        ))}
+                    <Avatar alt={contact.name} src={contact.avatarLink} />
+                  </ListItemAvatar>
+                  <ListItemText primary={contact.name} secondary={`@${contact.userName}`} />
+                  {contact.selected && (
+                    <ListItemIcon>
+                      <CheckIcon color="primary" fontSize="small" />
+                    </ListItemIcon>
+                  )}
+                </ListItemButton>
+              </ListItem>
+            ))}
+        </>
+      )}
     </>
   )
 }

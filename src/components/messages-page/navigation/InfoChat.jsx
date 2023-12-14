@@ -21,6 +21,7 @@ import EmailIcon from "@mui/icons-material/Email"
 
 import SearchPeople from "./SearchPeople"
 import SearchMessages from "./SearchMessages"
+import NoResultFound from "./NoResultFound"
 
 const InfoChat = (props) => {
   const [contacts, setContacts] = useState([
@@ -68,10 +69,32 @@ const InfoChat = (props) => {
 
   const [messages, setMessages] = useState([
     {
-      message: "A message",
-      messageDate: "date",
+      text: "A message",
+      Date: "date",
       contactId: 0,
       sender: 0, // i or him?
+      id: 0,
+    },
+    {
+      text: "New message",
+      Date: "date",
+      contactId: 0,
+      sender: 0, // i or him?
+      id: 0,
+    },
+    {
+      text: "Old message",
+      Date: "date",
+      contactId: 0,
+      sender: 0, // i or him?
+      id: 0,
+    },
+    {
+      text: "Gold message",
+      Date: "date",
+      contactId: 0,
+      sender: 0, // i or him?
+      id: 0,
     },
   ])
 
@@ -151,13 +174,23 @@ const InfoChat = (props) => {
 
         {searchActive && searchValue.length !== 0 && tabValue === "all" && (
           <>
+            {messages.filter((message) => message.text.toUpperCase().includes(searchValue.toUpperCase())).length === 0 && contacts.filter((contact) => contact.name.toUpperCase().includes(searchValue.toUpperCase()) || contact.userName.toUpperCase().includes(searchValue.toUpperCase())).length === 0 && <NoResultFound searchValue={searchValue} />}
             <SearchPeople contacts={contacts} searchValue={searchValue} tabValue={tabValue} />
             <SearchMessages messages={messages} searchValue={searchValue} tabValue={tabValue} />
           </>
         )}
-        {searchActive && searchValue.length !== 0 && tabValue === "people" && <SearchPeople contacts={contacts} searchValue={searchValue} tabValue={tabValue} />}
-        {searchActive && searchValue.length !== 0 && tabValue === "messages" && <SearchMessages messages={messages} searchValue={searchValue} tabValue={tabValue} />}
-
+        {searchActive && searchValue.length !== 0 && tabValue === "people" && (
+          <>
+            {contacts.filter((contact) => contact.name.toUpperCase().includes(searchValue.toUpperCase()) || contact.userName.toUpperCase().includes(searchValue.toUpperCase())).length === 0 && <NoResultFound searchValue={searchValue} />}
+            <SearchPeople contacts={contacts} searchValue={searchValue} tabValue={tabValue} />
+          </>
+        )}
+        {searchActive && searchValue.length !== 0 && tabValue === "messages" && (
+          <>
+            {messages.filter((message) => message.text.toUpperCase().includes(searchValue.toUpperCase())).length === 0 && <NoResultFound searchValue={searchValue} />}
+            <SearchMessages messages={messages} searchValue={searchValue} tabValue={tabValue} />
+          </>
+        )}
         {/* Contacts */}
         {!searchActive &&
           contacts.map((contact, index) => (
@@ -173,7 +206,7 @@ const InfoChat = (props) => {
                         </Avatar> */}
                   <Avatar alt={contact.name} src={contact.avatarLink} />
                 </ListItemAvatar>
-                <ListItemText primary={`${contact.name} [id=${contact.id}]`} secondary={`@${contact.userName}`} />
+                <ListItemText primary={contact.name} secondary={`@${contact.userName}`} />
                 {contact.selected && (
                   <ListItemIcon>
                     <CheckIcon color="primary" fontSize="small" />
