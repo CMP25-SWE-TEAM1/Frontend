@@ -21,48 +21,9 @@ import SearchMessages from "./SearchMessages"
 import NoResultFound from "./NoResultFound"
 
 const InfoChat = (props) => {
-  const [contacts, setContacts] = useState([
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U74",
-      name: "Khaled",
-      id: 103,
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U66",
-      name: "Moaz",
-      id: 106,
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U55",
-      name: "Ali",
-      id: 105,
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U44",
-      name: "Hamza",
-      id: 104,
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U77",
-      name: "Abd El-Rahman",
-      id: 107,
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-  ])
+  const contacts = props.contacts
+  const selectedContact = props.selectedContact
+  const setSelectedContact = props.setSelectedContact
 
   const [messages, setMessages] = useState([
     {
@@ -111,8 +72,6 @@ const InfoChat = (props) => {
   }
 
   const [searchActive, setSearchActive] = useState(false)
-
-  const [selectedContact, setSelectedContact] = useState()
 
   return (
     <div className="info chat">

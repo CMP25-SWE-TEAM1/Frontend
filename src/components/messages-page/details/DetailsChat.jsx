@@ -14,7 +14,9 @@ import { SOCKET_ON, SOCKET_IO } from "./MessagesConstants"
 
 const socket = SOCKET_ON ? io.connect(SOCKET_IO.mock) : ""
 
-const DetailsChat = () => {
+const DetailsChat = (props) => {
+  const contact = props.contact
+
   const one = true
   const two = true
   const navigate = useNavigate()
@@ -176,9 +178,9 @@ const DetailsChat = () => {
         <div className="head">
           <div>
             <a href="#/username">
-              <img src={require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
+              <img src={contact.avatarLink || require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
             </a>
-            <h2>Mickey Mouse</h2>
+            <h2>{contact.name || "Mickey Mouse"}</h2>
           </div>
           <a href="/info" title="Details">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -202,20 +204,20 @@ const DetailsChat = () => {
               {two && (
                 <div className="chatbox-content">
                   {/* User info */}
-                  <div className="contact-info" onClick={() => navigate("#/username")}>
+                  <div className="contact-info" onClick={() => navigate(`#/${contact.userName || "username"}`)}>
                     {/* Image */}
                     <div className="image">
-                      <img src={require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
+                      <img src={contact.avatarLink || require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
                     </div>
                     {/* Name + contact name */}
                     <div className="contact-data">
-                      <a href="#/username">Mickey Mouse</a>
-                      <a href="#/username">@MickeyMouseEG</a>
+                      <a href="#/username">{contact.name || "Mickey Mouse"}</a>
+                      <a href="#/username">@{contact.userName || "MickeyMouseEG"}</a>
                     </div>
                     {/* Bio */}
-                    <div className="contact-bio">The Official Mickey Mouse - Egypt Account</div>
+                    <div className="contact-bio">{contact.bio || "The Official Mickey Mouse - Egypt Account"}</div>
                     {/* Info 1 (Joined + No. of followers) */}
-                    <div className="contact-xdata-1">Joined January 2011 · 268.8K Followers</div>
+                    <div className="contact-xdata-1">Joined January 2011 · {contact.followers_num || "268.8K"} Followers</div>
                     {/* Info 2 (common followers) */}
                     <div className="contact-xdata-2">Not followed by anyone you're following</div>
                   </div>

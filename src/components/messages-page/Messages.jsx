@@ -4,9 +4,59 @@ import "./messages.css"
 import InfoChat from "./navigation/InfoChat"
 import InfoNoChat from "./navigation/InfoNoChat"
 
+import { useState } from "react"
+
 const Messages = () => {
-  const one = false
-  const two = false
+  const [contacts, setContacts] = useState([
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U74",
+      name: "Khaled",
+      id: 103,
+      bio: "I am the real batman",
+      lastMessage: "last message",
+      lastMessageDate: "date",
+    },
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U66",
+      name: "Moaz",
+      id: 106,
+      bio: "I am the real batman",
+      lastMessage: "last message",
+      lastMessageDate: "date",
+    },
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U55",
+      name: "Ali",
+      id: 105,
+      bio: "I am the real batman",
+      lastMessage: "last message",
+      lastMessageDate: "date",
+    },
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U44",
+      name: "Hamza",
+      id: 104,
+      bio: "I am the real batman",
+      lastMessage: "last message",
+      lastMessageDate: "date",
+    },
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U77",
+      name: "Abd El-Rahman",
+      id: 107,
+      bio: "I am the real batman",
+      lastMessage: "last message",
+      lastMessageDate: "date",
+    },
+  ])
+
+  const [selectedContact, setSelectedContact] = useState()
+
   return (
     <>
       {/* <div className="sidebar">Sidebar</div> */}
@@ -33,11 +83,11 @@ const Messages = () => {
               </a>
             </div>
           </div>
-          {one && <InfoNoChat />}
-          {!one && <InfoChat />}
+          {contacts.length === 0 && <InfoNoChat />}
+          {contacts.length !== 0 && <InfoChat contacts={contacts} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />}
         </div>
-        {two && <DetailsNoChat />}
-        {!two && <DetailsChat />}
+        {!selectedContact && <DetailsNoChat />}
+        {selectedContact && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} />}
       </div>
     </>
   )
