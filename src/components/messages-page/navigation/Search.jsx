@@ -13,16 +13,17 @@ const Search = (props) => {
   const handleSearchValueChange = props.handleSearchValueChange
   const setSearchValue = props.setSearchValue
 
-  const [returnBtnActive, setReturnBtnActive] = useState(false)
+  const searchActive = props.searchActive
+  const setSearchActive = props.setSearchActive
 
   return (
     <>
-      {returnBtnActive && (
+      {searchActive && (
         <IconButton
           sx={{ marginRight: "5px" }}
           aria-label="return"
           onClick={() => {
-            setReturnBtnActive(false)
+            setSearchActive(false)
             setSearchValue("")
           }}
         >
@@ -41,7 +42,7 @@ const Search = (props) => {
         placeholder="Search Direct Messages"
         inputProps={{ "aria-label": "search messages" }}
         onFocus={() => {
-          setReturnBtnActive(true)
+          setSearchActive(true)
         }}
       />
     </>

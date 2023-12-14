@@ -119,12 +119,14 @@ const InfoChat = (props) => {
     setValue(newValue)
   }
 
+  const [searchActive, setSearchActive] = useState(false)
+
   return (
     <div className="info chat">
       <List dense={false}>
         {/* Search */}
         <ListItem sx={{ paddingLeft: "24px" }}>
-          <Search searchValue={searchValue} handleSearchValueChange={handleSearchValueChange} setSearchValue={setSearchValue} />
+          <Search searchValue={searchValue} handleSearchValueChange={handleSearchValueChange} setSearchValue={setSearchValue} searchActive={searchActive} setSearchActive={setSearchActive} />
         </ListItem>
 
         {/* Tabs (All, people, messages) */}
@@ -140,31 +142,39 @@ const InfoChat = (props) => {
           </ListItem>
         )}
 
+        {searchActive && searchValue.length === 0 && <div style={{ fontSize: "15px", color: "rgb(83, 100, 113)", textAlign: "center", marginTop: "32px" }}>Try searching for people, or messages</div>}
+        {/* {searchActive && searchValue.length !== 0 && 
+        <div>
+          Try searching for people, or messages
+        </div>
+        } */}
+
         {/* Contacts */}
-        {contacts
-          .filter((contact) => contact.name.toUpperCase().includes(searchValue.toUpperCase()) || contact.userName.toUpperCase().includes(searchValue.toUpperCase()))
-          .map((contact, index) => (
-            <ListItem disablePadding key={index}>
-              <ListItemButton
-                onClick={() => {
-                  handleContactSelection(index)
-                }}
-              >
-                <ListItemAvatar>
-                  {/* <Avatar>
+        {!searchActive &&
+          contacts
+            .filter((contact) => contact.name.toUpperCase().includes(searchValue.toUpperCase()) || contact.userName.toUpperCase().includes(searchValue.toUpperCase()))
+            .map((contact, index) => (
+              <ListItem disablePadding key={index}>
+                <ListItemButton
+                  onClick={() => {
+                    handleContactSelection(index)
+                  }}
+                >
+                  <ListItemAvatar>
+                    {/* <Avatar>
                           <FaceIcon color="secondary" />
                         </Avatar> */}
-                  <Avatar alt={contact.name} src={contact.avatarLink} />
-                </ListItemAvatar>
-                <ListItemText primary={`${contact.name} [id=${contact.id}]`} secondary={`@${contact.userName}`} />
-                {contact.selected && (
-                  <ListItemIcon>
-                    <CheckIcon color="primary" fontSize="small" />
-                  </ListItemIcon>
-                )}
-              </ListItemButton>
-            </ListItem>
-          ))}
+                    <Avatar alt={contact.name} src={contact.avatarLink} />
+                  </ListItemAvatar>
+                  <ListItemText primary={`${contact.name} [id=${contact.id}]`} secondary={`@${contact.userName}`} />
+                  {contact.selected && (
+                    <ListItemIcon>
+                      <CheckIcon color="primary" fontSize="small" />
+                    </ListItemIcon>
+                  )}
+                </ListItemButton>
+              </ListItem>
+            ))}
       </List>
     </div>
   )
