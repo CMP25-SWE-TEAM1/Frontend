@@ -15,7 +15,12 @@ import Search from "./Search"
 import Tabs from "@mui/material/Tabs"
 import Tab from "@mui/material/Tab"
 import Box from "@mui/material/Box"
-import { grey } from "@mui/material/colors"
+
+import PersonIcon from "@mui/icons-material/Person"
+import EmailIcon from "@mui/icons-material/Email"
+
+import SearchPeople from "./SearchPeople"
+import SearchMessages from "./SearchMessages"
 
 const InfoChat = (props) => {
   const [contacts, setContacts] = useState([
@@ -113,10 +118,10 @@ const InfoChat = (props) => {
     setSearchValue(event.target.value)
   }
 
-  const [value, setValue] = useState("all")
+  const [tabValue, setTabValue] = useState("all")
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue)
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue)
   }
 
   const [searchActive, setSearchActive] = useState(false)
@@ -133,7 +138,7 @@ const InfoChat = (props) => {
         {searchValue.length !== 0 && (
           <ListItem>
             <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
-              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" indicatorColor="primary">
+              <Tabs value={tabValue} onChange={handleTabChange} aria-label="basic tabs example" indicatorColor="primary">
                 <Tab value="all" label="All" id="simple-tab-0" sx={{ flex: 1, textTransform: "none", fontWeight: 600 }} />
                 <Tab value="people" label="People" id="simple-tab-1" sx={{ flex: 1, textTransform: "none", fontWeight: 600 }} />
                 <Tab value="messages" label="Messages" id="simple-tab-2" sx={{ flex: 1, textTransform: "none", fontWeight: 600 }} />
@@ -143,38 +148,40 @@ const InfoChat = (props) => {
         )}
 
         {searchActive && searchValue.length === 0 && <div style={{ fontSize: "15px", color: "rgb(83, 100, 113)", textAlign: "center", marginTop: "32px" }}>Try searching for people, or messages</div>}
-        {/* {searchActive && searchValue.length !== 0 && 
-        <div>
-          Try searching for people, or messages
-        </div>
-        } */}
+
+        {searchActive && searchValue.length !== 0 && tabValue === "all" && (
+          <>
+            <SearchPeople contacts={contacts} searchValue={searchValue} tabValue={tabValue} />
+            <SearchMessages messages={messages} searchValue={searchValue} tabValue={tabValue} />
+          </>
+        )}
+        {searchActive && searchValue.length !== 0 && tabValue === "people" && <SearchPeople contacts={contacts} searchValue={searchValue} tabValue={tabValue} />}
+        {searchActive && searchValue.length !== 0 && tabValue === "messages" && <SearchMessages messages={messages} searchValue={searchValue} tabValue={tabValue} />}
 
         {/* Contacts */}
         {!searchActive &&
-          contacts
-            .filter((contact) => contact.name.toUpperCase().includes(searchValue.toUpperCase()) || contact.userName.toUpperCase().includes(searchValue.toUpperCase()))
-            .map((contact, index) => (
-              <ListItem disablePadding key={index}>
-                <ListItemButton
-                  onClick={() => {
-                    handleContactSelection(index)
-                  }}
-                >
-                  <ListItemAvatar>
-                    {/* <Avatar>
+          contacts.map((contact, index) => (
+            <ListItem disablePadding key={index}>
+              <ListItemButton
+                onClick={() => {
+                  handleContactSelection(index)
+                }}
+              >
+                <ListItemAvatar>
+                  {/* <Avatar>
                           <FaceIcon color="secondary" />
                         </Avatar> */}
-                    <Avatar alt={contact.name} src={contact.avatarLink} />
-                  </ListItemAvatar>
-                  <ListItemText primary={`${contact.name} [id=${contact.id}]`} secondary={`@${contact.userName}`} />
-                  {contact.selected && (
-                    <ListItemIcon>
-                      <CheckIcon color="primary" fontSize="small" />
-                    </ListItemIcon>
-                  )}
-                </ListItemButton>
-              </ListItem>
-            ))}
+                  <Avatar alt={contact.name} src={contact.avatarLink} />
+                </ListItemAvatar>
+                <ListItemText primary={`${contact.name} [id=${contact.id}]`} secondary={`@${contact.userName}`} />
+                {contact.selected && (
+                  <ListItemIcon>
+                    <CheckIcon color="primary" fontSize="small" />
+                  </ListItemIcon>
+                )}
+              </ListItemButton>
+            </ListItem>
+          ))}
       </List>
     </div>
   )
