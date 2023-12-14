@@ -6,10 +6,6 @@ import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
 import GifPicker, { ContentFilter } from "gif-picker-react"
 import { TENOR_API_KEY } from "../../MessagesConstants"
-// API
-import { APIs } from "../../MessagesConstants"
-import { useSelector } from "react-redux"
-import axios from "axios"
 
 const MessageInput = (props) => {
   // Message input
@@ -44,7 +40,7 @@ const MessageInput = (props) => {
       if (newMessageMedia) {
         if (newMessageMediaType === "Img") {
           handleSendMessage(newMessageText)
-          handleUploadMedia(newMessageMedia)
+          // handleUploadMedia(newMessageMedia) // upload media
         } else handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
       } else handleSendMessage(newMessageText)
     }
@@ -64,26 +60,6 @@ const MessageInput = (props) => {
   const [newMessageMedia, setNewMessageMedia] = useState()
   const [newMessageMediaType, setNewMessageMediaType] = useState()
   const [mediaInputPreview, setMediaInputPreview] = useState()
-
-  const userToken = useSelector((state) => state.user.token)
-  // handleUploadMedia: Uploads media to server and get its URL
-  const handleUploadMedia = (mediaFile) => {
-    const formData = new FormData()
-    formData.append("media", mediaFile)
-
-    axios
-      .post(APIs.actual.postMedia, formData, {
-        headers: {
-          authorization: "Bearer " + userToken,
-        },
-      })
-      .then((res) => {
-        console.log(res)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
 
   const handleMediaUpload = (event, MediaType) => {
     const file = event.target.files[0]

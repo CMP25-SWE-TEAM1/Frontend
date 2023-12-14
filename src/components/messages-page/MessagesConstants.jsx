@@ -20,7 +20,7 @@ const ACTUAL_DOMAIN = "http://backend.gigachat.cloudns.org/api"
 // sub-domains
 export const APIs = {
   mock: {
-    // postMedia: MOCK_DOMAIN + "/media",
+    postMedia: MOCK_DOMAIN + "/media",
     getChat: MOCK_DOMAIN + "/user/chat",
     getChatAll: MOCK_DOMAIN + "/user/chat/all",
   },

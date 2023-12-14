@@ -6,46 +6,33 @@ import InfoNoChat from "./navigation/InfoNoChat"
 
 import { useState, useEffect } from "react"
 
-import { APIs, BACKEND_ON, SERVER_ON } from "./MessagesConstants"
-import axios from "axios"
+import { BACKEND_ON } from "./MessagesConstants"
+import useGetContacts from "./customHooks/get/useGetContacts"
 
 const Messages = () => {
+  const handleGetContacts = useGetContacts
+
   useEffect(() => {
     if (BACKEND_ON) {
       handleGetContacts().then((newContacts) => {
-        console.log("newContacts", newContacts)
+        // console.log("newContacts", newContacts)
         setContacts(
           newContacts.map((conatct) => ({
             id: conatct.id,
             userName: conatct.username,
             name: conatct.nickname,
-            lastMessage: conatct.lastMessage,
-            lastMessageDate: conatct.time,
 
             // Contact avatar is missing!!
             // avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-            // bio: "I am the real batman",
+
+            lastMessage: conatct.lastMessage,
+            lastMessageDate: conatct.time,
             lastMessageSeen: conatct.seen,
           }))
         )
       })
     }
   }, [])
-
-  const handleGetContacts = () => {
-    return axios
-      .get(SERVER_ON ? APIs.actual.getChatAll : APIs.mock.getChatAll)
-      .then((res) => {
-        // Handle the successful response
-        console.log(res.data)
-        return res.data
-      })
-      .catch((err) => {
-        // Handle errors
-        console.log(err)
-        return []
-      })
-  }
 
   const [contacts, setContacts] = useState([
     {
