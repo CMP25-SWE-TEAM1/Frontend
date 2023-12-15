@@ -238,9 +238,11 @@ const DetailsChat = (props) => {
                       .map((msg) => (
                         <Message messageMeta={msg.time} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
                       ))}
-                    <Divider>
-                      <Chip label="unread messages" />
-                    </Divider>
+                    {messagesData.filter((msg) => !msg.seen) && (
+                      <Divider>
+                        <Chip label="unread messages" />
+                      </Divider>
+                    )}
                     {messagesData
                       .filter((msg) => !msg.seen)
                       .map((msg) => (
