@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import axios from "axios"
-import { useParams } from "react-router-dom"
-import ProfilePage from "./ProfilePage"
+import { useNavigate } from "react-router-dom"
+
+
 const FollowButton = (props) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const { token } = useSelector((state) => state.user)
   const mock = false
   const [buttonstate, setbuttonstate] = useState(props.buttonName)
+
+  const navigate = useNavigate();
   // there should be a conditional rendering by back
   useEffect(() => {
     setbuttonstate(props.buttonName)
   }, [props.buttonName])
   const APIsf = {
     mock: { postfollowProfileAPI: `http://localhost:3001/api/user/${props.tag}/follow` },
-    actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
     actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
   }
   const APIsuf = {
@@ -23,7 +25,8 @@ const FollowButton = (props) => {
   }
   function HandleClick() {
     if (buttonstate === "Edit Profile") {
-      //Open Modal
+      props.handleOpenProfileEditModal()
+      navigate('/settings/profile')
     } else if (buttonstate === "Follow") {
       axios
         .post(

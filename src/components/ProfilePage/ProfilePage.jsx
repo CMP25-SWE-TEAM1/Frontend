@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import React from "react"
 import FollowButton from "./FollowButton"
@@ -14,28 +14,29 @@ import { useState } from "react"
 import defaultProfilePic from "../../assets/imgs/Default_Profile_Picture.png"
 import Header from "./Header"
 import ProfilePageEdit from "./ProfilePageEdit"
-import { useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import Details from "./Details"
 import Widgets from "../Widgets"
+import { changeUser } from "../../store/UserSlice"
 
-const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) => {
+const ProfilePage = (props) => {
   const { user } = useSelector((state) => state.user)
   const { token } = useSelector((state) => state.user)
   const [profileres, setProfile] = useState([])
-
   const mock = false
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth) //todo: for responsiveness
   const [profilePicURL, setProfilePicURL] = useState()
   const [bannerPicURL, setCoverPicURL] = useState()
+
   let { tag } = useParams()
+  const dispatch = useDispatch()
   const APIs = {
     mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
     actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/` },
   }
+  
   const Fetch = () => {
-    setTimeout(() => {
-      if (tag) {
         if (user.username !== tag) {
           axios
             .get(mock ? APIs.mock.getProfileAPI + `${tag}` : APIs.actual.getProfileAPI + `${tag}`, {
@@ -71,6 +72,7 @@ const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) =>
                 setCoverPicURL(res.data.user.banner_image)
                 res.data.user.is_curr_user = true
                 setProfile(res.data.user)
+                dispatch(changeUser(res.data.user))
               }
             })
             .catch((err) => {
@@ -78,12 +80,14 @@ const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) =>
               console.log(err)
             })
         }
-      } else {
-        Fetch()
-      }
-    }, 100)
   }
-  useEffect(Fetch, [])
+  useEffect(()=>{
+    if(tag)
+    {
+      Fetch()
+    }
+  }
+    , [tag])
 
   // console.log(profileres.is_curr_user)
   return (
@@ -100,14 +104,15 @@ const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) =>
             <div className="flex flex-row">
               <ProfileImage profileimage={profilePicURL} profileimageURL={profilePicURL}></ProfileImage>
               <Details ismuted={profileres.is_wanted_user_muted} isblocked={profileres.is_wanted_user_blocked} tag={tag} display={`${profileres.is_curr_user? `hidden`: `block`}`}></Details>
-              <FollowButton tag={tag} buttonName={profileres.is_curr_user ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
+              <FollowButton handleOpenProfileEditModal={props.handleOpenProfileEditModal} tag={tag} buttonName={profileres.is_curr_user ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
             </div>
-            <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
+            
           </div>
+          <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
           <ProfileBio profilebio={profileres.bio}></ProfileBio>
           <ProfileICons profilelocation={profileres.location} profilewebsite={profileres.website} profilejoindate={profileres.joined_date}></ProfileICons>
           <Followers followers={profileres.followers_num} following={profileres.followings_num}></Followers>
-          <ProfilePageEdit openModal={false} handleCloseModal={handleCloseModal}></ProfilePageEdit>
+          <ProfilePageEdit openModal={props.openModal} handleCloseModal={props.handleCloseModal}></ProfilePageEdit>
           <ProfileMediabuttons ></ProfileMediabuttons>
         </div>
       </div>

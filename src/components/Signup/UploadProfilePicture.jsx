@@ -74,7 +74,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
           })
         })
         .then((res) => {
-          // console.log(res.data.data.usls[0])
+           console.log(res.data.data.usls[0])
           // console.log(userToken)
           newuser = {
             ...tmpuser,
