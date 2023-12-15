@@ -1,9 +1,9 @@
 import { APIs, SERVER_ON } from "../../MessagesConstants"
 import axios from "axios"
 
-const useDeleteMessage = (id) => {
+const useDeleteMessage = (messageId) => {
   return axios
-    .delete(SERVER_ON ? `${APIs.actual.deleteMessage}/${id}` : `${APIs.mock.deleteMessage}/${id}`)
+    .delete(SERVER_ON ? `${APIs.actual.deleteMessage}/${messageId}` : `${APIs.mock.deleteMessage}/${messageId}`)
     .then((res) => {
       // Handle the successful response
       //   console.log(res.data)
