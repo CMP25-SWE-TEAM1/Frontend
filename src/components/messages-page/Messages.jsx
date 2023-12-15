@@ -130,10 +130,10 @@ const Messages = () => {
               </a>
             </div>
           </div>
-          {contacts.length === 0 && <InfoNoChat />}
+          {contacts.length === 0 && <InfoNoChat handleComposeModalOpen={handleComposeModalOpen} />}
           {contacts.length !== 0 && <InfoChat contacts={contacts} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />}
         </div>
-        {(!selectedContact || !contacts.filter((contact) => contact.id === selectedContact)[0]) && <DetailsNoChat />}
+        {(!selectedContact || !contacts.filter((contact) => contact.id === selectedContact)[0]) && <DetailsNoChat handleComposeModalOpen={handleComposeModalOpen} />}
         {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} />}
       </div>
 

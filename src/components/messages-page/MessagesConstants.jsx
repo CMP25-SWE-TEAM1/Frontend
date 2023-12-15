@@ -12,7 +12,7 @@ export const SOCKET_IO = {
 // APIs
 // ================
 // flags
-export const BACKEND_ON = true // flag for using APIs(true) or not(false)
+export const BACKEND_ON = false // flag for using APIs(true) or not(false)
 export const SERVER_ON = false // flag for using Mock(false) or actual(true)
 // domains
 const MOCK_DOMAIN = "http://localhost:3001/api"
