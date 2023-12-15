@@ -5,14 +5,27 @@ import { useState, useEffect, useRef } from "react"
 import Divider from "@mui/material/Divider"
 import Chip from "@mui/material/Chip"
 
+import useGetChat from "../customHooks/get/useGetChat"
 // Socket.io
 import io from "socket.io-client"
-import { SOCKET_ON, SOCKET_IO, BACKEND_ON } from "../MessagesConstants"
-import useGetChat from "../customHooks/get/useGetChat"
 
-const socket = SOCKET_ON ? io.connect(SOCKET_IO.mock) : ""
+import { SOCKET_ON, SOCKET_IO, BACKEND_ON } from "../MessagesConstants"
+import { useSelector } from "react-redux"
 
 const DetailsChat = (props) => {
+  const userToken = useSelector((state) => state.user.token)
+  const connection_string = SOCKET_IO.actual
+  const socket = SOCKET_ON
+    ? io(connection_string, {
+        withCredentials: true,
+        extraHeaders: {
+          // token: "malek"
+          // token: userToken,
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzQ2ZjA0NGUyOGRlYTYyMDY5M2I4MSIsImlhdCI6MTcwMjEyOTQ3MiwiZXhwIjoxNzA5OTA1NDcyfQ.hn1CqfcPfGvFZuDn7PBhNfIpjv_ObO2SfZre3v0Y6FQ",
+        },
+      })
+    : ""
+
   const contact = props.contact
   const handleGetChat = useGetChat
 
@@ -165,7 +178,7 @@ const DetailsChat = (props) => {
   useEffect(() => {
     if (SOCKET_ON) {
       socket.on("receive_message", (data) => {
-        // console.log("received_message:", data.message)
+        console.log("received_message:", data.message)
         setScrollToBottomFlag(true)
         const message = data.message
         setMessagesData([...messagesData, { id: msgIdCounterS, messageText: message.messageText, messageMedia: message.messageMedia, mediaType: message.messageMediaType }])
@@ -176,8 +189,16 @@ const DetailsChat = (props) => {
   }, [messagesData, msgIdCounterS])
   // Send message to socket sercer
   const sendMessage_toServer = (message) => {
-    // console.log("message sending...", message)
-    socket.emit("send_message", { message })
+    console.log("message sending...", message)
+    socket.emit("send_message", {
+      //  sender_ID:
+      reciever_ID: contact.id,
+      data: {
+        ...(message.messageMedia && { media: message.messageMedia }),
+        ...(message.messageMediaType && { mediaType: message.messageMediaType }),
+        ...(message.messageText && { text: message.messageText }),
+      },
+    })
   }
 
   // Handle get chat of specific user

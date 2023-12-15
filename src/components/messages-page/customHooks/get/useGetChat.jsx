@@ -12,7 +12,7 @@ const useGetChat = (chatid) => {
       })
       .then((res) => {
         // Handle the successful response
-        console.log(res)
+        // console.log(res)
         return res.data
       })
       .catch((err) => {
