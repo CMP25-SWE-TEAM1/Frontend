@@ -8,7 +8,7 @@ import { last120Years, days, months } from "../../constants/index.js"
 
 import { useSelector } from "react-redux"
 
-const Birthdate = ({ month, setMonth, day, setDay, year, setYear }) => {
+const Birthdate = ({ month, setMonth, day, setDay, year, setYear, yearwidth,monthwidth }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
 
   const handleChangeYear = (event) => {
@@ -41,6 +41,7 @@ const Birthdate = ({ month, setMonth, day, setDay, year, setYear }) => {
             label="Age"
             onChange={handleChangeMonth}
             sx={{
+              width: monthwidth,
               color: "black",
               ".MuiOutlinedInput-notchedOutline": {
                 borderColor: "#767C86",
@@ -157,6 +158,7 @@ const Birthdate = ({ month, setMonth, day, setDay, year, setYear }) => {
             label="Year"
             onChange={handleChangeYear}
             sx={{
+              width: yearwidth,
               color: "black",
               ".MuiOutlinedInput-notchedOutline": {
                 borderColor: "#767C86",

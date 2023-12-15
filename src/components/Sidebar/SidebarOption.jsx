@@ -11,6 +11,7 @@ function SidebarOption({ icon, name, link }) {
       className="group my-1 box-border cursor-pointer border-0 max-[1278px]:w-fit"
       onClick={() => {
         navigate(link)
+        window.location.reload();
         
       }}
     >
