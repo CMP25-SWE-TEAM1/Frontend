@@ -1,12 +1,94 @@
+import MessageCompose from "./compose/MessageCompose"
 import DetailsChat from "./details/DetailsChat"
 import DetailsNoChat from "./details/DetailsNoChat"
 import "./messages.css"
 import InfoChat from "./navigation/InfoChat"
 import InfoNoChat from "./navigation/InfoNoChat"
 
-const Messages = () => {
-  const one = true
-  const two = false
+import { useState, useEffect } from "react"
+
+import { BACKEND_ON } from "./MessagesConstants"
+import useGetContacts from "./customHooks/get/useGetContacts"
+
+const Messages = (props) => {
+  const handleGetContacts = useGetContacts
+
+  // Compose message
+  const composeModalOpen = props.composeModalOpen
+  const handleComposeModalOpen = props.handleComposeModalOpen
+  const handleComposeModalClose = props.handleComposeModalClose
+
+  useEffect(() => {
+    if (BACKEND_ON) {
+      handleGetContacts().then((response) => {
+        // console.log("newChats", newChats)
+        const newChats = response.data.map((chat) => ({
+          id: chat._id,
+
+          userName: chat.chat_members[0].username,
+          name: chat.chat_members[0].nickname,
+          avatarLink: chat.chat_members[0].profile_image,
+
+          lastMessage: chat.lastMessage.description,
+          lastMessageDate: chat.lastMessage.sendTime,
+          lastMessageSeen: chat.lastMessage.seen,
+          lastMessageSender: chat.lastMessage.sender,
+        }))
+        setContacts(newChats)
+      })
+    }
+  }, [])
+
+  const [contacts, setContacts] = useState([
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U74",
+      name: "Khaled",
+      id: 103,
+      bio: "I am the real batman",
+      lastMessage: "last message",
+      lastMessageDate: "date",
+    },
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U66",
+      name: "Moaz",
+      id: 106,
+      bio: "I am the real batman",
+      lastMessage: "last message",
+      lastMessageDate: "date",
+    },
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U55",
+      name: "Ali",
+      id: 105,
+      bio: "I am the real batman",
+      lastMessage: "last message",
+      lastMessageDate: "date",
+    },
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U44",
+      name: "Hamza",
+      id: 104,
+      bio: "I am the real batman",
+      lastMessage: "last message",
+      lastMessageDate: "date",
+    },
+    {
+      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+      userName: "U77",
+      name: "Abd El-Rahman",
+      id: 107,
+      bio: "I am the real batman",
+      lastMessage: "last message",
+      lastMessageDate: "date",
+    },
+  ])
+
+  const [selectedContact, setSelectedContact] = useState()
+
   return (
     <>
       {/* <div className="sidebar">Sidebar</div> */}
@@ -15,7 +97,13 @@ const Messages = () => {
           <div className="header">
             <h2>Messages</h2>
             <div>
-              <a href="/messages/settings" title="Settings">
+              <a
+                href="/messages/settings"
+                onClick={(event) => {
+                  event.preventDefault()
+                }}
+                title="Settings"
+              >
                 {/* Setting  icon */}
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <g>
@@ -23,7 +111,14 @@ const Messages = () => {
                   </g>
                 </svg>
               </a>
-              <a href="/messages/compose" title="New message">
+              <a
+                href="/messages/compose"
+                onClick={(event) => {
+                  event.preventDefault()
+                  handleComposeModalOpen()
+                }}
+                title="New message"
+              >
                 {/* Compose icon */}
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <g>
@@ -33,12 +128,14 @@ const Messages = () => {
               </a>
             </div>
           </div>
-          {one && <InfoNoChat />}
-          {!one && <InfoChat />}
+          {contacts.length === 0 && <InfoNoChat handleComposeModalOpen={handleComposeModalOpen} />}
+          {contacts.length !== 0 && <InfoChat contacts={contacts} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />}
         </div>
-        {two && <DetailsNoChat />}
-        {!two && <DetailsChat />}
+        {(!selectedContact || !contacts.filter((contact) => contact.id === selectedContact)[0]) && <DetailsNoChat handleComposeModalOpen={handleComposeModalOpen} />}
+        {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} />}
       </div>
+
+      <MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} />
     </>
   )
 }

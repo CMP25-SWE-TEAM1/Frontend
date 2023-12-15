@@ -2,19 +2,33 @@ import { useNavigate } from "react-router-dom"
 import Message from "./message/Message"
 import MessageInput from "./message/MessageInput"
 import { useState, useEffect, useRef } from "react"
+import Divider from "@mui/material/Divider"
+import Chip from "@mui/material/Chip"
 
-// API
-import { APIs } from "./MessagesConstants"
-import { useSelector } from "react-redux"
-import axios from "axios"
-
+import useGetChat from "../customHooks/get/useGetChat"
 // Socket.io
 import io from "socket.io-client"
-import { SOCKET_ON, SOCKET_IO } from "./MessagesConstants"
 
-const socket = SOCKET_ON ? io.connect(SOCKET_IO.mock) : ""
+import { SOCKET_ON, SOCKET_IO, BACKEND_ON } from "../MessagesConstants"
+import { useSelector } from "react-redux"
 
-const DetailsChat = () => {
+const DetailsChat = (props) => {
+  const userToken = useSelector((state) => state.user.token)
+  const connection_string = SOCKET_IO.actual
+  const socket = SOCKET_ON
+    ? io(connection_string, {
+        withCredentials: true,
+        extraHeaders: {
+          // token: "malek"
+          // token: userToken,
+          token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzQ2ZjA0NGUyOGRlYTYyMDY5M2I4MSIsImlhdCI6MTcwMjEyOTQ3MiwiZXhwIjoxNzA5OTA1NDcyfQ.hn1CqfcPfGvFZuDn7PBhNfIpjv_ObO2SfZre3v0Y6FQ",
+        },
+      })
+    : ""
+
+  const contact = props.contact
+  const handleGetChat = useGetChat
+
   const one = true
   const two = true
   const navigate = useNavigate()
@@ -103,8 +117,27 @@ const DetailsChat = () => {
   // scroll to bottom button
   const endOfChat = useRef(null)
   useEffect(() => {
+    if (BACKEND_ON) {
+      handleGetChat(contact.id).then((response) => {
+        console.log("response", response)
+        const newChat = response.data.map((message) => ({
+          id: message.id,
+          messageText: message.description,
+          // Need some update
+          messageMedia: message.media ? message.media[0].data : undefined,
+          mediaType: () => {
+            return message.media && message.media[0].type === "photo" ? "Img" : undefined
+          },
+          direction: message.mine ? "R" : "L",
+          // not handled yet! (in FE ): )
+          seen: message.seen,
+          time: message.sendTime,
+        }))
+        setMessagesData(newChat)
+      })
+    }
     scrollToBottom()
-  }, [])
+  }, [contact.id, handleGetChat])
   const scrollToBottom = () => {
     // endOfChat?.current?.scrollIntoView({ behavior: "smooth" })
     endOfChat?.current?.scrollIntoView()
@@ -145,7 +178,7 @@ const DetailsChat = () => {
   useEffect(() => {
     if (SOCKET_ON) {
       socket.on("receive_message", (data) => {
-        // console.log("received_message:", data.message)
+        console.log("received_message:", data.message)
         setScrollToBottomFlag(true)
         const message = data.message
         setMessagesData([...messagesData, { id: msgIdCounterS, messageText: message.messageText, messageMedia: message.messageMedia, mediaType: message.messageMediaType }])
@@ -156,19 +189,19 @@ const DetailsChat = () => {
   }, [messagesData, msgIdCounterS])
   // Send message to socket sercer
   const sendMessage_toServer = (message) => {
-    // console.log("message sending...", message)
-    socket.emit("send_message", { message })
+    console.log("message sending...", message)
+    socket.emit("send_message", {
+      //  sender_ID:
+      reciever_ID: contact.id,
+      data: {
+        ...(message.messageMedia && { media: message.messageMedia }),
+        ...(message.messageMediaType && { mediaType: message.messageMediaType }),
+        ...(message.messageText && { text: message.messageText }),
+      },
+    })
   }
 
   // Handle get chat of specific user
-  const userToken = useSelector((state) => state.user.token)
-
-  const handleGetChat = (chatUserId) => {
-    const formData = new FormData()
-    formData.append("id", chatUserId)
-
-    // axios
-  }
 
   return (
     <div className="details chat">
@@ -176,9 +209,9 @@ const DetailsChat = () => {
         <div className="head">
           <div>
             <a href="#/username">
-              <img src={require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
+              <img src={contact.avatarLink || "https://64.media.tumblr.com/avatar_f71055191601_128.pnj"} alt="profile img" />
             </a>
-            <h2>Mickey Mouse</h2>
+            <h2>{contact.name || "Hamza"}</h2>
           </div>
           <a href="/info" title="Details">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -202,28 +235,40 @@ const DetailsChat = () => {
               {two && (
                 <div className="chatbox-content">
                   {/* User info */}
-                  <div className="contact-info" onClick={() => navigate("#/username")}>
+                  <div className="contact-info" onClick={() => navigate(`#/${contact.userName || "username"}`)}>
                     {/* Image */}
                     <div className="image">
-                      <img src={require("../../../assets/imgs/profile-pic-2.jpg")} alt="profile img" />
+                      <img src={contact.avatarLink || "https://64.media.tumblr.com/avatar_f71055191601_128.pnj"} alt="profile img" />
                     </div>
                     {/* Name + contact name */}
                     <div className="contact-data">
-                      <a href="#/username">Mickey Mouse</a>
-                      <a href="#/username">@MickeyMouseEG</a>
+                      <a href="#/username">{contact.name || "Hamza"}</a>
+                      <a href="#/username">@{contact.userName || "hamza_xyz"}</a>
                     </div>
                     {/* Bio */}
-                    <div className="contact-bio">The Official Mickey Mouse - Egypt Account</div>
+                    <div className="contact-bio">{contact.bio || "I am the real batman"}</div>
                     {/* Info 1 (Joined + No. of followers) */}
-                    <div className="contact-xdata-1">Joined January 2011 · 268.8K Followers</div>
+                    <div className="contact-xdata-1">Joined January 2011 · {contact.followers_num || "268.8K"} Followers</div>
                     {/* Info 2 (common followers) */}
                     <div className="contact-xdata-2">Not followed by anyone you're following</div>
                   </div>
                   {/* Messages */}
                   <div className="messages">
-                    {messagesData.map((msg) => (
-                      <Message messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
-                    ))}
+                    {messagesData
+                      .filter((msg) => msg.seen)
+                      .map((msg) => (
+                        <Message messageMeta={msg.time} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
+                      ))}
+                    {messagesData.filter((msg) => !msg.seen).length !== 0 && (
+                      <Divider>
+                        <Chip label="unread messages" />
+                      </Divider>
+                    )}
+                    {messagesData
+                      .filter((msg) => !msg.seen)
+                      .map((msg) => (
+                        <Message messageMeta={msg.time} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
+                      ))}
                   </div>
                   <div ref={endOfChat}></div>
                 </div>
@@ -231,7 +276,7 @@ const DetailsChat = () => {
               <div className={`chat-scroll-down ${chatBtnDwnAppear ? "" : "hide"}`}>
                 {/* Note: onClick console error */}
                 <div onClick={() => handleBackToBottom()}>
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" style={{ fill: "#1D9BF0" }}>
                     <g>
                       <path d="M13 3v13.59l5.043-5.05 1.414 1.42L12 20.41l-7.457-7.45 1.414-1.42L11 16.59V3h2z"></path>
                     </g>
