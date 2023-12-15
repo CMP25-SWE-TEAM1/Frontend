@@ -20,22 +20,21 @@ const Messages = (props) => {
 
   useEffect(() => {
     if (BACKEND_ON) {
-      handleGetContacts().then((newContacts) => {
-        // console.log("newContacts", newContacts)
-        setContacts(
-          newContacts.map((conatct) => ({
-            id: conatct.id,
-            userName: conatct.username,
-            name: conatct.nickname,
+      handleGetContacts().then((response) => {
+        // console.log("newChats", newChats)
+        const newChats = response.data.map((chat) => ({
+          id: chat._id,
 
-            // Contact avatar is missing!!
-            // avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+          userName: chat.chat_members[0].username,
+          name: chat.chat_members[0].nickname,
+          avatarLink: chat.chat_members[0].profile_image,
 
-            lastMessage: conatct.lastMessage,
-            lastMessageDate: conatct.sendTime,
-            lastMessageSeen: conatct.seen,
-          }))
-        )
+          lastMessage: chat.lastMessage.description,
+          lastMessageDate: chat.lastMessage.sendTime,
+          lastMessageSeen: chat.lastMessage.seen,
+          lastMessageSender: chat.lastMessage.sender,
+        }))
+        setContacts(newChats)
       })
     }
   }, [])
