@@ -1,7 +1,7 @@
 import "../../styles/home.css"
 import PostsContainer from "./Posts/PostsContainer"
 import HorizontalNavbar from "../General/HorizontalNavbar"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Widgets from "../Widgets"
 import getUser from "../../constants/index"
 
@@ -28,55 +28,96 @@ const Home = () => {
       getUserTweets: `http://backend.gigachat.cloudns.org/api/profile/${user.username}/tweets`,
     },
   }
-  useEffect(() => {
-    // console.log("token")
-    // console.log(userToken)
+  const [pageNumber, setPageNumber] = useState(1)
+  const [finshed, setFinished] = useState(false)
 
+  const fetchPosts = () => {
+    console.log("fetching new posts...")
     axios
       .get(APIs.actual.getAllTweetsAPI, {
+        params: {
+          page: pageNumber,
+          count: 10,
+        },
         headers: {
           authorization: "Bearer " + userToken,
         },
       })
       .then((response) => {
-        console.log(response)
+        // console.log(response)
         if (response.status === 200) {
           // console.log("in then ");
+          // console.log(response.data.tweetList)
           if (response.data.tweetList) {
-            setPosts(response.data.tweetList)
-          } else setPosts([])
-
-          return axios.get(APIs.actual.getUserTweets, {
-            params: {
-              page: 1,
-              count: 10,
-              username: user.username,
-            },
-            headers: {
-              authorization: "Bearer " + userToken,
-            },
-          })
-        }
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          console.log("user posts ", res.data)
-          if (res.data.posts) {
-            setPosts((prevState) => [
-              ...prevState,
-              ...res.data.posts.map((post) => ({
-                tweetDetails: post,
-                followingUser: user,
-              })),
-            ])
-            // console.log(res)
+            setPosts((prevState) => [...prevState, ...response.data.tweetList.sort(() => Math.random() - 0.5)])
+          }
+          if (response.data.tweetList.length < 10) {
+            setFinished(true)
           }
         }
       })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [])
+      .catch((err) => console.log(err))
+  }
+
+  useEffect(() => {
+    if (finshed === false) fetchPosts()
+  }, [pageNumber])
+
+  // useEffect(() => {
+  //   // console.log("token")
+  //   // console.log(userToken)
+
+  //   axios
+  //     .get(APIs.actual.getAllTweetsAPI, {
+  //       params: {
+  //         page: pageNumber,
+  //         count: 10,
+  //       },
+  //       headers: {
+  //         authorization: "Bearer " + userToken,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       // console.log(response)
+  //       if (response.status === 200) {
+  //         // console.log("in then ");
+  //         if (response.data.tweetList) {
+  //           setPosts(response.data.tweetList.sort(() => Math.random() - 0.5))
+  //         } else setPosts([])
+
+  //         return axios.get(APIs.actual.getUserTweets, {
+  //           params: {
+  //             page: 1,
+  //             count: 10,
+  //             username: user.username,
+  //           },
+  //           headers: {
+  //             authorization: "Bearer " + userToken,
+  //           },
+  //         })
+  //       }
+  //     })
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         // console.log("user posts ", res.data)
+  //         if (res.data.posts) {
+  //           setPosts((prevState) => [
+  //             ...prevState,
+  //             ...res.data.posts
+  //               .map((post) => ({
+  //                 tweetDetails: post,
+  //                 followingUser: user,
+  //               }))
+  //               .sort(() => Math.random() - 0.5),
+  //           ])
+  //           // console.log(res)
+  //         }
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error)
+  //     })
+  // }, [])
 
   const handleNewPost = (newPost) => {
     setPosts([{ tweetDetails: newPost.data }, ...posts])
@@ -242,11 +283,28 @@ const Home = () => {
     },
   ]
 
+  const feedRef = useRef()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const container = feedRef.current
+
+      if (container.scrollHeight - Math.ceil(container.scrollTop) === container.clientHeight) {
+        setPageNumber((prevState) => prevState + 1)
+      }
+    }
+
+    const container = feedRef.current
+    container.addEventListener("scroll", handleScroll)
+
+    return () => {
+      container.removeEventListener("scroll", handleScroll)
+    }
+  }, [feedRef])
+
   return (
     <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
-      {/* {user && <Sidebar user={user} setUser={setUser} />} */}
-
-      <div className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-[600px]">
+      <div ref={feedRef} id="homeFeed" className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] max-xs:border-l-0 max-xs:border-r-0 sm:w-[600px]">
         {/* <div className="sticky top-0 z-50 mb-0 border-0 border-b border-lightBorder bg-white backdrop-blur-md dark:border-darkBorder dark:bg-inherit dark:backdrop-brightness-[40%]"> */}
         {/* <div className="h-[53px] flex justify-start items-center">
           <h2 className="font-semibold text-xl text-gray-800 pl-6 dark:text-white">
@@ -259,13 +317,14 @@ const Home = () => {
         {/* </div> */}
         <ComposePost handleNewPost={(newPost) => handleNewPost(newPost)} />
         <PostsContainer posts={posts} setPosts={setPosts} />
+        {/* .sort(() => Math.random() - 0.5) */}
       </div>
       {/* <div>
         <p>name: {user.name}</p>
         <p>email: {user.email}</p>
         <img src={user.picture} alt="profile" />
       </div> */}
-      {user && <Widgets parent={"home"}/>}
+      {user && <Widgets parent={"home"} />}
     </div>
   )
 }

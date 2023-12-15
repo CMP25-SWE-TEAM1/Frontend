@@ -85,6 +85,11 @@ const userSlice = createSlice({
       temp_user.email = action.payload
       localStorage.setItem("user", JSON.stringify(temp_user))
     },
+    changeUser: (state,action) =>
+    {
+      state.user= action.payload
+      localStorage.setItem("user",JSON.stringify(action.payload))
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -122,5 +127,5 @@ export const signupUser = userSlice.actions.signupUser
 export const changeProfilePicture = userSlice.actions.changeProfilePicture
 export const changeUsername = userSlice.actions.changeUsername
 export const changeEmail = userSlice.actions.changeEmail
-
+export const changeUser  = userSlice.actions.changeUser
 export default userSlice.reducer

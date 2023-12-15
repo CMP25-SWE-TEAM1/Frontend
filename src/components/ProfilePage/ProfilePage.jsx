@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import React from "react"
 import FollowButton from "./FollowButton"
@@ -14,74 +14,77 @@ import { useState } from "react"
 import defaultProfilePic from "../../assets/imgs/Default_Profile_Picture.png"
 import Header from "./Header"
 import ProfilePageEdit from "./ProfilePageEdit"
-import { useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import Details from "./Details"
 import Widgets from "../Widgets"
+import { changeUser } from "../../store/UserSlice"
 
-const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) => {
+const ProfilePage = (props) => {
   const { user } = useSelector((state) => state.user)
   const { token } = useSelector((state) => state.user)
   const [profileres, setProfile] = useState([])
-
   const mock = false
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth) //todo: for responsiveness
   const [profilePicURL, setProfilePicURL] = useState()
   const [bannerPicURL, setCoverPicURL] = useState()
-  let { tag } = useParams()
+  const { tag } = useParams()
+  const dispatch = useDispatch()
   const APIs = {
     mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
     actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/` },
   }
+
   const Fetch = () => {
-    setTimeout(() => {
-      if (tag) {
-        if (user.username !== tag) {
-          axios
-            .get(mock ? APIs.mock.getProfileAPI + `${tag}` : APIs.actual.getProfileAPI + `${tag}`, {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            })
-            .then((res) => {
-              if (res.status === 200) {
-                console.log(`Bearer ${token}`)
-                setProfilePicURL(res.data.user.profile_image)
-                setCoverPicURL(res.data.user.banner_image)
-                setProfile(res.data.user)
-              }
-            })
-            .catch((err) => {
-              console.log(tag)
-              console.log(err)
-            })
-        } else {
-          axios
-            .get(mock ? APIs.mock.getProfileAPI : APIs.actual.getProfileAPI, {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            })
-            .then((res) => {
-              if (res.status === 200) {
-                // console.log(`Bearer ${token}`)
-                setProfilePicURL(res.data.user.profile_image)
-                setCoverPicURL(res.data.user.banner_image)
-                res.data.user.is_curr_user = true
-                setProfile(res.data.user)
-              }
-            })
-            .catch((err) => {
-              console.log(tag)
-              console.log(err)
-            })
-        }
-      } else {
-        Fetch()
-      }
-    }, 100)
+    if (user.username !== tag) {
+      axios
+        .get(mock ? APIs.mock.getProfileAPI + `${tag}` : APIs.actual.getProfileAPI + `${tag}`, {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            console.log(res)
+            console.log(`Bearer ${token}`)
+            setProfilePicURL(res.data.user.profile_image)
+            setCoverPicURL(res.data.user.banner_image)
+            setProfile(res.data.user)
+          }
+        })
+        .catch((err) => {
+          console.log(tag)
+          console.log(err)
+        })
+    } else {
+      axios
+        .get(mock ? APIs.mock.getProfileAPI : APIs.actual.getProfileAPI, {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            // console.log(`Bearer ${token}`)
+            console.log(res)
+            setProfilePicURL(res.data.user.profile_image)
+            setCoverPicURL(res.data.user.banner_image)
+            res.data.user.is_curr_user = true
+            setProfile({ ...res.data.user, profileImage: res.data.user.profile_image })
+            dispatch(changeUser({ ...res.data.user, profileImage: res.data.user.profile_image }))
+          }
+        })
+        .catch((err) => {
+          console.log(tag)
+          console.log(err)
+        })
+    }
   }
-  useEffect(Fetch, [])
+  useEffect(() => {
+    if (tag) {
+      Fetch()
+    }
+  }, [tag])
 
   // console.log(profileres.is_curr_user)
   return (
@@ -93,24 +96,24 @@ const ProfilePage = (handleOpenProfileEditModal, openModal, handleCloseModal) =>
         border-t-0 border-lightBorder dark:border-darkBorder md:w-[100%]"
         >
           <div id="Upperhalf" className="mb-[10%] h-[50%] md:w-[100%] lg:w-[100%]">
-            <Header profilename={profileres.nickname} postsnum={profileres.followers_num}></Header>
+            <Header profilename={profileres.nickname} postsnum={profileres.num_of_posts}></Header>
             <CoverImage coverimage={bannerPicURL}></CoverImage>
             <div className="flex flex-row">
               <ProfileImage profileimage={profilePicURL} profileimageURL={profilePicURL}></ProfileImage>
-              <Details display={profileres.is_curr_user === "Edit Profile" ? `hidden` : `inline-block`}></Details>
-              <FollowButton tag={tag} buttonName={profileres.is_curr_user ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
+              <Details ismuted={profileres.is_wanted_user_muted} isblocked={profileres.is_wanted_user_blocked} tag={tag} display={`${profileres.is_curr_user ? `hidden` : `block`}`}></Details>
+              <FollowButton handleOpenProfileEditModal={props.handleOpenProfileEditModal} tag={tag} buttonName={profileres.is_curr_user ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
             </div>
-            <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
           </div>
+          <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
           <ProfileBio profilebio={profileres.bio}></ProfileBio>
           <ProfileICons profilelocation={profileres.location} profilewebsite={profileres.website} profilejoindate={profileres.joined_date}></ProfileICons>
-          <Followers followers={profileres.followers_num} following={profileres.following_num}></Followers>
-          <ProfilePageEdit openModal={false} handleCloseModal={handleCloseModal}></ProfilePageEdit>
-          <ProfileMediabuttons ></ProfileMediabuttons>
+          <Followers followers={profileres.followers_num} following={profileres.followings_num}></Followers>
+          <ProfilePageEdit openModal={props.openModal} handleCloseModal={props.handleCloseModal}></ProfilePageEdit>
+          <ProfileMediabuttons></ProfileMediabuttons>
         </div>
       </div>
 
-      {user && <Widgets parent={"profile"}/>}
+      {user && <Widgets parent={"profile"} />}
     </div>
   )
 }
