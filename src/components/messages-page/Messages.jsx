@@ -13,6 +13,12 @@ import useGetContacts from "./customHooks/get/useGetContacts"
 const Messages = () => {
   const handleGetContacts = useGetContacts
 
+  // Compose message
+  const [composeModalOpen, setComposeModalOpen] = useState(false)
+  const handleComposeModalOpen = () => setComposeModalOpen(true)
+
+  const handleComposeModalClose = () => setComposeModalOpen(false)
+
   useEffect(() => {
     if (BACKEND_ON) {
       handleGetContacts().then((newContacts) => {
@@ -93,7 +99,13 @@ const Messages = () => {
           <div className="header">
             <h2>Messages</h2>
             <div>
-              <a href="/messages/settings" title="Settings">
+              <a
+                href="/messages/settings"
+                onClick={(event) => {
+                  event.preventDefault()
+                }}
+                title="Settings"
+              >
                 {/* Setting  icon */}
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <g>
@@ -101,7 +113,14 @@ const Messages = () => {
                   </g>
                 </svg>
               </a>
-              <a href="/messages/compose" title="New message">
+              <a
+                href="/messages/compose"
+                onClick={(event) => {
+                  event.preventDefault()
+                  handleComposeModalOpen()
+                }}
+                title="New message"
+              >
                 {/* Compose icon */}
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <g>
@@ -118,7 +137,7 @@ const Messages = () => {
         {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} />}
       </div>
 
-      <MessageCompose />
+      <MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} />
     </>
   )
 }

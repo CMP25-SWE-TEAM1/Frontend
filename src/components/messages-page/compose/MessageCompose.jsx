@@ -22,10 +22,9 @@ import Chip from "@mui/material/Chip"
 
 import "./message-compose.css"
 
-const MessageCompose = () => {
-  const [composeModalOpen, setComposeModalOpen] = useState(true)
-  const handleComposeModalOpen = () => setComposeModalOpen(true)
-  const handleComposeModalClose = () => setComposeModalOpen(false)
+const MessageCompose = (props) => {
+  const composeModalOpen = props.composeModalOpen
+  const handleComposeModalClose = props.handleComposeModalClose
 
   const [contacts, setContacts] = useState([
     {
