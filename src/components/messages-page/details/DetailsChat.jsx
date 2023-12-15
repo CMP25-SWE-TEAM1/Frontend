@@ -3,19 +3,16 @@ import Message from "./message/Message"
 import MessageInput from "./message/MessageInput"
 import { useState, useEffect, useRef } from "react"
 
-// API
-import { APIs } from "../MessagesConstants"
-import { useSelector } from "react-redux"
-import axios from "axios"
-
 // Socket.io
 import io from "socket.io-client"
-import { SOCKET_ON, SOCKET_IO } from "../MessagesConstants"
+import { SOCKET_ON, SOCKET_IO, BACKEND_ON } from "../MessagesConstants"
+import useGetChat from "../customHooks/get/useGetChat"
 
 const socket = SOCKET_ON ? io.connect(SOCKET_IO.mock) : ""
 
 const DetailsChat = (props) => {
   const contact = props.contact
+  const handleGetChat = useGetChat
 
   const one = true
   const two = true
@@ -105,8 +102,28 @@ const DetailsChat = (props) => {
   // scroll to bottom button
   const endOfChat = useRef(null)
   useEffect(() => {
+    if (BACKEND_ON) {
+      handleGetChat(contact.id).then((newChat) => {
+        setMessagesData(
+          newChat.map((message) => ({
+            id: message.id,
+            messageText: message.description,
+            // Need some update
+            messageMedia: message.media[0].data,
+            mediaType: () => {
+              return message.media[0].type === "photo" ? "Img" : undefined
+            },
+            // not handled yet! (in FE ): )
+            seen: message.seen,
+            time: message.time,
+            // where is direction!! (ask BE)
+            direction: "R",
+          }))
+        )
+      })
+    }
     scrollToBottom()
-  }, [])
+  }, [contact.id, handleGetChat])
   const scrollToBottom = () => {
     // endOfChat?.current?.scrollIntoView({ behavior: "smooth" })
     endOfChat?.current?.scrollIntoView()
@@ -163,14 +180,6 @@ const DetailsChat = (props) => {
   }
 
   // Handle get chat of specific user
-  const userToken = useSelector((state) => state.user.token)
-
-  const handleGetChat = (chatUserId) => {
-    const formData = new FormData()
-    formData.append("id", chatUserId)
-
-    // axios
-  }
 
   return (
     <div className="details chat">

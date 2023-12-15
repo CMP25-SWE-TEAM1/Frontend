@@ -8,7 +8,7 @@ const useGetChat = (chatid) => {
     })
     .then((res) => {
       // Handle the successful response
-      console.log(res.data)
+      // console.log(res.data)
       return res.data
     })
     .catch((err) => {
