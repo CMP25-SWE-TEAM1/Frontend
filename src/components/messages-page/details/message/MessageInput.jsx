@@ -6,8 +6,10 @@ import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
 import GifPicker, { ContentFilter } from "gif-picker-react"
 import { TENOR_API_KEY } from "../../MessagesConstants"
+import usePostMedia from "../../customHooks/post/usePostMedia"
 
 const MessageInput = (props) => {
+  const handlePostMedia = usePostMedia
   // Message input
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false)
   const [emojiPickerVisibiltyStyle, setEmojiPickerVisibiltyStyle] = useState("none")
@@ -39,8 +41,9 @@ const MessageInput = (props) => {
       // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
       if (newMessageMedia) {
         if (newMessageMediaType === "Img") {
-          handleSendMessage(newMessageText)
-          // handleUploadMedia(newMessageMedia) // upload media
+          handlePostMedia(newMessageMedia).then((response) => {
+            handleSendMessage(newMessageText, response.urls[0], newMessageMediaType)
+          }) // upload media
         } else handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
       } else handleSendMessage(newMessageText)
     }

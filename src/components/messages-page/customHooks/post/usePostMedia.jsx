@@ -2,17 +2,16 @@ import { APIs, SERVER_ON } from "./../../MessagesConstants"
 import axios from "axios"
 
 // handleUploadMedia: Uploads media to server and get its URL
-const usePostMedia = (mediaFiles) => {
+const usePostMedia = (mediaFile) => {
   const formData = new FormData()
-  mediaFiles.forEach((file) => {
-    formData.append(`media`, file)
-  })
+  formData.append(`media`, mediaFile)
 
-  axios
+  return axios
     .post(SERVER_ON ? APIs.actual.postMedia : APIs.mock.postMedia, formData)
     .then((res) => {
       console.log(res.data)
-      return res.data.urls
+      console.log(res.data.urls[0])
+      return res.data
     })
     .catch((err) => {
       console.log(err)
