@@ -32,7 +32,7 @@ const Messages = (props) => {
             // avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
 
             lastMessage: conatct.lastMessage,
-            lastMessageDate: conatct.time,
+            lastMessageDate: conatct.sendTime,
             lastMessageSeen: conatct.seen,
           }))
         )

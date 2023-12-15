@@ -103,23 +103,22 @@ const DetailsChat = (props) => {
   const endOfChat = useRef(null)
   useEffect(() => {
     if (BACKEND_ON) {
-      handleGetChat(contact.id).then((newChat) => {
-        setMessagesData(
-          newChat.map((message) => ({
-            id: message.id,
-            messageText: message.description,
-            // Need some update
-            messageMedia: message.media[0].data,
-            mediaType: () => {
-              return message.media[0].type === "photo" ? "Img" : undefined
-            },
-            // not handled yet! (in FE ): )
-            seen: message.seen,
-            time: message.time,
-            // where is direction!! (ask BE)
-            direction: "R",
-          }))
-        )
+      handleGetChat(contact.id).then((response) => {
+        console.log("response", response)
+        const newChat = response.data.map((message) => ({
+          id: message.id,
+          messageText: message.description,
+          // Need some update
+          messageMedia: message.media ? message.media[0].data : undefined,
+          mediaType: () => {
+            return message.media && message.media[0].type === "photo" ? "Img" : undefined
+          },
+          direction: message.mine ? "R" : "L",
+          // not handled yet! (in FE ): )
+          seen: message.seen,
+          time: message.sendTime,
+        }))
+        setMessagesData(newChat)
       })
     }
     scrollToBottom()
@@ -233,7 +232,7 @@ const DetailsChat = (props) => {
                   {/* Messages */}
                   <div className="messages">
                     {messagesData.map((msg) => (
-                      <Message messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
+                      <Message messageMeta={msg.time} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
                     ))}
                   </div>
                   <div ref={endOfChat}></div>

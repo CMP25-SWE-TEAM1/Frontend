@@ -18,6 +18,16 @@ const Message = (props) => {
   const mediaType = props.mediaType
   const deleteMessage = props.deleteMessage
   const messageId = props.messageId
+  const messageMeta = props.messageMeta
+
+  const formattedDate = new Date(messageMeta).toLocaleString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  })
 
   const [gifPaused, setGifPaused] = useState(false)
   const gifRef = useRef(null)
@@ -120,7 +130,7 @@ const Message = (props) => {
         </div>
       </div>
       <div className="message-meta">
-        <span>This is Meta</span>
+        <span>{formattedDate}</span>
       </div>
     </div>
   )
