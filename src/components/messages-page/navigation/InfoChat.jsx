@@ -19,6 +19,7 @@ import Box from "@mui/material/Box"
 import SearchPeople from "./SearchPeople"
 import SearchMessages from "./SearchMessages"
 import NoResultFound from "./NoResultFound"
+import HighlightedMessage from "./HighlightedMessage"
 
 const InfoChat = (props) => {
   const contacts = props.contacts
@@ -124,15 +125,25 @@ const InfoChat = (props) => {
                   setSelectedContact(contact.id)
                 }}
               >
-                <ListItemAvatar>
-                  <Avatar alt={contact.name || "Hamza"} src={contact.avatarLink || "https://64.media.tumblr.com/avatar_f71055191601_128.pnj"} />
-                </ListItemAvatar>
-                <ListItemText primary={contact.name || "Hamza"} secondary={`@${contact.userName || "hamza_xyz"}`} />
-                {contact.selected && (
-                  <ListItemIcon>
-                    <CheckIcon color="primary" fontSize="small" />
-                  </ListItemIcon>
-                )}
+                <div>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <ListItemAvatar>
+                      <Avatar alt={contact.name || "Hamza"} src={contact.avatarLink || "https://64.media.tumblr.com/avatar_f71055191601_128.pnj"} />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={contact.name || "Hamza"}
+                      secondary={`@${contact.userName || "hamza_xyz"} . ${
+                        new Date(contact.lastMessageDate).toLocaleString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                        }) || "Dec 2"
+                      }`}
+                    />
+                  </div>
+                  <div style={{ marginTop: "5px" }}>
+                    <HighlightedMessage mainText={contact.lastMessage || "none"} subText={""} />
+                  </div>
+                </div>
               </ListItemButton>
             </ListItem>
           ))}
