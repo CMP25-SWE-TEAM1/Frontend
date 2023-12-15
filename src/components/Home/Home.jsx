@@ -47,6 +47,7 @@ const Home = () => {
         // console.log(response)
         if (response.status === 200) {
           // console.log("in then ");
+          // console.log(response.data.tweetList)
           if (response.data.tweetList) {
             setPosts((prevState) => [...prevState, ...response.data.tweetList.sort(() => Math.random() - 0.5)])
           }
@@ -62,61 +63,61 @@ const Home = () => {
     if (finshed === false) fetchPosts()
   }, [pageNumber])
 
-  useEffect(() => {
-    // console.log("token")
-    // console.log(userToken)
+  // useEffect(() => {
+  //   // console.log("token")
+  //   // console.log(userToken)
 
-    axios
-      .get(APIs.actual.getAllTweetsAPI, {
-        params: {
-          page: pageNumber,
-          count: 10,
-        },
-        headers: {
-          authorization: "Bearer " + userToken,
-        },
-      })
-      .then((response) => {
-        // console.log(response)
-        if (response.status === 200) {
-          // console.log("in then ");
-          if (response.data.tweetList) {
-            setPosts(response.data.tweetList.sort(() => Math.random() - 0.5))
-          } else setPosts([])
+  //   axios
+  //     .get(APIs.actual.getAllTweetsAPI, {
+  //       params: {
+  //         page: pageNumber,
+  //         count: 10,
+  //       },
+  //       headers: {
+  //         authorization: "Bearer " + userToken,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       // console.log(response)
+  //       if (response.status === 200) {
+  //         // console.log("in then ");
+  //         if (response.data.tweetList) {
+  //           setPosts(response.data.tweetList.sort(() => Math.random() - 0.5))
+  //         } else setPosts([])
 
-          return axios.get(APIs.actual.getUserTweets, {
-            params: {
-              page: 1,
-              count: 10,
-              username: user.username,
-            },
-            headers: {
-              authorization: "Bearer " + userToken,
-            },
-          })
-        }
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          // console.log("user posts ", res.data)
-          if (res.data.posts) {
-            setPosts((prevState) => [
-              ...prevState,
-              ...res.data.posts
-                .map((post) => ({
-                  tweetDetails: post,
-                  followingUser: user,
-                }))
-                .sort(() => Math.random() - 0.5),
-            ])
-            // console.log(res)
-          }
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [])
+  //         return axios.get(APIs.actual.getUserTweets, {
+  //           params: {
+  //             page: 1,
+  //             count: 10,
+  //             username: user.username,
+  //           },
+  //           headers: {
+  //             authorization: "Bearer " + userToken,
+  //           },
+  //         })
+  //       }
+  //     })
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         // console.log("user posts ", res.data)
+  //         if (res.data.posts) {
+  //           setPosts((prevState) => [
+  //             ...prevState,
+  //             ...res.data.posts
+  //               .map((post) => ({
+  //                 tweetDetails: post,
+  //                 followingUser: user,
+  //               }))
+  //               .sort(() => Math.random() - 0.5),
+  //           ])
+  //           // console.log(res)
+  //         }
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error)
+  //     })
+  // }, [])
 
   const handleNewPost = (newPost) => {
     setPosts([{ tweetDetails: newPost.data }, ...posts])
