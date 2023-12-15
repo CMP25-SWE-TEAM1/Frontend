@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom"
 import Message from "./message/Message"
 import MessageInput from "./message/MessageInput"
 import { useState, useEffect, useRef } from "react"
+import Divider from "@mui/material/Divider"
+import Chip from "@mui/material/Chip"
 
 // Socket.io
 import io from "socket.io-client"
@@ -231,9 +233,19 @@ const DetailsChat = (props) => {
                   </div>
                   {/* Messages */}
                   <div className="messages">
-                    {messagesData.map((msg) => (
-                      <Message messageMeta={msg.time} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
-                    ))}
+                    {messagesData
+                      .filter((msg) => msg.seen)
+                      .map((msg) => (
+                        <Message messageMeta={msg.time} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
+                      ))}
+                    <Divider>
+                      <Chip label="unread messages" />
+                    </Divider>
+                    {messagesData
+                      .filter((msg) => !msg.seen)
+                      .map((msg) => (
+                        <Message messageMeta={msg.time} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
+                      ))}
                   </div>
                   <div ref={endOfChat}></div>
                 </div>
