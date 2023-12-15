@@ -10,14 +10,13 @@ import { useState, useEffect } from "react"
 import { BACKEND_ON } from "./MessagesConstants"
 import useGetContacts from "./customHooks/get/useGetContacts"
 
-const Messages = () => {
+const Messages = (props) => {
   const handleGetContacts = useGetContacts
 
   // Compose message
-  const [composeModalOpen, setComposeModalOpen] = useState(false)
-  const handleComposeModalOpen = () => setComposeModalOpen(true)
-
-  const handleComposeModalClose = () => setComposeModalOpen(false)
+  const composeModalOpen = props.composeModalOpen
+  const handleComposeModalOpen = props.handleComposeModalOpen
+  const handleComposeModalClose = props.handleComposeModalClose
 
   useEffect(() => {
     if (BACKEND_ON) {
