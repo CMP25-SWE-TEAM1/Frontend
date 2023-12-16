@@ -9,12 +9,14 @@ import useGetChat from "../customHooks/get/useGetChat"
 
 // Socket.io
 import { SOCKET_ON, BACKEND_ON } from "../MessagesConstants"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { selectSocket } from "../../../store/SocketSlice"
 
 const DetailsChat = (props) => {
   const userToken = useSelector((state) => state.user.token)
 
-  const socket = props.socket
+  const dispatch = useDispatch()
+  const socket = useSelector(selectSocket)
 
   const contact = props.contact
   const handleGetChat = useGetChat
@@ -149,9 +151,9 @@ const DetailsChat = (props) => {
   useEffect(() => {
     if (SOCKET_ON) {
       socket.on("receive_message", (data) => {
-        // console.log("received_message:", data.message)
+        console.log("received_message:", data)
         setScrollToBottomFlag(true)
-        console.log(data)
+        // console.log(data)
         const message = data.message
         setMessagesData([
           ...messagesData,
@@ -178,7 +180,7 @@ const DetailsChat = (props) => {
   // Send message to socket sercer
   const sendMessage_toServer = (message) => {
     console.log("message sending...", message)
-    // console.log("sending to...", contact.id)
+    console.log("sending to...", contact.id)
     // console.log(contact.id)
     // console.log(typeof contact.id)
     socket.emit("send_message", {

@@ -9,13 +9,19 @@ import { useState, useEffect } from "react"
 
 import { BACKEND_ON } from "./MessagesConstants"
 import useGetContacts from "./customHooks/get/useGetContacts"
-import { useSelector } from "react-redux"
-import useSocket from "./customHooks/useSocket"
+import { useDispatch, useSelector } from "react-redux"
+import { initializeSocket } from "./customHooks/socketService"
+import { setSocket } from "../../store/SocketSlice"
 
 const Messages = (props) => {
   const userToken = useSelector((state) => state.user.token)
-  // const socket = useSocket(userToken)
-  const socket = ""
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const socket = initializeSocket(userToken)
+    dispatch(setSocket(socket))
+  }, [dispatch, userToken])
+
   const handleGetContacts = useGetContacts
 
   // Compose message
@@ -28,7 +34,7 @@ const Messages = (props) => {
       handleGetContacts(userToken).then((response) => {
         console.log("GetContacts response", response)
         const newChats = response.data.map((chat) => ({
-          id: chat._id,
+          id: chat.chat_members[0].id,
 
           userName: chat.chat_members[0].username,
           name: chat.chat_members[0].nickname,
@@ -137,7 +143,7 @@ const Messages = (props) => {
           {contacts.length !== 0 && <InfoChat contacts={contacts} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />}
         </div>
         {(!selectedContact || !contacts.filter((contact) => contact.id === selectedContact)[0]) && <DetailsNoChat handleComposeModalOpen={handleComposeModalOpen} />}
-        {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} socket={socket} />}
+        {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} />}
       </div>
 
       <MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} />
