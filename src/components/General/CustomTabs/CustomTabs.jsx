@@ -33,22 +33,24 @@ const CustomTabs = ({ tabValue, handleChangeTabValue, tabsNames }) => {
           aria-label="basic tabs example"
           variant="scrollable"
         >
-          {tabsNames.map((tab, index) => {
-            return (
-              <Tab
-                key={index}
-                label={tab}
-                sx={{
-                  width: `${100 / tabsNames.length}%`,
-                  fontWeight: tabValue === index ? "550" : "100",
-                  fontSize: "12px",
-                  padding: 0,
-                  color: tabValue === index && darkMode ? "white" : tabValue === index ? "black" : darkMode ? "#9aa1ad" : "",
-                }}
-                {...a11yProps(index)}
-              />
-            )
-          })}
+          {
+            tabsNames.map((tab,index) => {
+              return (
+                <Tab
+                  key={tab}
+                  label={tab}
+                  sx={{
+                    width: `${100/tabsNames.length}%`,
+                    fontWeight: tabValue === index ? "550" : "100",
+                    fontSize: "12px",
+                    padding: 0,
+                    color: tabValue === index && darkMode ? "white" : tabValue === index ? "black" : darkMode ? "#9aa1ad" : "",
+                  }}
+                  {...a11yProps(index)}
+                />
+              )
+            })
+          }
         </Tabs>
       </Box>
     </Box>

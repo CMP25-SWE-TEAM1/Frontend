@@ -64,9 +64,6 @@ const TrendsContainer = ({ data, loading, type }) => {
           </div>
         )
       })}
-      <div>
-        <PostsContainer posts={trendTweets} setPosts={setTrendTweets} />
-      </div>
     </div>
   )
 }
