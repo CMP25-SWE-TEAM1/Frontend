@@ -136,7 +136,7 @@ const App = () => {
           </Route>
           <Route path={`settings/profile`} element={<ProfilePageEdit handleOpenProfileEditModal={handleOpenProfileEditModal}  openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
           <Route path="/signup" element={<SignUp openModal={openProfileEditModal} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
-          <Route path="/replies" element={<PostPage post={testPost} />}></Route>
+          <Route path="/:tag/status/:id" element={<PostPage post={testPost} />}></Route>
           <Route path="/:tag/status/:id/:NavbarLink" element={<PostEngagement />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

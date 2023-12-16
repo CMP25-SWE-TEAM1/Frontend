@@ -18,7 +18,7 @@ import MenuItem from "@mui/material/MenuItem"
 import Popup from "./Popup";
 import ComposePostFooter from "./ComposePostFooter";
 
-function ComposePost({ handleNewPost }) {
+function ComposePost({ buttonName, handleNewPost, postType, referredTweetId }) {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
   const [description, setDescription] = useState("")
   const [replyPermissionIndex, setReplyPermissionIndex] = useState(0)
@@ -52,11 +52,12 @@ function ComposePost({ handleNewPost }) {
     }
     const getComposeTweet = (()=>{
       return {
+      referredTweetId: referredTweetId,
       description:`${runningMock?"ismail ramadan":description}`,
       media: media.map((item,index)=>{
         return {data: mediaUrls[index],type: item.type.match(/mp4/) ? "mp4" : "jpg" }
       }),
-      type: "tweet"
+      type: postType
     }
   });
     const getMediaTypes = ()=> media.map((item)=>item.type.match(/image/)?"jpg":"mp4");
@@ -88,7 +89,7 @@ function ComposePost({ handleNewPost }) {
     setMediaDisabled(false);
     setGIFDisabled(false);
     setpollDisabled(false);
-    console.log("getComposeTweet ",getComposeTweet());
+    console.log("getComposeTweet ",getComposeTweet(postType));
     axios
       .post(APIs.actual.postTweetAPI,getComposeTweet(), {
         headers: {
@@ -180,7 +181,7 @@ function ComposePost({ handleNewPost }) {
   const htmlElement = document.getElementById("htmlid")
 
   return (
-    <div className="ComposePost flex h-fit border border-l-0 border-r-0 border-lightBorder p-3 text-black dark:border-darkBorder dark:text-white" data-testid="postId">
+    <div className={`ComposePost flex h-fit border-b ${buttonName==="Post"? "border-t":""} border-lightBorder p-3 text-black dark:border-darkBorder dark:text-white`} data-testid="postId">
       <div className=" h-10 w-10 sm:mr-3">
       <Link className="hover:underline" to={`/${user.userTag}`}>
         <Avatar alt="Remy Sharp" src={user.profileImage} sx={{ width: 40, height: 40 }} />
@@ -194,7 +195,7 @@ function ComposePost({ handleNewPost }) {
             disableUnderline: true,
             
           }}
-          placeholder="What is happening?!"
+          placeholder={`${buttonName==="Post"? "What is happening?!":"Post your reply"}`}
           value= {description}
           onChange={(e)=>handleDescriptionChange(e)}
           multiline
@@ -208,7 +209,7 @@ function ComposePost({ handleNewPost }) {
           }}
         />
         <DisplayMedia mediaUrls={mediaUrls} mediaTypes={getMediaTypes()} margin={1.5}/>
-        <div>
+        <div className={`replyPermission ${buttonName==="Post"? "":"hidden"}`}>
           <Button target={"_blank"} color="text-[#1D9BF0]" size="sm" variant="plain" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="my-3 rounded-full bg-transparent py-0 hover:bg-[#e7f5fd] dark:bg-transparent dark:hover:bg-[#031018]">
             <GeneralButton name={permissionOptions[replyPermissionIndex].icon2} color="text-[#1D9BF0]" backgroundColor="bg-transparent" height="h-6" width="w-6"></GeneralButton>
             <div className="ml-0.5 text-[14px] normal-case text-[#1D9BF0]">{permissionOptions[replyPermissionIndex].name} can reply</div>
@@ -266,8 +267,8 @@ function ComposePost({ handleNewPost }) {
             ))}
           </Menu>
         </div>
-        <hr className="h-px border-0 bg-lightBorder dark:bg-darkBorder" />
-        <ComposePostFooter handleUploadMediaClick={handleUploadMediaClick} handleUploadMedia={handleUploadMedia} hiddenUploadMediaInput={hiddenUploadMediaInput} mediaDisabled={mediaDisabled} GIFDisabled={GIFDisabled} pollDisabled={pollDisabled} postDisabled={postDisabled} progressCircleSize={progressCircleSize} charsCount={charsCount} charsProgressColor={charsProgressColor} progressCircleValue={progressCircleValue} handleSubmit={handleSubmit} />
+        <hr className={`h-px border-0 bg-lightBorder dark:bg-darkBorder ${buttonName==="Post"? "":"hidden"}`} />
+        <ComposePostFooter buttonName={buttonName} handleUploadMediaClick={handleUploadMediaClick} handleUploadMedia={handleUploadMedia} hiddenUploadMediaInput={hiddenUploadMediaInput} mediaDisabled={mediaDisabled} GIFDisabled={GIFDisabled} pollDisabled={pollDisabled} postDisabled={postDisabled} progressCircleSize={progressCircleSize} charsCount={charsCount} charsProgressColor={charsProgressColor} progressCircleValue={progressCircleValue} handleSubmit={handleSubmit} />
       </div>
     </div>
   )

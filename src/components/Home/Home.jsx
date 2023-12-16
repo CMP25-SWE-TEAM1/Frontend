@@ -315,7 +315,7 @@ const Home = () => {
         {/* <HorizontalNavbar urls={homeNavLinks} originalUrl={"/home"} /> */}
         {/* </div> */}
         {/* </div> */}
-        <ComposePost handleNewPost={(newPost) => handleNewPost(newPost)} />
+        <ComposePost buttonName="Post" handleNewPost={(newPost) => handleNewPost(newPost)} postType="tweet"/>
         <PostsContainer posts={posts} setPosts={setPosts} />
         {/* .sort(() => Math.random() - 0.5) */}
       </div>
