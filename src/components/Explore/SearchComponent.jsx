@@ -159,7 +159,7 @@ const SearchComponent = () => {
       //       console.error(error)
       //     }
       //   })
-      window.location.href = `search?q=${searchQuery}`
+      window.location.href = `search?q=${searchQuery.replace(/#/g, "%23")}`
     }
   }
 
