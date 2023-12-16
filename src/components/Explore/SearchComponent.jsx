@@ -137,7 +137,7 @@ const SearchComponent = () => {
 
   const handleEnterKeyPress = (e) => {
     if (e.key === "Enter") {
-      console.log("Enter key pressed", searchQuery)
+      window.location.href = `search?q=${searchQuery}`
     }
   }
 
