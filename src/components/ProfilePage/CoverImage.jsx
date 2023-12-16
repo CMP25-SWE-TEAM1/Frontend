@@ -1,5 +1,6 @@
 import { Box, Modal } from '@mui/material';
 import {React,useState,useEffect} from 'react'
+import { DefaultCoverPage } from '../../constants';
 function CoverImage(props) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
     function coverpagehandle()
@@ -20,7 +21,6 @@ function CoverImage(props) {
     }, [])
     const modalStyle = {
     position: "absolute",
-
     backgroundColor: "transparent",
     border: "1px solid #767C86",
     borderRadius: "16px",
@@ -39,10 +39,10 @@ function CoverImage(props) {
     modalStyle.maxWidth = "none" // optional, to remove any max-width constraints
   }
   return (
-    <div id="cover-page" className={`w-[100%] md:h-[50%] lg:h-[75%]   `}>
+    <div id="cover-page" className={`w-[100%]  `}>
       <img
-        className="h-[100%] w-[100%] object-fill"
-        src={props.coverimage ? props.coverimage : "https://answers.flexsim.com/themes/base/admin/img/default-coverImage.png"}
+        className={`relative ${props.height}  w-[100%] object-fill`}
+        src={props.coverimage? props.coverimage:DefaultCoverPage}
         alt="cover-page"
         onClick={() => {
           coverpagehandle()

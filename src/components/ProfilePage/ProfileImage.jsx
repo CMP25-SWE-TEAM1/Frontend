@@ -11,8 +11,9 @@ function ProfileImage(props) {
     }
     // console.log(props)
   return (
-    <div id="profile-page"> 
-    <Avatar src={props.profileimageURL} className={`relative w-[140px] h-[140px] top-[-50%] left-[5%] 
+    <div id="profile-page" className='relative min-w-[140px] max-w-[140px] min-h-[140px] max-h-[140px]
+    left-[1.5%] '> 
+    <Avatar src={props.profileimageURL} className={`relative w-[140px] h-[140px] 
     ${darkMode? `border-black` : `border-white`} border-[5px] `} onClick={()=>{profilepagehandler()}}></Avatar>
     </div>
   )

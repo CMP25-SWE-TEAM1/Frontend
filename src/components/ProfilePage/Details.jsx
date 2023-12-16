@@ -129,7 +129,7 @@ import axios from 'axios';
     }
   }
   return (
-    <div id='show-details-div' className={`relative left-[47%] ${props.display} w-[40px] h-[40px] 
+    <div id='show-details-div' className={`relative left-[18vw] top-[75px] ${props.display} w-[40px] h-[40px] 
     ${darkmode? `bg-black text-white` : `bg-white text-black`} 
     border border-b-2 border-t- border-lightBorder dark:border-darkBorder hover:bg-lightHover 
     dark:hover:bg-darkHover rounded-[50%] bg-[white] text-center mt-[2%] `}>
