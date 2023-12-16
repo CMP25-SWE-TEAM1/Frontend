@@ -6,8 +6,8 @@ function PostBody({descriptionLines, mediaUrls, mediaTypes}) {
     <>
       <div className="post-text">
           <div className="max-h-[100px] overflow-hidden text-start dark:text-gray-300" data-testid="post-text-id">
-            {descriptionLines.map((line) => (
-              <p>
+            {descriptionLines.map((line,index) => (
+              <p key={index}>
                 {line}
                 <br />
               </p>

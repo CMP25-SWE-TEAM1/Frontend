@@ -29,14 +29,13 @@ const ProfilePage = (props) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth) //todo: for responsiveness
   const [profilePicURL, setProfilePicURL] = useState()
   const [bannerPicURL, setCoverPicURL] = useState()
-
-  let { tag } = useParams()
+  const { tag } = useParams()
   const dispatch = useDispatch()
   const APIs = {
     mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
     actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/` },
   }
-  
+
   const Fetch = () => {
         if (user.username !== tag) {
           axios
@@ -85,13 +84,11 @@ const ProfilePage = (props) => {
             })
         }
   }
-  useEffect(()=>{
-    if(tag)
-    {
+  useEffect(() => {
+    if (tag) {
       Fetch()
     }
-  }
-    , [tag])
+  }, [tag])
 
   // //console.log(profileres.is_curr_user)
   return (
@@ -114,18 +111,17 @@ const ProfilePage = (props) => {
               <FollowButton  handleOpenProfileEditModal={props.handleOpenProfileEditModal} tag={tag} buttonName={tag=== user.username ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
               </div>
             </div>
-            
           </div>
           <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
           <ProfileBio profilebio={profileres.bio}></ProfileBio>
           <ProfileICons profilelocation={profileres.location} profilewebsite={profileres.website} profilejoindate={profileres.joined_date}></ProfileICons>
           <Followers followers={profileres.followers_num} following={profileres.followings_num}></Followers>
           <ProfilePageEdit openModal={props.openModal} handleCloseModal={props.handleCloseModal}></ProfilePageEdit>
-          <ProfileMediabuttons ></ProfileMediabuttons>
+          <ProfileMediabuttons></ProfileMediabuttons>
         </div>
       </div>
 
-      {user && <Widgets parent={"profile"}/>}
+      {user && <Widgets parent={"profile"} />}
     </div>
   )
 }
