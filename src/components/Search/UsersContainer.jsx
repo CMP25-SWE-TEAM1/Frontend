@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { Link } from "react-router-dom"
 
 const UsersContainer = (props) => {
-  const users = props.results
+  const users = props.users
 
   return (
     <div className="user-container">
