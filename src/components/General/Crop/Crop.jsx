@@ -72,7 +72,7 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect, originalPho
               variant="outlined"
               startIcon={<Cancel />}
               onClick={() => {
-                setPhotoURL(originalPhoto)
+                // setPhotoURL(originalPhoto)
                 setOpenCrop(false)
               }}
               className="mr-5"
