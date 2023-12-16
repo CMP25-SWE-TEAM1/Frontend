@@ -2,7 +2,7 @@ export const TENOR_API_KEY = "AIzaSyDE0FD8utv75fMWO_i0DzKDXyLR9-hn77o"
 
 // Socket server
 // ================
-export const SOCKET_ON = true
+export const SOCKET_ON = false
 
 export const SOCKET_IO = {
   mock: "http://localhost:3001",
