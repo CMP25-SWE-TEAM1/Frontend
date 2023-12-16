@@ -20,7 +20,7 @@ const CustomTabs = ({ tabValue, handleChangeTabValue, tabsNames }) => {
         <Tabs
           sx={{
             "& .MuiTabs-indicator": {
-              marginLeft: "4.3%",
+              marginLeft: `${tabsNames.length == 3 ? 11 : 4.3}%`,
               height: "4px",
               borderRadius: "999px",
               maxWidth: 70,

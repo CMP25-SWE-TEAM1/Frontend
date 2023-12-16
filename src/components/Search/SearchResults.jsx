@@ -25,81 +25,92 @@ const SearchResults = () => {
 
   const APIs = {
     mock: {},
-    actual: { searchUsers: "http://backend.gigachat.cloudns.org/api/user/search", searchTweets: "http://backend.gigachat.cloudns.org/api/tweets/search", searchTrends: "http://backend.gigachat.cloudns.org/api/trends/search" },
+    actual: { searchUsers: "http://backend.gigachat.cloudns.org/api/user/search", searchTweets: "http://backend.gigachat.cloudns.org/api/tweets/search", searchTrends: "http://backend.gigachat.cloudns.org/api/trends/" },
   }
 
   const handleChangeTabValue = (event, newValue) => {
     setTabValue(newValue)
   }
 
+  const toPeopleTab = () => {
+    setTabValue(2)
+  }
+
   const fetchData = () => {
-    axios
-      .get(APIs.actual.searchUsers, {
-        params: {
-          word: searchQuery,
-          type: "user",
-          page: pageNumber,
-          count: 1,
-        },
-        headers: {
-          authorization: "Bearer " + token,
-        },
-      })
-      .then((res) => {
-        console.log(res)
-        setUserResults((prevResults) => [...prevResults, ...res.data.results])
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    if (searchQuery) {
+      axios
+        .get(APIs.actual.searchUsers, {
+          params: {
+            word: searchQuery,
+            type: "user",
+            page: pageNumber,
+            count: 10,
+          },
+          headers: {
+            authorization: "Bearer " + token,
+          },
+        })
+        .then((res) => {
+          console.log(res)
+          setUserResults((prevResults) => [...prevResults, ...res.data.results])
+        })
+        .catch((err) => {
+          console.log(err)
+        })
 
-    axios
-      .get(APIs.actual.searchTweets, {
-        params: {
-          word: searchQuery,
-          type: "tweet",
-          page: pageNumber,
-          count: 10,
-        },
-        headers: {
-          authorization: "Bearer " + token,
-        },
-      })
-      .then((res) => {
-        console.log(res)
-        setTweetResults((prevResults) => [...prevResults, ...res.data.results])
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      if (searchQuery[0] !== "#") {
+        axios
+          .get(APIs.actual.searchTweets, {
+            params: {
+              word: searchQuery,
+              type: "tweet",
+              page: pageNumber,
+              count: 10,
+            },
+            headers: {
+              authorization: "Bearer " + token,
+            },
+          })
+          .then((res) => {
+            console.log(res)
+            setTweetResults((prevResults) => [...prevResults, ...res.data.results])
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
 
-    axios
-      .get(APIs.actual.searchTrends, {
-        params: {
-          word: searchQuery,
-          type: "hashtag",
-          page: pageNumber,
-          count: 10,
-        },
-        headers: {
-          authorization: "Bearer " + token,
-        },
-      })
-      .then((res) => {
-        console.log(res)
-        setTrendResults((prevResults) => [...prevResults, ...res.data.results])
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      if (searchQuery[0] === "#") {
+        axios
+          .get(APIs.actual.searchTrends + searchQuery.slice(1), {
+            params: {
+              type: "hashtag",
+              page: pageNumber,
+              count: 10,
+            },
+            headers: {
+              authorization: "Bearer " + token,
+            },
+          })
+          .then((res) => {
+            console.log(res)
+            setTrendResults((prevResults) => [...prevResults, ...res.data.data])
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
 
-    pageNumber = pageNumber + 1
-    console.log("page " + pageNumber)
+      pageNumber = pageNumber + 1
+      console.log("page " + pageNumber)
+    }
   }
 
   useEffect(() => {
     fetchData()
   }, [])
+
+  const tabNames = ["Top", "Latest", "People"]
 
   return (
     <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
@@ -108,21 +119,23 @@ const SearchResults = () => {
           <SearchComponent query={searchQuery}/>
           <CustomTabs tabValue={tabValue} handleChangeTabValue={handleChangeTabValue} tabsNames={tabNames} />
           <CustomTabPanel value={tabValue} index={0} className="w-full">
-            {userResults && (
+            {userResults[0] && (
               <div className="flex flex-col">
                 <h1 className="p-5 text-2xl font-bold">People</h1>
-                <UsersContainer users={userResults} />
+                <UsersContainer users={userResults.slice(0,3)} />
+                <div className="text-primary p-5 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" onClick={toPeopleTab}>View all</div>
               </div>
             )}
-            {tweetResults && <PostsContainer posts={tweetResults} />}
+            {trendResults[0] && <PostsContainer posts={trendResults} setPosts={setTrendResults} />}
+            {tweetResults[0] && <PostsContainer posts={tweetResults} setPosts={setTweetResults} />}
           </CustomTabPanel>
           <CustomTabPanel value={tabValue} index={1} className="w-full">
-            {tweetResults && <PostsContainer posts={tweetResults} />}
+            {trendResults[0] && <PostsContainer posts={trendResults} setPosts={setTrendResults} />}
+            {tweetResults[0] && <PostsContainer posts={tweetResults} setPosts={setTweetResults} />}{" "}
           </CustomTabPanel>
           <CustomTabPanel value={tabValue} index={2} className="w-full">
-            {userResults && <UsersContainer users={userResults} />}
+            {userResults[0] && <UsersContainer users={userResults} />}
           </CustomTabPanel>
-          <CustomTabPanel value={tabValue} index={3} className="w-full"></CustomTabPanel>
         </div>
       </div>
       {user && <Widgets />}
