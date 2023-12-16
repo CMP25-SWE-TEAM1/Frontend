@@ -18,6 +18,9 @@ const SearchResults = () => {
   const [userResults, setUserResults] = useState([])
   const [tabValue, setTabValue] = useState(0)
   let pageNumber = 1
+  let noMoreUsers = false
+  let noMoreTweets = false
+  let noMoreTrends = false
 
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
@@ -38,27 +41,28 @@ const SearchResults = () => {
 
   const fetchData = () => {
     if (searchQuery) {
-      axios
-        .get(APIs.actual.searchUsers, {
-          params: {
-            word: searchQuery,
-            type: "user",
-            page: pageNumber,
-            count: 10,
-          },
-          headers: {
-            authorization: "Bearer " + token,
-          },
-        })
-        .then((res) => {
-          console.log(res)
-          setUserResults((prevResults) => [...prevResults, ...res.data.results])
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      if (!noMoreUsers)
+        axios
+          .get(APIs.actual.searchUsers, {
+            params: {
+              word: searchQuery,
+              type: "user",
+              page: pageNumber,
+              count: 10,
+            },
+            headers: {
+              authorization: "Bearer " + token,
+            },
+          })
+          .then((res) => {
+            setUserResults((prevResults) => [...prevResults, ...res.data.results])
+            if (res.data.results.length < 10) noMoreUsers = true
+          })
+          .catch((err) => {
+            console.log(err)
+          })
 
-      if (searchQuery[0] !== "#") {
+      if (searchQuery[0] !== "#" && !noMoreTweets) {
         axios
           .get(APIs.actual.searchTweets, {
             params: {
@@ -72,15 +76,15 @@ const SearchResults = () => {
             },
           })
           .then((res) => {
-            console.log(res)
             setTweetResults((prevResults) => [...prevResults, ...res.data.results])
+            if (res.data.results.length < 10) noMoreTweets = true
           })
           .catch((err) => {
             console.log(err)
           })
       }
 
-      if (searchQuery[0] === "#") {
+      if (searchQuery[0] === "#" && !noMoreTrends) {
         axios
           .get(APIs.actual.searchTrends + searchQuery.slice(1), {
             params: {
@@ -93,8 +97,8 @@ const SearchResults = () => {
             },
           })
           .then((res) => {
-            console.log(res)
             setTrendResults((prevResults) => [...prevResults, ...res.data.data])
+            if (res.data.data.length < 10) noMoreTrends = true
           })
           .catch((err) => {
             console.log(err)
@@ -102,7 +106,6 @@ const SearchResults = () => {
       }
 
       pageNumber = pageNumber + 1
-      console.log("page " + pageNumber)
     }
   }
 
@@ -122,8 +125,10 @@ const SearchResults = () => {
             {userResults[0] && (
               <div className="flex flex-col">
                 <h1 className="p-5 text-2xl font-bold">People</h1>
-                <UsersContainer users={userResults.slice(0,3)} />
-                <div className="text-primary p-5 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" onClick={toPeopleTab}>View all</div>
+                <UsersContainer users={userResults.slice(0, 3)} />
+                <div className="p-5 text-primary hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" onClick={toPeopleTab}>
+                  View all
+                </div>
               </div>
             )}
             {trendResults[0] && <PostsContainer posts={trendResults} setPosts={setTrendResults} />}

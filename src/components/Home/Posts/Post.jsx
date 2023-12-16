@@ -6,7 +6,7 @@ import PostBody from "./PostBody"
 import PostFooter from "./PostFooter"
 import axios from "axios"
 import { useSelector } from "react-redux"
-import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt'
+import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt"
 import { useLocation } from "react-router-dom"
 
 const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, followingUser, setPosts, posts }) => {
@@ -22,8 +22,8 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
   const [timeoutRef, setTimeoutRef] = useState(null)
 
   const [hoveredProfile, setHoveredProfile] = useState([])
-    
-  const pathname = useLocation().pathname;
+
+  const pathname = useLocation().pathname
   const APIs = {
     mock: {
       like: `/api/tweets/like/${id}`,
@@ -190,7 +190,6 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
     setReposted(!reposted)
   }
 
-  
   //"Thu Oct 26 2023 23:18:01 GMT+0200 (Eastern European Standard Time)" we need date in this format
 
   const htmlElement = document.getElementById("htmlid")
@@ -214,8 +213,8 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
   //   console.log(date)
   // },[date])
   return (
-    <Link className={`w-full ${pathname.search(id)===-1? "":"pointer-events-none"}`} to={`/${userTag}/status/${id}`}>
-      <div className={` h-fit border border-l-0 border-r-0 ${pathname.search(id)===-1? "hover:bg-gray-100 dark:hover:bg-[#080808]":""} border-lightBorder p-3  dark:border-darkBorder `} data-testid="postId">
+    <Link className={`w-full ${pathname.search(id) === -1 ? "" : "pointer-events-none"}`} to={`/${userTag}/status/${id}`}>
+      <div className={` h-fit border border-l-0 border-r-0 ${pathname.search(id) === -1 ? "hover:bg-gray-100 dark:hover:bg-[#080808]" : ""} border-lightBorder p-3  dark:border-darkBorder `} data-testid="postId">
         <div></div>
         <div className="flex">
           <div className=" h-fit w-10 sm:mr-3">
@@ -224,23 +223,23 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
             </Link>
           </div>
           <div className=" w-full sm:mr-2">
-            <PostHeader pathname={pathname} userTag={userTag} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={ followingUser} setPosts={setPosts} posts={posts} />
+            <PostHeader pathname={pathname} userTag={userTag} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={followingUser} setPosts={setPosts} posts={posts} />
           </div>
         </div>
-        <PostBody descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes}/>
-        <div className={`${pathname.search(id)!==-1? "":"hidden"}`}>
-        <Link className={`pointer-events-auto`} to={`/${userTag}/status/${id}/retweets`}>
-          <div className="h-14 border-t border-b border-lightBorder dark:border-lightBorder flex items-center text-sm text-ternairy dark:text-secondary">
-           <SignalCellularAltIcon 
-           sx={{
-                      width: 16,
-                      height: 16,
-                      mr:1
-                    }}
-                    />
-                     View post engagements
-           </div>
-        </Link>
+        <PostBody descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes} />
+        <div className={`${pathname.search(id) !== -1 ? "" : "hidden"}`}>
+          <Link className={`pointer-events-auto`} to={`/${userTag}/status/${id}/retweets`}>
+            <div className="flex h-14 items-center border-b border-t border-lightBorder text-sm text-ternairy dark:border-lightBorder dark:text-secondary">
+              <SignalCellularAltIcon
+                sx={{
+                  width: 16,
+                  height: 16,
+                  mr: 1,
+                }}
+              />
+              View post engagements
+            </div>
+          </Link>
         </div>
         <PostFooter id={id} pathname={pathname} replyCount={replyCount} reposted={reposted} repostsNum={repostsNum} liked={liked} likesNum={likesNum} viewCount={viewCount} handleRepostClick={handleRepostClick} handleLikeClick={handleLikeClick} />
       </div>
