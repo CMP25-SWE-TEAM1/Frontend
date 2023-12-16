@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode, setLightMode } from "./store/ThemeSlice"
 import PostPage from "./components/PostPage/PostPage"
 import Messages from "./components/messages-page/Messages"
+import MessageCompose from "./components/messages-page/compose/MessageCompose"
 import ProfilePage from "./components/ProfilePage/ProfilePage"
 import ProfilePageEdit from "./components/ProfilePage/ProfilePageEdit"
 import NotFound from "./components/NotFound"
@@ -75,6 +76,20 @@ const App = () => {
   const handleCloseProfileModal = () => {
     SetProfileEditModal(false)
   }
+
+  // Compose message
+  const [composeModalOpen, setComposeModalOpen] = useState(false)
+  // const [composeModalURL, setComposeModalURL] = useState("") // location before ComposeModalOpen
+  const handleComposeModalOpen = () => {
+    setComposeModalOpen(true)
+    // setComposeModalURL(window.location.pathname)
+    // setLocation("/messages/compose")
+  }
+  const handleComposeModalClose = () => {
+    setComposeModalOpen(false)
+    // setLocation(composeModalURL)
+  }
+
   const user = useSelector((state) => state.user.user)
   // console.log(location)
   const testPost = {
@@ -112,6 +127,8 @@ const App = () => {
             <Route path="" element={<All />}></Route>
           </Route>
           <Route path="/messages" element={<Messages />}></Route>
+          <Route path="/messages" element={<Messages composeModalOpen={composeModalOpen} handleComposeModalOpen={handleComposeModalOpen} handleComposeModalClose={handleComposeModalClose} />}></Route>
+          {/* <Route path="/messages/compose" element={<MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} />}></Route> */}
           <Route path="/settings" element={<Settings />}>
             <Route path="" element={<MobileSettings />}></Route>
             <Route path="account" element={<Account />}></Route>
@@ -134,7 +151,7 @@ const App = () => {
             <Route path="likes" element={<ProfileLikes />}></Route>
             <Route path="" element={<ProfilePosts />}></Route>
           </Route>
-          <Route path={`settings/profile`} element={<ProfilePageEdit handleOpenProfileEditModal={handleOpenProfileEditModal}  openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
+          <Route path={`settings/profile`} element={<ProfilePageEdit handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
           <Route path="/signup" element={<SignUp openModal={openProfileEditModal} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/replies" element={<PostPage post={testPost} />}></Route>
           <Route path="/:tag/status/:id/:NavbarLink" element={<PostEngagement />}></Route>

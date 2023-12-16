@@ -1,0 +1,55 @@
+#message-compose {}
+
+#message-compose .message-compose-header {
+    display: flex;
+    align-items: center;
+    height: 53px;
+    padding: 0 16px;
+}
+
+#message-compose .message-compose-header .message-compose-close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: 0.2s;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+#message-compose .message-compose-header .message-compose-close:hover {
+    background-color: #E7E7E8;
+}
+
+#message-compose .message-compose-header .message-compose-close svg {
+    width: 20px;
+    height: 20px;
+}
+
+#message-compose .message-compose-header .message-compose-title {
+    flex: 1;
+    font-weight: 600;
+    font-size: 19px;
+}
+
+#message-compose .message-compose-header .message-compose-next {
+    background-color: #87898C;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: default;
+    user-select: none;
+}
+
+#message-compose .message-compose-header .message-compose-next.active {
+    cursor: pointer;
+    background-color: black;
+}
+
+#message-compose .message-compose-header .message-compose-next.active:hover {
+    background-color: #272C30;
+}
