@@ -33,7 +33,7 @@ function ComposePostFooter({buttonName, handleUploadMediaClick, handleUploadMedi
           <div className="flex items-center">
             <div className={`circleProgress-addIcon flex items-center ${postDisabled? "hidden":""}`}>
           <Box sx={{ position: 'relative',top: '4px',border:'1.5px',mr: '12px'}}>
-          <CircularProgress variant="determinate" sx={{ color:"grey.200"}} size={progressCircleSize} value={charsCount<100? 100:0} />
+          <CircularProgress variant="determinate" className="text-lightBorder dark:text-darkBorder" size={progressCircleSize} value={charsCount<100? 100:0} />
           <CircularProgress variant="determinate" sx={{ position: 'absolute',left: 0, color: charsProgressColor}} size={progressCircleSize} value={charsCount<100? charsCount:charsCount<2900/28? 100:0} />
           <Box 
         sx={{
@@ -52,8 +52,8 @@ function ComposePostFooter({buttonName, handleUploadMediaClick, handleUploadMedi
         </Typography>
       </Box>
           </Box>
-          <div className={`px-3 py-1 border-l border-gray-300 ${buttonName==="Post"? "":"hidden"}`}>
-          <GeneralButton name={<AddRoundedIcon fontSize="small" />} title="Add" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-6" width="w-6 border-[1.5px] border-gray-300 rounded-full" link="/compose/tweet" />
+          <div className={`px-3 py-1 border-l border-lightBorder dark:border-darkBorder ${buttonName==="Post"? "":"hidden"}`}>
+          <GeneralButton name={<AddRoundedIcon fontSize="small" />} title="Add" color="text-[#1D9BF0]" hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-6" width="w-6" other="border-[1.5px] border-lightBorder dark:border-darkBorder rounded-full" link="/compose/tweet" />
           </div>
           </div>
           <button onClick={handleSubmit} className={`rounded-full bg-[#1D9BF0] p-0 ${postDisabled? "pointer-events-none":""}`}>
