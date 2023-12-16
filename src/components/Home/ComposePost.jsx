@@ -42,7 +42,7 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId }) {
   const userToken = useSelector((state) => state.user.token)
     
   useEffect(()=>{
-    setPostDisabled((description.length===0 || description.length>280 || (description.match(/\s/g) && description.match(/\s/g).length===description.length)) && media.length===0);
+    setPostDisabled(((description.length===0 || (description.match(/\s/g) && description.match(/\s/g).length===description.length)) && media.length===0) || description.length>280);
   },[description,media]);
 
     const APIs = {
@@ -195,8 +195,7 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId }) {
             disableUnderline: true,
             
           }}
-          placeholder={`${buttonName==="Post"? "What is happening?!":"Post your reply"}`}
-          value= {description}
+          placeholder={`${buttonName==="Post"? "What is happening?!":"Post your reply"}`} 
           onChange={(e)=>handleDescriptionChange(e)}
           multiline
           fullWidth
@@ -207,7 +206,7 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId }) {
               color: darkMode ? "#ffffff" : "#000000",
             },
           }}
-        />
+        ><span className="bg-[#f4212e]">{description.slice(0,280)}</span><span className="text-[#f4212e]">{description.slice(280,description.length)}</span></TextField>
         <DisplayMedia mediaUrls={mediaUrls} mediaTypes={getMediaTypes()} margin={1.5}/>
         <div className={`replyPermission ${buttonName==="Post"? "":"hidden"}`}>
           <Button target={"_blank"} color="text-[#1D9BF0]" size="sm" variant="plain" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="my-3 rounded-full bg-transparent py-0 hover:bg-[#e7f5fd] dark:bg-transparent dark:hover:bg-[#031018]">
