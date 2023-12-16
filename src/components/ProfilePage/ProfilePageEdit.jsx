@@ -68,11 +68,11 @@ const ProfilePageEdit = (props)=>{
   function EditProfile(e)
   {
     e.preventDefault()
-
+    
     if(name !== user.nickname || bio !== user.bio || location !== user.location 
-    || website !== user.website || JSON.stringify(birthdate) !==JSON.stringify((user.birth_date).slice(0,10).split('-')))
+    || website !== user.website || JSON.stringify(`${month}-${day}-${year}`) !==JSON.stringify((user.birth_date).slice(0,10).split('-')))
     {
-      //console.log("DAFASDAS")
+      
       axios.patch(
         APIds.actual.EditProfileAPI,{
           bio: bio,
@@ -237,15 +237,19 @@ const ProfilePageEdit = (props)=>{
               x
             </button>
             <p className="mt-[15px] ml-[15px] text-xl font-semibold">Edit Profile</p>
-            <button className={`absolute ${darkMode? `bg-white text-black`:`bg-black text-white`}  z-10 top-[12.5px] right-[12.5px] 
-             hover:bg-lightHover dark:hover:bg-darkHover
-              w-[70px] h-[35px] font-medium text-lg rounded-full`}onClick={()=>{hiddenFormSubmit.current.click()}} disabled={name === ""} >Save</button>
+            <button className={`absolute   z-10 top-[12.5px] right-[12.5px] 
+             bg-black text-2xl text-white no-underline 
+             hover:bg-darkHover dark:bg-white dark:text-black dark:hover:bg-lightHover
+              w-[70px] h-[35px] font-medium text-lg rounded-full`}onClick={()=>{hiddenFormSubmit.current.click()}} disabled={name === ""||2023-year<18} >Save</button>
         </div>
         <form id="EditProfileForm-test" className="relative h-[60%] flex flex-col" onSubmit={(e)=>{EditProfile(e)}}> 
         <input id="FormSubmit-test" type="submit" ref={hiddenFormSubmit} className="hidden"></input>
         <div id="CoverimageDiv-test" className="relative h-[50%] w-[100%]">
         <CoverImage  coverimage={coverpage} height="h-[300px]" ></CoverImage>
-        <button id="AddImage-test" type="button" className={`absolute ${coverpage === DefaultCoverPage? `left-[50%]`:`left-[40%] `} m-auto h-[47px] w-[47px] top-[25vh] -translate-x-[50%] -translate-y-[50%] rounded-full bg-darkHover hover:bg-darkBorder dark:bg-gray-600 dark:hover:bg-darkHover`} onClick={handlecoverPictureClick}>
+        <button id="AddImage-test" type="button" className={`absolute ${coverpage === DefaultCoverPage? `left-[50%]`:`left-[40%] `} m-auto h-[47px] w-[47px] 
+        top-[25vh] -translate-x-[50%] -translate-y-[50%]
+         rounded-full bg-white hover:bg-lightHover
+         dark:bg-gray-600 dark:hover:bg-darkHover`} onClick={handlecoverPictureClick}>
             <AddAPhotoOutlinedIcon  className={`-ml-[3px] -mt-[5px] ${darkMode ? "text-white" : "text-black"}`} />
             <input
               type="file"
@@ -255,7 +259,7 @@ const ProfilePageEdit = (props)=>{
             />
           </button>
           <button id="remove-banner-test" type="button" className={`absolute font-medium text-xl left-[60%] top-[25vh] m-auto h-[47px] w-[47px] 
-          -translate-x-[50%] -translate-y-[50%]  rounded-full bg-darkHover hover:bg-darkBorder 
+          -translate-x-[50%] -translate-y-[50%]  rounded-full bg-white hover:bg-lightHover
           dark:bg-gray-600 dark:hover:bg-darkHover ${coverpage === DefaultCoverPage? `hidden` :``} `} 
           onClick={
             ()=>{
@@ -269,7 +273,9 @@ const ProfilePageEdit = (props)=>{
           <div className="w-fit rounded-full border border-white dark:border-black">
             <img id="ProfileImage-test" src={profileimage ? profileimage : defaultProfilePic} alt="profile" className="h-[120px] w-[120px] rounded-full" />
           </div>
-          <button id="AddProfileImage-test" type="button" className="absolute left-[50%] top-[50%] m-auto h-[47px] w-[47px] -translate-x-[50%] -translate-y-[50%] rounded-full bg-darkHover hover:bg-darkBorder dark:bg-gray-600 dark:hover:bg-darkHover" onClick={handlePictureClick}>
+          <button id="AddProfileImage-test" type="button" className="absolute left-[50%] top-[50%] m-auto h-[47px] w-[47px] 
+          -translate-x-[50%] -translate-y-[50%] rounded-full bg-white hover:bg-lightHover 
+          dark:bg-gray-600 dark:hover:bg-darkHover" onClick={handlePictureClick}>
             <AddAPhotoOutlinedIcon className={`-ml-[3px] -mt-[5px] ${darkMode ? "text-white" : "text-black"}`} />
             <input
               type="file"
@@ -324,6 +330,9 @@ const ProfilePageEdit = (props)=>{
           <div className={`${selectdatedisplay? 'block': 'hidden' } mb-[10%]`}>
           <Birthdate month={month} setMonth={setMonth} day={day} setDay={setDay} year={year} setYear={setYear} yearwidth={"150px"} monthwidth={"300px"}></Birthdate>
           </div>
+          <Alert severity="error" className={`${2023-year < 18 ? "flex" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+              The age can't be less than 18
+            </Alert>
           </div>
         </form>
       </div>
