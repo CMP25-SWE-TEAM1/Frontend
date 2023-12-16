@@ -114,7 +114,7 @@ const SearchComponent = () => {
         },
       })
       .then((res) => {
-        // console.log(res.data.users)
+        // console.log(res.data.results)
         setSearchUsers(res.data.results)
       })
       .catch((error) => {
