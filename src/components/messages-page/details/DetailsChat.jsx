@@ -151,29 +151,32 @@ const DetailsChat = (props) => {
   useEffect(() => {
     if (SOCKET_ON) {
       socket.on("receive_message", (data) => {
-        console.log("received_message:", data)
-        setScrollToBottomFlag(true)
-        // console.log(data)
-        const message = data.message
-        setMessagesData([
-          ...messagesData,
-          {
-            id: message._id,
-            messageText: message.description,
-            // Need some update
-            messageMedia: message.media ? message.media[0].data : undefined,
-            mediaType: () => {
-              return message.media && message.media[0].type === "photo" ? "Img" : undefined
+        if (data.chat_ID == contact.id) {
+          console.log("received_message:", data)
+          setScrollToBottomFlag(true)
+          // console.log(data)
+          const message = data.message
+
+          setMessagesData([
+            ...messagesData,
+            {
+              id: message._id,
+              messageText: message.description,
+              // Need some update
+              messageMedia: message.media ? message.media[0].data : undefined,
+              mediaType: () => {
+                return message.media && message.media[0].type === "photo" ? "Img" : undefined
+              },
+              direction: message.mine ? "R" : "L",
+              // not handled yet! (in FE ): )
+              seen: message.seen,
+              time: message.sendTime,
             },
-            direction: message.mine ? "R" : "L",
-            // not handled yet! (in FE ): )
-            seen: message.seen,
-            time: message.sendTime,
-          },
-        ])
-        // setMessagesData([...messagesData, { id: msgIdCounterS, messageText: message.messageText, messageMedia: message.messageMedia, mediaType: message.messageMediaType }])
-        setMsgIdCounterS(msgIdCounterS + 1)
-        // scrollToBottom()
+          ])
+          // setMessagesData([...messagesData, { id: msgIdCounterS, messageText: message.messageText, messageMedia: message.messageMedia, mediaType: message.messageMediaType }])
+          setMsgIdCounterS(msgIdCounterS + 1)
+          // scrollToBottom()
+        }
       })
     }
   }, [messagesData, msgIdCounterS])
