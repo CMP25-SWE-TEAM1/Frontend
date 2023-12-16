@@ -138,27 +138,28 @@ const SearchComponent = () => {
   const handleEnterKeyPress = (e) => {
     if (e.key === "Enter") {
       console.log("Enter key pressed", searchQuery)
-      axios
-        .get(APIs.actual.searchTweets, {
-          params: {
-            word: searchQuery,
-            type: "tweet",
-            page: 1,
-            count: 100,
-          },
-          headers: {
-            authorization: "Bearer " + userToken,
-          },
-        })
-        .then((res) => {
-          // console.log(res.data.users)
-          console.log(res.data.results)
-        })
-        .catch((error) => {
-          if (error.response && error.response.status !== 404) {
-            console.error(error)
-          }
-        })
+      // axios
+      //   .get(APIs.actual.searchTweets, {
+      //     params: {
+      //       word: searchQuery,
+      //       type: "tweet",
+      //       page: 1,
+      //       count: 100,
+      //     },
+      //     headers: {
+      //       authorization: "Bearer " + userToken,
+      //     },
+      //   })
+      //   .then((res) => {
+      //     // console.log(res.data.users)
+      //     console.log(res.data.results)
+      //   })
+      //   .catch((error) => {
+      //     if (error.response && error.response.status !== 404) {
+      //       console.error(error)
+      //     }
+      //   })
+      window.location.href = `search?q=${searchQuery}`
     }
   }
 

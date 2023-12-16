@@ -3,6 +3,7 @@ import GeneralButton from "../Sidebar/Button"
 import { useSelector } from "react-redux"
 import { Avatar } from "@mui/material"
 import { Link } from "react-router-dom"
+import FollowButton from "../ProfilePage/FollowButton"
 
 function Person({nickname,username,profileImage,bio,isFollowed,index}){
     const user = useSelector((state) =>state.user.user)
@@ -36,11 +37,7 @@ function Person({nickname,username,profileImage,bio,isFollowed,index}){
             <div className="truncate font-semibold hover:underline" id="mahmoud_name">{nickname}</div>
             <div className="truncate text-secondary" id="mahmoud_username">@{username}</div>
           </div>
-          {user.username!==username && <Link>
-          <div onMouseOver={isFollowed && handleMouseOver} onMouseLeave={isFollowed && handleMouseLeave}>
-          <GeneralButton name={isFollowed? unfollow:"Follow"} height="h-8" width={isFollowed? "w-28":"w-20"} backgroundColor={isFollowed? `${bgColor}`:"bg-black dark:bg-white"} color={isFollowed? `${color}`:"text-white dark:text-black"} other={`border ${borderColor}`}/>
-          </div>
-          </Link>}
+          {user.username!==username && <FollowButton buttonName="Follow" tag={username}/>}
           </div>
           {bio && <div className="w-full">{bio}</div>} 
           </div>         
