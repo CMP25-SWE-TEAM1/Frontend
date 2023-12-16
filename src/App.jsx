@@ -36,6 +36,7 @@ import ProfileReplies from "./components/ProfilePage/ProfileReplies"
 import ProfileMedia from "./components/ProfilePage/ProfileMedia"
 import ProfileLikes from "./components/ProfilePage/ProfileLikes"
 import PostEngagement from "./components/PostEngagement/PostEngagement"
+import SearchResults from "./components/Search/SearchResults"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
@@ -105,6 +106,7 @@ const App = () => {
           <Route path="password_reset" element={<PasswordReset />}></Route>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/explore" element={<Explore />} />
+          <Route path="/search/*" element={<SearchResults />}></Route>
           <Route path="/notifications" element={<Notifications />}>
             <Route path="all" element={<All />}></Route>
             <Route path="verified" element={<Verified />}></Route>
