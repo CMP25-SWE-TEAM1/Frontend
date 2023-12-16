@@ -110,7 +110,7 @@ function PostHeader({ pathname, userTag, userProfilePicture, userName, finalDate
           </Link>
         </div>
         <Link>
-          <div className="flex h-10 w-10 items-center justify-center rounded-full text-secondary hover:bg-[#e7f5fd] hover:text-primary dark:hover:bg-[#031018]">
+          <div className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full text-secondary hover:bg-[#e7f5fd] hover:text-primary dark:hover:bg-[#031018]">
             <MoreHorizIcon target={"_blank"} variant="text" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent" />
             <Menu
               id="basic-menu"
