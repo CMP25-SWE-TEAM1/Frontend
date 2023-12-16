@@ -43,7 +43,7 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect }) => {
         }}
       >
         <div className="!mt-0 !h-fit">
-          <Cropper image={photoURL} crop={crop} zoom={zoom} rotation={rotation} aspect={aspect} onZoomChange={setZoom} onRotationChange={setRotation} onCropChange={setCrop} onCropComplete={cropComplete} />
+          <Cropper  image={photoURL} crop={crop} zoom={zoom} rotation={rotation} aspect={aspect} onZoomChange={setZoom} onRotationChange={setRotation} onCropChange={setCrop} onCropComplete={cropComplete} />
         </div>
       </DialogContent>
 
@@ -74,6 +74,7 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect }) => {
               onClick={() => {
                 // setPhotoURL(originalPhoto)
                 setOpenCrop(false)
+                
               }}
               className="mr-5"
             >

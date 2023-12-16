@@ -2,7 +2,7 @@ import React from 'react'
 
 function ProfileName(props) {
   return (
-    <div id="name" className="relative flex flex-col ml-[1.5%] top-[-2.5%] w-[50%]">
+    <div id="name" className="relative flex flex-col left-[2.5%] w-[50%]">
     <div className="">
         <h1 className={`font-bold text-lg `}>
             {props.profilename}
