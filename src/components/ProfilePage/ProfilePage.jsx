@@ -18,6 +18,7 @@ import { useLocation, useParams } from "react-router-dom"
 import Details from "./Details"
 import Widgets from "../Widgets"
 import { changeUser } from "../../store/UserSlice"
+import { DefaultCoverPage } from "../../constants"
 
 const ProfilePage = (props) => {
   const { user } = useSelector((state) => state.user)
@@ -46,16 +47,17 @@ const ProfilePage = (props) => {
             })
             .then((res) => {
               if (res.status === 200) {
-                console.log(res)
-                console.log(`Bearer ${token}`)
+                //console.log(res)
+                //console.log(`Bearer ${token}`)
                 setProfilePicURL(res.data.user.profile_image)
-                setCoverPicURL(res.data.user.banner_image)
+                setCoverPicURL(res.data.user.banner_image? res.data.user.banner_image : DefaultCoverPage)
+                
                 setProfile(res.data.user)
               }
             })
             .catch((err) => {
-              console.log(tag)
-              console.log(err)
+              //console.log(tag)
+              //console.log(err)
             })
         } else {
           axios
@@ -66,18 +68,20 @@ const ProfilePage = (props) => {
             })
             .then((res) => {
               if (res.status === 200) {
-                // console.log(`Bearer ${token}`)
-                console.log(res)
+                // //console.log(`Bearer ${token}`)
+               // //console.log(res)
                 setProfilePicURL(res.data.user.profile_image)
-                setCoverPicURL(res.data.user.banner_image)
-                res.data.user.is_curr_user = true
-                setProfile(res.data.user)
-                dispatch(changeUser(res.data.user))
+                const banner_image = res.data.user.banner_image ? res.data.user.banner_image : DefaultCoverPage
+                setCoverPicURL(banner_image)
+                const newUser = {...res.data.user, banner_image:banner_image }   
+                setProfile(newUser)
+              
+                dispatch(changeUser(newUser))
               }
             })
             .catch((err) => {
-              console.log(tag)
-              console.log(err)
+              //console.log(tag)
+              //console.log(err)
             })
         }
   }
@@ -89,22 +93,26 @@ const ProfilePage = (props) => {
   }
     , [tag])
 
-  // console.log(profileres.is_curr_user)
+  // //console.log(profileres.is_curr_user)
   return (
     <div className=" flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
-      <div className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-[600px]">
+      <div className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow 
+      overflow-y-scroll border border-b-0 border-t-0 border-lightBorder 
+      dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-[600px]">
         <div
           id="Profile"
           className="flex h-[100%] flex-col border border-b-0 
         border-t-0 border-lightBorder dark:border-darkBorder md:w-[100%]"
         >
-          <div id="Upperhalf" className="mb-[10%] h-[50%] md:w-[100%] lg:w-[100%]">
+          <div id="Upperhalf" className="relative m-0 h-[42vh] w-[100%]">
             <Header profilename={profileres.nickname} postsnum={profileres.num_of_posts}></Header>
-            <CoverImage coverimage={bannerPicURL}></CoverImage>
-            <div className="flex flex-row">
+            <CoverImage height={"h-[25vh]"} coverimage={bannerPicURL}></CoverImage>
+            <div className="flex flex-row relative h-[25%]  top-[-75px] ">
               <ProfileImage profileimage={profilePicURL} profileimageURL={profilePicURL}></ProfileImage>
-              <Details ismuted={profileres.is_wanted_user_muted} isblocked={profileres.is_wanted_user_blocked} tag={tag} display={`${profileres.is_curr_user? `hidden`: `block`}`}></Details>
-              <FollowButton handleOpenProfileEditModal={props.handleOpenProfileEditModal} tag={tag} buttonName={profileres.is_curr_user ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
+              <Details ismuted={profileres.is_wanted_user_muted} isblocked={profileres.is_wanted_user_blocked} tag={tag} display={`${tag=== user.username ? `hidden`: `block`}`}></Details>
+             <div id="follow-button-div" className={`relative ${tag===user.username? `left-[25vw]`:`left-[21vw]`} top-[75px] mx-0 mt-[2%] `}>
+              <FollowButton  handleOpenProfileEditModal={props.handleOpenProfileEditModal} tag={tag} buttonName={tag=== user.username ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
+              </div>
             </div>
             
           </div>

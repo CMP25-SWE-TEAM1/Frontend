@@ -70,7 +70,7 @@ const FollowButton = (props) => {
   }
 
   return (
-    <div id="follow-buttonDiv" className={`relative mx-0 mt-[2%] left-[49%]`}>
+    <>
       <button
         id="follow-button"
         onClick={() => {
@@ -99,7 +99,7 @@ const FollowButton = (props) => {
         <span>{buttonstate}</span>
       </button>{" "}
       {/*todo: conditional rendering white for follow black for unfollow*/}
-    </div>
+    </>
   )
 }
 
