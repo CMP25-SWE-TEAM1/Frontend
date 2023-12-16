@@ -7,11 +7,13 @@ import UserSearchComponent from "./UserSearchOption"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 
+import { InputBase } from "@mui/material"
+
 import axios from "axios"
 import { APIs } from "../../constants/signupConstants"
 import TrendSearchOption from "./TrendSearchOption"
 
-const SearchComponent = () => {
+const SearchComponent = ({ query }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const userToken = useSelector((state) => state.user.token)
 
@@ -70,6 +72,10 @@ const SearchComponent = () => {
       isFollowingMe: true,
     },
   ]
+
+  useEffect(() => {
+    if (query !== "") setSearchQuery(query)
+  }, [query])
 
   useEffect(() => {
     setSearchAll([...searchTrends, ...searchUsers])
@@ -138,28 +144,8 @@ const SearchComponent = () => {
   const handleEnterKeyPress = (e) => {
     if (e.key === "Enter") {
       console.log("Enter key pressed", searchQuery)
-      // axios
-      //   .get(APIs.actual.searchTweets, {
-      //     params: {
-      //       word: searchQuery,
-      //       type: "tweet",
-      //       page: 1,
-      //       count: 100,
-      //     },
-      //     headers: {
-      //       authorization: "Bearer " + userToken,
-      //     },
-      //   })
-      //   .then((res) => {
-      //     // console.log(res.data.users)
-      //     console.log(res.data.results)
-      //   })
-      //   .catch((error) => {
-      //     if (error.response && error.response.status !== 404) {
-      //       console.error(error)
-      //     }
-      //   })
-      window.location.href = `search?q=${searchQuery}`
+
+      window.location.href = `search?q=${searchQuery.replace(/#/g, "%23")}`
     }
   }
 
@@ -191,27 +177,25 @@ const SearchComponent = () => {
               return <li>{option.username ? <UserSearchComponent key={option.username} {...props} option={option} /> : <TrendSearchOption key={option.title} {...props} option={option} />}</li>
             }}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Try searching for people with username"
-                InputProps={{
-                  ...params.InputProps,
-                  type: "search",
-                  onKeyDown: handleEnterKeyPress,
-                }}
-                onChange={(e) => {
-                  const value = e.target.value
-                  setSearchQuery(value)
-                  handleSearchChange(value)
-                }}
-                sx={{
-                  "& .MuiInputLabel-root": { color: darkMode ? "#71767b" : "black" },
-                  "& .MuiInputBase-root": { border: "1px solid gray !important", borderRadius: 100 },
-                  "& .MuiInputBase-input": {
-                    color: darkMode ? "#71767b" : "black",
-                  },
-                }}
-              />
+              <div className="input-container" {...params} ref={params.InputProps.ref}>
+                <input
+                  onKeyDown={handleEnterKeyPress}
+                  {...params.inputProps}
+                  className={searchQuery === "" ? "form-input" : "form-input filled-input"}
+                  type="search"
+                  name="search"
+                  id="search"
+                  value={searchQuery}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    setSearchQuery(value)
+                    handleSearchChange(value)
+                  }}
+                />
+                <label className="input-label" htmlFor="name">
+                  Search for people, hashtags or tweets
+                </label>
+              </div>
             )}
           />
         </Stack>

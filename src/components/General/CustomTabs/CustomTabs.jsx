@@ -37,6 +37,7 @@ const CustomTabs = ({ tabValue, handleChangeTabValue, tabsNames }) => {
             tabsNames.map((tab,index) => {
               return (
                 <Tab
+                  key={tab}
                   label={tab}
                   sx={{
                     width: `${100/tabsNames.length}%`,
