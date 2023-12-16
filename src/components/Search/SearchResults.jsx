@@ -25,7 +25,7 @@ const SearchResults = () => {
 
   const APIs = {
     mock: {},
-    actual: { searchUsers: "http://backend.gigachat.cloudns.org/api/user/search", searchTweets: "http://backend.gigachat.cloudns.org/api/tweets/search", searchTrends: "http://backend.gigachat.cloudns.org/api/trends/search" },
+    actual: { searchUsers: "http://backend.gigachat.cloudns.org/api/user/search", searchTweets: "http://backend.gigachat.cloudns.org/api/tweets/search", searchTrends: "http://backend.gigachat.cloudns.org/api/trends/" },
   }
 
   const handleChangeTabValue = (event, newValue) => {
@@ -39,7 +39,7 @@ const SearchResults = () => {
           word: searchQuery,
           type: "user",
           page: pageNumber,
-          count: 1,
+          count: 10,
         },
         headers: {
           authorization: "Bearer " + token,
@@ -74,9 +74,8 @@ const SearchResults = () => {
       })
 
     axios
-      .get(APIs.actual.searchTrends, {
+      .get(APIs.actual.searchTrends + searchQuery.slice(1), {
         params: {
-          word: searchQuery,
           type: "hashtag",
           page: pageNumber,
           count: 10,
@@ -87,7 +86,7 @@ const SearchResults = () => {
       })
       .then((res) => {
         console.log(res)
-        setTrendResults((prevResults) => [...prevResults, ...res.data.results])
+        setTrendResults((prevResults) => [...prevResults, ...res.data.data])
       })
       .catch((err) => {
         console.log(err)
@@ -101,12 +100,14 @@ const SearchResults = () => {
     fetchData()
   }, [])
 
+  const tabNames = ["Top", "Latest", "People"]
+
   return (
     <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
       <div id="scrolledElement" className="no-scrollbar ml-0 mr-1 max-w-[620px] flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-fit md:shrink-0">
         <div className="flex h-[53px] flex-col items-center">
           <SearchComponent />
-          <CustomTabs tabValue={tabValue} handleChangeTabValue={handleChangeTabValue} />
+          <CustomTabs tabValue={tabValue} handleChangeTabValue={handleChangeTabValue} tabsNames={tabNames} />
           <CustomTabPanel value={tabValue} index={0} className="w-full">
             {userResults && (
               <div className="flex flex-col">
@@ -114,15 +115,15 @@ const SearchResults = () => {
                 <UsersContainer users={userResults} />
               </div>
             )}
-            {tweetResults && <PostsContainer posts={tweetResults} />}
+            {trendResults && <PostsContainer posts={trendResults} setPosts={setTrendResults} />}
+            {tweetResults && <PostsContainer posts={tweetResults} setPosts={setTweetResults} />}
           </CustomTabPanel>
           <CustomTabPanel value={tabValue} index={1} className="w-full">
-            {tweetResults && <PostsContainer posts={tweetResults} />}
+            {tweetResults && <PostsContainer posts={tweetResults} setPosts={setTweetResults} />}
           </CustomTabPanel>
           <CustomTabPanel value={tabValue} index={2} className="w-full">
             {userResults && <UsersContainer users={userResults} />}
           </CustomTabPanel>
-          <CustomTabPanel value={tabValue} index={3} className="w-full"></CustomTabPanel>
         </div>
       </div>
       {user && <Widgets />}
