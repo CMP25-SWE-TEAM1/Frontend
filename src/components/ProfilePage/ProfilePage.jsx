@@ -100,8 +100,8 @@ const ProfilePage = (props) => {
             <CoverImage coverimage={bannerPicURL}></CoverImage>
             <div className="flex flex-row">
               <ProfileImage profileimage={profilePicURL} profileimageURL={profilePicURL}></ProfileImage>
-              <Details ismuted={profileres.is_wanted_user_muted} isblocked={profileres.is_wanted_user_blocked} tag={tag} display={`${profileres.is_curr_user ? `hidden` : `block`}`}></Details>
-              <FollowButton handleOpenProfileEditModal={props.handleOpenProfileEditModal} tag={tag} buttonName={profileres.is_curr_user ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
+              <Details ismuted={profileres.is_wanted_user_muted} isblocked={profileres.is_wanted_user_blocked} tag={tag} display={`${tag === user.username ? `hidden` : `block`}`}></Details>
+              <FollowButton handleOpenProfileEditModal={props.handleOpenProfileEditModal} tag={tag} buttonName={tag === user.username ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
             </div>
           </div>
           <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
