@@ -183,7 +183,7 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId }) {
   return (
     <div className={`ComposePost flex h-fit border-b ${buttonName==="Post"? "border-t":""} border-lightBorder p-3 text-black dark:border-darkBorder dark:text-white`} data-testid="postId">
       <div className=" h-10 w-10 sm:mr-3">
-      <Link className="hover:underline" to={`/${user.userTag}`}>
+      <Link className="hover:underline" to={`/${user.username}`}>
         <Avatar alt="Remy Sharp" src={user.profileImage} sx={{ width: 40, height: 40 }} />
         </Link>
       </div>
@@ -250,11 +250,11 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId }) {
           >
             <div className="ml-3 flex items-center">
               <span className="text-[15px] dark:text-white">
-                <b>Who can reply?</b>
-                <br />
-                Choose who can reply to this post.
-                <br />
-                Anyone mentioned can always reply.
+                <p><b>Who can reply?</b></p>
+                <div className="text-sm text-secondary">
+                <p>Choose who can reply to this post.</p>
+                <p>Anyone mentioned can always reply.</p>
+                </div>
               </span>
             </div>
             {permissionOptions.map((option, index) => (
