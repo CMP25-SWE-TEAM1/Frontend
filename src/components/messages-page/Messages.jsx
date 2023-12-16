@@ -9,8 +9,13 @@ import { useState, useEffect } from "react"
 
 import { BACKEND_ON } from "./MessagesConstants"
 import useGetContacts from "./customHooks/get/useGetContacts"
+import { useSelector } from "react-redux"
+import useSocket from "./customHooks/useSocket"
 
 const Messages = (props) => {
+  const userToken = useSelector((state) => state.user.token)
+  // const socket = useSocket(userToken)
+  const socket = ""
   const handleGetContacts = useGetContacts
 
   // Compose message
@@ -20,8 +25,8 @@ const Messages = (props) => {
 
   useEffect(() => {
     if (BACKEND_ON) {
-      handleGetContacts().then((response) => {
-        // console.log("newChats", newChats)
+      handleGetContacts(userToken).then((response) => {
+        console.log("GetContacts response", response)
         const newChats = response.data.map((chat) => ({
           id: chat._id,
 
@@ -132,7 +137,7 @@ const Messages = (props) => {
           {contacts.length !== 0 && <InfoChat contacts={contacts} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />}
         </div>
         {(!selectedContact || !contacts.filter((contact) => contact.id === selectedContact)[0]) && <DetailsNoChat handleComposeModalOpen={handleComposeModalOpen} />}
-        {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} />}
+        {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} socket={socket} />}
       </div>
 
       <MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} />
