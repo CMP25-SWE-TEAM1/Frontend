@@ -3,8 +3,8 @@ import Widgets from "../Widgets"
 
 import { useState } from "react"
 
-import CustomTabPanel from "./CustomTabPanel"
-import CustomTabs from "./CustomTabs"
+import CustomTabPanel from "../General/CustomTabs/CustomTabPanel"
+import CustomTabs from "../General/CustomTabs/CustomTabs"
 import WithConditionalDataFetching from "./WithDataFetching"
 import SearchComponent from "./SearchComponent"
 
@@ -17,7 +17,7 @@ const Explore = () => {
     setTabValue(newValue)
   }
 
-  const tabsNames=["FOR YOU","TRENDING","NEWS","SPORTS","ENTERTAINMENT"]
+  const tabsNames = ["FOR YOU", "TRENDING", "NEWS", "SPORTS", "ENTERTAINMENT"]
 
   return (
     <div className="flex flex-1 flex-grow-[8] max-xs:max-w-[475]">

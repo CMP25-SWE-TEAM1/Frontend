@@ -7,8 +7,8 @@ import UsersContainer from "./UsersContainer"
 import PostsContainer from "../Home/Posts/PostsContainer"
 import { Routes, Route } from "react-router-dom"
 import SearchComponent from "../Explore/SearchComponent"
-import CustomTabPanel from "../Explore/CustomTabPanel"
-import CustomTabs from "../Explore/CustomTabs"
+import CustomTabPanel from "../General/CustomTabs/CustomTabPanel"
+import CustomTabs from "../General/CustomTabs/CustomTabs"
 import ScrollToBottom from "../General/ScrollToBottom"
 
 const SearchResults = () => {
