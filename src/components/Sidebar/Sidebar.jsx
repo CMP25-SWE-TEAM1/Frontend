@@ -77,7 +77,7 @@ const Sidebar = () => {
   const optionsIcons = [
     <HomeOutlinedIcon />,
     <SearchRoundedIcon />,
-    <Badge badgeContent={16} color="primary">
+    <Badge badgeContent={unseenCount} color="primary">
       <NotificationsNoneRoundedIcon />
     </Badge>,
     <MailOutlineRoundedIcon />,

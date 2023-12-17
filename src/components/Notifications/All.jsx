@@ -87,7 +87,7 @@ const All = () => {
       .get(APIs.actual.getAllNotifications, {
         params: {
           page: 1,
-          count: 10,
+          count: 1000,
         },
         headers: {
           authorization: "Bearer " + userToken,
@@ -102,28 +102,28 @@ const All = () => {
       })
   }, [])
 
-  // useEffect(() => {
-  //   axios
-  //     .post(
-  //       APIs.actual.markNotificationSeen,
-  //       {},
-  //       {
-  //         headers: {
-  //           authorization: "Bearer " + userToken,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       console.log(res)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }, [])
+  useEffect(() => {
+    axios
+      .post(
+        APIs.actual.markNotificationSeen,
+        {},
+        {
+          headers: {
+            authorization: "Bearer " + userToken,
+          },
+        }
+      )
+      .then((res) => {
+        // console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
 
   return (
     <div>
-      <NotificationsContainer list={notTest} type={"all"} />
+      <NotificationsContainer list={allNotifications} type={"all"} />
     </div>
   )
 }
