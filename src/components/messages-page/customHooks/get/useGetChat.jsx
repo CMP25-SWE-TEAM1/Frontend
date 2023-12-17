@@ -8,6 +8,7 @@ const useGetChat = async (chatId, userToken) => {
         authorization: `Bearer ${userToken}`,
       },
     })
+    console.log("getChat res", res)
     return res.data
   } catch (err) {
     // Handle errors

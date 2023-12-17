@@ -148,7 +148,7 @@ const Messages = (props) => {
         {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} />}
       </div>
 
-      <MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} />
+      <MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} setSelectedContact={setSelectedContact} setContacts={setContacts} contacts={contacts}/>
     </>
   )
 }

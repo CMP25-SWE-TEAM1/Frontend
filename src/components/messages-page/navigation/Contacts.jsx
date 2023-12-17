@@ -18,6 +18,7 @@ const Contacts = (props) => {
         <ListItem disablePadding key={index} sx={selectedContact === contact.id ? { backgroundColor: "#EFF3F4", borderRight: "4px solid #1D9BF0" } : {}}>
           <ListItemButton
             onClick={() => {
+              console.log("selectedContact", contact.id)
               setSelectedContact(contact.id)
             }}
           >
@@ -29,10 +30,12 @@ const Contacts = (props) => {
                 <ListItemText
                   primary={contact.name || "Hamza"}
                   secondary={`@${contact.userName || "hamza_xyz"} . ${
-                    new Date(contact.lastMessageDate).toLocaleString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                    }) || "Dec 2"
+                    contact.lastMessageDate
+                      ? new Date(contact.lastMessageDate).toLocaleString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                        })
+                      : ""
                   }`}
                 />
               </div>

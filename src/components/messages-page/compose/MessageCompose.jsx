@@ -28,6 +28,9 @@ import { BACKEND_ON } from "../MessagesConstants"
 const MessageCompose = (props) => {
   const userToken = useSelector((state) => state.user.token)
   const handleUsersSearch = useGetUsersSearch
+  const setChatSelectedContact = props.setSelectedContact
+  const setChatContacts = props.setContacts
+  const chatContacts = props.contacts
 
   const composeModalOpen = props.composeModalOpen
   const handleComposeModalClose = props.handleComposeModalClose
@@ -122,18 +125,23 @@ const MessageCompose = (props) => {
   const handleSearchValueChange = (event) => {
     setSearchValue(event.target.value)
 
-    if (BACKEND_ON) {
+    if (BACKEND_ON && event.target.value !== "") {
       handleUsersSearch(event.target.value, userToken).then((response) => {
         console.log("GetUsersSearch response", response)
-        const newUsers = response.results.map((user) => ({
-          avatrLink: user.profile_image,
-          userName: user.username,
-          name: user.nickname,
-          id: user._id,
-          selected: selectedContacts.id === user._id ? true : false,
-        }))
-        setContacts(newUsers)
+        if (!response.results) setContacts([])
+        else {
+          const newUsers = response.results.map((user) => ({
+            avatrLink: user.profile_image,
+            userName: user.username,
+            name: user.nickname,
+            id: user._id,
+            selected: selectedContacts.id === user._id ? true : false,
+          }))
+          setContacts(newUsers)
+        }
       })
+    } else {
+      if (event.target.value === "") setContacts([])
     }
   }
 
@@ -150,7 +158,29 @@ const MessageCompose = (props) => {
               </svg>
             </div>
             <div className="message-compose-title">New message</div>
-            <div className={`message-compose-next ${activeNextBtn}`}>Next</div>
+            <div
+              className={`message-compose-next ${activeNextBtn}`}
+              onClick={() => {
+                if (activeNextBtn === "active") {
+                  handleComposeModalClose()
+                  if (chatContacts.filter((contact) => contact.id === selectedContacts[0].id).length === 0) {
+                    console.log([...chatContacts, selectedContacts[0]])
+                    setChatContacts([
+                      ...chatContacts,
+                      {
+                        avatarLink: selectedContacts[0].avatrLink,
+                        userName: selectedContacts[0].userName,
+                        name: selectedContacts[0].name,
+                        id: selectedContacts[0].id,
+                      },
+                    ])
+                  }
+                  setChatSelectedContact(selectedContacts[0].id)
+                }
+              }}
+            >
+              Next
+            </div>
           </div>
           <div className="message-compose-body">
             <div className="message-compose-search"></div>
