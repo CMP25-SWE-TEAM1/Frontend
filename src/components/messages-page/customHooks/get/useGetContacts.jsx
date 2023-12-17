@@ -8,6 +8,7 @@ const useGetContacts = async (userToken) => {
         authorization: `Bearer ${userToken}`,
       },
     })
+    console.log("res", res)
     return res.data
   } catch (err) {
     // Handle errors

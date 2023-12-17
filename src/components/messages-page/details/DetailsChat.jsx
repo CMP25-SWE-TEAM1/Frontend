@@ -163,9 +163,9 @@ const DetailsChat = (props) => {
               id: message._id,
               messageText: message.description,
               // Need some update
-              messageMedia: message.media ? message.media[0].data : undefined,
+              messageMedia: message.media && message.media.link ? message.media.link : undefined,
               mediaType: () => {
-                return message.media && message.media[0].type === "photo" ? "Img" : undefined
+                return message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined
               },
               direction: message.mine ? "R" : "L",
               // not handled yet! (in FE ): )
