@@ -162,9 +162,7 @@ const DetailsChat = (props) => {
               messageText: message.description,
               // Need some update
               messageMedia: message.media && message.media.link ? message.media.link : undefined,
-              mediaType: () => {
-                return message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined
-              },
+              mediaType: message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined,
               direction: message.mine ? "R" : "L",
               // not handled yet! (in FE ): )
               seen: message.seen,
@@ -188,9 +186,13 @@ const DetailsChat = (props) => {
       //  sender_ID:
       reciever_ID: contact.id,
       data: {
-        ...(message.messageMedia && { media: message.messageMedia }),
-        ...(message.messageMediaType && { mediaType: message.messageMediaType }),
         ...(message.messageText && { text: message.messageText }),
+        ...(message.messageMedia && {
+          media: {
+            link: message.messageMedia,
+            type: message.messageMediaType === "GIF" ? "video" : "image",
+          },
+        }),
       },
     })
   }
