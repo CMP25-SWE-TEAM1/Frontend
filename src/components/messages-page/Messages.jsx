@@ -9,8 +9,19 @@ import { useState, useEffect } from "react"
 
 import { BACKEND_ON } from "./MessagesConstants"
 import useGetContacts from "./customHooks/get/useGetContacts"
+import { useDispatch, useSelector } from "react-redux"
+import { initializeSocket } from "./customHooks/socketService"
+import { setSocket } from "../../store/SocketSlice"
 
 const Messages = (props) => {
+  const userToken = useSelector((state) => state.user.token)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const socket = initializeSocket(userToken)
+    dispatch(setSocket(socket))
+  }, [dispatch, userToken])
+
   const handleGetContacts = useGetContacts
 
   // Compose message
@@ -20,10 +31,10 @@ const Messages = (props) => {
 
   useEffect(() => {
     if (BACKEND_ON) {
-      handleGetContacts().then((response) => {
-        // console.log("newChats", newChats)
+      handleGetContacts(userToken).then((response) => {
+        console.log("GetContacts response", response)
         const newChats = response.data.map((chat) => ({
-          id: chat._id,
+          id: chat.chat_members[0].id,
 
           userName: chat.chat_members[0].username,
           name: chat.chat_members[0].nickname,

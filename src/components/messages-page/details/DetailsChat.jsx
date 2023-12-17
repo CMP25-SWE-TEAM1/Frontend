@@ -6,25 +6,17 @@ import Divider from "@mui/material/Divider"
 import Chip from "@mui/material/Chip"
 
 import useGetChat from "../customHooks/get/useGetChat"
+
 // Socket.io
-import io from "socket.io-client"
+import { SOCKET_ON, BACKEND_ON } from "../MessagesConstants"
+import { useDispatch, useSelector } from "react-redux"
+import { selectSocket } from "../../../store/SocketSlice"
 
-import { SOCKET_ON, SOCKET_IO, BACKEND_ON } from "../MessagesConstants"
-import { useSelector } from "react-redux"
-
-const connection_string = SOCKET_IO.actual
 const DetailsChat = (props) => {
   const userToken = useSelector((state) => state.user.token)
-  const socket = SOCKET_ON
-    ? io(connection_string, {
-        withCredentials: true,
-        extraHeaders: {
-          // token: "malek"
-          token: userToken,
-          // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NzQ2ZjA0NGUyOGRlYTYyMDY5M2I4MSIsImlhdCI6MTcwMjEyOTQ3MiwiZXhwIjoxNzA5OTA1NDcyfQ.hn1CqfcPfGvFZuDn7PBhNfIpjv_ObO2SfZre3v0Y6FQ",
-        },
-      })
-    : ""
+
+  const dispatch = useDispatch()
+  const socket = useSelector(selectSocket)
 
   const contact = props.contact
   const handleGetChat = useGetChat
@@ -35,6 +27,18 @@ const DetailsChat = (props) => {
   // Messages mapping
   let msgIdCounter = 0
   const [messagesData, setMessagesData] = useState([
+    // - Message right
+    // -- Text only
+    // -- media only
+    // -- Gif only
+    // -- Text + media
+    // -- Text + Gif
+    // - Message left
+    // -- Text only
+    // -- media only
+    // -- Gif only
+    // -- Text + media
+    // -- Text + Gif
     {
       id: msgIdCounter++,
       direction: "R",
@@ -42,19 +46,6 @@ const DetailsChat = (props) => {
       messageMedia: "https://www.harrisburgu.edu/wp-content/uploads/189dce017fb19e3ca1b94b2095d519cc514df22c.jpg",
       mediaType: "Img",
     },
-    {
-      id: msgIdCounter++,
-      direction: "L",
-      messageText: "Me too 😄",
-      // messageMedia: "https://assetsio.reedpopcdn.com/Rocket-League-(header-suggestion).jpg?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp",
-      // mediaType: "Img",
-    },
-    // {
-    //   id: msgIdCounter++,
-    //   direction: "L",
-    //   // messageMedia: "https://assetsio.reedpopcdn.com/Rocket-League-(header-suggestion).jpg?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp",
-    //   // mediaType: "Img",
-    // },
     {
       id: msgIdCounter++,
       direction: "L",
@@ -76,22 +67,7 @@ const DetailsChat = (props) => {
       id: msgIdCounter++,
       direction: "L",
       messageText: "No.. no.. no.. nooooooooo",
-      // messageMedia: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXZdiKSL5gDE0kpxefsDYrhJ8_9vSlcLxymvtq2L8iQkdiLhSh0f9gVvwAqYVIhHfAN90&usqp=CAU",
-      // mediaType: "Img",
     },
-    // {
-    //   id: msgIdCounter++,
-    //   direction: "R",
-    //   messageText: "Angry text testing. Lorem Ipsum is simply dummy text.",
-    //   messageMedia: "https://media.tenor.com/CJw7RJsyzSYAAAPo/haha-emoji.mp4",
-    //   mediaType: "GIF",
-    // },
-    // {
-    //   id: msgIdCounter++,
-    //   direction: "L",
-    //   messageMedia: "https://media.tenor.com/Vk9E_QK45u8AAAPo/run-running.mp4",
-    //   mediaType: "GIF",
-    // },
     {
       id: msgIdCounter++,
       direction: "R",
@@ -99,12 +75,6 @@ const DetailsChat = (props) => {
       messageMedia: "https://media.tenor.com/JJquxnSAmJwAAAPo/seal-hibo-heart.mp4",
       mediaType: "GIF",
     },
-    // {
-    //   id: msgIdCounter++,
-    //   direction: "R",
-    //   messageMedia: "https://media.tenor.com/4jKA6Zc7GAcAAAPo/i-love-you-minions-the-rise-of-gru.mp4",
-    //   mediaType: "GIF",
-    // },
   ])
   const [msgIdCounterS, setMsgIdCounterS] = useState(messagesData.length)
   // const [msgData, setMsgData] = useState({
@@ -118,22 +88,25 @@ const DetailsChat = (props) => {
   const endOfChat = useRef(null)
   useEffect(() => {
     if (BACKEND_ON) {
-      handleGetChat(contact.id).then((response) => {
+      handleGetChat(contact.id, userToken).then((response) => {
         console.log("response", response)
-        const newChat = response.data.map((message) => ({
-          id: message.id,
-          messageText: message.description,
-          // Need some update
-          messageMedia: message.media ? message.media[0].data : undefined,
-          mediaType: () => {
-            return message.media && message.media[0].type === "photo" ? "Img" : undefined
-          },
-          direction: message.mine ? "R" : "L",
-          // not handled yet! (in FE ): )
-          seen: message.seen,
-          time: message.sendTime,
-        }))
-        setMessagesData(newChat)
+        if (!response.data) setMessagesData([])
+        else {
+          const newChat = response.data.map((message) => ({
+            id: message.id,
+            messageText: message.description,
+            // Need some update
+            messageMedia: message.media ? message.media[0].data : undefined,
+            mediaType: () => {
+              return message.media && message.media[0].type === "photo" ? "Img" : undefined
+            },
+            direction: message.mine ? "R" : "L",
+            // not handled yet! (in FE ): )
+            seen: message.seen,
+            time: message.sendTime,
+          }))
+          setMessagesData(newChat)
+        }
       })
     }
     scrollToBottom()
@@ -178,35 +151,41 @@ const DetailsChat = (props) => {
   useEffect(() => {
     if (SOCKET_ON) {
       socket.on("receive_message", (data) => {
-        // console.log("received_message:", data.message)
-        setScrollToBottomFlag(true)
-        console.log(data)
-        const message = data.message
-        setMessagesData([
-          ...messagesData,
-          {
-            id: message._id,
-            messageText: message.description,
-            // Need some update
-            messageMedia: message.media ? message.media[0].data : undefined,
-            mediaType: () => {
-              return message.media && message.media[0].type === "photo" ? "Img" : undefined
+        if (data.chat_ID == contact.id) {
+          console.log("received_message:", data)
+          setScrollToBottomFlag(true)
+          // console.log(data)
+          const message = data.message
+
+          setMessagesData([
+            ...messagesData,
+            {
+              id: message._id,
+              messageText: message.description,
+              // Need some update
+              messageMedia: message.media ? message.media[0].data : undefined,
+              mediaType: () => {
+                return message.media && message.media[0].type === "photo" ? "Img" : undefined
+              },
+              direction: message.mine ? "R" : "L",
+              // not handled yet! (in FE ): )
+              seen: message.seen,
+              time: message.sendTime,
             },
-            direction: message.mine ? "R" : "L",
-            // not handled yet! (in FE ): )
-            seen: message.seen,
-            time: message.sendTime,
-          },
-        ])
-        // setMessagesData([...messagesData, { id: msgIdCounterS, messageText: message.messageText, messageMedia: message.messageMedia, mediaType: message.messageMediaType }])
-        setMsgIdCounterS(msgIdCounterS + 1)
-        // scrollToBottom()
+          ])
+          // setMessagesData([...messagesData, { id: msgIdCounterS, messageText: message.messageText, messageMedia: message.messageMedia, mediaType: message.messageMediaType }])
+          setMsgIdCounterS(msgIdCounterS + 1)
+          // scrollToBottom()
+        }
       })
     }
   }, [messagesData, msgIdCounterS])
   // Send message to socket sercer
   const sendMessage_toServer = (message) => {
     console.log("message sending...", message)
+    console.log("sending to...", contact.id)
+    // console.log(contact.id)
+    // console.log(typeof contact.id)
     socket.emit("send_message", {
       //  sender_ID:
       reciever_ID: contact.id,
