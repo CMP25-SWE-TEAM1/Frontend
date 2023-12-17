@@ -21,3 +21,4 @@ for (let i = 0; i < 120; i++) {
   const year = currentYear - i
   last120Years.push(year)
 }
+export const DefaultCoverPage = "https://wallpaperaccess.com/full/2969070.jpg";

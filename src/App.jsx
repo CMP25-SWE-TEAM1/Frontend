@@ -1,6 +1,5 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom"
 import Sidebar from "./components/Sidebar/Sidebar"
-import Widgets from "./components/Widgets"
 import Home from "./components/Home/Home"
 import Login from "./components/Login/Login"
 import PasswordReset from "./components/PasswordReset/PasswordReset"
@@ -23,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { setDarkMode, setLightMode } from "./store/ThemeSlice"
 import PostPage from "./components/PostPage/PostPage"
 import Messages from "./components/messages-page/Messages"
+import MessageCompose from "./components/messages-page/compose/MessageCompose"
 import ProfilePage from "./components/ProfilePage/ProfilePage"
 import ProfilePageEdit from "./components/ProfilePage/ProfilePageEdit"
 import NotFound from "./components/NotFound"
@@ -36,6 +36,7 @@ import ProfileReplies from "./components/ProfilePage/ProfileReplies"
 import ProfileMedia from "./components/ProfilePage/ProfileMedia"
 import ProfileLikes from "./components/ProfilePage/ProfileLikes"
 import PostEngagement from "./components/PostEngagement/PostEngagement"
+import SearchResults from "./components/Search/SearchResults"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
@@ -75,6 +76,20 @@ const App = () => {
   const handleCloseProfileModal = () => {
     SetProfileEditModal(false)
   }
+
+  // Compose message
+  const [composeModalOpen, setComposeModalOpen] = useState(false)
+  // const [composeModalURL, setComposeModalURL] = useState("") // location before ComposeModalOpen
+  const handleComposeModalOpen = () => {
+    setComposeModalOpen(true)
+    // setComposeModalURL(window.location.pathname)
+    // setLocation("/messages/compose")
+  }
+  const handleComposeModalClose = () => {
+    setComposeModalOpen(false)
+    // setLocation(composeModalURL)
+  }
+
   const user = useSelector((state) => state.user.user)
   // console.log(location)
   const testPost = {
@@ -105,6 +120,7 @@ const App = () => {
           <Route path="password_reset" element={<PasswordReset />}></Route>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/explore" element={<Explore />} />
+          <Route path="/search/*" element={<SearchResults />}></Route>
           <Route path="/notifications" element={<Notifications />}>
             <Route path="all" element={<All />}></Route>
             <Route path="verified" element={<Verified />}></Route>
@@ -112,6 +128,8 @@ const App = () => {
             <Route path="" element={<All />}></Route>
           </Route>
           <Route path="/messages" element={<Messages />}></Route>
+          <Route path="/messages" element={<Messages composeModalOpen={composeModalOpen} handleComposeModalOpen={handleComposeModalOpen} handleComposeModalClose={handleComposeModalClose} />}></Route>
+          {/* <Route path="/messages/compose" element={<MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} />}></Route> */}
           <Route path="/settings" element={<Settings />}>
             <Route path="" element={<MobileSettings />}></Route>
             <Route path="account" element={<Account />}></Route>
@@ -134,9 +152,9 @@ const App = () => {
             <Route path="likes" element={<ProfileLikes />}></Route>
             <Route path="" element={<ProfilePosts />}></Route>
           </Route>
-          <Route path={`settings/profile`} element={<ProfilePageEdit openModal={true} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
+          <Route path={`settings/profile`} element={<ProfilePageEdit handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
           <Route path="/signup" element={<SignUp openModal={openProfileEditModal} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
-          <Route path="/replies" element={<PostPage post={testPost} />}></Route>
+          <Route path="/:tag/status/:id" element={<PostPage post={testPost} />}></Route>
           <Route path="/:tag/status/:id/:NavbarLink" element={<PostEngagement />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

@@ -64,6 +64,9 @@ const GoogleLoginButton = ({ handleCloseModal }) => {
             }
           })
         })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }, [profile])
 

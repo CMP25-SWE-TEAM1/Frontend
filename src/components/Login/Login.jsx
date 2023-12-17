@@ -13,6 +13,8 @@ import { loginUser } from "../../store/UserSlice"
 import GoogleLoginButton from "../General/GoogleLoginButton"
 import axios from "axios"
 
+import { EMAIL_REGEX } from "../../constants/signupConstants.js"
+
 const Login = ({ openModal, handleCloseModal, setLocation }) => {
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
@@ -90,7 +92,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
   const handleLoginEvent = (e) => {
     e.preventDefault()
     let userCredentials = {
-      email: userName,
+      query: userName,
       password: password,
     }
     // axios
@@ -121,10 +123,20 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
     setShowPassword(!showPassword)
   }
 
+  function validEmail(emeil) {
+    return EMAIL_REGEX.test(emeil)
+  }
+
   const handleEmailCheck = () => {
+    let userCredentials = { username: userName }
+
+    if (validEmail(userName)) {
+      userCredentials = { email: userName }
+    }
+
     let emailExist
     axios
-      .post(APIs.actual.emailExistAPI, { email: userName })
+      .post(APIs.actual.emailExistAPI, userCredentials)
       .then((res) => {
         emailExist = res.status === 200
       })
@@ -132,15 +144,16 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
         handleNext(emailExist)
       })
       .catch((err) => {
+        console.log(err)
         emailExist = !err.message === "Request failed with status code 404"
-        handleNext(emailExist) //this will be removed
+        handleNext(emailExist)
         // console.log(emailExist)
       })
   }
 
   return (
     <>
-      <Modal open={openModal} onClose={handleCloseModal} data-testid="loginModal"  disableEscapeKeyDown disablePortal>
+      <Modal open={openModal} onClose={handleCloseModal} data-testid="loginModal" disableEscapeKeyDown disablePortal>
         <Box style={modalStyle}>
           <div className="pop-up min-w-[350px] bg-white dark:bg-black md:rounded-2xl " id="mahmoud_login_box">
             <button className="relative top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>

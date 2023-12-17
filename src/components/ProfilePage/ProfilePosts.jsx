@@ -56,7 +56,7 @@ const ProfilePosts = () => {
         .get(APIs.actual.getUserTweets, {
           params: {
             page: 1,
-            count: 10,
+            count: 150,
             username: user.username,
           },
           headers: {

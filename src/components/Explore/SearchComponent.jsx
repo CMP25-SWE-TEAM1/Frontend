@@ -4,20 +4,24 @@ import Autocomplete from "@mui/material/Autocomplete"
 
 import UserSearchComponent from "./UserSearchOption"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
+
+import { InputBase } from "@mui/material"
 
 import axios from "axios"
 import { APIs } from "../../constants/signupConstants"
+import TrendSearchOption from "./TrendSearchOption"
 
-const SearchComponent = () => {
+const SearchComponent = ({ query }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const userToken = useSelector((state) => state.user.token)
 
-  const [userSearch, setUserSearch] = useState("")
+  const [searchQuery, setSearchQuery] = useState("")
 
   const [searchUsers, setSearchUsers] = useState([])
-
+  const [searchTrends, setSearchTrends] = useState([])
+  const [searchAll, setSearchAll] = useState([])
   const users = [
     {
       id: "652c16b01e15482dcdd5c361",
@@ -69,33 +73,78 @@ const SearchComponent = () => {
     },
   ]
 
+  useEffect(() => {
+    if (query !== "") setSearchQuery(query)
+  }, [query])
+
+  useEffect(() => {
+    setSearchAll([...searchTrends, ...searchUsers])
+  }, [searchTrends, searchUsers])
+
+  const handleSearchTrends = (word) => {
+    axios
+      .get(APIs.actual.searchTrends, {
+        params: {
+          word: word,
+          type: "hashtag",
+          page: 1,
+          count: 3,
+        },
+        headers: {
+          authorization: "Bearer " + userToken,
+        },
+      })
+      .then((res) => {
+        // console.log(res.data.results)
+        setSearchTrends(res.data.results)
+      })
+      .catch((error) => {
+        setSearchTrends([])
+        if (error.response && error.response.status !== 404) {
+          console.error(error)
+        }
+      })
+  }
+
   const handleSearchUsers = (word) => {
-    if (word !== "")
-      axios
-        .get(APIs.actual.searchUsers, {
-          params: {
-            word: word,
-            type: "user",
-            page: 1,
-            count: 10,
-          },
-          headers: {
-            authorization: "Bearer " + userToken,
-          },
-        })
-        .then((res) => {
-          // console.log(res.data.users)
-          setSearchUsers(res.data.users)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    else setSearchUsers([])
+    axios
+      .get(APIs.actual.searchUsers, {
+        params: {
+          word: word,
+          type: "user",
+          page: 1,
+          count: 10,
+        },
+        headers: {
+          authorization: "Bearer " + userToken,
+        },
+      })
+      .then((res) => {
+        // console.log(res.data.results)
+        setSearchUsers(res.data.results)
+      })
+      .catch((error) => {
+        setSearchUsers([])
+        if (error.response && error.response.status !== 404) {
+          console.error(error)
+        }
+      })
+  }
+
+  const handleSearchChange = (word) => {
+    if (word !== "") {
+      handleSearchTrends(word)
+      handleSearchUsers(word)
+    } else {
+      setSearchUsers([])
+      setSearchTrends([])
+    }
   }
 
   const handleEnterKeyPress = (e) => {
     if (e.key === "Enter") {
-      console.log("Enter key pressed", userSearch)
+      console.log("Enter key pressed", searchQuery)
+      window.location.href = `search?q=${searchQuery.replace(/#/g, "%23")}`
     }
   }
 
@@ -105,33 +154,47 @@ const SearchComponent = () => {
         <Stack spacing={2} sx={{ width: "100%" }}>
           <Autocomplete
             freeSolo
+            blurOnSelect={false}
+            renderGroup={(group) => (
+              <div>
+                <span className="p-2 text-sm">{group.group}</span>
+                <div>{group.children}</div>
+              </div>
+            )}
+            groupBy={(option) => {
+              if (option.username) {
+                return "Users"
+              } else {
+                return "Trends"
+              }
+            }}
             disableClearable
-            getOptionLabel={(option) => option?.username || userSearch}
-            options={searchUsers}
+            getOptionLabel={(option) => option?.username || searchQuery}
+            options={searchAll}
             noOptionsText={"No options found"}
-            renderOption={(props, option) => <UserSearchComponent {...props} option={option} />}
+            renderOption={(props, option) => {
+              return <li>{option.username ? <UserSearchComponent key={option.username} {...props} option={option} /> : <TrendSearchOption key={option.title} {...props} option={option} />}</li>
+            }}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Try searching for people with username"
-                InputProps={{
-                  ...params.InputProps,
-                  type: "search",
-                  onKeyDown: handleEnterKeyPress,
-                }}
-                onChange={(e) => {
-                  const value = e.target.value
-                  setUserSearch(value)
-                  handleSearchUsers(value)
-                }}
-                sx={{
-                  "& .MuiInputLabel-root": { color: darkMode ? "#71767b" : "black" },
-                  "& .MuiInputBase-root": { border: "1px solid gray !important" ,borderRadius:100},
-                  "& .MuiInputBase-input": {
-                    color: darkMode ? "#71767b" : "black",
-                  },
-                }}
-              />
+              <div className="input-container" {...params} ref={params.InputProps.ref}>
+                <input
+                  onKeyDown={handleEnterKeyPress}
+                  {...params.inputProps}
+                  className={searchQuery === "" ? "form-input" : "form-input filled-input"}
+                  type="search"
+                  name="search"
+                  id="search"
+                  value={searchQuery}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    setSearchQuery(value)
+                    handleSearchChange(value)
+                  }}
+                />
+                <label className="input-label" htmlFor="name">
+                  Search for people, hashtags or tweets
+                </label>
+              </div>
             )}
           />
         </Stack>

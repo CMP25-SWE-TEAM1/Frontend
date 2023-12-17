@@ -5,7 +5,7 @@ function RepliesContainer({replies}) {
  
   return (
     <div className="replies-container">
-      {replies.map(reply=><Reply props={reply}/>)}
+      {replies&&replies.map(reply=><Reply reply={reply}/>)}
     </div>
   )
 }

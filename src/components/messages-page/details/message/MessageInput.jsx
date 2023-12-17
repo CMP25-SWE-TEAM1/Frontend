@@ -5,13 +5,11 @@ import ReactEmojiPicker from "./ReactEmojiPicker"
 import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
 import GifPicker, { ContentFilter } from "gif-picker-react"
-import { TENOR_API_KEY } from "../MessagesConstants"
-// API
-import { APIs } from "../MessagesConstants"
-import { useSelector } from "react-redux"
-import axios from "axios"
+import { TENOR_API_KEY } from "../../MessagesConstants"
+import usePostMedia from "../../customHooks/post/usePostMedia"
 
 const MessageInput = (props) => {
+  const handlePostMedia = usePostMedia
   // Message input
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false)
   const [emojiPickerVisibiltyStyle, setEmojiPickerVisibiltyStyle] = useState("none")
@@ -43,9 +41,9 @@ const MessageInput = (props) => {
       // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
       if (newMessageMedia) {
         if (newMessageMediaType === "Img") {
-          handleSendMessage(newMessageText, "https://t3.ftcdn.net/jpg/05/14/75/82/360_F_514758236_i8rnB85PVdEaK19yGaK0TpaYEYMyxOL5.jpg", newMessageMediaType)
-          // handleSendMessage(newMessageText)
-          // handleUploadMedia(newMessageMedia)
+          handlePostMedia(newMessageMedia).then((response) => {
+            handleSendMessage(newMessageText, response.urls[0], newMessageMediaType)
+          }) // upload media
         } else handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
       } else handleSendMessage(newMessageText)
     }
@@ -65,26 +63,6 @@ const MessageInput = (props) => {
   const [newMessageMedia, setNewMessageMedia] = useState()
   const [newMessageMediaType, setNewMessageMediaType] = useState()
   const [mediaInputPreview, setMediaInputPreview] = useState()
-
-  const userToken = useSelector((state) => state.user.token)
-  // handleUploadMedia: Uploads media to server and get its URL
-  const handleUploadMedia = (mediaFile) => {
-    const formData = new FormData()
-    formData.append("media", mediaFile)
-
-    axios
-      .post(APIs.actual.postMedia, formData, {
-        headers: {
-          authorization: "Bearer " + userToken,
-        },
-      })
-      .then((res) => {
-        console.log(res)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
 
   const handleMediaUpload = (event, MediaType) => {
     const file = event.target.files[0]

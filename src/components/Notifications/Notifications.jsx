@@ -1,4 +1,4 @@
-import Widgets from "../Widgets"
+import Widgets from "../Widgets/Widgets"
 
 import { useSelector,useDispatch } from "react-redux"
 
@@ -55,7 +55,7 @@ const Notifications = () => {
             </div>
           </div>
           <div className="flex h-[53px] items-center">
-            <HorizontalNavbar urls={notificationsNavLinks} originalUrl={"/notifications"} handlers={[]} />
+            <HorizontalNavbar urls={notificationsNavLinks} originalUrl={"/notifications"} handlers={[]}/>
           </div>
         </div>
         <Outlet />

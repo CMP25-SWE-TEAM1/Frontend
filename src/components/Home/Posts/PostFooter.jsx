@@ -5,16 +5,16 @@ import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutline
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined"
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
-import QueryStatsOutlinedIcon from "@mui/icons-material/QueryStatsOutlined"
+import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt'
 import { Link } from "react-router-dom"
 
 
-
-function PostFooter({replyCount, reposted, repostsNum, liked, likesNum, viewCount, handleRepostClick, handleLikeClick}) {
+function PostFooter({id, pathname, replyCount, reposted, repostsNum, liked, likesNum, viewCount, handleRepostClick, handleLikeClick}) {
+  
   return (
     <div className="post-footer mt-3 flex max-w-full justify-between text-ternairy dark:text-secondary">
-              <Link>
-            <div className="group -ml-2 flex cursor-pointer items-center transition-colors  duration-300 hover:text-primary" title="Reply">
+             <Link>
+            <div className={`pointer-events-auto group -ml-2 flex cursor-pointer items-center transition-colors  duration-300 hover:text-primary`} title="Reply">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-[#e7f5fd] dark:group-hover:bg-[#031018] ">
               <ChatBubbleOutlineOutlinedIcon
                   sx={{
@@ -27,7 +27,7 @@ function PostFooter({replyCount, reposted, repostsNum, liked, likesNum, viewCoun
             </div>
             </Link>
               <Link>
-            <div className={`  group flex cursor-pointer items-center transition-colors duration-300 ${reposted? "text-green-500" : ""} hover:text-green-500`} title="Repost" onClick={handleRepostClick}>
+            <div className={`pointer-events-auto group flex cursor-pointer items-center transition-colors duration-300 ${reposted? "text-green-500" : ""} hover:text-green-500`} title="Repost" onClick={handleRepostClick}>
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-[#e8f9ee] dark:group-hover:bg-[#031309] ">
                 <CachedOutlinedIcon
                   sx={{
@@ -40,7 +40,7 @@ function PostFooter({replyCount, reposted, repostsNum, liked, likesNum, viewCoun
             </div>
               </Link>
               <Link>
-            <div className={`  group flex cursor-pointer items-center transition-colors duration-300 ${liked? "text-pink-600" : ""} hover:text-pink-600`} title="Like" onClick={handleLikeClick}>
+            <div className={`pointer-events-auto  group flex cursor-pointer items-center transition-colors duration-300 ${liked? "text-pink-600" : ""} hover:text-pink-600`} title="Like" onClick={handleLikeClick}>
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-[#f9e5ef] dark:group-hover:bg-[#14000a]">
               {liked? <FavoriteOutlinedIcon
                   sx={{
@@ -59,10 +59,10 @@ function PostFooter({replyCount, reposted, repostsNum, liked, likesNum, viewCoun
               <span className="text-sm">{likesNum}</span>
             </div>
               </Link>
-              <Link>
-            <div className="  group flex cursor-pointer  items-center transition-colors duration-300 hover:text-primary" title="Views">
+              {pathname.search(id) ===-1 && <Link>
+            <div className="pointer-events-auto  group flex cursor-pointer  items-center transition-colors duration-300 hover:text-primary" title="Views">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-[#e7f5fd] dark:group-hover:bg-[#031018] ">
-              <QueryStatsOutlinedIcon
+              <SignalCellularAltIcon
                   sx={{
                     width: 16,
                     height: 16,
@@ -71,10 +71,10 @@ function PostFooter({replyCount, reposted, repostsNum, liked, likesNum, viewCoun
               </div>
               <span className="text-sm">{viewCount}</span>
             </div>
-              </Link>
-            <div className="bookmarkUpload flex">
+              </Link>}
+            <div className={`bookmarkUpload flex ${pathname.search(id) ===-1 ?"":"w-40 justify-between"}`}>
                 <Link>
-              <div className={`group flex cursor-pointer items-center transition-colors duration-300 hover:text-primary`} title="Bookmark">
+              <div className={`pointer-events-auto group flex cursor-pointer items-center transition-colors duration-300 hover:text-primary`} title="Bookmark">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-[#e7f5fd] dark:group-hover:bg-[#031018]">
                 <BookmarkBorderOutlinedIcon
                     sx={{
@@ -86,7 +86,7 @@ function PostFooter({replyCount, reposted, repostsNum, liked, likesNum, viewCoun
               </div>
                   </Link>
                 <Link>
-              <div className="  group flex cursor-pointer items-center transition-colors duration-300 hover:text-primary" title="Share">
+              <div className=" pointer-events-auto group flex cursor-pointer items-center transition-colors duration-300 hover:text-primary" title="Share">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-[#e7f5fd] dark:group-hover:bg-[#031018]">
                 <FileUploadOutlinedIcon
                     sx={{

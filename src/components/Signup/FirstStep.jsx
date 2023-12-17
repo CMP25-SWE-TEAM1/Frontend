@@ -58,7 +58,7 @@ const FirstStep = ({ nickName, setNickName, email, setEmail, month, setMonth, da
             <p className="date-text text-[0.8rem] text-ternairy">This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.</p>
             <br></br>
           </div>
-          <Birthdate month={month} setMonth={setMonth} day={day} setDay={setDay} year={year} setYear={setYear} />
+          <Birthdate month={month} setMonth={setMonth} day={day} setDay={setDay} year={year} setYear={setYear} monthwidth={"120px"} yearwidth={"100px"} />
         </div>
         <button
           className="btn"

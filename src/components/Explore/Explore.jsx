@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux"
-import Widgets from "../Widgets"
+import Widgets from "../Widgets/Widgets"
 
 import { useState } from "react"
 
-import CustomTabPanel from "./CustomTabPanel"
-import CustomTabs from "./CustomTabs"
+import CustomTabPanel from "../General/CustomTabs/CustomTabPanel"
+import CustomTabs from "../General/CustomTabs/CustomTabs"
 import WithConditionalDataFetching from "./WithDataFetching"
 import SearchComponent from "./SearchComponent"
 
@@ -17,12 +17,14 @@ const Explore = () => {
     setTabValue(newValue)
   }
 
+  const tabsNames = ["FOR YOU", "TRENDING", "NEWS", "SPORTS", "ENTERTAINMENT"]
+
   return (
     <div className="flex flex-1 flex-grow-[8] max-xs:max-w-[475]">
       <div className="no-scrollbar ml-0 mr-1 max-w-[620px] flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-fit md:shrink-0">
-        <div className="sticky top-0 z-50 mb-0 border-0 border-b border-lightBorder bg-white bg-opacity-[87%] backdrop-blur-sm dark:border-darkBorder dark:bg-inherit dark:bg-opacity-[99%]">
-          <SearchComponent />
-          <CustomTabs tabValue={tabValue} handleChangeTabValue={handleChangeTabValue} />
+        <div className="sticky top-0 z-50 mb-0 border-0 border-b border-lightBorder bg-white bg-opacity-[87%] backdrop-blur-sm dark:border-darkBorder dark:bg-inherit dark:bg-opacity-[99%] dark:backdrop-brightness-[20%] dark:max-xs:bg-black dark:max-xs:bg-opacity-50 dark:max-xs:backdrop-blur-sm dark:max-xs:backdrop-brightness-[30%]">
+          <SearchComponent query={""}/>
+          <CustomTabs tabValue={tabValue} handleChangeTabValue={handleChangeTabValue} tabsNames={tabsNames} />
         </div>
         <CustomTabPanel value={tabValue} index={0}>
           {WithConditionalDataFetching("trending")}
@@ -41,7 +43,7 @@ const Explore = () => {
         </CustomTabPanel>
       </div>
 
-      {user && <Widgets parent={"explore"}/>}
+      {user && <Widgets parent={"explore"} />}
     </div>
   )
 }

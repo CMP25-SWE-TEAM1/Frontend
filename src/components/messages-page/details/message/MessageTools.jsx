@@ -1,5 +1,7 @@
 import copyToClipboard from "copy-to-clipboard"
 import { useState } from "react"
+import useDeleteMessage from "../../customHooks/delete/useDeleteMessage"
+import { BACKEND_ON } from "../../MessagesConstants"
 
 const MessageTools = (props) => {
   const messageId = props.messageId
@@ -12,6 +14,8 @@ const MessageTools = (props) => {
   const [isAlertVisible, setIsAlertVisible] = useState(false)
   const [alertVTimeOut, setAlertVTimeOut] = useState(null)
   const [isDeleteMessageVisible, setIsDeleteMessageVisible] = useState(false)
+
+  const handleDeleteMessage = useDeleteMessage
 
   // const handleReply = () => {
   //   hideMsgTools()
@@ -32,6 +36,9 @@ const MessageTools = (props) => {
     setIsDeleteMessageVisible(true)
   }
   const handleDeleteMsg = () => {
+    if (BACKEND_ON) {
+      handleDeleteMessage(messageId)
+    }
     console.log(`message with id(${messageId}) is deleted!`)
     deleteMessage(messageId)
     setIsDeleteMessageVisible(false)

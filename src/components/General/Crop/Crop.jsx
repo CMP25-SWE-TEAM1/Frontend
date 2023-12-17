@@ -5,7 +5,7 @@ import React, {  useState } from "react"
 import Cropper from "react-easy-crop"
 import getCroppedImg from "./utils/CropImage"
 
-const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect, originalPhoto }) => {
+const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [rotation, setRotation] = useState(0)
@@ -43,7 +43,7 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect, originalPho
         }}
       >
         <div className="!mt-0 !h-fit">
-          <Cropper image={photoURL} crop={crop} zoom={zoom} rotation={rotation} aspect={aspect} onZoomChange={setZoom} onRotationChange={setRotation} onCropChange={setCrop} onCropComplete={cropComplete} />
+          <Cropper  image={photoURL} crop={crop} zoom={zoom} rotation={rotation} aspect={aspect} onZoomChange={setZoom} onRotationChange={setRotation} onCropChange={setCrop} onCropComplete={cropComplete} />
         </div>
       </DialogContent>
 
@@ -72,8 +72,9 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect, originalPho
               variant="outlined"
               startIcon={<Cancel />}
               onClick={() => {
-                setPhotoURL(originalPhoto)
+                // setPhotoURL(originalPhoto)
                 setOpenCrop(false)
+                
               }}
               className="mr-5"
             >
