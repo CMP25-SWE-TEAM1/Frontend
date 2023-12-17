@@ -32,6 +32,7 @@ const Messages = (props) => {
   useEffect(() => {
     if (BACKEND_ON) {
       handleGetContacts(userToken).then((response) => {
+        // console.log("userToken",userToken)
         console.log("GetContacts response", response)
         const newChats = response.data.map((chat) => ({
           id: chat.chat_members[0].id,
@@ -41,6 +42,7 @@ const Messages = (props) => {
           avatarLink: chat.chat_members[0].profile_image,
 
           lastMessage: chat.lastMessage.description,
+          lastMessageMediaType: chat.lastMessage.media ? (chat.lastMessage.media.type === "image" ? "Img" : "GIF") : undefined,
           lastMessageDate: chat.lastMessage.sendTime,
           lastMessageSeen: chat.lastMessage.seen,
           lastMessageSender: chat.lastMessage.sender,

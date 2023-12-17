@@ -141,7 +141,7 @@ const InfoChat = (props) => {
                     />
                   </div>
                   <div style={{ marginTop: "5px" }}>
-                    <HighlightedMessage mainText={contact.lastMessage || "none"} subText={""} />
+                    <HighlightedMessage mainText={contact.lastMessage || `${contact.userName === contact.lastMessageSender ? "Sent a " : "You sent a "}${contact.lastMessageMediaType === "GIF" ? "photo" : "GIF"}`} subText={""} />
                   </div>
                 </div>
               </ListItemButton>
