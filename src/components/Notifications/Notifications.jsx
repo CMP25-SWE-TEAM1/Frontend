@@ -29,10 +29,10 @@ const Notifications = () => {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    const socket = initializeSocket(userToken)
-    dispatch(setNotificationSocket(socket))
-  }, [dispatch, userToken])
+  // useEffect(() => {
+  //   const socket = initializeSocket(userToken)
+  //   dispatch(setNotificationSocket(socket))
+  // }, [dispatch, userToken])
 
   return (
     <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">

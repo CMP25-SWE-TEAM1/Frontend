@@ -39,5 +39,8 @@ export const APIs = {
     searchTweets: "http://backend.gigachat.cloudns.org/api/tweets/search",
     searchTrends: "http://backend.gigachat.cloudns.org/api/trends/search",
     getTrends: "http://backend.gigachat.cloudns.org/api/trends/",
+    getAllNotifications: "http://backend.gigachat.cloudns.org/api/user/notifications",
+    getNotificationUnseenCount: "http://backend.gigachat.cloudns.org/api/user/notifications/unseenCount",
+    markNotificationSeen: "http://backend.gigachat.cloudns.org/api/user/notifications/markAllAsSeen",
   },
 }
