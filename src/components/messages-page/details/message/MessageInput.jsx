@@ -41,9 +41,10 @@ const MessageInput = (props) => {
       // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
       if (newMessageMedia) {
         if (newMessageMediaType === "Img") {
-          handlePostMedia(newMessageMedia).then((response) => {
-            handleSendMessage(newMessageText, response.urls[0], newMessageMediaType)
-          }) // upload media
+          // handlePostMedia(newMessageMedia).then((response) => {
+          //   handleSendMessage(newMessageText, response.urls[0], newMessageMediaType)
+          // }) // upload media
+          handleSendMessage(newMessageText, "https://cdn.forumcomm.com/dims4/default/b339688/2147483647/strip/true/crop/800x800+0+0/resize/1066x1066!/quality/90/?url=https%3A%2F%2Ffcc-cue-exports-brightspot.s3.us-west-2.amazonaws.com%2Ffccnn%2Fbinary%2Fpepe_binary_796212.jpg", newMessageMediaType)
         } else handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
       } else handleSendMessage(newMessageText)
     }

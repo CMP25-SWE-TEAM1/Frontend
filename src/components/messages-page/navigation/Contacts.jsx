@@ -40,7 +40,7 @@ const Contacts = (props) => {
                 />
               </div>
               <div style={{ marginTop: "5px" }}>
-                <HighlightedMessage mainText={contact.lastMessage || `${contact.userName === contact.lastMessageSender ? "Sent a " : "You sent a "}${contact.lastMessageMediaType === "GIF" ? "photo" : "GIF"}`} subText={""} />
+                <HighlightedMessage mainText={contact.lastMessage || `${contact.lastMessageMediaType ? (contact.userName === contact.lastMessageSender ? "Sent a" : "You sent a") : ""} ${contact.lastMessageMediaType ? (contact.lastMessageMediaType === "GIF" ? "photo" : "GIF") : ""}`} subText={""} />
               </div>
             </div>
           </ListItemButton>
