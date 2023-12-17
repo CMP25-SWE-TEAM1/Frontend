@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import Post from "./Post"
+import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
 
 const PostsContainer = ({ posts, setPosts }) => {
   const handlePostClick = (p) => {}
@@ -9,8 +10,10 @@ const PostsContainer = ({ posts, setPosts }) => {
       {posts.map((p, index) => {
         return (
           <div key={index}>
+            
             <Post
               userProfilePicture={p.tweetDetails ? p.tweetDetails.tweet_owner.profile_image : p.tweet_owner.profile_image}
+              postType={p.tweetDetails.type}
               userName={p.tweetDetails ? p.tweetDetails.tweet_owner.nickname : p.tweet_owner.nickname}
               userTag={p.tweetDetails ? p.tweetDetails.tweet_owner.username : p.tweet_owner.username}
               id={p.tweetDetails ? (p.tweetDetails._id ? p.tweetDetails._id : p.tweetDetails.id) : p._id}

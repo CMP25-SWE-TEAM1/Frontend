@@ -16,10 +16,9 @@ import { Avatar } from "@mui/material"
 import { useSelector } from "react-redux"
 import { useLocation } from "react-router-dom"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
-
 import axios from "axios"
 
-function PostHeader({ pathname, userTag, userProfilePicture, userName, finalDate, id, isVisible, handleMouseEnter, handleMouseLeave, hoveredProfile, openMenu, anchorPostMenu, handleMenuClose, htmlElement, handleMenuButtonClick, followingUser, setPosts, posts }) {
+function PostHeader({ pathname, postType, userTag, userProfilePicture, userName, finalDate, id, isVisible, handleMouseEnter, handleMouseLeave, hoveredProfile, openMenu, anchorPostMenu, handleMenuClose, htmlElement, handleMenuButtonClick, followingUser, setPosts, posts }) {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const user = useSelector((state) => state.user.user)
 
