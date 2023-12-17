@@ -21,8 +21,14 @@ import TagFacesIcon from "@mui/icons-material/TagFaces"
 import Chip from "@mui/material/Chip"
 
 import "./message-compose.css"
+import useGetUsersSearch from "../customHooks/get/useGetUsersSearch"
+import { useSelector } from "react-redux"
+import { BACKEND_ON } from "../MessagesConstants"
 
 const MessageCompose = (props) => {
+  const userToken = useSelector((state) => state.user.token)
+  const handleUsersSearch = useGetUsersSearch
+
   const composeModalOpen = props.composeModalOpen
   const handleComposeModalClose = props.handleComposeModalClose
 
@@ -115,6 +121,20 @@ const MessageCompose = (props) => {
   const [searchValue, setSearchValue] = useState("")
   const handleSearchValueChange = (event) => {
     setSearchValue(event.target.value)
+
+    if (BACKEND_ON) {
+      handleUsersSearch(event.target.value, userToken).then((response) => {
+        console.log("GetUsersSearch response", response)
+        const newUsers = response.results.map((user) => ({
+          avatrLink: user.profile_image,
+          userName: user.username,
+          name: user.nickname,
+          id: user._id,
+          selected: selectedContacts.id === user._id ? true : false,
+        }))
+        setContacts(newUsers)
+      })
+    }
   }
 
   return (

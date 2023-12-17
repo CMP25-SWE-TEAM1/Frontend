@@ -86,6 +86,8 @@ const DetailsChat = (props) => {
   // })
   // scroll to bottom button
   const endOfChat = useRef(null)
+  const endOfSeenChat = useRef(null)
+
   useEffect(() => {
     if (BACKEND_ON) {
       handleGetChat(contact.id, userToken).then((response) => {
@@ -260,6 +262,7 @@ const DetailsChat = (props) => {
                         <Chip label="unread messages" />
                       </Divider>
                     )}
+                    <div ref={endOfSeenChat}></div>
                     {messagesData
                       .filter((msg) => !msg.seen)
                       .map((msg) => (
