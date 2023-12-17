@@ -2,7 +2,7 @@ import "../../styles/home.css"
 import PostsContainer from "./Posts/PostsContainer"
 import HorizontalNavbar from "../General/HorizontalNavbar"
 import { useState, useEffect, useRef } from "react"
-import Widgets from "../Widgets"
+import Widgets from "../Widgets/Widgets"
 import getUser from "../../constants/index"
 
 import RepliesContainer from "../PostPage/RepliesContainer"
@@ -315,7 +315,7 @@ const Home = () => {
         {/* <HorizontalNavbar urls={homeNavLinks} originalUrl={"/home"} /> */}
         {/* </div> */}
         {/* </div> */}
-        <ComposePost buttonName="Post" handleNewPost={(newPost) => handleNewPost(newPost)} postType="tweet"/>
+        <ComposePost buttonName="Post" handleNewPost={(newPost) => handleNewPost(newPost)} postType="tweet" />
         <PostsContainer posts={posts} setPosts={setPosts} />
         {/* .sort(() => Math.random() - 0.5) */}
       </div>

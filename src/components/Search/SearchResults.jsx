@@ -1,4 +1,4 @@
-import Widgets from "../Widgets"
+import Widgets from "../Widgets/Widgets"
 import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import { Outlet, useLocation } from "react-router"

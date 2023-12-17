@@ -1,4 +1,4 @@
-import Widgets from "../Widgets"
+import Widgets from "../Widgets/Widgets"
 
 import { useSelector } from "react-redux"
 

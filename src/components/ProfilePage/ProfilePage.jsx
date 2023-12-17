@@ -16,7 +16,7 @@ import Header from "./Header"
 import ProfilePageEdit from "./ProfilePageEdit"
 import { useLocation, useParams } from "react-router-dom"
 import Details from "./Details"
-import Widgets from "../Widgets"
+import Widgets from "../Widgets/Widgets"
 import { changeUser } from "../../store/UserSlice"
 import { DefaultCoverPage } from "../../constants"
 

@@ -1,6 +1,5 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom"
 import Sidebar from "./components/Sidebar/Sidebar"
-import Widgets from "./components/Widgets"
 import Home from "./components/Home/Home"
 import Login from "./components/Login/Login"
 import PasswordReset from "./components/PasswordReset/PasswordReset"
