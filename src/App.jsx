@@ -128,7 +128,6 @@ const App = () => {
             <Route path="mentions" element={<Mentions />}></Route>
             <Route path="" element={<All />}></Route>
           </Route>
-          <Route path="/messages" element={<Messages />}></Route>
           <Route path="/messages" element={<Messages composeModalOpen={composeModalOpen} handleComposeModalOpen={handleComposeModalOpen} handleComposeModalClose={handleComposeModalClose} />}></Route>
           {/* <Route path="/messages/compose" element={<MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} />}></Route> */}
           <Route path="/settings" element={<Settings />}>
