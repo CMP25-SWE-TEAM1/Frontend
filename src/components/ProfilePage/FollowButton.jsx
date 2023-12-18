@@ -26,7 +26,7 @@ const FollowButton = (props) => {
   function HandleClick() {
     if (buttonstate === "Edit Profile") {
       props.handleOpenProfileEditModal()
-      navigate('/settings/profile')
+       navigate('/settings/profile')
     } else if (buttonstate === "Follow") {
       axios
         .post(

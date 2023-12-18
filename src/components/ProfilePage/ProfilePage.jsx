@@ -13,7 +13,7 @@ import { useEffect } from "react"
 import { useState } from "react"
 import defaultProfilePic from "../../assets/imgs/Default_Profile_Picture.png"
 import Header from "./Header"
-import ProfilePageEdit from "./ProfilePageEdit"
+import ProfilePageEdit from "./ProfilePageEdit/ProfilePageEdit"
 import { useLocation, useParams } from "react-router-dom"
 import Details from "./Details"
 import Widgets from "../Widgets/Widgets"
@@ -46,7 +46,7 @@ const ProfilePage = (props) => {
             })
             .then((res) => {
               if (res.status === 200) {
-                //console.log(res)
+                console.log(res)
                 //console.log(`Bearer ${token}`)
                 setProfilePicURL(res.data.user.profile_image)
                 setCoverPicURL(res.data.user.banner_image? res.data.user.banner_image : DefaultCoverPage)
@@ -114,7 +114,7 @@ const ProfilePage = (props) => {
           </div>
           <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
           <ProfileBio profilebio={profileres.bio}></ProfileBio>
-          <ProfileICons profilelocation={profileres.location} profilewebsite={profileres.website} profilejoindate={profileres.joined_date}></ProfileICons>
+          <ProfileICons profilelocation={profileres.location} profilewebsite={profileres.website} profilejoindate={profileres.joined_date} profilebirthdate = {profileres.birth_date}></ProfileICons>
           <Followers followers={profileres.followers_num} following={profileres.followings_num}></Followers>
           <ProfilePageEdit openModal={props.openModal} handleCloseModal={props.handleCloseModal}></ProfilePageEdit>
           <ProfileMediabuttons></ProfileMediabuttons>
