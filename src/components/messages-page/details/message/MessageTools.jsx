@@ -1,7 +1,7 @@
 import copyToClipboard from "copy-to-clipboard"
 import { useState } from "react"
 import useDeleteMessage from "../../customHooks/delete/useDeleteMessage"
-import { BACKEND_ON } from "../../MessagesConstants"
+import { BACKEND_ON } from "../../constants/MessagesConstants"
 
 const MessageTools = (props) => {
   const messageId = props.messageId

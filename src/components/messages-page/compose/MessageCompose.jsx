@@ -23,7 +23,7 @@ import Chip from "@mui/material/Chip"
 import "./message-compose.css"
 import useGetUsersSearch from "../customHooks/get/useGetUsersSearch"
 import { useSelector } from "react-redux"
-import { BACKEND_ON } from "../MessagesConstants"
+import { BACKEND_ON } from "../constants/MessagesConstants"
 
 const MessageCompose = (props) => {
   const userToken = useSelector((state) => state.user.token)

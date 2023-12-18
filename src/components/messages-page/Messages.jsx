@@ -7,7 +7,7 @@ import InfoNoChat from "./navigation/InfoNoChat"
 
 import { useState, useEffect } from "react"
 
-import { BACKEND_ON } from "./MessagesConstants"
+import { BACKEND_ON } from "./constants/MessagesConstants"
 import useGetContacts from "./customHooks/get/useGetContacts"
 import { useDispatch, useSelector } from "react-redux"
 import { initializeSocket } from "./customHooks/socketService"
@@ -148,7 +148,7 @@ const Messages = (props) => {
         {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} />}
       </div>
 
-      <MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} setSelectedContact={setSelectedContact} setContacts={setContacts} contacts={contacts}/>
+      <MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} setSelectedContact={setSelectedContact} setContacts={setContacts} contacts={contacts} />
     </>
   )
 }

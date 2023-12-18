@@ -1,4 +1,4 @@
-import { APIs, SERVER_ON } from "./../../MessagesConstants"
+import { APIs, SERVER_ON } from "./../../constants/MessagesConstants"
 import axios from "axios"
 
 const useGetChatSearch = async (searchQuery, userToken) => {

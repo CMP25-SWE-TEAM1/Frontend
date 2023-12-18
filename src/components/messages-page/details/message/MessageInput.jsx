@@ -5,7 +5,7 @@ import ReactEmojiPicker from "./ReactEmojiPicker"
 import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
 import GifPicker, { ContentFilter } from "gif-picker-react"
-import { TENOR_API_KEY } from "../../MessagesConstants"
+import { TENOR_API_KEY } from "../../constants/MessagesConstants"
 import usePostMedia from "../../customHooks/post/usePostMedia"
 
 const MessageInput = (props) => {

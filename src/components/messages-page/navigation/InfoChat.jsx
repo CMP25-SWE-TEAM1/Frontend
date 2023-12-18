@@ -22,7 +22,7 @@ import NoResultFound from "./NoResultFound"
 import Contacts from "./Contacts"
 import useGetChatSearch from "../customHooks/get/useGetChatSearch"
 import { useSelector } from "react-redux"
-import { BACKEND_ON } from "../MessagesConstants"
+import { BACKEND_ON } from "../constants/MessagesConstants"
 
 const InfoChat = (props) => {
   const contacts = props.contacts

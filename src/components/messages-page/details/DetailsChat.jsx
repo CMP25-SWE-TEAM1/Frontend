@@ -8,7 +8,7 @@ import Chip from "@mui/material/Chip"
 import useGetChat from "../customHooks/get/useGetChat"
 
 // Socket.io
-import { SOCKET_ON, BACKEND_ON } from "../MessagesConstants"
+import { SOCKET_ON, BACKEND_ON } from "../constants/MessagesConstants"
 import { useDispatch, useSelector } from "react-redux"
 import { selectSocket } from "../../../store/SocketSlice"
 
