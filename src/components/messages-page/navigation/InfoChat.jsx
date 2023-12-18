@@ -2,13 +2,6 @@ import { useState } from "react"
 
 import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
-import ListItemButton from "@mui/material/ListItemButton"
-import ListItemAvatar from "@mui/material/ListItemAvatar"
-import Avatar from "@mui/material/Avatar"
-import ListItemText from "@mui/material/ListItemText"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import FaceIcon from "@mui/icons-material/Face"
-import CheckIcon from "@mui/icons-material/Check"
 
 import Search from "./Search"
 
@@ -23,6 +16,7 @@ import Contacts from "./Contacts"
 import useGetChatSearch from "../customHooks/get/useGetChatSearch"
 import { useSelector } from "react-redux"
 import { BACKEND_ON } from "../constants/MessagesConstants"
+import * as DataInit from "../constants/MessagesInit"
 
 const InfoChat = (props) => {
   const contacts = props.contacts
@@ -32,40 +26,7 @@ const InfoChat = (props) => {
   const userToken = useSelector((state) => state.user.token)
   const handleGetChatSearch = useGetChatSearch
 
-  const [messages, setMessages] = useState([
-    {
-      text: "A message",
-      date: "date",
-
-      contactName: "Khaled",
-      contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      contactId: 103,
-    },
-    {
-      text: "New message",
-      date: "date",
-
-      contactName: "Khaled",
-      contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      contactId: 103,
-    },
-    {
-      text: "Old message",
-      date: "date",
-
-      contactName: "Hamza",
-      contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      contactId: 104,
-    },
-    {
-      text: "Gold message",
-      date: "date",
-
-      contactName: "Hamza",
-      contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      contactId: 104,
-    },
-  ])
+  const [messages, setMessages] = useState(DataInit.InfoChat_messages)
 
   const [searchValue, setSearchValue] = useState("")
   const handleSearchValueChange = (event) => {

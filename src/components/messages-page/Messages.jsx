@@ -12,6 +12,7 @@ import useGetContacts from "./customHooks/get/useGetContacts"
 import { useDispatch, useSelector } from "react-redux"
 import { initializeSocket } from "./customHooks/socketService"
 import { setSocket } from "../../store/SocketSlice"
+import * as DataInit from "./constants/MessagesInit"
 
 const Messages = (props) => {
   const userToken = useSelector((state) => state.user.token)
@@ -52,53 +53,7 @@ const Messages = (props) => {
     }
   }, [])
 
-  const [contacts, setContacts] = useState([
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U74",
-      name: "Khaled",
-      id: 103,
-      bio: "I am the real batman",
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U66",
-      name: "Moaz",
-      id: 106,
-      bio: "I am the real batman",
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U55",
-      name: "Ali",
-      id: 105,
-      bio: "I am the real batman",
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U44",
-      name: "Hamza",
-      id: 104,
-      bio: "I am the real batman",
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U77",
-      name: "Abd El-Rahman",
-      id: 107,
-      bio: "I am the real batman",
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-  ])
+  const [contacts, setContacts] = useState(DataInit.Messages_contacts)
 
   const [selectedContact, setSelectedContact] = useState()
 
