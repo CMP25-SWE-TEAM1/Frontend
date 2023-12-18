@@ -101,7 +101,7 @@ const InfoChat = (props) => {
 
   return (
     <div className="info chat">
-      <List dense={false}>
+      <List dense={false} sx={{ maxWidth: "450px" }}>
         {/* Search */}
         <ListItem sx={{ paddingLeft: "24px" }}>
           <Search searchValue={searchValue} handleSearchValueChange={handleSearchValueChange} setSearchValue={setSearchValue} searchActive={searchActive} setSearchActive={setSearchActive} />

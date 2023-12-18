@@ -36,7 +36,7 @@
 
   .messages-page .navigation {
     background-color: white;
-    flex: 1;
+    /* flex: 1; */
     border-right: 1px solid #eee;
     border-left: 1px solid #eee;
   }
@@ -56,6 +56,7 @@
     align-items: center;
     color: black;
     background-color: white;
+    max-width: 450px
   }
 
   .messages-page .navigation .header h2 {
@@ -81,6 +82,11 @@
   .messages-page .navigation .header>div a:hover,
   .messages-page .details.chat .content .head>a:hover {
     background-color: #e7e7e8;
+  }
+
+  .messages-page .navigation .info.chat {
+    max-height: calc(100vh - 53px);
+    overflow-y: auto;
   }
 
   .messages-page .navigation .info.no-chat {

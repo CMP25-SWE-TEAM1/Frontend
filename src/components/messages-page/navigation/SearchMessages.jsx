@@ -35,7 +35,11 @@ const SearchMessages = (props) => {
                     setSelectedContact(message.contactId)
                   }}
                 >
-                  <div>
+                  <div
+                    style={{
+                      maxWidth: "100%",
+                    }}
+                  >
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <ListItemAvatar>
                         <Avatar alt={message.contactName} src={message.contactAvatarLink} />

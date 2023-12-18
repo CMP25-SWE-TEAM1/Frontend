@@ -3,7 +3,18 @@ import Typography from "@mui/material/Typography"
 
 const HighlightedMessage = ({ mainText, subText }) => {
   return (
-    <Typography variant="body1" component="div" className="text-sm text-gray-500">
+    <Typography
+      variant="body1"
+      component="div"
+      className="text-sm text-gray-500"
+      sx={{
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        display: "-webkit-box",
+        WebkitBoxOrient: "vertical",
+        WebkitLineClamp: 2, // Limit to two lines
+      }}
+    >
       {mainText.toLowerCase().includes(subText.toLowerCase()) ? (
         <span>
           {mainText.split(new RegExp(`(${subText})`, "i")).map((part, index) => (
