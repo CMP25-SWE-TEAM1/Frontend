@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
-import { useState, cloneElement } from "react"
+import { useState, cloneElement, useEffect } from "react"
 
 import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
@@ -36,6 +36,9 @@ const MessageCompose = (props) => {
   const handleComposeModalClose = props.handleComposeModalClose
 
   const [contacts, setContacts] = useState(chatContacts)
+  useEffect(() => {
+    setContacts(chatContacts)
+  }, [chatContacts])
   // const [contacts, setContacts] = useState([
   //   {
   //     avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
