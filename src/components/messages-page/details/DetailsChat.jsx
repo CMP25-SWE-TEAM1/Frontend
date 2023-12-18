@@ -160,6 +160,17 @@ const DetailsChat = (props) => {
     })
   }
 
+  const handleMessageMetaCheck = (message, nextMessage) => {
+    if (!nextMessage) return true
+    else {
+      const messageDate = new Date(message.date)
+      const nextMessageDate = new Date(nextMessage.date)
+
+      const timeDiff = (nextMessageDate - messageDate) / 1000
+
+      return timeDiff < 60
+    }
+  }
   // Handle get chat of specific user
 
   return (
@@ -215,9 +226,11 @@ const DetailsChat = (props) => {
                   <div className="messages">
                     {messagesData
                       .filter((msg) => msg.seen === true)
-                      .map((msg) => (
-                        <Message messageMeta={msg.time} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
-                      ))}
+                      .map((msg, index, array) => {
+                        const nextMsg = index < array.length - 1 ? array[index + 1] : null
+                        const withMeta = handleMessageMetaCheck(msg, nextMsg)
+                        return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
+                      })}
                     {messagesData.filter((msg) => msg.seen === false).length !== 0 && (
                       <Divider sx={{ marginBottom: "24px" }}>
                         <Chip label="unread messages" />
@@ -226,9 +239,11 @@ const DetailsChat = (props) => {
                     <div ref={endOfSeenChat}></div>
                     {messagesData
                       .filter((msg) => msg.seen === false)
-                      .map((msg) => (
-                        <Message messageMeta={msg.time} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
-                      ))}
+                      .map((msg, index, array) => {
+                        const nextMsg = index < array.length - 1 ? array[index + 1] : null
+                        const withMeta = handleMessageMetaCheck(msg, nextMsg)
+                        return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
+                      })}
                   </div>
                   <div ref={endOfChat}></div>
                 </div>

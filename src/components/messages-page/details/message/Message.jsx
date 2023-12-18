@@ -129,9 +129,11 @@ const Message = (props) => {
           </div>
         </div>
       </div>
-      <div className="message-meta">
-        <span>{formattedDate}</span>
-      </div>
+      {messageMeta && (
+        <div className="message-meta">
+          <span>{formattedDate}</span>
+        </div>
+      )}
     </div>
   )
 }
