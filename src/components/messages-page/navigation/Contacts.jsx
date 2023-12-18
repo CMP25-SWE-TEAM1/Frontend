@@ -7,6 +7,9 @@ import ListItemText from "@mui/material/ListItemText"
 
 import HighlightedMessage from "./HighlightedMessage"
 
+import MarkUnreadChatAltIcon from "@mui/icons-material/MarkUnreadChatAlt"
+import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction"
+
 const Contacts = (props) => {
   const contacts = props.contacts.sort((a, b) => new Date(b.lastMessageDate) - new Date(a.lastMessageDate))
 
@@ -48,6 +51,12 @@ const Contacts = (props) => {
                 <HighlightedMessage mainText={contact.lastMessage || `${contact.lastMessageMediaType ? (contact.userName === contact.lastMessageSender ? "Sent a" : "You sent a") : ""} ${contact.lastMessageMediaType ? (contact.lastMessageMediaType === "GIF" ? "photo" : "GIF") : ""}`} subText={""} />
               </div>
             </div>
+
+            {contact.lastMessageSeen === false && (
+              <ListItemSecondaryAction>
+                <MarkUnreadChatAltIcon color="primary" />
+              </ListItemSecondaryAction>
+            )}
           </ListItemButton>
         </ListItem>
       ))}
