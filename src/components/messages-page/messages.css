@@ -721,6 +721,23 @@
     z-index: 400;
   }
 
+  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div .edit-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #4a4b49;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    fill: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transform: translate(-5px, -5px);
+    z-index: 400;
+  }
+
   .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div .cancel-btn:hover {
     background-color: #5b5c5a;
   }
