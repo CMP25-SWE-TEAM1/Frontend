@@ -253,18 +253,18 @@ const DetailsChat = (props) => {
                   {/* Messages */}
                   <div className="messages">
                     {messagesData
-                      .filter((msg) => msg.seen)
+                      .filter((msg) => msg.seen === true)
                       .map((msg) => (
                         <Message messageMeta={msg.time} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
                       ))}
-                    {messagesData.filter((msg) => !msg.seen).length !== 0 && (
+                    {messagesData.filter((msg) => msg.seen === false).length !== 0 && (
                       <Divider sx={{ marginBottom: "24px" }}>
                         <Chip label="unread messages" />
                       </Divider>
                     )}
                     <div ref={endOfSeenChat}></div>
                     {messagesData
-                      .filter((msg) => !msg.seen)
+                      .filter((msg) => msg.seen === false)
                       .map((msg) => (
                         <Message messageMeta={msg.time} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
                       ))}

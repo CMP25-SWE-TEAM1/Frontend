@@ -23,7 +23,11 @@ const Contacts = (props) => {
               setSelectedContact(contact.id)
             }}
           >
-            <div>
+            <div
+              style={{
+                maxWidth: "100%",
+              }}
+            >
               <div style={{ display: "flex", alignItems: "center" }}>
                 <ListItemAvatar>
                   <Avatar alt={contact.name || "Hamza"} src={contact.avatarLink || "https://64.media.tumblr.com/avatar_f71055191601_128.pnj"} />

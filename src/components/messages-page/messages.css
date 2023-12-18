@@ -123,6 +123,8 @@
     flex-direction: column;
     flex: 1;
     color: black;
+
+    max-width: 100%
   }
 
   .messages-page .details.chat .content .head {
@@ -285,7 +287,9 @@
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info .image img {
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info .contact-data {
@@ -424,6 +428,10 @@
     padding-left: 12px;
   }
 
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-data {
+    max-width: 100%;
+  }
+
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-data:has(.message-media) {
     flex: 1;
   }
@@ -512,6 +520,7 @@
     font-size: 15px;
     font-weight: 400;
     transition: background-color 0.218s;
+    word-wrap: break-word;
     /* Message with no meta */
     /* border-radius: 24px 24px 24px 24px; */
   }
