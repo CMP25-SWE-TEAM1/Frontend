@@ -8,7 +8,8 @@ import ListItemText from "@mui/material/ListItemText"
 import HighlightedMessage from "./HighlightedMessage"
 
 const Contacts = (props) => {
-  const contacts = props.contacts
+  const contacts = props.contacts.sort((a, b) => new Date(b.lastMessageDate) - new Date(a.lastMessageDate))
+
   const selectedContact = props.selectedContact
   const setSelectedContact = props.setSelectedContact
 
