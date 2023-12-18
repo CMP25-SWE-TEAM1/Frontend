@@ -276,9 +276,16 @@ const MessageInput = (props) => {
           </div>
         </Box>
       </Modal>
-      <div className={`${openCrop ? "!block" : "!hidden"}  !mt-0`}>
-        <Crop photoURL={messageImgURL} setPhotoURL={setMessageImgURL} setOpenCrop={setOpenCrop} setFile={setMessageImg} aspect={1} />
-      </div>
+      <Modal
+        open={openCrop}
+        onClose={() => {
+          setOpenCrop(false)
+        }}
+      >
+        <Box sx={modalStyle}>
+          <Crop photoURL={messageImgURL} setPhotoURL={setMessageImgURL} setOpenCrop={setOpenCrop} setFile={setMessageImg} aspect={1} />
+        </Box>
+      </Modal>
     </div>
   )
 }
@@ -289,7 +296,7 @@ const modalStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   minWidth: 400,
-  maxWidth: "80%",
+  maxWidth: 600,
   maxHeight: "80vh",
   overflowY: "auto",
   bgcolor: "background.paper",
