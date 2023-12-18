@@ -27,8 +27,8 @@ const EditDate=({selectdatedisplay,setSelectdatedisplay,htmldate,month,setMonth,
           <div className={`${selectdatedisplay? 'block': 'hidden' } mb-[10%]`}>
           <Birthdate month={month} setMonth={setMonth} day={day} setDay={setDay} year={year} setYear={setYear} yearwidth={"150px"} monthwidth={"300px"}></Birthdate>
           </div>
-          <Alert severity="error" className={`${2023-year < 18 ? "flex" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
-              The age can't be less than 18
+          <Alert severity="error" className={`${2023-year < 18 ? "absolute" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+              The age can't be less than 18 Years
             </Alert>
           </div>
   )

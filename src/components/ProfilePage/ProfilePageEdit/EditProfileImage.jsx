@@ -1,7 +1,7 @@
 import React from 'react'
 import defaultProfilePic from "../../../assets/imgs/Default_Profile_Picture.png"
 import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined"
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux' 
 const EditProfileImage = ({profileimage,handlePictureClick,handlePictureChange,hiddenFileInput})=> {
   const {darkMode}= useSelector((state)=>state.theme)
     return (

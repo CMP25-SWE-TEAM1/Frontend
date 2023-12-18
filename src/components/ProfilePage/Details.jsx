@@ -26,6 +26,7 @@ import axios from 'axios';
     }
     if(props.isblocked)
     {
+      console.log("Hello")
       setblocked('hidden');
       setnotblocked('block');
     }else{

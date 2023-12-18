@@ -7,7 +7,6 @@ import defaultProfilePic from "../../../assets/imgs/Default_Profile_Picture.png"
 import CoverImage from "../CoverImage.jsx"
 import axios from "axios"
 import { useLocation, useNavigate } from "react-router-dom"
-import Birthdate from "../../Signup/Birthdate.jsx"
 import { APIs } from "../../../constants/signupConstants.js"
 import {months,DefaultCoverPage} from "../../../constants/index"
 import Crop from "../../General/Crop/Crop.jsx"
@@ -17,7 +16,7 @@ import TextInput from "./TextInput.jsx"
 import EditDate from "./EditDate.jsx"
 import EditProfileImage from "./EditProfileImage.jsx"
 import EditBannerImage from "./EditBannerImage.jsx"
-import Header from "../Header.jsx"
+import Header from "./Header.jsx"
 const ProfilePageEdit = (props)=>{
   const APIds = {
     mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
@@ -214,7 +213,7 @@ const ProfilePageEdit = (props)=>{
    }
   }
   const handlePictureChange = (event) => {
-    
+    event.preventDefault()
     const fileUploaded = event.target.files[0]
     setProfileimagefile(fileUploaded)
     setProfileimage(URL.createObjectURL(fileUploaded))
@@ -222,41 +221,27 @@ const ProfilePageEdit = (props)=>{
     setOpenCrop(true)
     
   }
-  
     return(
       <Modal open={props.openModal} onClose={()=>{props.handleCloseModal()
         navigate(`/${user.username}`)}} data-testid="loginModal"  disableEscapeKeyDown disablePortal>
         <Box style={modalStyle} className={` ${darkMode?  `bg-black`:`bg-white`}`}>
           <div id="ParentDiv-test">
-      <div id="ParentDiv2-test" className={`pop-up ${openCrop||opencoverCrop ? "!hidden" : ""}  flex flex-col overflow-y-auto no-scrollbar  `}>
-       {/*<Header handleCloseModal={props.handleCloseModal} hiddenFormSubmit={hiddenFormSubmit} name={name} year={year}></Header>*/}
-        <div id="Header-test" className={`absolute w-[100%] h-[10%]  top-0  z-10 backdrop-blur-sm  ${darkMode? `bg-black`:`bg-white`}  flex flex-row`}>
-        <button type="button" className="relative ml-[5px] mt-[5px] h-10 w-10 rounded-3xl bg-transparent 
-        bg-white text-2xl text-black no-underline 
-        hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover"
-         onClick={()=>{
-          props.handleCloseModal() 
-          navigate(`/${user.username}`)
-           }}>
-              x
-            </button>
-            <p className="mt-[15px] ml-[15px] text-xl font-semibold">Edit Profile</p>
-            <button className={`absolute   z-10 top-[12.5px] right-[12.5px] 
-             bg-black text-2xl text-white no-underline 
-             hover:bg-darkHover dark:bg-white dark:text-black dark:hover:bg-lightHover
-              w-[70px] h-[35px] font-medium text-lg rounded-full`}onClick={()=>{hiddenFormSubmit.current.click()}} disabled={name === ""||2023-year<18} >Save</button>
-        </div>
+        <div id="ParentDiv2-test" className={`pop-up ${openCrop||opencoverCrop ? "!hidden" : ""}  flex flex-col overflow-y-auto no-scrollbar  `}>
+       <Header handleCloseModal={props.handleCloseModal} hiddenFormSubmit={hiddenFormSubmit} name={name} year={year} website={website.search(".com") === -1}></Header>
         <form id="EditProfileForm-test" className="relative h-[60%] flex flex-col" onSubmit={(e)=>{EditProfile(e)}}> 
         <input id="FormSubmit-test" type="submit" ref={hiddenFormSubmit} className="hidden"></input>
         <EditBannerImage coverpage={coverpage} handlecoverPictureChange={handlecoverPictureChange} handlecoverPictureClick={handlecoverPictureClick} hiddencoverFileInput={hiddencoverFileInput} setCoverpage={setCoverpage}></EditBannerImage>
         <EditProfileImage profileimage={profileimage} handlePictureClick={handlePictureClick} handlePictureChange={handlePictureChange} hiddenFileInput={hiddenFileInput}></EditProfileImage>
-        <TextInput inputtext={name} setInputtext={setName} label="Name" divcustomizedstyle="input-container mt-[10%]  mb-[2.5%] mx-auto w-[95%]" id="Name" inputcustomizedstyle=""></TextInput>
+        <TextInput max="50" inputtext={name} setInputtext={setName} label="Name" divcustomizedstyle="input-container mt-[10%]  mb-[2.5%] mx-auto w-[95%]" id="Name" inputcustomizedstyle=""></TextInput>
         <Alert severity="error" className={`${name==="" ? "flex" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
               Name can't be blank
         </Alert>
-          <TextInput inputtext={bio} setInputtext={setBio} label="Bio" id="Bio" divcustomizedstyle="input-container  mb-[2.5%] mx-auto w-[95%]" inputcustomizedstyle="h-[100px]" ></TextInput>
-          <TextInput inputtext={location} setInputtext={setLocation} label="Location" id="Location" divcustomizedstyle="input-container  mb-[2.5%] mx-auto w-[95%]" inputcustomizedstyle=""></TextInput> 
-          <TextInput inputtext={website} setInputtext={setWebsite} label="Website" id="Website" divcustomizedstyle="input-container  mb-[2.5%] mx-auto w-[95%]" inputcustomizedstyle=""></TextInput>
+          <TextInput max="300" inputtext={bio} setInputtext={setBio} label="Bio" id="Bio" divcustomizedstyle="input-container  mb-[2.5%] mx-auto w-[95%]" inputcustomizedstyle="h-[100px]" ></TextInput>
+          <TextInput max="30" inputtext={location} setInputtext={setLocation} label="Location" id="Location" divcustomizedstyle="input-container  mb-[2.5%] mx-auto w-[95%]" inputcustomizedstyle=""></TextInput> 
+          <TextInput max="100" inputtext={website} setInputtext={setWebsite} label="Website" id="Website" divcustomizedstyle="input-container  mb-[2.5%] mx-auto w-[95%]" inputcustomizedstyle=""></TextInput>
+          <Alert severity="error" className={`${ website.search(".com") === -1 ? "flex" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+              Enter A valid URL
+        </Alert>
           <EditDate selectdatedisplay={selectdatedisplay} setSelectdatedisplay={setSelectdatedisplay}
           htmldate={htmldate} month={month} setMonth={setMonth} day={day} setDay={setDay} year={year} setYear={setYear} ></EditDate>
         </form>
