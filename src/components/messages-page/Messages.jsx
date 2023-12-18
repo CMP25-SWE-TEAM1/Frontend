@@ -75,20 +75,22 @@ const Messages = (props) => {
       handleGetContacts(userToken).then((response) => {
         // console.log("userToken",userToken)
         console.log("GetContacts response", response)
-        const newChats = response.data.map((chat) => ({
-          id: chat.chat_members[0].id,
+        if (response && response.data) {
+          const newChats = response.data.map((chat) => ({
+            id: chat.chat_members[0].id,
 
-          userName: chat.chat_members[0].username,
-          name: chat.chat_members[0].nickname,
-          avatarLink: chat.chat_members[0].profile_image,
+            userName: chat.chat_members[0].username,
+            name: chat.chat_members[0].nickname,
+            avatarLink: chat.chat_members[0].profile_image,
 
-          lastMessage: chat.lastMessage.description,
-          lastMessageMediaType: chat.lastMessage.media ? (chat.lastMessage.media.type === "image" ? "Img" : "GIF") : undefined,
-          lastMessageDate: chat.lastMessage.sendTime,
-          lastMessageSeen: chat.lastMessage.seen,
-          lastMessageSender: chat.lastMessage.sender,
-        }))
-        setContacts(newChats)
+            lastMessage: chat.lastMessage.description,
+            lastMessageMediaType: chat.lastMessage.media ? (chat.lastMessage.media.type === "image" ? "Img" : "GIF") : undefined,
+            lastMessageDate: chat.lastMessage.sendTime,
+            lastMessageSeen: chat.lastMessage.seen,
+            lastMessageSender: chat.lastMessage.sender,
+          }))
+          setContacts(newChats)
+        }
       })
     }
   }, [])
