@@ -54,7 +54,7 @@ const Contacts = (props) => {
 
             {contact.lastMessageSeen === false && (
               <ListItemSecondaryAction>
-                <MarkUnreadChatAltIcon color="primary" />
+                <MarkUnreadChatAltIcon color="primary" fontSize="small" />
               </ListItemSecondaryAction>
             )}
           </ListItemButton>

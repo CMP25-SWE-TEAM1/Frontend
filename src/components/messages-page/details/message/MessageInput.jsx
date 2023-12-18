@@ -7,8 +7,10 @@ import Modal from "@mui/material/Modal"
 import GifPicker, { ContentFilter } from "gif-picker-react"
 import { TENOR_API_KEY } from "../../constants/MessagesConstants"
 import usePostMedia from "../../customHooks/post/usePostMedia"
+import { useSelector } from "react-redux"
 
 const MessageInput = (props) => {
+  const userToken = useSelector((state) => state.user.token)
   const handlePostMedia = usePostMedia
   // Message input
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false)
@@ -39,12 +41,13 @@ const MessageInput = (props) => {
   const handleSndMsg = () => {
     if (newMessageText !== "" || newMessageMedia !== undefined) {
       // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
-      if (newMessageMedia) {
+      if (newMessageMedia || messageImg) {
         if (newMessageMediaType === "Img") {
-          // handlePostMedia(newMessageMedia).then((response) => {
-          //   handleSendMessage(newMessageText, response.urls[0], newMessageMediaType)
-          // }) // upload media
-          handleSendMessage(newMessageText, "https://cdn.forumcomm.com/dims4/default/b339688/2147483647/strip/true/crop/800x800+0+0/resize/1066x1066!/quality/90/?url=https%3A%2F%2Ffcc-cue-exports-brightspot.s3.us-west-2.amazonaws.com%2Ffccnn%2Fbinary%2Fpepe_binary_796212.jpg", newMessageMediaType)
+          handlePostMedia(messageImg, userToken).then((response) => {
+            console.log(response)
+            handleSendMessage(newMessageText, response.data.usls[0], newMessageMediaType)
+          }) // upload media
+          // handleSendMessage(newMessageText, "https://cdn.forumcomm.com/dims4/default/b339688/2147483647/strip/true/crop/800x800+0+0/resize/1066x1066!/quality/90/?url=https%3A%2F%2Ffcc-cue-exports-brightspot.s3.us-west-2.amazonaws.com%2Ffccnn%2Fbinary%2Fpepe_binary_796212.jpg", newMessageMediaType)
         } else handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
       } else handleSendMessage(newMessageText)
     }
@@ -54,6 +57,8 @@ const MessageInput = (props) => {
     setNewMessageMedia()
     setNewMessageMediaType()
     setMediaInputPreview()
+    setMessageImg()
+    setMessageImgURL()
   }
 
   const spacingTheme = createTheme({
@@ -65,13 +70,19 @@ const MessageInput = (props) => {
   const [newMessageMediaType, setNewMessageMediaType] = useState()
   const [mediaInputPreview, setMediaInputPreview] = useState()
 
+  const [messageImg, setMessageImg] = useState()
+  const [messageImgURL, setMessageImgURL] = useState()
+
   const handleMediaUpload = (event, MediaType) => {
     const file = event.target.files[0]
+    setMessageImg(file)
+    setMessageImgURL(URL.createObjectURL(file))
 
     // Validate if file is an image file
     if (file && isImageFile(file)) {
       // Load file and render it
       const image = new FileReader()
+      console.log("my test log", image.result)
       image.onload = function () {
         setMediaInputPreview(image.result)
       }
@@ -85,6 +96,7 @@ const MessageInput = (props) => {
       setNewMessageMedia()
       setNewMessageMediaType()
       setMediaInputPreview()
+      setSndMsgActv("")
       return
     }
   }
@@ -93,6 +105,8 @@ const MessageInput = (props) => {
     setNewMessageMedia()
     setNewMessageMediaType()
     setMediaInputPreview()
+    setMessageImg()
+    setMessageImgURL()
   }
   const isImageFile = (file) => {
     // Get the file's MIME type
@@ -137,7 +151,7 @@ const MessageInput = (props) => {
     <div className="keyboard">
       <div className="content">
         {/* Left icons (Media - GIF - Emoji) */}
-        {!mediaInputPreview && (
+        {!mediaInputPreview && !messageImgURL && (
           <div className="icons">
             <div className="media-icon" title="Media">
               <input type="file" id="mahmoud_file_upload" accept="image/*" onChange={(e) => handleMediaUpload(e, "Img")} />
@@ -182,7 +196,7 @@ const MessageInput = (props) => {
         )}
         {/* Message text */}
         <div className="message-text">
-          {mediaInputPreview && (
+          {(mediaInputPreview || messageImgURL) && (
             <div className="new-message-media-attach">
               <div>
                 <div className="cancel-btn" title="Remove" onClick={handleMediaCancel}>
@@ -192,7 +206,7 @@ const MessageInput = (props) => {
                     </g>
                   </svg>
                 </div>
-                {newMessageMediaType === "Img" && <img src={mediaInputPreview} alt="attached media" />}
+                {newMessageMediaType === "Img" && <img src={messageImgURL} alt="attached media" />}
                 {
                   newMessageMediaType === "GIF" && (
                     // <div className="relative cursor-pointer overflow-hidden rounded-md">
