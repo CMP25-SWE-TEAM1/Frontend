@@ -40,7 +40,17 @@ const SearchMessages = (props) => {
                       <ListItemAvatar>
                         <Avatar alt={message.contactName} src={message.contactAvatarLink} />
                       </ListItemAvatar>
-                      <ListItemText primary={message.contactName} secondary={message.date} />
+                      <ListItemText
+                        primary={message.contactName}
+                        secondary={
+                          message.date
+                            ? new Date(message.date).toLocaleString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                              })
+                            : ""
+                        }
+                      />
                     </div>
                     <div style={{ marginTop: "5px" }}>
                       <HighlightedMessage mainText={message.text} subText={searchValue} />
