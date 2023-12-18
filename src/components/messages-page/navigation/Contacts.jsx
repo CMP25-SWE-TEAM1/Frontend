@@ -64,7 +64,7 @@ const Contacts = (props) => {
                 <ListItemText primary={contact.name || "Hamza"} secondary={`@${contact.userName || "hamza_xyz"} . ${contact.lastMessageDate ? getLastMessageTime(contact.lastMessageDate) : ""}`} />
               </div>
               <div style={{ marginTop: "5px" }}>
-                <HighlightedMessage mainText={contact.lastMessage || `${contact.lastMessageMediaType ? (contact.userName === contact.lastMessageSender ? "Sent a" : "You sent a") : ""} ${contact.lastMessageMediaType ? (contact.lastMessageMediaType === "GIF" ? "photo" : "GIF") : ""}`} subText={""} />
+                <HighlightedMessage mainText={contact.lastMessage || `${contact.lastMessageMediaType ? (contact.userName === contact.lastMessageSender ? "Sent a" : "You sent a") : ""} ${contact.lastMessageMediaType ? (contact.lastMessageMediaType === "GIF" ? "GIF" : "photo") : ""}`} subText={""} />
               </div>
             </div>
 

@@ -6,6 +6,7 @@ import Divider from "@mui/material/Divider"
 import Chip from "@mui/material/Chip"
 
 import useGetChat from "../customHooks/get/useGetChat"
+import * as DataInit from "../constants/MessagesInit"
 
 // Socket.io
 import { SOCKET_ON, BACKEND_ON } from "../constants/MessagesConstants"
@@ -14,6 +15,8 @@ import { selectSocket } from "../../../store/SocketSlice"
 
 const DetailsChat = (props) => {
   const userToken = useSelector((state) => state.user.token)
+  const [messagesData, setMessagesData] = useState(DataInit.DetailsChat_messages)
+  const handleNavNewMessage = props.handleNavNewMessage
 
   const dispatch = useDispatch()
   const socket = useSelector(selectSocket)
@@ -26,65 +29,8 @@ const DetailsChat = (props) => {
   const two = true
   const navigate = useNavigate()
   // Messages mapping
-  let msgIdCounter = 0
-  const [messagesData, setMessagesData] = useState([
-    // - Message right
-    // -- Text only
-    // -- media only
-    // -- Gif only
-    // -- Text + media
-    // -- Text + Gif
-    // - Message left
-    // -- Text only
-    // -- media only
-    // -- Gif only
-    // -- Text + media
-    // -- Text + Gif
-    {
-      id: msgIdCounter++,
-      direction: "R",
-      messageText: "First message for me 👋",
-      messageMedia: "https://www.harrisburgu.edu/wp-content/uploads/189dce017fb19e3ca1b94b2095d519cc514df22c.jpg",
-      mediaType: "Img",
-    },
-    {
-      id: msgIdCounter++,
-      direction: "L",
-      messageText: "Another one 😄",
-    },
-    {
-      id: msgIdCounter++,
-      direction: "R",
-      messageText: "Read next carefully 😈😈",
-    },
-    {
-      id: msgIdCounter++,
-      direction: "R",
-      messageText: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      // messageMedia: "https://m.media-amazon.com/images/M/MV5BMTQ2NDg4MDA2MV5BMl5BanBnXkFtZTgwNzQxOTQ1MjE@._V1_.jpg",
-      // mediaType: "Img",
-    },
-    {
-      id: msgIdCounter++,
-      direction: "L",
-      messageText: "No.. no.. no.. nooooooooo",
-    },
-    {
-      id: msgIdCounter++,
-      direction: "R",
-      messageText: "Encrypted message to Hefeny",
-      messageMedia: "https://media.tenor.com/JJquxnSAmJwAAAPo/seal-hibo-heart.mp4",
-      mediaType: "GIF",
-    },
-  ])
-  const [msgIdCounterS, setMsgIdCounterS] = useState(messagesData.length)
-  // const [msgData, setMsgData] = useState({
-  //   direction: "L", // "L" or "R"
-  //   messageText: "", // (if exist) "<some text>"
-  //   messageMedia: "", // (if exist) "<a link>"
-  //   mediaType: "", // (if exist) "Img" or "GIF"
-  //   metaData: "", // {obj}
-  // })
+  // const [msgData, setMsgData] = useState(
+  // )
   // scroll to bottom button
   const endOfChat = useRef(null)
   const endOfSeenChat = useRef(null)
@@ -140,7 +86,7 @@ const DetailsChat = (props) => {
     // console.log("Sent message:", messageText)
     // Add message to the chat
     // setMessagesData([...messagesData, { id: msgIdCounterS, direction: "R", messageText, messageMedia, mediaType: messageMediaType }])
-    setMsgIdCounterS(msgIdCounterS + 1)
+    // setMsgIdCounterS(msgIdCounterS + 1)
     // scrollToBottom()
     // Send message in BackEnd
     const message = { messageText, messageMedia, messageMediaType }
@@ -163,6 +109,9 @@ const DetailsChat = (props) => {
   useEffect(() => {
     if (SOCKET_ON) {
       socket.on("receive_message", (data) => {
+        // Update nav
+        handleNavNewMessage(data.chat_ID, data.message)
+        // Update chat
         if (data.chat_ID == contact.id) {
           console.log("received_message:", data)
           setScrollToBottomFlag(true)
@@ -184,12 +133,12 @@ const DetailsChat = (props) => {
             },
           ])
           // setMessagesData([...messagesData, { id: msgIdCounterS, messageText: message.messageText, messageMedia: message.messageMedia, mediaType: message.messageMediaType }])
-          setMsgIdCounterS(msgIdCounterS + 1)
+          // setMsgIdCounterS(msgIdCounterS + 1)
           // scrollToBottom()
         }
       })
     }
-  }, [messagesData, msgIdCounterS])
+  }, [socket, messagesData, contact.id])
   // Send message to socket sercer
   const sendMessage_toServer = (message) => {
     console.log("message sending...", message)
