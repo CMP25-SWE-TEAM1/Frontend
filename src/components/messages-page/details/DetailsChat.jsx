@@ -20,6 +20,7 @@ const DetailsChat = (props) => {
 
   const contact = props.contact
   const handleGetChat = useGetChat
+  const [chatPage, setChatPage] = useState(1)
 
   const one = true
   const two = true
@@ -90,7 +91,8 @@ const DetailsChat = (props) => {
 
   useEffect(() => {
     if (BACKEND_ON) {
-      handleGetChat(contact.id, userToken).then((response) => {
+      console.log("chatPage", chatPage)
+      handleGetChat(contact.id, userToken, chatPage).then((response) => {
         console.log("response", response)
         if (!response.data) setMessagesData([])
         else {
@@ -106,6 +108,16 @@ const DetailsChat = (props) => {
             time: message.sendTime,
           }))
           setMessagesData(newChat)
+          // setChatPage((prevChatPage) => prevChatPage + 1)
+
+          // // Fetch messages until the user sees all unread messages
+          // if (response.data && response.data.length !== 0 && response.data[0].seen === false) {
+          //   const currentChatPage = chatPage // Capture the current value
+          //   handleGetChat(contact.id, userToken, currentChatPage).then((response) => {
+          //     console.log(`response of chatPage(${currentChatPage})`, response)
+          //     setChatPage((prevChatPage) => prevChatPage + 1) // Update chatPage using the latest value
+          //   })
+          // }
         }
       })
     }
