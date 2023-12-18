@@ -30,6 +30,7 @@ export const APIs = {
     postMedia: ACTUAL_DOMAIN + "/media",
     getChat: ACTUAL_DOMAIN + "/user/chat",
     getChatAll: ACTUAL_DOMAIN + "/user/chat/all",
+    getChatAllSearch: ACTUAL_DOMAIN + "/user/chat/search",
     deleteMessage: ACTUAL_DOMAIN + "/user/chat/message",
     getUsersSearch: ACTUAL_DOMAIN + "/user/search",
   },

@@ -19,13 +19,18 @@ import Box from "@mui/material/Box"
 import SearchPeople from "./SearchPeople"
 import SearchMessages from "./SearchMessages"
 import NoResultFound from "./NoResultFound"
-import HighlightedMessage from "./HighlightedMessage"
 import Contacts from "./Contacts"
+import useGetChatSearch from "../customHooks/get/useGetChatSearch"
+import { useSelector } from "react-redux"
+import { BACKEND_ON } from "../MessagesConstants"
 
 const InfoChat = (props) => {
   const contacts = props.contacts
   const selectedContact = props.selectedContact
   const setSelectedContact = props.setSelectedContact
+
+  const userToken = useSelector((state) => state.user.token)
+  const handleGetChatSearch = useGetChatSearch
 
   const [messages, setMessages] = useState([
     {
@@ -65,6 +70,25 @@ const InfoChat = (props) => {
   const [searchValue, setSearchValue] = useState("")
   const handleSearchValueChange = (event) => {
     setSearchValue(event.target.value)
+    if (BACKEND_ON && event.target.value !== "") {
+      handleGetChatSearch(event.target.value, userToken).then((response) => {
+        console.log("GetMessagesSearch response", response)
+        if (!response.data) setMessages([])
+        else {
+          const newMessages = response.data.map((message) => ({
+            text: message.lastMessage.description,
+            date: message.lastMessage.sendTime,
+
+            contactName: message.chat_members[0].nickname,
+            contactAvatarLink: message.chat_members[0].profile_image,
+            contactId: message.chat_members[0].id,
+          }))
+          setMessages(newMessages)
+        }
+      })
+    } else {
+      setMessages([])
+    }
   }
 
   const [tabValue, setTabValue] = useState("all")
