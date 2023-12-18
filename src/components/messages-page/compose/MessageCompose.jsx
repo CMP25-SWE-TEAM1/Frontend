@@ -35,43 +35,44 @@ const MessageCompose = (props) => {
   const composeModalOpen = props.composeModalOpen
   const handleComposeModalClose = props.handleComposeModalClose
 
-  const [contacts, setContacts] = useState([
-    {
-      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U74",
-      name: "Khaled",
-      id: 3,
-      selected: false,
-    },
-    {
-      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U66",
-      name: "Moaz",
-      id: 6,
-      selected: false,
-    },
-    {
-      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U55",
-      name: "Ali",
-      id: 5,
-      selected: false,
-    },
-    {
-      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U44",
-      name: "Hamza",
-      id: 4,
-      selected: false,
-    },
-    {
-      avatrLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U77",
-      name: "Abd El-Rahman",
-      id: 7,
-      selected: false,
-    },
-  ])
+  const [contacts, setContacts] = useState(chatContacts)
+  // const [contacts, setContacts] = useState([
+  //   {
+  //     avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+  //     userName: "U74",
+  //     name: "Khaled",
+  //     id: 3,
+  //     selected: false,
+  //   },
+  //   {
+  //     avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+  //     userName: "U66",
+  //     name: "Moaz",
+  //     id: 6,
+  //     selected: false,
+  //   },
+  //   {
+  //     avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+  //     userName: "U55",
+  //     name: "Ali",
+  //     id: 5,
+  //     selected: false,
+  //   },
+  //   {
+  //     avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+  //     userName: "U44",
+  //     name: "Hamza",
+  //     id: 4,
+  //     selected: false,
+  //   },
+  //   {
+  //     avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
+  //     userName: "U77",
+  //     name: "Abd El-Rahman",
+  //     id: 7,
+  //     selected: false,
+  //   },
+  // ])
   const handleContactSelection = (choosenContact) => {
     const nextContacts = contacts.map((contact) => {
       if (choosenContact.id === contact.id) {
@@ -131,7 +132,7 @@ const MessageCompose = (props) => {
         if (!response.results) setContacts([])
         else {
           const newUsers = response.results.map((user) => ({
-            avatrLink: user.profile_image,
+            avatarLink: user.profile_image,
             userName: user.username,
             name: user.nickname,
             id: user._id,
@@ -168,7 +169,7 @@ const MessageCompose = (props) => {
                     setChatContacts([
                       ...chatContacts,
                       {
-                        avatarLink: selectedContacts[0].avatrLink,
+                        avatarLink: selectedContacts[0].avatarLink,
                         userName: selectedContacts[0].userName,
                         name: selectedContacts[0].name,
                         id: selectedContacts[0].id,
@@ -209,7 +210,7 @@ const MessageCompose = (props) => {
                       {selectedContacts.map((contact, index) => {
                         return (
                           <ListItem key={index} sx={{ paddingTop: "4px", paddingBottom: "4px", paddingLeft: "4px", paddingRight: "4px", width: "fit-content" }}>
-                            <Chip variant="outlined" color="primary" onClick={handleDelete(contact)} onDelete={handleDelete(contact)} label={contact.name} avatar={<Avatar src={contact.avatrLink} />} />
+                            <Chip variant="outlined" color="primary" onClick={handleDelete(contact)} onDelete={handleDelete(contact)} label={contact.name} avatar={<Avatar src={contact.avatarLink} />} />
                           </ListItem>
                         )
                       })}
@@ -230,7 +231,7 @@ const MessageCompose = (props) => {
                           {/* <Avatar>
                         <FaceIcon color="secondary" />
                       </Avatar> */}
-                          <Avatar alt={contact.name} src={contact.avatrLink} />
+                          <Avatar alt={contact.name} src={contact.avatarLink} />
                         </ListItemAvatar>
                         <ListItemText primary={contact.name} secondary={`@${contact.userName}`} />
                         {contact.selected && (

@@ -258,7 +258,7 @@ const DetailsChat = (props) => {
                         <Message messageMeta={msg.time} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
                       ))}
                     {messagesData.filter((msg) => !msg.seen).length !== 0 && (
-                      <Divider>
+                      <Divider sx={{ marginBottom: "24px" }}>
                         <Chip label="unread messages" />
                       </Divider>
                     )}
