@@ -146,9 +146,8 @@ const App = () => {
             <Route path="display" element={<Display />}></Route>
           </Route>
           <Route path={`/:tag`} element={<ProfilePage handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal} />}>
-            <Route path="posts" element={<ProfilePosts />}></Route>
-            <Route path="replies" element={<ProfileReplies />}></Route>
-            <Route path="media" element={<ProfileMedia />}></Route>
+            <Route  element={<ProfilePosts />}></Route>
+            <Route path="with_replies" element={<ProfileReplies />}></Route>
             <Route path="likes" element={<ProfileLikes />}></Route>
             <Route path="" element={<ProfilePosts />}></Route>
           </Route>

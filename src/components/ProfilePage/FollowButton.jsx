@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
+
 import ProfileRequests from "./profilerequests"
 
 const FollowButton = (props) => {
@@ -10,7 +9,7 @@ const FollowButton = (props) => {
   const mock = false
   const [buttonstate, setbuttonstate] = useState(props.buttonName)
 
-  const navigate = useNavigate();
+  
   // there should be a conditional rendering by back
   useEffect(() => {
     setbuttonstate(props.buttonName)
@@ -25,10 +24,7 @@ const FollowButton = (props) => {
     unblockactual: { unBlock: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unblock` },
   }
   function HandleClick() {
-    if (buttonstate === "Edit Profile") {
-      props.handleOpenProfileEditModal()
-       navigate('/settings/profile')
-    } else if (buttonstate === "Follow") {
+  if (buttonstate === "Follow") {
      ProfileRequests.follow(false,APIs,token,setbuttonstate)
     } else if(buttonstate === "Following") {
     ProfileRequests.unfollow(false,APIs,token,setbuttonstate)
@@ -37,6 +33,7 @@ const FollowButton = (props) => {
       ProfileRequests.unblock(false,APIs,token)
     }
   }
+  console.log(buttonstate)
   return (
     <>
       <button
@@ -44,32 +41,24 @@ const FollowButton = (props) => {
         onClick={() => {
           HandleClick()
         }}
-        className={` 
+        className={` ${props.display}
               ${
                 darkMode
                   ? buttonstate === "Follow"
                       ? `bg-white text-black
-                        hover:bg-darkHover dark:hover:bg-lightHover`
-                      : `bg-black text-white hover:bg-lightHover dark:hover:bg-darkHover `
+                        hover:bg-darkHover dark:hover:bg-lightHover w-[80px]`
+                      :
+                       `bg-black text-white hover:bg-lightHover dark:hover:bg-darkHover
+                        bt hover:border-[rgb(244,33,46)]  hover:text-[rgb(244,33,46)] w-[120px] `
                   : buttonstate === "Follow"
-                      ? `bg-black text-white hover:bg-darkHover dark:hover:bg-lightHover`
-                      : `bg-white text-black hover:bg-lightHover dark:hover:bg-darkHover`
+                      ? `bg-black text-white hover:bg-darkHover dark:hover:bg-lightHover  w-[80px]`
+                      :
+                       `bg-white text-black hover:bg-lightHover dark:hover:bg-darkHover
+                        bt hover:border-[rgb(244,33,46)]  hover:text-[rgb(244,33,46)]`
                 } 
-                h-[35px] w-[110px] 
-                rounded-full border border-lightBorder text-center font-semibold
-                dark:border-darkBorder
-                ${
-                  buttonstate === "Following"
-                    ? `bt hover:border-[rgb(244,33,46)]  hover:text-[rgb(244,33,46)]
-                `
-                    : ``
-                }
-                ${
-                  buttonstate === "Blocked"
-                  ?
-                  `blockedbt  text-white  hover:text-white`
-                    : ``
-                }`}
+                h-[40px]  
+                rounded-full border border-lightBorder text-center  font-[500]
+                dark:border-darkBorder`}
       >
         <span>{buttonstate}</span>
       </button>

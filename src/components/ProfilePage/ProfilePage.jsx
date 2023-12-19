@@ -20,6 +20,8 @@ import Widgets from "../Widgets/Widgets"
 import { changeUser } from "../../store/UserSlice"
 import { DefaultCoverPage } from "../../constants"
 import ProfileRequests from "./profilerequests"
+import BlockButton from "./BlockButton"
+import EditProfileButton from "./EditProfileButton"
 
 const ProfilePage = (props) => {
   const { user } = useSelector((state) => state.user)
@@ -67,8 +69,10 @@ const ProfilePage = (props) => {
             <div className="flex flex-row relative h-[25%]  top-[-75px] ">
               <ProfileImage profileimage={profilePicURL} profileimageURL={profilePicURL}></ProfileImage>
               <Details ismuted={profileres.is_wanted_user_muted} isblocked={profileres.is_wanted_user_blocked} tag={tag} display={`${tag=== user.username ? `hidden`: `block`}`}></Details>
-             <div id="follow-button-div" className={`relative ${tag===user.username? `left-[25vw]`:`left-[21vw]`} top-[75px] mx-0 mt-[2%] `}>
-              <FollowButton  handleOpenProfileEditModal={props.handleOpenProfileEditModal} tag={tag} buttonName={tag=== user.username ? `Edit Profile` : profileres.is_wanted_user_blocked? `Blocked` :  profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
+             <div id="Button-div" className={`absolute ${tag===user.username? `right-[0px]`:`right-[10px]`} top-[90px] m-0  `}>
+              <BlockButton isblocked={profileres.is_wanted_user_blocked && !(tag===user.username) } tag = {tag}></BlockButton>
+              <FollowButton display={profileres.is_wanted_user_blocked || tag===user.username? 'hidden':'block'}  tag={tag} buttonName={ profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
+              <EditProfileButton handleOpenProfileEditModal={props.handleOpenProfileEditModal} display={tag===user.username && !profileres.is_wanted_user_blocked ? `display`:`hidden` }></EditProfileButton>
               </div>
             </div>
           </div>

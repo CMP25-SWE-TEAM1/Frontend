@@ -14,10 +14,6 @@
 .blockedbt:hover::before{
     content:"Unblock"
 }
-.blockedbt:hover{
-    background-color: rgb(244,33,46);
-}
-
 .blockedbt:hover span{
     display: none;
 }
