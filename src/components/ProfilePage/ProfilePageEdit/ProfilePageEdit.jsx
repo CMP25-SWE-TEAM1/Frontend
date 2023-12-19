@@ -33,7 +33,7 @@ const ProfilePageEdit = (props)=>{
   const [location, setLocation] = useState(user.location? user.location:'');
   const [website, setWebsite] = useState(user.website? user.website:'');
   const [birthdate, setBirthDate] = useState((user.birthDate).slice(0,10).split('-'));
-  const [profileimage,setProfileimage] = useState(user.profile_image);
+  const [profileimage,setProfileimage] = useState(user.profileImage);
   const [profileimagefile,setProfileimagefile]= useState();
   const [coverimagefile,setCoverimagefile] = useState();
   const [coverpage, setCoverpage] = useState(user.banner_image);
@@ -74,7 +74,7 @@ const ProfilePageEdit = (props)=>{
     e.preventDefault()
     
     if(name !== user.nickname || bio !== user.bio || location !== user.location 
-    || website !== user.website || JSON.stringify(`${month}-${day}-${year}`) !==JSON.stringify((user.birth_date).slice(0,10).split('-')))
+    || website !== user.website || JSON.stringify(`${month}-${day}-${year}`) !==JSON.stringify((user.birthDate).slice(0,10).split('-')))
     {
       
       axios.patch(
@@ -114,6 +114,9 @@ const ProfilePageEdit = (props)=>{
       })
       .then((res) => {
         //.log("i'm here")
+        let newUser = {...user};
+        newUser.profileImage =  res.data.data.usls[0];
+        dispatch(changeUser(newUser))
         axios.patch(
           APIs.actual.changeProfilePicture,
           { profile_image: res.data.data.usls[0] },
@@ -140,7 +143,9 @@ const ProfilePageEdit = (props)=>{
           authorization: "Bearer "+ token,
         }
       }).then((res)=>{
-        //.log(res)
+        let newUser = {...user};
+        newUser.banner_image =  DefaultCoverPage;
+        dispatch(changeUser(newUser))
       }).then((err)=>{
         //.log(err)
       })
@@ -158,6 +163,9 @@ const ProfilePageEdit = (props)=>{
       })
       .then((res) => {
         //.log(res)
+        let newUser = {...user};
+        newUser.banner_image =  res.data.data.usls[0];
+        dispatch(changeUser(newUser))
         axios.patch(
           "http://backend.gigachat.cloudns.org/api/user/profile/banner",
           { profile_banner: res.data.data.usls[0] },

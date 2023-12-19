@@ -6,7 +6,7 @@ const Header=({handleCloseModal,hiddenFormSubmit,name,year,website})=> {
   const {user} = useSelector((state)=> state.user)
   const {darkMode} = useSelector((state)=>state.theme) 
     return (
-    <div id="Header-test" className={` sticky top-0 rounded-t-[1px] w-[100%] h-[10%]    z-10 backdrop-blur-sm  ${darkMode? `bg-black`:`bg-white`}  flex flex-row`}>
+    <div id="Header-test" className={` sticky top-0 rounded-t-[1px] w-[100%] h-[70px]  z-10 backdrop-blur-sm  ${darkMode? `bg-black`:`bg-white`}  flex flex-row`}>
     <button type="button" className="relative ml-[5px] mt-[5px] h-10 w-10 rounded-3xl bg-transparent 
     bg-white text-2xl text-black no-underline 
     hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover"

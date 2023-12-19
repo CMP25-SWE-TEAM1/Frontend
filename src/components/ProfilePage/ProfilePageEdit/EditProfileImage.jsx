@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 const EditProfileImage = ({profileimage,handlePictureClick,handlePictureChange,hiddenFileInput})=> {
   const {darkMode}= useSelector((state)=>state.theme)
     return (
-    <div id="ProfileImageDiv-test" className="relative  m-0 top-[7.5%] ml-[5%] w-fit rounded-full border-2 border-black dark:border-white">
+    <div id="ProfileImageDiv-test" className="relative  m-0   ml-[5%] w-fit rounded-full border-2 border-black dark:border-white">
           <div className="w-fit rounded-full border border-white dark:border-black">
             <img id="ProfileImage-test" src={profileimage ? profileimage : defaultProfilePic} alt="profile" className="h-[120px] w-[120px] rounded-full" />
           </div>
