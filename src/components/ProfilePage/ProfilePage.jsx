@@ -11,7 +11,7 @@ import ProfileName from "./ProfileName"
 import Followers from "./Followers"
 import { useEffect } from "react"
 import { useState } from "react"
-import defaultProfilePic from "../../assets/imgs/Default_Profile_Picture.png"
+
 import Header from "./Header"
 import ProfilePageEdit from "./ProfilePageEdit/ProfilePageEdit"
 import { useLocation, useParams } from "react-router-dom"
@@ -19,6 +19,7 @@ import Details from "./Details"
 import Widgets from "../Widgets/Widgets"
 import { changeUser } from "../../store/UserSlice"
 import { DefaultCoverPage } from "../../constants"
+import ProfileRequests from "./profilerequests"
 
 const ProfilePage = (props) => {
   const { user } = useSelector((state) => state.user)
@@ -30,7 +31,6 @@ const ProfilePage = (props) => {
   const [profilePicURL, setProfilePicURL] = useState()
   const [bannerPicURL, setCoverPicURL] = useState()
   const { tag } = useParams()
-  const dispatch = useDispatch()
   const APIs = {
     mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
     actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/` },
@@ -38,52 +38,12 @@ const ProfilePage = (props) => {
 
   const Fetch = () => {
         if (user.username !== tag) {
-          axios
-            .get(mock ? APIs.mock.getProfileAPI + `${tag}` : APIs.actual.getProfileAPI + `${tag}`, {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            })
-            .then((res) => {
-              if (res.status === 200) {
-                console.log(res)
-                //console.log(`Bearer ${token}`)
-                setProfilePicURL(res.data.user.profile_image)
-                setCoverPicURL(res.data.user.banner_image? res.data.user.banner_image : DefaultCoverPage)
-                
-                setProfile(res.data.user)
-              }
-            })
-            .catch((err) => {
-              //console.log(tag)
-              //console.log(err)
-            })
+         ProfileRequests.getOtherprofile(false,APIs,tag,setProfilePicURL,setCoverPicURL,setProfile,token)
         } else {
-          axios
-            .get(mock ? APIs.mock.getProfileAPI : APIs.actual.getProfileAPI, {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            })
-            .then((res) => {
-              if (res.status === 200) {
-                // //console.log(`Bearer ${token}`)
-               // //console.log(res)
-                setProfilePicURL(res.data.user.profile_image)
-                const banner_image = res.data.user.banner_image ? res.data.user.banner_image : DefaultCoverPage
-                setCoverPicURL(banner_image)
-                const newUser = {...res.data.user, banner_image:banner_image }   
-                setProfile(newUser)
-              
-                dispatch(changeUser(newUser))
-              }
-            })
-            .catch((err) => {
-              //console.log(tag)
-              //console.log(err)
-            })
+         ProfileRequests.getMyprofile(false,APIs,token,setProfile,setProfilePicURL,setCoverPicURL)
         }
   }
+
   useEffect(() => {
     if (tag) {
       Fetch()
@@ -108,7 +68,7 @@ const ProfilePage = (props) => {
               <ProfileImage profileimage={profilePicURL} profileimageURL={profilePicURL}></ProfileImage>
               <Details ismuted={profileres.is_wanted_user_muted} isblocked={profileres.is_wanted_user_blocked} tag={tag} display={`${tag=== user.username ? `hidden`: `block`}`}></Details>
              <div id="follow-button-div" className={`relative ${tag===user.username? `left-[25vw]`:`left-[21vw]`} top-[75px] mx-0 mt-[2%] `}>
-              <FollowButton  handleOpenProfileEditModal={props.handleOpenProfileEditModal} tag={tag} buttonName={tag=== user.username ? `Edit Profile` : profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
+              <FollowButton  handleOpenProfileEditModal={props.handleOpenProfileEditModal} tag={tag} buttonName={tag=== user.username ? `Edit Profile` : profileres.is_wanted_user_blocked? `Blocked` :  profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
               </div>
             </div>
           </div>

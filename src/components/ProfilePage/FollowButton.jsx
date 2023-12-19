@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-
+import ProfileRequests from "./profilerequests"
 
 const FollowButton = (props) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
@@ -15,60 +15,28 @@ const FollowButton = (props) => {
   useEffect(() => {
     setbuttonstate(props.buttonName)
   }, [props.buttonName])
-  const APIsf = {
-    mock: { postfollowProfileAPI: `http://localhost:3001/api/user/${props.tag}/follow` },
-    actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
-  }
-  const APIsuf = {
-    mock: { postfollowProfileAPI: `http://localhost:3001/api/user/${props.tag}/unfollow` },
-    actual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
+  
+  const APIs = {
+    followmock: { postfollowProfileAPI: `http://localhost:3001/api/user/${props.tag}/follow` },
+    followactual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
+    unfollowmock: { postfollowProfileAPI: `http://localhost:3001/api/user/${props.tag}/unfollow` },
+    unfollowactual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
+    unblockmock: { unBlock:   `http://localhost:3001/api/profile/` },
+    unblockactual: { unBlock: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unblock` },
   }
   function HandleClick() {
     if (buttonstate === "Edit Profile") {
       props.handleOpenProfileEditModal()
        navigate('/settings/profile')
     } else if (buttonstate === "Follow") {
-      axios
-        .post(
-          mock ? APIsf.mock.postfollowProfileAPI : APIsf.actual.postfollowProfileAPI,
-          {},
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          if (res.status === 204) {
-            setbuttonstate("Following")
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-          console.log(props.tag)
-        })
-    } else {
-      axios
-        .post(
-          mock ? APIsuf.mock.postfollowProfileAPI : APIsuf.actual.postfollowProfileAPI,
-          {},
-          {
-            headers: {
-              authorization: "Bearer " + token,
-            },
-          }
-        )
-        .then((res) => {
-          if (res.status === 204) {
-            setbuttonstate("Follow")
-          }
-        })
-        .catch((err) => {
-          console.log(APIsuf.actual.postfollowProfileAPI)
-        })
+     ProfileRequests.follow(false,APIs,token,setbuttonstate)
+    } else if(buttonstate === "Following") {
+    ProfileRequests.unfollow(false,APIs,token,setbuttonstate)
+    }
+    else {
+      ProfileRequests.unblock(false,APIs,token)
     }
   }
-
   return (
     <>
       <button
@@ -76,29 +44,36 @@ const FollowButton = (props) => {
         onClick={() => {
           HandleClick()
         }}
-        className={` ${
-          darkMode
-            ? buttonstate === "Follow"
-              ? `bg-white text-black
-                hover:bg-darkHover dark:hover:bg-lightHover`
-              : `bg-black text-white hover:bg-lightHover dark:hover:bg-darkHover `
-            : buttonstate === "Follow"
-            ? `bg-black text-white hover:bg-darkHover dark:hover:bg-lightHover`
-            : `bg-white text-black hover:bg-lightHover dark:hover:bg-darkHover`
-        } 
-                border-b-1 border-t- } h-[35px] w-[110px] 
+        className={` 
+              ${
+                darkMode
+                  ? buttonstate === "Follow"
+                      ? `bg-white text-black
+                        hover:bg-darkHover dark:hover:bg-lightHover`
+                      : `bg-black text-white hover:bg-lightHover dark:hover:bg-darkHover `
+                  : buttonstate === "Follow"
+                      ? `bg-black text-white hover:bg-darkHover dark:hover:bg-lightHover`
+                      : `bg-white text-black hover:bg-lightHover dark:hover:bg-darkHover`
+                } 
+                h-[35px] w-[110px] 
                 rounded-full border border-lightBorder text-center font-semibold
                 dark:border-darkBorder
                 ${
                   buttonstate === "Following"
-                    ? `bt hover:border-[red]  hover:text-[red]
+                    ? `bt hover:border-[rgb(244,33,46)]  hover:text-[rgb(244,33,46)]
                 `
+                    : ``
+                }
+                ${
+                  buttonstate === "Blocked"
+                  ?
+                  `blockedbt  text-white  hover:text-white`
                     : ``
                 }`}
       >
         <span>{buttonstate}</span>
-      </button>{" "}
-      {/*todo: conditional rendering white for follow black for unfollow*/}
+      </button>
+     
     </>
   )
 }

@@ -2,9 +2,9 @@ import { useState,useEffect,useRef } from "react"
 import React from 'react'
 import { Modal, Box } from "@mui/material"
 import { useSelector } from "react-redux"
-import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined"
 import defaultProfilePic from "../../../assets/imgs/Default_Profile_Picture.png"
-import CoverImage from "../CoverImage.jsx"
+import { useDispatch } from "react-redux"
+import { changeUser } from "../../../store/UserSlice.js"
 import axios from "axios"
 import { useLocation, useNavigate } from "react-router-dom"
 import { APIs } from "../../../constants/signupConstants.js"
@@ -25,13 +25,14 @@ const ProfilePageEdit = (props)=>{
  
 
   const mock = false;
+  const dispatch = useDispatch()
   const {user}  = useSelector((state) =>(state.user))
   const {token} = useSelector((state)=>(state.user))
   const [name,setName]       = useState(user.nickname);
   const [bio, setBio] = useState(user.bio? user.bio:'')
   const [location, setLocation] = useState(user.location? user.location:'');
   const [website, setWebsite] = useState(user.website? user.website:'');
-  const [birthdate, setBirthDate] = useState(user.birth_date?(user.birth_date).slice(0,10).split('-'):'');
+  const [birthdate, setBirthDate] = useState((user.birthDate).slice(0,10).split('-'));
   const [profileimage,setProfileimage] = useState(user.profile_image);
   const [profileimagefile,setProfileimagefile]= useState();
   const [coverimagefile,setCoverimagefile] = useState();
@@ -89,7 +90,12 @@ const ProfilePageEdit = (props)=>{
           }
         }
       ).then((res)=>{
-        //.log(res)
+        let newUser = {...user};
+        newUser.nickname  = name;
+        newUser.location = location;
+        newUser.bio = bio;
+        newUser.website = website;
+        dispatch(changeUser(newUser))
       }).catch((err)=>{
         //.log(err)
       })
