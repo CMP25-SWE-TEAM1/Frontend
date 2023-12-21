@@ -9,9 +9,8 @@ function ProfileMediabuttons() {
   const user = useSelector((state) => state.user.user)
 
   const profileNavLinks = [
-    { title: "Posts", location: "posts" },
-    { title: "Replis", location: "replies" },
-    { title: "Media", location: "media" },
+    { title: "Posts", location: "" },
+    { title: "Replies", location: "with_replies" },
     { title: "Likes", location: "Likes" },
   ]
   const location = useLocation()
@@ -23,7 +22,7 @@ function ProfileMediabuttons() {
   const darkMode = useSelector((state) => state.theme.darkMode)
   return (
     <div>
-      <div id="profile-buttons-div" className={`flex w-[100%] `}>
+      <div id="profile-buttons-div" className={`flex w-[100%] h-[50px] `}>
         <HorizontalNavbar urls={profileNavLinks} originalUrl={`/${root}`} handlers={[]}/>
       </div>
       <div>

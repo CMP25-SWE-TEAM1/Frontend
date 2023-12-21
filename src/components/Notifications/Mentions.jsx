@@ -4,79 +4,44 @@ import logoDark from "../../assets/imgs/gigachatLogoOne_dark-removebg-preview.pn
 import logoLight from "../../assets/imgs/gigachatLogoOne_light_v2-removebg-preview.png"
 
 import { useSelector } from "react-redux"
+import { useEffect, useState } from "react"
+
+import PostsContainer from "../Home/Posts/PostsContainer"
+import axios from "axios"
+import { APIs } from "../../constants/signupConstants"
 
 const Mentions = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
+  const user = useSelector((state) => state.user.user)
 
-  const notTest = [
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-    {
-      logo: darkMode ? logoDark : logoLight,
-      text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
-    },
-  ]
+  const userToken = useSelector((state) => state.user.token)
+
+  const [mentions, setMentions] = useState([])
+
+  useEffect(() => {
+    axios
+      .get(APIs.actual.getMentions, {
+        params: {
+          page: 1,
+          count: 100,
+        },
+        headers: {
+          authorization: "Bearer " + userToken,
+        },
+      })
+      .then((res) => {
+        console.log(res)
+        setMentions(res.data.tweetList)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
+
   return (
     <div>
-      <NotificationsContainer list={[]} type={"mentions"}/>
+      {!mentions[0] && <NotificationsContainer list={[]} type={"mentions"} />}
+      <PostsContainer posts={mentions} setPosts={setMentions} />
     </div>
   )
 }

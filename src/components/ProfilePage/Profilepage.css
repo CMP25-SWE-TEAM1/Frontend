@@ -11,6 +11,12 @@
 .bt:hover span{
     display: none;
 }
+.blockedbt:hover::before{
+    content:"Unblock"
+}
+.blockedbt:hover span{
+    display: none;
+}
 }
 
 .Detailsbt{
@@ -20,3 +26,4 @@
     height: calc(100%/2);
     margin-left: -50px;
 }
+

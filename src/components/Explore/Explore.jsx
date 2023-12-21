@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux"
-import Widgets from "../Widgets"
+import Widgets from "../Widgets/Widgets"
 
 import { useState } from "react"
 

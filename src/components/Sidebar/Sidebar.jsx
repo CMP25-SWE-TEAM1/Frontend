@@ -22,12 +22,19 @@ import { Avatar } from "@mui/material"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
 import { Modal, Box } from "@mui/material"
+import Badge from "@mui/material/Badge"
 import UploadProfilePicture from "../Signup/UploadProfilePicture"
+
+import axios from "axios"
+
+import { APIs } from "../../constants/signupConstants"
 
 import { styles } from "../../styles"
 
 const Sidebar = () => {
   const user = useSelector((state) => state.user.user)
+  const userToken = useSelector((state) => state.user.token)
+
   const userTag = user.username
   const darkMode = useSelector((state) => state.theme.darkMode)
   const [shrink, setShrink] = useState(window.innerWidth < 1278)
@@ -47,8 +54,38 @@ const Sidebar = () => {
   // const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}/communities`, `/${userTag}`, "/settings/account"]
   // const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} alt="sidebarOption" />)
 
+  const [unseenCount, setUnseenCount] = useState(0)
+
+  useEffect(() => {
+    axios
+      .get(APIs.actual.getNotificationUnseenCount, {
+        params: {},
+        headers: {
+          authorization: "Bearer " + userToken,
+        },
+      })
+      .then((res) => {
+        // console.log(res.data.data.notificationsCount)
+        setUnseenCount(res.data.data.notificationsCount)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
+
   const optionsNames = ["Home", "Explore", "Notifications", "Messages", "Lists", "Bookmarks", "Profile", "Settings"]
-  const optionsIcons = [<HomeOutlinedIcon />, <SearchRoundedIcon />, <NotificationsNoneRoundedIcon />, <MailOutlineRoundedIcon />, <ListAltRoundedIco />, <PeopleOutlinedIcon />, <PersonOutlinedIcon />, <SettingsIcon />]
+  const optionsIcons = [
+    <HomeOutlinedIcon />,
+    <SearchRoundedIcon />,
+    <Badge badgeContent={unseenCount} color="primary">
+      <NotificationsNoneRoundedIcon />
+    </Badge>,
+    <MailOutlineRoundedIcon />,
+    <ListAltRoundedIco />,
+    <PeopleOutlinedIcon />,
+    <PersonOutlinedIcon />,
+    <SettingsIcon />,
+  ]
   const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}`, "/settings/account"]
   const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} alt="sidebarOption" />)
 
