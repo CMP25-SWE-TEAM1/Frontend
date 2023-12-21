@@ -32,7 +32,6 @@ const ProfilePageEdit = (props)=>{
   const [bio, setBio] = useState(user.bio? user.bio:'')
   const [location, setLocation] = useState(user.location? user.location:'');
   const [website, setWebsite] = useState(user.website? user.website:'');
-  const [birthdate, setBirthDate] = useState((user.birthDate).slice(0,10).split('-'));
   const [profileimage,setProfileimage] = useState(user.profileImage);
   const [profileimagefile,setProfileimagefile]= useState();
   const [coverimagefile,setCoverimagefile] = useState();
@@ -42,16 +41,23 @@ const ProfilePageEdit = (props)=>{
   const navigate = useNavigate();
   const locationURL = useLocation();
   const [selectdatedisplay,setSelectdatedisplay]= useState(false);
-  const htmldate  = `${months[birthdate[1]-1]} ${birthdate[2]}, ${birthdate[0]}`
-  const [year, setYear] = useState(birthdate[0])
-  const [month, setMonth] = useState(months[birthdate[1]-1])
-  const [day, setDay] = useState(birthdate[2])
+  const [year, setYear] = useState()
+  const [month, setMonth] = useState()
+  const [day, setDay] = useState()
   const [openCrop, setOpenCrop] = useState(false)
   const [opencoverCrop,setOpenCoverCrop] = useState(false)
  
   //.log(openCrop)
   // Update the window width when the component mounts
-
+  useEffect(()=>{
+    if(user.birthDate !== undefined)
+    {
+      const birthdate = ((user.birthDate).slice(0,10).split('-'))
+      setDay(birthdate[2])
+      setMonth(months[birthdate[1]-1])
+      setYear(birthdate[0])
+    }
+  },[user.birthDate])
   useEffect(() => {
     if(locationURL.pathname === "/settings/profile")
     {
@@ -257,7 +263,7 @@ const ProfilePageEdit = (props)=>{
               Enter A valid URL
         </Alert>
           <EditDate selectdatedisplay={selectdatedisplay} setSelectdatedisplay={setSelectdatedisplay}
-          htmldate={htmldate} month={month} setMonth={setMonth} day={day} setDay={setDay} year={year} setYear={setYear} ></EditDate>
+          htmldate={`${month} ${day}, ${year}`} month={month} setMonth={setMonth} day={day} setDay={setDay} year={year} setYear={setYear} ></EditDate>
         </form>
       </div>
       <div id="CROP-ForProfile" className={` ${openCrop ? "!block" : "!hidden"}  !mt-0`}>
