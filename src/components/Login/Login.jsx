@@ -164,7 +164,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
             <div id="firstPage" className="m-auto w-[300px]">
               <div>
                 <h1 className="mb-4 mt-3">Log in to Gigachat</h1>
-                <GoogleLoginButton handleCloseModal={handleCloseModal} />
+                <GoogleLoginButton handleCloseModal={handleCloseModal} message={"Sign in with Google"} />
                 <div className="flex h-10 items-center justify-center">
                   <div className="flex w-full items-center">
                     <hr className="mr-2 w-full" />
