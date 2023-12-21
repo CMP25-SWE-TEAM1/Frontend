@@ -27,7 +27,7 @@ const Explore = () => {
           <CustomTabs tabValue={tabValue} handleChangeTabValue={handleChangeTabValue} tabsNames={tabsNames} />
         </div>
         <CustomTabPanel value={tabValue} index={0}>
-          {WithConditionalDataFetching("trending")}
+          {WithConditionalDataFetching("foryou")}
         </CustomTabPanel>
         <CustomTabPanel value={tabValue} index={1}>
           {WithConditionalDataFetching("trending")}
