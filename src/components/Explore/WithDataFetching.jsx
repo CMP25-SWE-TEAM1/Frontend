@@ -5,81 +5,112 @@ import TrendsContainer from "./TrendsContainer"
 
 const useDataFetching = (type) => {
   const [data, setData] = useState([])
+  const [sports, setSports] = useState([])
+  const [news, setNews] = useState([])
+  const [entertainment, setEntertainment] = useState([])
+  const [trends, setTrends] = useState([])
+
   const [loading, setLoading] = useState(true)
   const userToken = useSelector((state) => state.user.token)
 
   const [pageNumber, setPageNumber] = useState(1)
   const [finshed, setFinished] = useState(false)
 
+  const fetchTrends = () => {
+    axios
+      .get("http://backend.gigachat.cloudns.org/api/trends/all", {
+        params: {
+          page: 1,
+          count: 1000,
+        },
+        headers: {
+          authorization: "Bearer " + userToken,
+        },
+      })
+      .then((res) => {
+        // console.log(res.data.data)
+        setTrends(res.data.data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const fetchNews = () => {
+    axios
+      .get("http://localhost:3001/api/trends/news", {
+        headers: {
+          authorization: "Bearer " + userToken,
+        },
+      })
+      .then((res) => {
+        // console.log(res)
+        setNews(res.data.data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        if (err.message !== "Network Error") console.log(err)
+      })
+  }
+
+  const fetchSports = () => {
+    axios
+      .get("http://localhost:3001/api/trends/sports", {
+        headers: {
+          authorization: "Bearer " + userToken,
+        },
+      })
+      .then((res) => {
+        // console.log(res)
+        setSports(res.data.data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        if (err.message !== "Network Error") console.log(err)
+      })
+  }
+
+  const fetchEntertainment = () => {
+    axios
+      .get("http://localhost:3001/api/trends/entertainment", {
+        headers: {
+          authorization: "Bearer " + userToken,
+        },
+      })
+      .then((res) => {
+        // console.log(res)
+        setEntertainment(res.data.data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        if (err.message !== "Network Error") console.log(err)
+      })
+  }
+
+  useEffect(() => {
+    setData([...trends, ...news, ...sports, ...entertainment])
+  }, [news, sports, entertainment, trends])
+
   useEffect(() => {
     switch (type) {
       case "trending":
-        axios
-          .get("http://backend.gigachat.cloudns.org/api/trends/all", {
-            params: {
-              page: 1,
-              count: 1000,
-            },
-            headers: {
-              authorization: "Bearer " + userToken,
-            },
-          })
-          .then((res) => {
-            // console.log(res.data.data)
-            setData(res.data.data)
-            setLoading(false)
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+        fetchTrends()
         break
       case "news":
-        axios
-          .get("http://localhost:3001/api/trends/news", {
-            headers: {
-              authorization: "Bearer " + userToken,
-            },
-          })
-          .then((res) => {
-            console.log(res)
-            setData(res.data.data)
-            setLoading(false)
-          })
-          .catch((err) => {
-            if (err.message !== "Network Error") console.log(err)
-          })
+        fetchNews()
         break
       case "sports":
-        axios
-          .get("http://localhost:3001/api/trends/sports", {
-            headers: {
-              authorization: "Bearer " + userToken,
-            },
-          })
-          .then((res) => {
-            console.log(res)
-            setData(res.data.data)
-            setLoading(false)
-          })
-          .catch((err) => {
-            if (err.message !== "Network Error") console.log(err)
-          })
+        fetchSports()
         break
       case "entertainment":
-        axios
-          .get("http://localhost:3001/api/trends/entertainment", {
-            headers: {
-              authorization: "Bearer " + userToken,
-            },
-          })
-          .then((res) => {
-            console.log(res)
-            setData(res.data.data)
-            setLoading(false)
-          })
-          .catch((err) => {
-            if (err.message !== "Network Error") console.log(err)
-          })
+        fetchEntertainment()
+        break
+      case "foryou":
+        fetchTrends()
+        fetchNews()
+        fetchSports()
+        fetchEntertainment()
         break
       default:
     }

@@ -95,6 +95,7 @@ const Sidebar = () => {
   const handleLogout = () => {
     localStorage.removeItem("user")
     localStorage.removeItem("token")
+    sessionStorage.removeItem("passwordIsConfirmed")
     dispatch(logoutUser())
     navigate("/")
   }

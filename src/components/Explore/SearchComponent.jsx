@@ -155,12 +155,14 @@ const SearchComponent = ({ query }) => {
           <Autocomplete
             freeSolo
             blurOnSelect={false}
-            renderGroup={(group) => (
-              <div>
-                <span className="p-2 text-sm">{group.group}</span>
-                <div>{group.children}</div>
-              </div>
-            )}
+            renderGroup={(group) => {
+              return (
+                <div key={group.key}>
+                  <span className="p-2 text-sm">{group.group}</span>
+                  <div>{group.children}</div>
+                </div>
+              )
+            }}
             groupBy={(option) => {
               if (option.username) {
                 return "Users"
@@ -173,29 +175,36 @@ const SearchComponent = ({ query }) => {
             options={searchAll}
             noOptionsText={"No options found"}
             renderOption={(props, option) => {
-              return <li>{option.username ? <UserSearchComponent key={option.username} {...props} option={option} /> : <TrendSearchOption key={option.title} {...props} option={option} />}</li>
+              return <li key={props.id}>{option.username ? <UserSearchComponent {...props} option={option} /> : <TrendSearchOption {...props} option={option} />}</li>
             }}
-            renderInput={(params) => (
-              <div className="input-container" {...params} ref={params.InputProps.ref}>
-                <input
-                  onKeyDown={handleEnterKeyPress}
-                  {...params.inputProps}
-                  className={searchQuery === "" ? "form-input" : "form-input filled-input"}
-                  type="search"
-                  name="search"
-                  id="search"
-                  value={searchQuery}
-                  onChange={(e) => {
-                    const value = e.target.value
-                    setSearchQuery(value)
-                    handleSearchChange(value)
-                  }}
-                />
-                <label className="input-label" htmlFor="name">
-                  Search for people, hashtags or tweets
-                </label>
-              </div>
-            )}
+            renderInput={(params) => {
+              // const tmp = params
+              // tmp.fullwidth = tmp.fullWidth
+              // delete tmp.fullWidth
+              // console.log(params)
+
+              return (
+                <div key={params.id} className="input-container" ref={params.InputProps.ref}>
+                  <input
+                    onKeyDown={handleEnterKeyPress}
+                    {...params.inputProps}
+                    className={searchQuery === "" ? "form-input" : "form-input filled-input"}
+                    type="search"
+                    name="search"
+                    id="search"
+                    value={searchQuery}
+                    onChange={(e) => {
+                      const value = e.target.value
+                      setSearchQuery(value)
+                      handleSearchChange(value)
+                    }}
+                  />
+                  <label className="input-label" htmlFor="name">
+                    Search for people, hashtags or tweets
+                  </label>
+                </div>
+              )
+            }}
           />
         </Stack>
       </div>

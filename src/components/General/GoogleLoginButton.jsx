@@ -41,6 +41,7 @@ const GoogleLoginButton = ({ handleCloseModal }) => {
         .catch((err) => {
           console.log(err)
           localStorage.removeItem("user")
+          sessionStorage.removeItem("passwordIsConfirmed")
         })
     }
   }, [user])

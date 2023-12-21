@@ -94,7 +94,7 @@ const All = () => {
         },
       })
       .then((res) => {
-        // console.log(res.data.data.notifications)
+        console.log(res.data.data.notifications)
         setAllNotifications(res.data.data.notifications)
       })
       .catch((err) => {

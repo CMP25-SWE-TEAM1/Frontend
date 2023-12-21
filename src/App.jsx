@@ -24,7 +24,7 @@ import PostPage from "./components/PostPage/PostPage"
 import Messages from "./components/messages-page/Messages"
 import MessageCompose from "./components/messages-page/compose/MessageCompose"
 import ProfilePage from "./components/ProfilePage/ProfilePage"
-import ProfilePageEdit from "./components/ProfilePage/ProfilePageEdit"
+import ProfilePageEdit from "./components/ProfilePage/ProfilePageEdit/ProfilePageEdit"
 import NotFound from "./components/NotFound"
 import Explore from "./components/Explore/Explore"
 import Notifications from "./components/Notifications/Notifications"
@@ -146,9 +146,8 @@ const App = () => {
             <Route path="display" element={<Display />}></Route>
           </Route>
           <Route path={`/:tag`} element={<ProfilePage handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal} />}>
-            <Route path="posts" element={<ProfilePosts />}></Route>
-            <Route path="replies" element={<ProfileReplies />}></Route>
-            <Route path="media" element={<ProfileMedia />}></Route>
+            <Route  element={<ProfilePosts />}></Route>
+            <Route path="with_replies" element={<ProfileReplies />}></Route>
             <Route path="likes" element={<ProfileLikes />}></Route>
             <Route path="" element={<ProfilePosts />}></Route>
           </Route>
