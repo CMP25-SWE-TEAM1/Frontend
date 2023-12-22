@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import TextField from "@mui/material/TextField"
 import { Link } from "react-router-dom"
 import { Avatar } from "@mui/material"
-import DisplayMedia from "./DisplayMedia"
+import DisplayMedia from "../DisplayMedia"
 import axios from "axios"
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined"
 import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined"
@@ -12,13 +12,13 @@ import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined"
 import VerifiedIcon from "@mui/icons-material/Verified"
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail"
 import Button from "@mui/material/Button"
-import GeneralButton from "../Sidebar/Button"
+import GeneralButton from "../../Sidebar/Button"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
-import Popup from "./Popup";
+import Popup from "../Popup";
 import ComposePostFooter from "./ComposePostFooter";
 
-function ComposePost({ buttonName, handleNewPost, postType, referredTweetId }) {
+function ComposePost({ buttonName, handleNewPost, postType, referredTweetId ,handleClosePopup}) {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
   const [description, setDescription] = useState("")
   const [replyPermissionIndex, setReplyPermissionIndex] = useState(0)
@@ -108,7 +108,8 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId }) {
           console.log('running mock')
           console.log(post);
         }
-        handleNewPost(post)
+        handleNewPost&&handleNewPost(post);
+        handleClosePopup&&handleClosePopup();
       })
       .catch((error) => {
         console.log('error in handleSubmit')

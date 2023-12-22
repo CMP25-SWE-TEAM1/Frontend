@@ -24,7 +24,16 @@ import MenuItem from "@mui/material/MenuItem"
 import { Modal, Box } from "@mui/material"
 import Badge from "@mui/material/Badge"
 import UploadProfilePicture from "../Signup/UploadProfilePicture"
-
+import { useLocation } from "react-router-dom"
+import HomeIcon from '@mui/icons-material/Home'
+import SearchIcon from '@mui/icons-material/Search'
+import NotificationsIcon from '@mui/icons-material/Notifications'
+import EmailIcon from '@mui/icons-material/Email';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import PeopleIcon from '@mui/icons-material/People';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import PostPopup from '../Home/ComposePost/PostPopup'
 import axios from "axios"
 
 import { APIs } from "../../constants/signupConstants"
@@ -34,17 +43,37 @@ import { styles } from "../../styles"
 const Sidebar = () => {
   const user = useSelector((state) => state.user.user)
   const userToken = useSelector((state) => state.user.token)
-
+  const pathname = useLocation().pathname;
   const userTag = user.username
+  const [unseenCount, setUnseenCount] = useState(0)
+  const optionsNames = ["Home", "Explore", "Notifications", "Messages", "Lists", "Bookmarks", "Profile", "Settings"]
+  const optionsIcons = [
+    [<HomeOutlinedIcon />,<HomeIcon />],
+    [<SearchRoundedIcon sx={{color:"#1f1f1f"}}/>,<SearchIcon sx={{color:"#000000"}}/>],
+    [<Badge badgeContent={unseenCount} color="primary">
+      <NotificationsNoneRoundedIcon />
+    </Badge>,
+    <Badge badgeContent={unseenCount} color="primary">
+      <NotificationsIcon/>
+    </Badge>],
+    [<MailOutlineRoundedIcon />,<EmailIcon/>],
+    [<ListAltRoundedIco sx={{color:"#1f1f1f"}}/>,<ListAltIcon sx={{color:"#000000"}}/>],
+    [<PeopleOutlinedIcon />,<PeopleIcon/>],
+    [<PersonOutlinedIcon />,<PersonIcon/>],
+    [<SettingsOutlinedIcon />,<SettingsIcon/>],
+  ]
+  const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}`, "/settings/account"]
+  
   const darkMode = useSelector((state) => state.theme.darkMode)
   const [shrink, setShrink] = useState(window.innerWidth < 1278)
+  const [selected, setSelected] = useState(optionLinks.indexOf(pathname))
+  const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} alt="sidebarOption" select={selected===index? true:false}/>)
   const handleResize = () => {
     if (window.innerWidth < 1278) setShrink(true)
     else setShrink(false)
-  }
+}
   window.addEventListener("resize", handleResize)
-
-  const moreIcon = <MoreHorizIcon />
+  
   const imageIcon = (altName, image, radius) => {
     return <img src={image} alt={`${altName}ImageIcon`} className={`h-${radius} w-${radius} rounded-full`} />
   }
@@ -53,9 +82,8 @@ const Sidebar = () => {
   // const optionsIcons = [<HomeOutlinedIcon />, <SearchRoundedIcon />, <NotificationsNoneRoundedIcon />, <MailOutlineRoundedIcon />, <ListAltRoundedIco />, <TurnedInNotOutlinedIcon />, <PeopleOutlinedIcon />, <PersonOutlinedIcon />, <SettingsIcon />]
   // const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}/communities`, `/${userTag}`, "/settings/account"]
   // const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} alt="sidebarOption" />)
-
-  const [unseenCount, setUnseenCount] = useState(0)
-
+  
+  
   useEffect(() => {
     axios
       .get(APIs.actual.getNotificationUnseenCount, {
@@ -73,21 +101,6 @@ const Sidebar = () => {
       })
   }, [])
 
-  const optionsNames = ["Home", "Explore", "Notifications", "Messages", "Lists", "Bookmarks", "Profile", "Settings"]
-  const optionsIcons = [
-    <HomeOutlinedIcon />,
-    <SearchRoundedIcon />,
-    <Badge badgeContent={unseenCount} color="primary">
-      <NotificationsNoneRoundedIcon />
-    </Badge>,
-    <MailOutlineRoundedIcon />,
-    <ListAltRoundedIco />,
-    <PeopleOutlinedIcon />,
-    <PersonOutlinedIcon />,
-    <SettingsIcon />,
-  ]
-  const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}`, "/settings/account"]
-  const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} alt="sidebarOption" />)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -109,21 +122,24 @@ const Sidebar = () => {
   const handleCloseMenu = () => {
     setAnchorMenu(null)
   }
-
+  
   const [openModal, setOpenSignupModal] = useState(false)
   const handleOpenModal = () => setOpenSignupModal(true)
   const handleCloseModal = () => {
     setOpenSignupModal(false)
   }
-
+  
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
+  useEffect(()=>{
+    setSelected(optionLinks.indexOf(pathname));
+  },[pathname])
   // Update the window width when the component mounts
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth)
     }
-
+    
     window.addEventListener("resize", handleResize)
 
     // Remove the event listener when the component is unmounted
@@ -156,12 +172,14 @@ const Sidebar = () => {
   return (
     <div className=" flex items-center justify-between  border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white max-xs:!sticky max-xs:bottom-0 max-xs:z-10 max-xs:backdrop-brightness-[90%] dark:max-xs:bg-black dark:max-xs:bg-opacity-50 dark:max-xs:backdrop-blur-sm dark:max-xs:backdrop-brightness-[30%] xs:max-w-[400px] xs:justify-end md:flex-grow">
       <div className={`flex h-full w-full flex-row  max-[1278px]:items-end max-xs:!items-center xs:flex-col xs:pl-[30%]`} id="mahmoud_navigate_pre">
-        <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" alt="gigaChatIcon" />
+        
+        <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" alt="gigaChatIcon" other={`${shrink ? "mr-3":""} mt-0.5`}/>
+       
         {options}
-        <Button name={shrink ? <HistoryEduOutlinedIcon /> : "Post"} color="text-white" backgroundColor="bg-[#1D9BF0]" height={shrink ? "h-14" : "h-12"} width={shrink ? "w-14" : "w-56"} link="/compose/tweet" alt="post" />
+        <Button name={shrink ? <HistoryEduOutlinedIcon /> : "Post"} color="text-white" backgroundColor="bg-[#1D9BF0]" height={shrink ? "h-14" : "h-12"} width={shrink ? "w-14" : "w-56"} link="/compose/tweet" alt="post" title="post" other={shrink ? "mr-2":""}/>
         {shrink ? (
-          <a alt="" className="group mt-auto box-border w-full cursor-pointer border-0">
-            <div title="switchAccountContainer" className=" flex w-full  items-center justify-around rounded-full p-3 group-hover:bg-lightHover dark:group-hover:bg-darkHover" id="mahmoud_switch_account">
+          <a alt="" className="group mt-auto box-border w-fit cursor-pointer border-0 mr-2">
+            <div title="switchAccountContainer" className=" flex w-fit  items-center justify-around rounded-full p-3 group-hover:bg-lightHover dark:group-hover:bg-darkHover" id="mahmoud_switch_account">
               <Avatar alt={user.nickname} src={user.profileImage} id="demo-positioned-button" aria-controls={openMenu ? "demo-positioned-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleClickMenu} />
               <Menu
                 id="demo-positioned-menu"
@@ -220,7 +238,7 @@ const Sidebar = () => {
             </div>
           </a>
         ) : (
-          <SwitchAccount profilePhoto={imageIcon("profile", user.picture, 2.5)} userName={user.name} userTag={`@${user.userTag}`} moreIcon={moreIcon} handleLogout={handleLogout} openMenu={openMenu} anchorMenu={anchorMenu} handleCloseMenu={handleCloseMenu} handleClickMenu={handleClickMenu} />
+          <SwitchAccount handleLogout={handleLogout} openMenu={openMenu} anchorMenu={anchorMenu} handleCloseMenu={handleCloseMenu} handleClickMenu={handleClickMenu} />
         )}
       </div>
       <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>

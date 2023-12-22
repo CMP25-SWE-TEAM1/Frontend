@@ -226,7 +226,7 @@ const Post = ({ userProfilePicture, postType, userName, userTag, id, date, reply
                     height: 16,
                   }}
                   />
-                  <span className="ml-2 hover:underline">{user.nickname===userTag?"You":userName} reposted</span>
+                  <span className="ml-2 hover:underline">{followingUser? followingUser.username===userTag?"You":followingUser.nickname:""} reposted</span>
             </div>
         <div className="flex">
           <div className=" h-fit w-10 sm:mr-3">

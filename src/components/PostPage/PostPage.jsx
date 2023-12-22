@@ -9,7 +9,7 @@ import { Link } from "react-router-dom"
 import UpperNavbar from "../General/UpperNavbar"
 import { useLocation } from "react-router-dom"
 import axios from "axios"
-import ComposeReply from "../Home/ComposePost"
+import ComposeReply from "../Home/ComposePost/ComposePost"
 
 function PostPage() {
   const [postLoaded, setPostLoaded] = useState(false)

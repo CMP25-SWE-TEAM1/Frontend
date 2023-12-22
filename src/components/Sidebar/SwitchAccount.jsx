@@ -18,7 +18,7 @@ import { useSelector } from "react-redux"
 import darkLogo from "../../assets/imgs/gigachatLogoOne_dark-removebg-preview.png"
 import lightLogo from "../../assets/imgs/gigachatLogoOne_light_v2-removebg-preview.png"
 
-function SwitchAccount({ userName, userTag, link, handleLogout,openMenu,anchorMenu,handleCloseMenu,handleClickMenu }) {
+function SwitchAccount({ handleLogout,openMenu,anchorMenu,handleCloseMenu,handleClickMenu }) {
   
 
   const htmlElement = document.getElementById("htmlid")
@@ -36,7 +36,7 @@ function SwitchAccount({ userName, userTag, link, handleLogout,openMenu,anchorMe
   return (
     <>
       <p className="group !mb-0 mt-auto box-border w-full cursor-pointer border-0">
-        <div title="switchAccountContainer" className=" flex w-full items-center justify-around rounded-full group-hover:bg-lightHover dark:group-hover:bg-darkHover xs:!p-3">
+        <div title="Accounts" className=" flex w-full items-center justify-around rounded-full group-hover:bg-lightHover dark:group-hover:bg-darkHover xs:!p-3">
           <Avatar alt={user.nickname} src={user.profileImage} />
           <div>
             <div className="truncate font-semibold" id="mahmoud_name">{user.nickname}</div>
