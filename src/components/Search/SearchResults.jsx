@@ -112,7 +112,11 @@ const SearchResults = () => {
             },
           })
           .then((res) => {
-            setTrendResults((prevResults) => [...prevResults, ...res.data.data])
+            const nn = res.data.data.map((d) => {
+              const n = { ...d, type: "tweet" }
+              return n
+            })
+            setTrendResults((prevResults) => [...prevResults, ...nn])
             if (res.data.data.length < 10) noMoreTrends = true
           })
           .catch((err) => {

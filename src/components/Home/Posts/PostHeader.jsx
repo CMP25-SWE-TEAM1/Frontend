@@ -16,10 +16,9 @@ import { Avatar } from "@mui/material"
 import { useSelector } from "react-redux"
 import { useLocation } from "react-router-dom"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
-
 import axios from "axios"
 
-function PostHeader({ pathname, userTag, userProfilePicture, userName, finalDate, id, isVisible, handleMouseEnter, handleMouseLeave, hoveredProfile, openMenu, anchorPostMenu, handleMenuClose, htmlElement, handleMenuButtonClick, followingUser, setPosts, posts }) {
+function PostHeader({ pathname, postType, userTag, userProfilePicture, userName, finalDate, id, isVisible, handleMouseEnter, handleMouseLeave, hoveredProfile, openMenu, anchorPostMenu, handleMenuClose, htmlElement, handleMenuButtonClick, followingUser, setPosts, posts }) {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const user = useSelector((state) => state.user.user)
 
@@ -72,7 +71,7 @@ function PostHeader({ pathname, userTag, userProfilePicture, userName, finalDate
         <div className="flex items-center">
           <div className=" relative flex items-center" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             {isVisible && (
-              <Box className="transition-all" sx={{ zIndex: 5, position: "absolute", backgroundColor: darkMode ? "black" : "white", color: darkMode ? "white" : "black", padding: "10px", borderRadius: "10px", boxShadow: darkMode ? "0px 0px 1px 1px gray" : "0px 0px 1px 1px black", width: "250px" }}>
+              <Box className="transition-all" sx={{ zIndex: 5, position: "absolute", top: 0, backgroundColor: darkMode ? "black" : "white", color: darkMode ? "white" : "black", padding: "10px", borderRadius: "10px", boxShadow: darkMode ? "0px 0px 1px 1px gray" : "0px 0px 1px 1px black", width: "250px" }}>
                 <div className="flex ">
                   <div className="w-fit">
                     <Link className="pointer-events-auto hover:brightness-90" to={`/${userTag}`}>
@@ -93,19 +92,20 @@ function PostHeader({ pathname, userTag, userProfilePicture, userName, finalDate
               </Box>
             )}
             <div className="pointer-events-auto">
-            <div className="hover:underline">{userName}
-            <VerifiedIcon className="pl-1 text-primary" sx={{ fontSize: "22px" }} />
+              <div className="hover:underline">
+                {userName}
+                <VerifiedIcon className="pl-1 text-primary" sx={{ fontSize: "22px" }} />
+              </div>
+              <Link className={`${pathname.search(id) === -1 ? "hidden" : ""} pointer-events-auto text-sm text-ternairy dark:text-secondary`} to={`/${userTag}`}>
+                @{userTag}
+              </Link>
             </div>
-            <Link className={`${pathname.search(id)===-1?"hidden":""} pointer-events-auto text-sm text-ternairy dark:text-secondary`} to={`/${userTag}`}>
-            @{userTag}
-          </Link>
-            </div>
-          <Link className={`${pathname.search(id)===-1?"":"hidden"} pointer-events-auto ml-1 text-sm text-ternairy dark:text-secondary`} to={`/${userTag}`}>
-            @{userTag}
-          </Link>
+            <Link className={`${pathname.search(id) === -1 ? "" : "hidden"} pointer-events-auto ml-1 text-sm text-ternairy dark:text-secondary`} to={`/${userTag}`}>
+              @{userTag}
+            </Link>
           </div>
-          <div className={`${pathname.search(id)===-1?"":"hidden"} m-1 h-[2px] w-[2px] rounded-full bg-ternairy dark:bg-secondary`}></div>
-          <Link className={`${pathname.search(id)===-1?"":"hidden"} pointer-events-auto text-sm text-ternairy hover:underline dark:text-secondary`} to={`/${userTag}/status/${id}`}>
+          <div className={`${pathname.search(id) === -1 ? "" : "hidden"} m-1 h-[2px] w-[2px] rounded-full bg-ternairy dark:bg-secondary`}></div>
+          <Link className={`${pathname.search(id) === -1 ? "" : "hidden"} pointer-events-auto text-sm text-ternairy hover:underline dark:text-secondary`} to={`/${userTag}/status/${id}`}>
             {finalDate}
           </Link>
         </div>

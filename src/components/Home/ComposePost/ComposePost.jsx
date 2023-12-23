@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import TextField from "@mui/material/TextField"
 import { Link } from "react-router-dom"
 import { Avatar } from "@mui/material"
-import DisplayMedia from "./DisplayMedia"
+import DisplayMedia from "../DisplayMedia"
 import axios from "axios"
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined"
 import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined"
@@ -12,13 +12,13 @@ import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined"
 import VerifiedIcon from "@mui/icons-material/Verified"
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail"
 import Button from "@mui/material/Button"
-import GeneralButton from "../Sidebar/Button"
+import GeneralButton from "../../Sidebar/Button"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
-import Popup from "./Popup";
+import Popup from "../Popup";
 import ComposePostFooter from "./ComposePostFooter";
 
-function ComposePost({ buttonName, handleNewPost, postType, referredTweetId }) {
+function ComposePost({ buttonName, handleNewPost, postType, referredTweetId ,handleClosePopup}) {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
   const [description, setDescription] = useState("")
   const [replyPermissionIndex, setReplyPermissionIndex] = useState(0)
@@ -48,7 +48,9 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId }) {
     const APIs = {
       mock: { postTweetAPI: "https://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/post/addPost" },
       actual: { postTweetAPI: "http://backend.gigachat.cloudns.org/api/tweets/",
-                uploadMedia: "http://backend.gigachat.cloudns.org/api/media" },
+                uploadMedia: "http://backend.gigachat.cloudns.org/api/media" ,
+                deleteMedia: "http://backend.gigachat.cloudns.org/api/media"
+              },
     }
     const getComposeTweet = (()=>{
       return {
@@ -106,7 +108,8 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId }) {
           console.log('running mock')
           console.log(post);
         }
-        handleNewPost(post)
+        handleNewPost&&handleNewPost(post);
+        handleClosePopup&&handleClosePopup();
       })
       .catch((error) => {
         console.log('error in handleSubmit')
@@ -154,7 +157,29 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId }) {
     }
     else console.log('uploading media error');
   }
+  const handleDeleteMedia = (mediaUrl,index)=>{
+    console.log('inside delete media')
+    console.log(mediaUrl,index)
+    axios.delete(APIs.actual.deleteMedia,
+      {
+        params: {
+          url:mediaUrl
+        },
+        headers: {
+          authorization: "Bearer " + userToken,
+        },
+      })
+    .then(response=>{
+      console.log("in delete media");
+      console.log(response.data);
+      setMediaUrls(mediaUrls.filter((i)=>i!==mediaUrl));
+      setMedia(media.filter((i,ind)=>ind!==index));
+      setMediaDisabled(false);
+    }).catch(error =>{
+      console.log(error);
+    })
 
+  }
   const permissionOptions = [
     {
       name: "Everyone",
@@ -207,7 +232,7 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId }) {
             },
           }}
         ><span className="bg-[#f4212e]">{description.slice(0,280)}</span><span className="text-[#f4212e]">{description.slice(280,description.length)}</span></TextField>
-        <DisplayMedia mediaUrls={mediaUrls} mediaTypes={getMediaTypes()} margin={1.5}/>
+        <DisplayMedia mediaUrls={mediaUrls} mediaTypes={getMediaTypes()} margin={1.5} handleDeleteMedia={handleDeleteMedia} showCancelButton={true}/>
         <div className={`replyPermission ${buttonName==="Post"? "":"hidden"}`}>
           <Button target={"_blank"} color="text-[#1D9BF0]" size="sm" variant="plain" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="my-3 rounded-full bg-transparent py-0 hover:bg-[#e7f5fd] dark:bg-transparent dark:hover:bg-[#031018]">
             <GeneralButton name={permissionOptions[replyPermissionIndex].icon2} color="text-[#1D9BF0]" backgroundColor="bg-transparent" height="h-6" width="w-6"></GeneralButton>

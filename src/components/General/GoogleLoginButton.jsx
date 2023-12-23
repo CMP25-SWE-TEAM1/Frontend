@@ -8,24 +8,26 @@ import { useNavigate } from "react-router"
 import { loginUser } from "../../store/UserSlice"
 import { APIs } from "../../constants/signupConstants"
 
-const GoogleLoginButton = ({ handleCloseModal }) => {
+const GoogleLoginButton = ({ handleCloseModal, message }) => {
   const [user, setUser] = useState()
   const [profile, setProfile] = useState()
-  const [accessToken, setAccessToken] = useState()
+
+  const [birthday, setBirthday] = useState()
 
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
 
   const login = useGoogleLogin({
+    scope: "https://www.googleapis.com/auth/user.birthday.read https://www.googleapis.com/auth/user.gender.read https://www.googleapis.com/auth/userinfo.profile",
     onSuccess: (res) => {
-      console.log(res)
+      // console.log(res)
       setUser(res)
       logOut()
     },
     onError: (error) => console.log("Login Failed:", error),
   })
-
+  ///auth/user.birthday.read
   useEffect(() => {
     if (user) {
       axios
@@ -36,6 +38,7 @@ const GoogleLoginButton = ({ handleCloseModal }) => {
           },
         })
         .then((res) => {
+          // console.log(res)
           setProfile(res.data)
         })
         .catch((err) => {
@@ -43,11 +46,46 @@ const GoogleLoginButton = ({ handleCloseModal }) => {
           localStorage.removeItem("user")
           sessionStorage.removeItem("passwordIsConfirmed")
         })
+
+      axios
+        .get(`https://people.googleapis.com/v1/people/me?personFields=birthdays,genders&access_token=${user.accessToken}`, {
+          headers: {
+            Authorization: `Bearer ${user.access_token}`,
+            Accept: "application/json",
+          },
+        })
+        .then((response) => {
+          const birthdays = response.data.birthdays
+          let found = false
+          for (let i = 0; i < birthdays.length; i++) {
+            const b = birthdays[i].date
+            if (b.day && b.month && b.year) {
+              setBirthday(`${b.month}-${b.day}-${b.year}`)
+              found = true
+              break
+            }
+          }
+          if (found) {
+            console.log("in found")
+          }
+          // console.log(response.data.birthdays)
+        }) //You will get data here
+        .catch((error) => {
+          console.warn(error)
+        })
     }
   }, [user])
 
   useEffect(() => {
-    if (profile) {
+    if (profile && birthday) {
+      // console.log({
+      //   access_token: user.access_token,
+      //   name: profile.name,
+      //   email: profile.email,
+      //   id: profile.id,
+      //   profile_image: profile.picture,
+      //   birthDate: birthday,
+      // })
       axios
         .post(APIs.actual.googleAuth, {
           access_token: user.access_token,
@@ -55,6 +93,7 @@ const GoogleLoginButton = ({ handleCloseModal }) => {
           email: profile.email,
           id: profile.id,
           profile_image: profile.picture,
+          birthDate: birthday,
         })
         .then((res) => {
           console.log(res)
@@ -78,22 +117,12 @@ const GoogleLoginButton = ({ handleCloseModal }) => {
 
   return (
     <div id="signInButton">
-      {profile ? (
-        <div>
-          <img src={profile.picture} alt="profile" />
-          <h3>User Logged in</h3>
-          <p>Name: {profile.name}</p>
-          <p>Email Address: {profile.email}</p>
-          <br />
-          <br />
-          <button onClick={logOut}>Log out</button>
-        </div>
-      ) : (
+      {
         <button onClick={() => login()} className="border-ternary flex h-[2.5rem] w-full items-center justify-center rounded-3xl border bg-white text-black transition-colors">
           <img src={googleLogo} alt="google logo" className="mr-2" />
-          <span className="text-sm font-semibold">Sign up with Google</span>
+          <span className="text-sm font-semibold">{message}</span>
         </button>
-      )}
+      }
     </div>
   )
 }

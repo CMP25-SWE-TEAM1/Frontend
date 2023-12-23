@@ -1,5 +1,5 @@
 import React from 'react'
-import GeneralButton from "../Sidebar/Button"
+import GeneralButton from "../../Sidebar/Button"
 import InsertPhotoOutlinedIcon from "@mui/icons-material/InsertPhotoOutlined"
 import GifBoxOutlinedIcon from "@mui/icons-material/GifBoxOutlined"
 import BallotOutlinedIcon from "@mui/icons-material/BallotOutlined"
