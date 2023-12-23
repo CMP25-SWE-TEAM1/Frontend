@@ -13,12 +13,12 @@ const SecondStep = ({nextShow}) => {
   }
 
   return (
-    <div id="Second Step" className="w-[320px] -mt-10 m-auto hidden">
-      <div  className="!h-fit">
+    <div id="Second Step" className="m-auto -mt-10 hidden w-[320px]">
+      <div className="!h-fit">
         <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 2 of 5</p>
         <ReCAPTCHA sitekey={siteKey} onChange={handleCaptchaVerification} />
         <button
-          className="btn"
+          className="btn bg-black dark:bg-white"
           onClick={() => {
             nextShow(2)
           }}

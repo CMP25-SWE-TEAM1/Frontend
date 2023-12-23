@@ -8,7 +8,7 @@ import { useState } from "react"
 
 import axios from "axios"
 
-import { PASSWORD_REGEX, UPPER_CASE_LETTER_REGEX, LOWER_CASE_LETTER_REGEX, SPECIAL_CHARACTER_REGEX, NUMBER_REGEX, LENGTH_REGEX, EMAIL_REGEX, APIs } from "../../constants/signupConstants.js"
+import { PASSWORD_REGEX, UPPER_CASE_LETTER_REGEX, LOWER_CASE_LETTER_REGEX, SPECIAL_CHARACTER_REGEX, NUMBER_REGEX, LENGTH_REGEX, APIs } from "../../constants/signupConstants.js"
 import { styles } from "../../styles.js"
 
 import { useSelector } from "react-redux"
@@ -122,7 +122,7 @@ const FifthStep = ({ setUser, mock, userToken, userTag, nextShow, password, setP
             </Alert>
           </Stack>
 
-          <button className="btn mt-16" disabled={checkPassword(password)} onClick={handleAssignPassword}>
+          <button className="btn mt-16 bg-black dark:bg-white" disabled={checkPassword(password)} onClick={handleAssignPassword}>
             <Link></Link>
             Sign Up
           </button>

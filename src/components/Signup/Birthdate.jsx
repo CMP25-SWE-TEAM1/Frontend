@@ -8,7 +8,7 @@ import { last120Years, days, months } from "../../constants/index.js"
 
 import { useSelector } from "react-redux"
 
-const Birthdate = ({ month, setMonth, day, setDay, year, setYear, yearwidth,monthwidth }) => {
+const Birthdate = ({ month, setMonth, day, setDay, year, setYear, yearwidth, monthwidth }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
 
   const handleChangeYear = (event) => {
@@ -72,6 +72,10 @@ const Birthdate = ({ month, setMonth, day, setDay, year, setYear, yearwidth,mont
                 ".MuiList-root": {
                   padding: 0,
                 },
+                ".MuiMenuItem-root.Mui-selected": {
+                  bgcolor: darkMode ? "white" : "black",
+                  color: !darkMode ? "white" : "black",
+                },
               },
             }}
           >
@@ -129,6 +133,10 @@ const Birthdate = ({ month, setMonth, day, setDay, year, setYear, yearwidth,mont
                 },
                 ".MuiList-root": {
                   padding: 0,
+                },
+                ".MuiMenuItem-root.Mui-selected": {
+                  bgcolor: darkMode ? "white" : "black",
+                  color: !darkMode ? "white" : "black",
                 },
               },
             }}
@@ -188,6 +196,10 @@ const Birthdate = ({ month, setMonth, day, setDay, year, setYear, yearwidth,mont
                 },
                 ".MuiList-root": {
                   padding: 0,
+                },
+                ".MuiMenuItem-root.Mui-selected": {
+                  bgcolor: darkMode ? "white" : "black",
+                  color: !darkMode ? "white" : "black",
                 },
               },
             }}

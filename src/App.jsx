@@ -152,7 +152,7 @@ const App = () => {
             <Route path="" element={<ProfilePosts />}></Route>
           </Route>
           <Route path={`settings/profile`} element={<ProfilePageEdit handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
-          <Route path="/signup" element={<SignUp openModal={openProfileEditModal} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
+          <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/:tag/status/:id" element={<PostPage post={testPost} />}></Route>
           <Route path="/:tag/status/:id/:NavbarLink" element={<PostEngagement />}></Route>
           <Route path="/compose/tweet" element={<Home composePostPopup={true}/>}></Route>

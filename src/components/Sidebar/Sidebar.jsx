@@ -50,7 +50,7 @@ const Sidebar = () => {
   const optionsNames = ["Home", "Explore", "Notifications", "Messages", "Lists", "Bookmarks", "Profile", "Settings"]
   const optionsIcons = [
     [<HomeOutlinedIcon />, <HomeIcon />],
-    [<SearchRoundedIcon sx={{ color: "#1f1f1f" }} />, <SearchIcon sx={{ color: "#000000" }} />],
+    [<SearchRoundedIcon />, <SearchIcon sx={{ color: "#000000" }} />],
     [
       <Badge badgeContent={unseenCount} color="primary">
         <NotificationsNoneRoundedIcon />
@@ -60,7 +60,7 @@ const Sidebar = () => {
       </Badge>,
     ],
     [<MailOutlineRoundedIcon />, <EmailIcon />],
-    [<ListAltRoundedIco sx={{ color: "#1f1f1f" }} />, <ListAltIcon sx={{ color: "#000000" }} />],
+    [<ListAltRoundedIco />, <ListAltIcon sx={{ color: "#000000" }} />],
     [<PeopleOutlinedIcon />, <PeopleIcon />],
     [<PersonOutlinedIcon />, <PersonIcon />],
     [<SettingsOutlinedIcon />, <SettingsIcon />],
@@ -178,7 +178,7 @@ const Sidebar = () => {
         <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" alt="gigaChatIcon" other={`${shrink ? "mr-3" : ""} mt-0.5`} />
 
         {options}
-        <Button name={shrink ? <HistoryEduOutlinedIcon /> : "Post"} color="text-white" backgroundColor={"bg-"+getColor(themeColor)} height={shrink ? "h-14" : "h-12"} width={shrink ? "w-14" : "w-56"} link="/compose/tweet" alt="post" title="post" other={shrink ? "mr-2" : ""} />
+        <Button name={shrink ? <HistoryEduOutlinedIcon /> : "Post"} color="text-white" backgroundColor={"bg-" + getColor(themeColor)} height={shrink ? "h-14" : "h-12"} width={shrink ? "w-14" : "w-56"} link="/compose/tweet" alt="post" title="post" other={shrink ? "mr-2" : ""} />
         {shrink ? (
           <a alt="" className="group mr-2 mt-auto box-border w-fit cursor-pointer border-0">
             <div title="switchAccountContainer" className=" flex w-fit  items-center justify-around rounded-full p-3 group-hover:bg-lightHover dark:group-hover:bg-darkHover" id="mahmoud_switch_account">
@@ -234,7 +234,7 @@ const Sidebar = () => {
                   }}
                   className="text-base dark:text-white"
                 >
-                  Logout
+                  Logout @{user.username}
                 </MenuItem>
               </Menu>
             </div>
@@ -243,10 +243,10 @@ const Sidebar = () => {
           <SwitchAccount handleLogout={handleLogout} openMenu={openMenu} anchorMenu={anchorMenu} handleCloseMenu={handleCloseMenu} handleClickMenu={handleClickMenu} />
         )}
       </div>
-      <Modal open={openModal} onClose={handleCloseModal} className="w-[90%]" disableEscapeKeyDown disablePortal>
-        <Box style={modalStyle}>
-          <div className="pop-up m-auto min-w-[350px] bg-white dark:bg-black md:rounded-2xl">
-            <button className="relative  top-0 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>
+      <Modal open={openModal} onClose={handleCloseModal}  disableEscapeKeyDown disablePortal>
+        <Box >
+          <div className="pop-up relative m-auto min-w-[350px] bg-white dark:bg-black md:rounded-2xl">
+            <button className=" absolute left-0 top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>
               x
             </button>
 

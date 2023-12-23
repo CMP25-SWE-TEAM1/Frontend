@@ -10,6 +10,7 @@ import { APIs } from "../../constants/signupConstants.js"
 import { useState } from "react"
 
 const ThirdStep = ({ nickName, email, month, day, year, emailExistError, validEmail, mock, nextShow, handleOpenBirthdateError }) => {
+  // eslint-disable-next-line no-unused-vars
   const [birthdateError, setBirthdateError] = useState(false)
 
   const handleSignup = () => {
@@ -19,7 +20,8 @@ const ThirdStep = ({ nickName, email, month, day, year, emailExistError, validEm
         birthDate: `${month}-${day}-${year}`,
         email: email,
       })
-      .then(() => {
+      .then((res) => {
+        console.log(res)
         nextShow(3)
       })
       .catch((err) => {
@@ -28,11 +30,9 @@ const ThirdStep = ({ nickName, email, month, day, year, emailExistError, validEm
   }
 
   const handleCheckBirthdate = () => {
-    let acceptedBirthdate
     axios
       .post(mock ? APIs.mock.checkBirthdateAPI : APIs.actual.checkBirthdateAPI, { birthDate: `${month}-${day}-${year}` })
       .then((res) => {
-        acceptedBirthdate = res.data.message === "User is above 13 years old."
       })
       .then(() => {
         setBirthdateError(false)
@@ -86,10 +86,10 @@ const ThirdStep = ({ nickName, email, month, day, year, emailExistError, validEm
         </div>
 
         <p className="text-xs text-secondary">
-          By signing up, you agree to the <a>Terms of Service</a> and <a>Privacy Policy</a>, including <a>Cookie Use</a>. Twitter may use your contact information, including your email address and phone number for purposes outlined in our Privacy Policy, like keeping your account secure and personalizing our services, including ads. <a>Learn more</a>. Others will be able to find you by email or phone number, when provided, unless you choose otherwise <a>here</a>.
+          By signing up, you agree to the <a href="/">Terms of Service</a> and <a href="/">Privacy Policy</a>, including <a href="/">Cookie Use</a>. Twitter may use your contact information, including your email address and phone number for purposes outlined in our Privacy Policy, like keeping your account secure and personalizing our services, including ads. <a href="/">Learn more</a>. Others will be able to find you by email or phone number, when provided, unless you choose otherwise <a href="/">here</a>.
         </p>
 
-        <button className="btn" id="next" onClick={handleCheckBirthdate} disabled={email === "" || nickName === "" || year === "" || month === "" || day === "" || !validEmail(email) || emailExistError}>
+        <button className="btn bg-black dark:bg-white" id="next" onClick={handleCheckBirthdate} disabled={email === "" || nickName === "" || year === "" || month === "" || day === "" || !validEmail(email) || emailExistError}>
           Sign Up
         </button>
       </div>

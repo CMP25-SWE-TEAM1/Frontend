@@ -31,7 +31,7 @@ const FirstStep = ({ nickName, setNickName, email, setEmail, month, setMonth, da
 
   return (
     <div id="First Step" className=" m-auto -mt-10 hidden w-[320px]">
-      <div className="!h-fit max-w[600px]">
+      <div className="max-w[600px] !h-fit">
         <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 1 of 5</p>
         <h1 className="mt-3">Create your account</h1>
         <div className="input-container">
@@ -61,7 +61,7 @@ const FirstStep = ({ nickName, setNickName, email, setEmail, month, setMonth, da
           <Birthdate month={month} setMonth={setMonth} day={day} setDay={setDay} year={year} setYear={setYear} monthwidth={"120px"} yearwidth={"100px"} />
         </div>
         <button
-          className="btn"
+          className="btn bg-black dark:bg-white"
           id="next"
           onClick={() => {
             nextShow(1)

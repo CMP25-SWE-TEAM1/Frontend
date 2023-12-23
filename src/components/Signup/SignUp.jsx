@@ -5,7 +5,7 @@ import { Modal, Box } from "@mui/material"
 
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
-import { loginUser, signupUser } from "../../store/UserSlice.js"
+import { signupUser } from "../../store/UserSlice.js"
 
 import UploadProfilePicture from "./UploadProfilePicture.jsx"
 import FirstStep from "./FirstStep.jsx"

@@ -97,7 +97,7 @@ function SwitchAccount({ handleLogout,openMenu,anchorMenu,handleCloseMenu,handle
                 }}
                 className="text-base dark:text-white"
               >
-                Logout
+                Logout @{user.username}
               </MenuItem>
             </Menu>
           </div>

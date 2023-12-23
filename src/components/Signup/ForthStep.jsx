@@ -57,7 +57,7 @@ const ForthStep = ({ setUserTag, setOriginalUsername, setUser, setUserToken, nex
         if (mock) {
           setIsResending(true)
         }
-        handleOpenBirthdateError()
+
         console.log(err)
       })
   }
@@ -79,6 +79,7 @@ const ForthStep = ({ setUserTag, setOriginalUsername, setUser, setUserToken, nex
     }
 
     return () => clearTimeout(timer)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countdown, isResending])
 
   const themeColor = useSelector((state) => state.theme.color)
@@ -116,7 +117,7 @@ const ForthStep = ({ setUserTag, setOriginalUsername, setUser, setUserToken, nex
         {emailConfirmationError && <Alert severity="error">Verfication Code is wrong</Alert>}
 
         <button
-          className="btn mt-20"
+          className="btn mt-20 bg-black dark:bg-white"
           onClick={() => {
             handleConfirmEmail()
           }}

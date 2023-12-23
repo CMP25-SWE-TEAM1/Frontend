@@ -50,7 +50,7 @@ const Notifications = () => {
                 }}
                 title="Settings"
               >
-                <SettingsIcon />
+                <SettingsIcon className="cursor-pointer"/>
               </div>
             </div>
           </div>
