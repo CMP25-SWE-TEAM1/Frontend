@@ -1,11 +1,9 @@
 import Widgets from "../Widgets/Widgets"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
-import { Outlet, useLocation } from "react-router"
+import { useLocation } from "react-router"
 import axios from "axios"
-import UsersContainer from "./UsersContainer"
 import PostsContainer from "../Home/Posts/PostsContainer"
-import { Routes, Route } from "react-router-dom"
 import SearchComponent from "../Explore/SearchComponent"
 import CustomTabPanel from "../General/CustomTabs/CustomTabPanel"
 import CustomTabs from "../General/CustomTabs/CustomTabs"
@@ -13,9 +11,9 @@ import ScrollToBottom from "../General/ScrollToBottom"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
-import SettingsIcon from "@mui/icons-material/Settings"
 import Checkbox from "@mui/material/Checkbox"
 import { toggleBlockedMutedMode } from "../../store/PreferencesSlice"
+import Person from "../PostEngagement/Person"
 
 const SearchResults = () => {
   const { user, token } = useSelector((state) => state.user)
@@ -149,7 +147,7 @@ const SearchResults = () => {
   return (
     <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
       <div id="scrolledElement" className="no-scrollbar ml-0 mr-1 max-w-[620px] flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-fit md:shrink-0">
-      <div className="sticky top-0 z-50 mb-0 border-0 border-b border-lightBorder bg-white bg-opacity-[87%] backdrop-blur-sm dark:border-darkBorder dark:bg-inherit dark:bg-opacity-[99%] dark:backdrop-brightness-[20%] dark:max-xs:bg-black dark:max-xs:bg-opacity-50 dark:max-xs:backdrop-blur-sm dark:max-xs:backdrop-brightness-[30%]">
+        <div className="sticky top-0 z-50 mb-0 border-0 border-b border-lightBorder bg-white bg-opacity-[87%] backdrop-blur-sm dark:border-darkBorder dark:bg-inherit dark:bg-opacity-[99%] dark:backdrop-brightness-[20%] dark:max-xs:bg-black dark:max-xs:bg-opacity-50 dark:max-xs:backdrop-blur-sm dark:max-xs:backdrop-brightness-[30%]">
           <div className="flex w-full items-center justify-around pr-2">
             <SearchComponent query={searchQuery} />
             <div className="w-[10%]">
@@ -211,7 +209,9 @@ const SearchResults = () => {
           {userResults[0] && (
             <div className="flex flex-col">
               <h1 className="p-5 text-2xl font-bold">People</h1>
-              <UsersContainer users={userResults.slice(0, 3)} />
+              {userResults.slice(0, 3).map((person) => (
+                <Person nickname={person.nickname} username={person.username} profile_image={person.profile_image} bio={person.bio ? person.bio : null} isFollowed={person.isFollowed} key={person._id} />
+              ))}
               <div className="p-5 text-primary hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" onClick={toPeopleTab}>
                 View all
               </div>
@@ -225,7 +225,7 @@ const SearchResults = () => {
           {tweetResults[0] && <PostsContainer posts={tweetResults} setPosts={setTweetResults} />}{" "}
         </CustomTabPanel>
         <CustomTabPanel value={tabValue} index={2} className="w-full">
-          {userResults[0] && <UsersContainer users={userResults} />}
+          {userResults[0] && userResults.map((person) => <Person nickname={person.nickname} username={person.username} profile_image={person.profile_image} bio={person.bio ? person.bio : null} isFollowed={person.isFollowed} key={person._id} />)}{" "}
         </CustomTabPanel>
       </div>
       {user && <Widgets />}

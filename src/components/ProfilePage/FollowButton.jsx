@@ -33,7 +33,6 @@ const FollowButton = (props) => {
       ProfileRequests.unblock(false,APIs,token)
     }
   }
-  console.log(buttonstate)
   return (
     <>
       <button

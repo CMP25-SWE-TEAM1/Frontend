@@ -152,7 +152,7 @@ const SearchComponent = ({ query }) => {
   const handleEnterKeyPress = (e) => {
     if (e.key === "Enter") {
       console.log("Enter key pressed", searchQuery)
-      window.location.href = `search?q=${searchQuery.replace(/#/g, "%23")}`
+      window.location.href = `/search?q=${searchQuery.replace(/#/g, "%23")}`
     }
   }
 
