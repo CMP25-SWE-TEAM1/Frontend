@@ -19,7 +19,7 @@ const BlockButton =({isblocked,tag}) => {
       onClick={() => {
         ProfileRequests.unblock(false,APIs,token)
       }}
-      className={`blockedbt ${display} bg-[rgb(244,33,46)]  h-[35px] w-[85px] 
+      className={`blockedbt ${display} bg-[rgb(244,33,46)] h-[35px] w-[85px] 
       rounded-full border border-lightBorder text-center font-sans font-[700]
       dark:border-darkBorder  text-white `}
     >

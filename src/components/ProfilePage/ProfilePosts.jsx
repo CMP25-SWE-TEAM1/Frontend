@@ -17,7 +17,7 @@ const ProfilePosts = () => {
   const location = useLocation()
   const [root, setRoot] = useState("")
   useEffect(() => {
-     console.log(location.pathname.split("/"))
+    console.log(location.pathname.split("/"))
     setRoot(location.pathname.split("/")[1])
   }, [location])
 
@@ -32,8 +32,7 @@ const ProfilePosts = () => {
 
   const [profile, setProfile] = useState()
   useEffect(() => {
-    if (root !== "" && root !== user.username)
-    ProfileRequests.getOtherprofile(false,APIs,root)
+    if (root !== "" && root !== user.username) ProfileRequests.getOtherprofile(false, APIs, root)
   }, [root])
 
   const [posts, setPosts] = useState([])
@@ -56,13 +55,12 @@ const ProfilePosts = () => {
           if (res.status === 200) {
             if (res.data.posts) {
               console.log(res.data)
-              setPosts((prevState) => [
-                ...prevState,
-                ...res.data.posts.map((post) => ({
+              setPosts(
+                res.data.posts.map((post) => ({
                   tweetDetails: post,
-                  followingUser: post.tweet_owner,
-                })),
-              ])
+                  followingUser: { username: root },
+                }))
+              )
             }
           }
         })
