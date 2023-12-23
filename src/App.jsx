@@ -37,6 +37,7 @@ import ProfileMedia from "./components/ProfilePage/ProfileMedia"
 import ProfileLikes from "./components/ProfilePage/ProfileLikes"
 import PostEngagement from "./components/PostEngagement/PostEngagement"
 import SearchResults from "./components/Search/SearchResults"
+import Followpage from "./components/ProfilePage/FollowPage/FollowPage"
 
 const App = () => {
   const [location, setLocation] = useState(window.location.pathname)
@@ -151,6 +152,7 @@ const App = () => {
             <Route path="likes" element={<ProfileLikes />}></Route>
             <Route path="" element={<ProfilePosts />}></Route>
           </Route>
+          <Route path={"/following"} element ={<Followpage></Followpage>}></Route>
           <Route path={`settings/profile`} element={<ProfilePageEdit handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
           <Route path="/signup" element={<SignUp openModal={openProfileEditModal} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/:tag/status/:id" element={<PostPage post={testPost} />}></Route>

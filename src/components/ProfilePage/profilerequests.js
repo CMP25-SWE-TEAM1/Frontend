@@ -1,7 +1,8 @@
 import axios from "axios"
 import { DefaultCoverPage } from "../../constants"
 class ProfileRequests{
-    static  getOtherprofile = (mock,APIs,tag,setProfile,setProfilePicURL,setCoverPicURL,setDetailsPos,token) => {
+    static  getOtherprofile = (mock,APIs,tag,setProfile,token,setProfilePicURL,setCoverPicURL,setDetailsPos,setButtonstate) => {
+      console.log(APIs);
         axios
         .get(mock ? APIs.mock.getProfileAPI + `${tag}` : APIs.actual.getProfileAPI + `${tag}`, {
           headers: {
@@ -11,13 +12,13 @@ class ProfileRequests{
         .then((res) => {
           if (res.status === 200) {
             console.log(res)
-            //console.log(`Bearer ${token}`)
-            //console.log(`Bearer ${token}`)
+           
             res.data.user.is_wanted_user_followed? setDetailsPos(`right-[140px]`):setDetailsPos(`right-[100px]`)
             setProfilePicURL(res.data.user.profile_image)
             const banner_image = res.data.user.banner_image ? res.data.user.banner_image : DefaultCoverPage
             setCoverPicURL(banner_image)
             const newUser = {...res.data.user, banner_image:banner_image }   
+            setButtonstate(res.data.user.is_wanted_user_followed? `Following`:`Follow`)
             setProfile(newUser)
           }
         })
@@ -35,6 +36,7 @@ class ProfileRequests{
             })
             .then((res) => {
               if (res.status === 200) {
+                console.log(res)
                 // //console.log(`Bearer ${token}`)
                // //console.log(res)
                 setProfilePicURL(res.data.user.profile_image)

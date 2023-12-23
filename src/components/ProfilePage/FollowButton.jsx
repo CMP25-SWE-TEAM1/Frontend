@@ -7,14 +7,11 @@ const FollowButton = (props) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const { token } = useSelector((state) => state.user)
   const mock = false
-  const [buttonstate, setbuttonstate] = useState(props.buttonName)
+  console.log(props);
 
   
   // there should be a conditional rendering by back
-  useEffect(() => {
-    setbuttonstate(props.buttonName)
-  }, [props.buttonName])
-  
+ 
   const APIs = {
     followmock: { postfollowProfileAPI: `http://localhost:3001/api/user/${props.tag}/follow` },
     followactual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
@@ -24,16 +21,16 @@ const FollowButton = (props) => {
     unblockactual: { unBlock: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unblock` },
   }
   function HandleClick() {
-  if (buttonstate === "Follow") {
-     ProfileRequests.follow(false,APIs,token,setbuttonstate,props.setDetailsPos)
-    } else if(buttonstate === "Following") {
-    ProfileRequests.unfollow(false,APIs,token,setbuttonstate,props.setDetailsPos)
+  if (props.buttonName === "Follow") {
+     ProfileRequests.follow(false,APIs,token,props.setButtonstate,props.setDetailsPos)
+    } else if(props.buttonName === "Following") {
+     ProfileRequests.unfollow(false,APIs,token,props.setButtonstate,props.setDetailsPos)
     }
     else {
       ProfileRequests.unblock(false,APIs,token)
     }
   }
-  console.log(buttonstate)
+  
   return (
     <>
       <button
@@ -44,13 +41,13 @@ const FollowButton = (props) => {
         className={` ${props.display}
               ${
                 darkMode
-                  ? buttonstate === "Follow"
+                  ? props.buttonName === "Follow"
                       ? `bg-white text-black
                         hover:bg-darkHover dark:hover:bg-lightHover w-[80px]`
                       :
                        `bg-black text-white hover:bg-lightHover dark:hover:bg-darkHover
                         bt hover:border-[rgb(244,33,46)]  hover:text-[rgb(244,33,46)] w-[120px] `
-                  : buttonstate === "Follow"
+                  : props.buttonName === "Follow"
                       ? `bg-black text-white hover:bg-darkHover dark:hover:bg-lightHover  w-[80px]`
                       :
                        `bg-white text-black hover:bg-lightHover dark:hover:bg-darkHover
@@ -60,7 +57,7 @@ const FollowButton = (props) => {
                 rounded-full border border-lightBorder text-center  font-[500]
                 dark:border-darkBorder`}
       >
-        <span>{buttonstate}</span>
+        <span>{props.buttonName}</span>
       </button>
      
     </>
