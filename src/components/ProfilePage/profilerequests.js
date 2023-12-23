@@ -1,7 +1,7 @@
 import axios from "axios"
 import { DefaultCoverPage } from "../../constants"
 class ProfileRequests{
-    static  getOtherprofile = (mock,APIs,tag,setProfilePicURL,setCoverPicURL,setProfile,setDetailsPos,token) => {
+    static  getOtherprofile = (mock,APIs,tag,setProfile,setProfilePicURL,setCoverPicURL,setDetailsPos,token) => {
         axios
         .get(mock ? APIs.mock.getProfileAPI + `${tag}` : APIs.actual.getProfileAPI + `${tag}`, {
           headers: {

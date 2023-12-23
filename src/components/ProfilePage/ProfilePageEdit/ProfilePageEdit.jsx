@@ -47,7 +47,7 @@ const ProfilePageEdit = (props)=>{
   const [day, setDay] = useState(user.birthDate? (user.birthDate).slice(0,10).split('-')[2]: 1)
   const [openCrop, setOpenCrop] = useState(false)
   const [opencoverCrop,setOpenCoverCrop] = useState(false)
- 
+  const inverseMonth={January:"01",February:"02",March:"03",April:"04",May:"05",June:"06",July:"07",August:"08",September:"09",October:10,Novmeber:11, December:12,}
   //.log(openCrop)
   // Update the window width when the component mounts
   
@@ -67,7 +67,6 @@ const ProfilePageEdit = (props)=>{
       window.removeEventListener("resize", handleResize)
     }
   }, [])
-
   function EditProfile(e)
   {
     e.preventDefault()
@@ -75,7 +74,7 @@ const ProfilePageEdit = (props)=>{
     if(name !== user.nickname || bio !== user.bio || location !== user.location 
     || website !== user.website || JSON.stringify(`${month}-${day}-${year}`) !==JSON.stringify((user.birthDate).slice(0,10).split('-')))
     {
-      
+     
       axios.patch(
         APIds.actual.EditProfileAPI,{
           bio: bio,
@@ -94,6 +93,7 @@ const ProfilePageEdit = (props)=>{
         newUser.location = location;
         newUser.bio = bio;
         newUser.website = website;
+        newUser.birthDate=`${year}-${inverseMonth[month]}-${day}T12:35:56.225Z`
         dispatch(changeUser(newUser))
       }).catch((err)=>{
         //.log(err)

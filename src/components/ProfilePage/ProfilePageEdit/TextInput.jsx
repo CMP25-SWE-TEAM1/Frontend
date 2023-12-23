@@ -1,7 +1,7 @@
 import React from 'react'
 
 const TextInput= (props)=> {
-  console.log(props.max)
+  
   return (
     <div className={`${props.divcustomizedstyle}`}>
       <p  className='threshold absolute right-[10px] text-[rgb(113,118,123)]  text-sm top-[5%]'>{props.inputtext.length}/{props.max}</p>

@@ -39,7 +39,7 @@ const ProfilePage = (props) => {
 
   const Fetch = () => {
         if (user.username !== tag) {
-         ProfileRequests.getOtherprofile(false,APIs,tag,setProfilePicURL,setCoverPicURL,setProfile,setDetailsPos,token)
+         ProfileRequests.getOtherprofile(false,APIs,tag,setProfile,setProfilePicURL,setCoverPicURL,setDetailsPos,token)
          console.log(profileres)
         } else {
          ProfileRequests.getMyprofile(false,APIs,token,setProfile,setProfilePicURL,setCoverPicURL)
