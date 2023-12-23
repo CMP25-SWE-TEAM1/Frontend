@@ -25,9 +25,9 @@ const FollowButton = (props) => {
   }
   function HandleClick() {
   if (buttonstate === "Follow") {
-     ProfileRequests.follow(false,APIs,token,setbuttonstate)
+     ProfileRequests.follow(false,APIs,token,setbuttonstate,props.setDetailsPos)
     } else if(buttonstate === "Following") {
-    ProfileRequests.unfollow(false,APIs,token,setbuttonstate)
+    ProfileRequests.unfollow(false,APIs,token,setbuttonstate,props.setDetailsPos)
     }
     else {
       ProfileRequests.unblock(false,APIs,token)

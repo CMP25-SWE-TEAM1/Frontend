@@ -17,6 +17,7 @@ import EditDate from "./EditDate.jsx"
 import EditProfileImage from "./EditProfileImage.jsx"
 import EditBannerImage from "./EditBannerImage.jsx"
 import Header from "./Header.jsx"
+import BioEdit from "./BioEdit.jsx"
 const ProfilePageEdit = (props)=>{
   const APIds = {
     mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
@@ -41,23 +42,15 @@ const ProfilePageEdit = (props)=>{
   const navigate = useNavigate();
   const locationURL = useLocation();
   const [selectdatedisplay,setSelectdatedisplay]= useState(false);
-  const [year, setYear] = useState()
-  const [month, setMonth] = useState()
-  const [day, setDay] = useState()
+  const [year, setYear] = useState(user.birthDate? (user.birthDate).slice(0,10).split('-')[0]: 2000)
+  const [month, setMonth] = useState(user.birthDate? months[(user.birthDate).slice(0,10).split('-')[1]-1] : months[0])
+  const [day, setDay] = useState(user.birthDate? (user.birthDate).slice(0,10).split('-')[2]: 1)
   const [openCrop, setOpenCrop] = useState(false)
   const [opencoverCrop,setOpenCoverCrop] = useState(false)
  
   //.log(openCrop)
   // Update the window width when the component mounts
-  useEffect(()=>{
-    if(user.birthDate !== undefined)
-    {
-      const birthdate = ((user.birthDate).slice(0,10).split('-'))
-      setDay(birthdate[2])
-      setMonth(months[birthdate[1]-1])
-      setYear(birthdate[0])
-    }
-  },[user.birthDate])
+  
   useEffect(() => {
     if(locationURL.pathname === "/settings/profile")
     {
@@ -247,7 +240,7 @@ const ProfilePageEdit = (props)=>{
         <Box style={modalStyle} className={` ${darkMode?  `bg-black`:`bg-white`}`}>
           <div id="ParentDiv-test">
         <div id="ParentDiv2-test" className={`pop-up ${openCrop||opencoverCrop ? "!hidden" : ""}  flex flex-col overflow-y-auto no-scrollbar  `}>
-       <Header handleCloseModal={props.handleCloseModal} hiddenFormSubmit={hiddenFormSubmit} name={name} year={year} website={website.search(".com") === -1}></Header>
+       <Header handleCloseModal={props.handleCloseModal} hiddenFormSubmit={hiddenFormSubmit} name={name} year={year} website={website.search(".com") === -1  && website.length !== 0 }></Header>
         <form id="EditProfileForm-test" className="relative h-[60%] flex flex-col" onSubmit={(e)=>{EditProfile(e)}}> 
         <input id="FormSubmit-test" type="submit" ref={hiddenFormSubmit} className="hidden"></input>
         <EditBannerImage coverpage={coverpage} handlecoverPictureChange={handlecoverPictureChange} handlecoverPictureClick={handlecoverPictureClick} hiddencoverFileInput={hiddencoverFileInput} setCoverpage={setCoverpage}></EditBannerImage>
@@ -256,10 +249,10 @@ const ProfilePageEdit = (props)=>{
         <Alert severity="error" className={`${name==="" ? "flex" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
               Name can't be blank
         </Alert>
-          <TextInput max="300" inputtext={bio} setInputtext={setBio} label="Bio" id="Bio" divcustomizedstyle="input-container  mb-[2.5%] mx-auto w-[95%]" inputcustomizedstyle="h-[100px]" ></TextInput>
+          <BioEdit bio={bio} setBio={setBio}></BioEdit>
           <TextInput max="30" inputtext={location} setInputtext={setLocation} label="Location" id="Location" divcustomizedstyle="input-container  mb-[2.5%] mx-auto w-[95%]" inputcustomizedstyle=""></TextInput> 
           <TextInput max="100" inputtext={website} setInputtext={setWebsite} label="Website" id="Website" divcustomizedstyle="input-container  mb-[2.5%] mx-auto w-[95%]" inputcustomizedstyle=""></TextInput>
-          <Alert severity="error" className={`${ website.search(".com") === -1 ? "flex" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
+          <Alert severity="error" className={`${ website.search(".com") === -1 && website.length !== 0 ? "flex" : "hidden"}`} sx={styles.signupPasswordCheckStyleMiddle}>
               Enter A valid URL
         </Alert>
           <EditDate selectdatedisplay={selectdatedisplay} setSelectdatedisplay={setSelectdatedisplay}

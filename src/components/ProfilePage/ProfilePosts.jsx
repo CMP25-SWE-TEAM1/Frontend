@@ -16,9 +16,9 @@ const ProfilePosts = () => {
   const location = useLocation()
   const [root, setRoot] = useState("")
   useEffect(() => {
-    // console.log(location.pathname.split("/"))
+     console.log(location.pathname.split("/"))
     setRoot(location.pathname.split("/")[1])
-  }, [])
+  }, [location])
 
   const APIs = {
     mock: { getAllTweetsAPI: "https://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/posts" },

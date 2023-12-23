@@ -14,11 +14,10 @@ import { useState } from "react"
 
 import Header from "./Header"
 import ProfilePageEdit from "./ProfilePageEdit/ProfilePageEdit"
-import { useLocation, useParams } from "react-router-dom"
+import {  useParams } from "react-router-dom"
 import Details from "./Details"
 import Widgets from "../Widgets/Widgets"
-import { changeUser } from "../../store/UserSlice"
-import { DefaultCoverPage } from "../../constants"
+
 import ProfileRequests from "./profilerequests"
 import BlockButton from "./BlockButton"
 import EditProfileButton from "./EditProfileButton"
@@ -29,9 +28,9 @@ const ProfilePage = (props) => {
   const [profileres, setProfile] = useState([])
   const mock = false
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth) //todo: for responsiveness
   const [profilePicURL, setProfilePicURL] = useState()
   const [bannerPicURL, setCoverPicURL] = useState()
+  const [detailspos,setDetailsPos]= useState()
   const { tag } = useParams()
   const APIs = {
     mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
@@ -40,7 +39,8 @@ const ProfilePage = (props) => {
 
   const Fetch = () => {
         if (user.username !== tag) {
-         ProfileRequests.getOtherprofile(false,APIs,tag,setProfilePicURL,setCoverPicURL,setProfile,token)
+         ProfileRequests.getOtherprofile(false,APIs,tag,setProfilePicURL,setCoverPicURL,setProfile,setDetailsPos,token)
+         console.log(profileres)
         } else {
          ProfileRequests.getMyprofile(false,APIs,token,setProfile,setProfilePicURL,setCoverPicURL)
         }
@@ -63,15 +63,15 @@ const ProfilePage = (props) => {
           className="flex h-[100%] flex-col border border-b-0 
         border-t-0 border-lightBorder dark:border-darkBorder md:w-[100%]"
         >
-          <div id="Upperhalf" className="relative m-0 h-[42vh] w-[100%]">
-            <Header profilename={profileres.nickname} postsnum={profileres.num_of_posts}></Header>
+         <Header profilename={profileres.nickname} postsnum={profileres.num_of_posts} likenum={profileres.num_of_likes}></Header>
+          <div id="Upperhalf" className="relative m-0 h-[35vh] w-[100%]">
             <CoverImage height={"h-[25vh]"} coverimage={bannerPicURL}></CoverImage>
             <div className="flex flex-row relative h-[25%]  top-[-75px] ">
               <ProfileImage profileimage={profilePicURL} profileimageURL={profilePicURL}></ProfileImage>
-              <Details ismuted={profileres.is_wanted_user_muted} isblocked={profileres.is_wanted_user_blocked} tag={tag} display={`${tag=== user.username ? `hidden`: `block`}`}></Details>
+              <Details position={detailspos} ismuted={profileres.is_wanted_user_muted} isblocked={profileres.is_wanted_user_blocked} tag={tag} display={`${tag=== user.username ? `hidden`: `block`}`}></Details>
              <div id="Button-div" className={`absolute ${tag===user.username? `right-[0px]`:`right-[10px]`} top-[90px] m-0  `}>
               <BlockButton isblocked={profileres.is_wanted_user_blocked && !(tag===user.username) } tag = {tag}></BlockButton>
-              <FollowButton display={profileres.is_wanted_user_blocked || tag===user.username? 'hidden':'block'}  tag={tag} buttonName={ profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
+              <FollowButton setDetailsPos={setDetailsPos} display={profileres.is_wanted_user_blocked || tag===user.username? 'hidden':'block'}  tag={tag} buttonName={ profileres.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>
               <EditProfileButton handleOpenProfileEditModal={props.handleOpenProfileEditModal} display={tag===user.username && !profileres.is_wanted_user_blocked ? `display`:`hidden` }></EditProfileButton>
               </div>
             </div>
