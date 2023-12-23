@@ -60,8 +60,10 @@ import axios from 'axios';
       setDisplay('hidden')
     }
   }
+  console.log(props.position);
   return (
-    <div id='show-details-div' className={`absolute ${props.isfollowed? `right-[140px]` :`right-[110px]`}  top-[80px] ${props.display} w-[40px] h-[40px] 
+    <div id='show-details-div' className={`absolute ${props.position}  top-[80px]
+    ${props.display} w-[40px] h-[40px] 
     ${darkmode? `bg-black text-white` : `bg-white text-black`} 
     border border-b-2 border-t- border-lightBorder dark:border-darkBorder hover:bg-lightHover 
     dark:hover:bg-darkHover rounded-[50%] bg-[white] text-center mt-[2%] `}>
