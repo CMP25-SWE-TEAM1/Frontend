@@ -10,6 +10,7 @@ import UpperNavbar from "../General/UpperNavbar"
 import { useLocation } from "react-router-dom"
 import axios from "axios"
 import ComposeReply from "../Home/ComposePost/ComposePost"
+import { getColor } from "../../constants"
 
 function PostPage() {
   const [postLoaded, setPostLoaded] = useState(false)
@@ -77,6 +78,9 @@ function PostPage() {
     console.log("from handleNewReply", newReply)
     setPostReplies([newReply.data, ...postReplies])
   }
+
+  const themeColor = useSelector((state) => state.theme.color)
+
   return (
     <div className="flex flex-1">
       <div className="ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder sm:w-[600px]">
@@ -87,7 +91,7 @@ function PostPage() {
           <>
             <Post userProfilePicture={post.tweet_owner.profile_image} userName={post.tweet_owner.nickname} userTag={post.tweet_owner.username} id={post.id} date={post.creation_time} media={post.media} description={post.description} replyCount={post.repliesNum} repostCount={post.repostsNum} likeCount={post.likesNum} viewCount={post.viewsNum} isLiked={post.isLiked} isReposted={post.isRetweeted} key={post.id} />
             <div className="ml-14 text-sm text-ternairy dark:text-secondary">
-              Replying to <span className="text-primary">@{post.tweet_owner.username}</span>
+              Replying to <span className={`${"text-" + getColor(themeColor)}`}>@{post.tweet_owner.username}</span>
             </div>
 
             <ComposeReply buttonName="Reply" handleNewPost={(newReply) => handleNewReply(newReply)} postType="reply" referredTweetId={post.id} />

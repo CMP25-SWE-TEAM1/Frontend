@@ -3,7 +3,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 // import { toggleTheme } from "../../../store/ThemeSlice"
-import { setDarkMode, setLightMode } from "../../../store/ThemeSlice"
+import { changeColor, setDarkMode, setLightMode } from "../../../store/ThemeSlice"
+import CheckIcon from "@mui/icons-material/Check"
 
 const Display = () => {
   const dispatch = useDispatch()
@@ -19,6 +20,15 @@ const Display = () => {
     localStorage.setItem("mode", true)
   }
 
+  const themeColor = useSelector((state) => state.theme.color)
+
+  const handleChangeColor = (num) => {
+    dispatch(changeColor({ color: num }))
+    setColorNum(num)
+  }
+
+  const [colorNum, setColorNum] = useState(themeColor)
+
   return (
     <div>
       <div className="flex items-center pl-4">
@@ -28,6 +38,60 @@ const Display = () => {
         <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Display</h1>
       </div>
       <p className="mb-4 pl-4 pr-10 text-xs text-secondary">Manage your font size, color, and background. These settings affect all the X accounts on this browser.</p>
+
+      <div>
+        <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Color</h1>
+        <div className="flex justify-evenly">
+          <div
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border bg-primary"
+            onClick={() => {
+              handleChangeColor(1)
+            }}
+          >
+            <CheckIcon className={`${colorNum === 1 ? "" : "hidden"}`} />
+          </div>
+          <div
+            className="bg-secondColor flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border"
+            onClick={() => {
+              handleChangeColor(2)
+            }}
+          >
+            <CheckIcon className={`${colorNum === 2 ? "" : "hidden"}`} />
+          </div>
+          <div
+            className="bg-thirdColor flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border"
+            onClick={() => {
+              handleChangeColor(3)
+            }}
+          >
+            <CheckIcon className={`${colorNum === 3 ? "" : "hidden"}`} />
+          </div>
+          <div
+            className="bg-forthColor flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border"
+            onClick={() => {
+              handleChangeColor(4)
+            }}
+          >
+            <CheckIcon className={`${colorNum === 4 ? "" : "hidden"}`} />
+          </div>
+          <div
+            className="bg-fifthColor flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border"
+            onClick={() => {
+              handleChangeColor(5)
+            }}
+          >
+            <CheckIcon className={`${colorNum === 5 ? "" : "hidden"}`} />
+          </div>
+          <div
+            className="bg-sixthColor flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border"
+            onClick={() => {
+              handleChangeColor(6)
+            }}
+          >
+            <CheckIcon className={`${colorNum === 6 ? "" : "hidden"}`} />
+          </div>
+        </div>
+      </div>
 
       <div>
         <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Background</h1>

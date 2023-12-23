@@ -15,6 +15,8 @@ import axios from "axios"
 
 import { EMAIL_REGEX } from "../../constants/signupConstants.js"
 
+import { getColor } from "../../constants"
+
 const Login = ({ openModal, handleCloseModal, setLocation }) => {
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
@@ -151,6 +153,8 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
       })
   }
 
+  const themeColor = useSelector((state) => state.theme.color)
+
   return (
     <>
       <Modal open={openModal} onClose={handleCloseModal} data-testid="loginModal" disableEscapeKeyDown disablePortal>
@@ -221,7 +225,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                       </label>
                     </div>
                     <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility} id="mahmoud_sees_you">
-                      <VisibilityIcon className="text-primary" />
+                      <VisibilityIcon className={`${"text-" + getColor(themeColor)}`} />
                     </span>
                   </div>
                   <Alert severity="error" sx={styles.signupPasswordCheckStyleMiddle} className={`${loginError ? "" : "hidden"}`}>
@@ -233,7 +237,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                       setLocation("/password_reset")
                     }}
                     to={"/password_reset"}
-                    className=" text-xs text-primary"
+                    className={` text-xs ${"text-" + getColor(themeColor)}`}
                     data-testid="forgetPassword"
                   >
                     Forgot password?

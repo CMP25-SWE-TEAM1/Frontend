@@ -14,6 +14,7 @@ import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined"
 import Checkbox from "@mui/material/Checkbox"
 import { toggleBlockedMutedMode } from "../../store/PreferencesSlice"
 import Person from "../PostEngagement/Person"
+import { getColor } from "../../constants"
 
 const SearchResults = () => {
   const { user, token } = useSelector((state) => state.user)
@@ -144,6 +145,8 @@ const SearchResults = () => {
     setAnchorMenu(null)
   }
 
+  const themeColor = useSelector((state) => state.theme.color)
+
   return (
     <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
       <div id="scrolledElement" className="no-scrollbar ml-0 mr-1 max-w-[620px] flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-fit md:shrink-0">
@@ -212,7 +215,7 @@ const SearchResults = () => {
               {userResults.slice(0, 3).map((person) => (
                 <Person nickname={person.nickname} username={person.username} profile_image={person.profile_image} bio={person.bio ? person.bio : null} isFollowed={person.isFollowed} key={person._id} />
               ))}
-              <div className="p-5 text-primary hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" onClick={toPeopleTab}>
+              <div className={`p-5 ${"text-" + getColor(themeColor)} hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover`} onClick={toPeopleTab}>
                 View all
               </div>
             </div>

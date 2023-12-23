@@ -4,6 +4,7 @@ import { useState } from "react"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import axios from "axios"
 import { useSelector } from "react-redux"
+import { getColor } from "../../../constants"
 
 const AccountInformation = () => {
   const [passwordIsConfirmed, setPasswordIsConfirmed] = useState(sessionStorage.getItem("passwordIsConfirmed"))
@@ -85,6 +86,8 @@ const AccountInformation = () => {
       setShowPassword(!showPassword)
     }
 
+    const themeColor = useSelector((state) => state.theme.color)
+
     return (
       <div>
         <div className="flex items-center pl-4">
@@ -104,10 +107,10 @@ const AccountInformation = () => {
               </label>
             </div>
             <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}>
-              <VisibilityIcon className="text-primary" />
+              <VisibilityIcon className={`${"text-" + getColor(themeColor)}`} />
             </span>
           </div>
-          <Link to={"/password_reset"} className="mt-2 text-xs text-primary">
+          <Link to={"/password_reset"} className={`mt-2 text-xs ${"text-" + getColor(themeColor)}`}>
             Forgot password?
           </Link>
         </div>

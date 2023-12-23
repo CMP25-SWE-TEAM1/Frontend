@@ -7,8 +7,9 @@ import { APIs } from "../../constants/signupConstants.js"
 import { useState, useRef, useEffect } from "react"
 
 import { useSelector } from "react-redux"
+import { getColor } from "../../constants"
 
-const ForthStep = ({  setUserTag, setOriginalUsername, setUser, setUserToken, nextShow, handleOpenBirthdateError, mock, email }) => {
+const ForthStep = ({ setUserTag, setOriginalUsername, setUser, setUserToken, nextShow, handleOpenBirthdateError, mock, email }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
 
   const [verficationCode, setVerficationCode] = useState("")
@@ -80,6 +81,8 @@ const ForthStep = ({  setUserTag, setOriginalUsername, setUser, setUserToken, ne
     return () => clearTimeout(timer)
   }, [countdown, isResending])
 
+  const themeColor = useSelector((state) => state.theme.color)
+
   return (
     <div id="Forth Step" className="m-auto -mt-10 hidden w-[320px]">
       <div className="!h-fit">
@@ -105,7 +108,7 @@ const ForthStep = ({  setUserTag, setOriginalUsername, setUser, setUserToken, ne
           </label>
         </div>
         <button ref={resendCode} onClick={handleResendConfirmationEmail} className="w-fit cursor-pointer !bg-transparent">
-          <span ref={resendCodeSpan} className=" text-primary hover:underline">
+          <span ref={resendCodeSpan} className={` ${"text-" + getColor(themeColor)} hover:underline`}>
             {isResending ? `Resending in ${countdown}s` : "Resend Email"}
           </span>
         </button>

@@ -6,6 +6,7 @@ import Alert from "@mui/material/Alert"
 import Stack from "@mui/material/Stack"
 import { styles } from "../../../styles"
 import { useSelector } from "react-redux"
+import { getColor } from "../../../constants"
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("")
@@ -13,7 +14,7 @@ const ChangePassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [errorMsg, setErrorMsg] = useState("")
   const [successMsg, setSuccessMsg] = useState("")
-  const { token }  = useSelector((state) => state.user)
+  const { token } = useSelector((state) => state.user)
 
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{8,}$/
   const upperCaseLetterRegex = /^(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*()]{1,}$/
@@ -66,7 +67,7 @@ const ChangePassword = () => {
             setSuccessMsg(res.data.data.message)
             setTimeout(() => {
               //window.location.href = "/settings/account"
-            }, 2000);
+            }, 2000)
           }
         })
         .catch((err) => {
@@ -79,6 +80,8 @@ const ChangePassword = () => {
       setErrorMsg("New password doesn't match confirmation")
     }
   }
+
+  const themeColor = useSelector((state) => state.theme.color)
 
   return (
     <div>
@@ -97,7 +100,7 @@ const ChangePassword = () => {
             Current password
           </label>
         </div>
-        <Link to={"/password_reset"} className="mt-2 text-xs text-primary">
+        <Link to={"/password_reset"} className={`mt-2 text-xs ${"text-" + getColor(themeColor)}`}>
           Forgot password?
         </Link>
       </div>

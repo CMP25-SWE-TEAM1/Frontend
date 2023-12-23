@@ -24,6 +24,9 @@ import { PASSWORD_REGEX, UPPER_CASE_LETTER_REGEX, LOWER_CASE_LETTER_REGEX, SPECI
 import Stack from "@mui/material/Stack"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 
+import { useSelector } from "react-redux"
+import { getColor } from "../../constants"
+
 const PasswordReset = () => {
   const mock = false
 
@@ -161,6 +164,8 @@ const PasswordReset = () => {
       })
   }
 
+  const themeColor = useSelector((state) => state.theme.color)
+
   return (
     <div className="flex h-[100vh] w-full bg-[#242d34]">
       <div className="pop-up m-auto min-w-[350px] bg-white dark:bg-black md:rounded-2xl">
@@ -265,7 +270,7 @@ const PasswordReset = () => {
                 </label>
               </div>
               <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}>
-                <VisibilityIcon className="text-primary" />
+                <VisibilityIcon className={`${"text-" + getColor(themeColor)}`} />
               </span>
             </div>
             <div>
@@ -286,7 +291,7 @@ const PasswordReset = () => {
                   Require at least 8 characters
                 </Alert>
               </Stack>
-              <Alert severity="success" className={`${changedSuccessfully ? "" : "hidden"} mt-2 -mb-9 text-xs`}>
+              <Alert severity="success" className={`${changedSuccessfully ? "" : "hidden"} -mb-9 mt-2 text-xs`}>
                 Password Changed Successfully, Navigating to Login...
               </Alert>
               <button className="btn mt-16" disabled={checkPassword(password) || code === ""} onClick={handleResetPassword}>

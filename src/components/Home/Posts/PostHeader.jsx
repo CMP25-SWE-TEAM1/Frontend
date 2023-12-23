@@ -18,6 +18,8 @@ import { useLocation } from "react-router-dom"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import axios from "axios"
 
+import { getColor } from "../../../constants"
+
 function PostHeader({ pathname, postType, userTag, userProfilePicture, userName, finalDate, id, isVisible, handleMouseEnter, handleMouseLeave, hoveredProfile, openMenu, anchorPostMenu, handleMenuClose, htmlElement, handleMenuButtonClick, followingUser, setPosts, posts }) {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const user = useSelector((state) => state.user.user)
@@ -65,6 +67,9 @@ function PostHeader({ pathname, postType, userTag, userProfilePicture, userName,
   // useEffect(() => {
   //   console.log(finalDate)
   // }, [finalDate])
+
+  const themeColor = useSelector((state) => state.theme.color)
+
   return (
     <>
       <div className="post-header flex items-center justify-between">
@@ -94,7 +99,7 @@ function PostHeader({ pathname, postType, userTag, userProfilePicture, userName,
             <div className="pointer-events-auto">
               <div className="hover:underline">
                 {userName}
-                <VerifiedIcon className="pl-1 text-primary" sx={{ fontSize: "22px" }} />
+                <VerifiedIcon className={`pl-1 ${"text-" + getColor(themeColor)}`} sx={{ fontSize: "22px" }} />
               </div>
               <Link className={`${pathname.search(id) === -1 ? "hidden" : ""} pointer-events-auto text-sm text-ternairy dark:text-secondary`} to={`/${userTag}`}>
                 @{userTag}
@@ -110,7 +115,7 @@ function PostHeader({ pathname, postType, userTag, userProfilePicture, userName,
           </Link>
         </div>
         <Link>
-          <div className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full text-secondary hover:bg-[#e7f5fd] hover:text-primary dark:hover:bg-[#031018]">
+          <div className={`pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full text-secondary hover:bg-[#e7f5fd] hover:${"text-" + getColor(themeColor)} dark:hover:bg-[#031018]`}>
             <MoreHorizIcon target={"_blank"} variant="text" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="bg-transparent" />
             <Menu
               id="basic-menu"
