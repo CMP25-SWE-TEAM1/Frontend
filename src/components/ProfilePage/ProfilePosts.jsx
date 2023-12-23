@@ -8,6 +8,7 @@ import { useState } from "react"
 import PostsContainer from "../Home/Posts/PostsContainer"
 
 import { useLocation } from "react-router"
+import ProfileRequests from "./profilerequests"
 
 const ProfilePosts = () => {
   const user = useSelector((state) => state.user.user)
@@ -31,21 +32,8 @@ const ProfilePosts = () => {
 
   const [profile, setProfile] = useState()
   useEffect(() => {
-    if (root !== "")
-      axios
-        .get(APIs.actual.getProfileAPI + `${root}`, {
-          headers: {
-            authorization: `Bearer ${userToken}`,
-          },
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            setProfile(res.data.user)
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+    if (root !== "" && root !== user.username)
+    ProfileRequests.getOtherprofile(false,APIs.getProfileAPI,root)
   }, [root])
 
   const [posts, setPosts] = useState([])
