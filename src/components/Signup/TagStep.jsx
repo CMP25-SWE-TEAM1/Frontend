@@ -69,7 +69,7 @@ const TagStep = ({ mock, userTag, setUserTag, originalUsername, userToken, user,
           {usernameError && <ErrorIcon className="absolute bottom-0 right-0 -translate-x-2 -translate-y-8 text-[18px] text-red-600" />}
           {usernameError && <span className="ml-3 text-sm text-red-600">Username has already been taken</span>}
         </div>
-        <button className="btn mt-3" onClick={handleAssignUsername} disabled={usernameError}>
+        <button className="btn mt-3 bg-black dark:bg-white" onClick={handleAssignUsername} disabled={usernameError}>
           Next
         </button>
       </div>

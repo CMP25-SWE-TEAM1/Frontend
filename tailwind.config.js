@@ -23,6 +23,11 @@ module.exports = {
         "black-100": "#100d25",
         "black-200": "#090325",
         "white-100": "#f3f3f3",
+        secondColor: "#ffd400",
+        thirdColor: "#f91880",
+        forthColor: "#7856ff",
+        fifthColor: "#ff7a00",
+        sixthColor: "#00ba7c",
       },
       boxShadow: {
         card: "0px 35px 120px -15px #211e35",

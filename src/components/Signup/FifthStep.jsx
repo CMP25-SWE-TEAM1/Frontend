@@ -8,8 +8,11 @@ import { useState } from "react"
 
 import axios from "axios"
 
-import { PASSWORD_REGEX, UPPER_CASE_LETTER_REGEX, LOWER_CASE_LETTER_REGEX, SPECIAL_CHARACTER_REGEX, NUMBER_REGEX, LENGTH_REGEX, EMAIL_REGEX, APIs } from "../../constants/signupConstants.js"
+import { PASSWORD_REGEX, UPPER_CASE_LETTER_REGEX, LOWER_CASE_LETTER_REGEX, SPECIAL_CHARACTER_REGEX, NUMBER_REGEX, LENGTH_REGEX, APIs } from "../../constants/signupConstants.js"
 import { styles } from "../../styles.js"
+
+import { useSelector } from "react-redux"
+import { getColor } from "../../constants"
 
 const FifthStep = ({ setUser, mock, userToken, userTag, nextShow, password, setPassword }) => {
   const [showPassword, setShowPassword] = useState(false)
@@ -81,6 +84,8 @@ const FifthStep = ({ setUser, mock, userToken, userTag, nextShow, password, setP
       })
   }
 
+  const themeColor = useSelector((state) => state.theme.color)
+
   return (
     <div id="Fifth Step" className="m-auto -mt-10 hidden w-[320px]">
       <div className="!h-fit">
@@ -95,7 +100,7 @@ const FifthStep = ({ setUser, mock, userToken, userTag, nextShow, password, setP
             </label>
           </div>
           <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility}>
-            <VisibilityIcon className="text-primary" />
+            <VisibilityIcon className={`${"text-" + getColor(themeColor)}`} />
           </span>
         </div>
         <div>
@@ -117,7 +122,7 @@ const FifthStep = ({ setUser, mock, userToken, userTag, nextShow, password, setP
             </Alert>
           </Stack>
 
-          <button className="btn mt-16" disabled={checkPassword(password)} onClick={handleAssignPassword}>
+          <button className="btn mt-16 bg-black dark:bg-white" disabled={checkPassword(password)} onClick={handleAssignPassword}>
             <Link></Link>
             Sign Up
           </button>

@@ -1,48 +1,52 @@
-import {useState} from "react"
+import { useState } from "react"
 import GeneralButton from "../Sidebar/Button"
 import { useSelector } from "react-redux"
 import { Avatar } from "@mui/material"
 import { Link } from "react-router-dom"
 import FollowButton from "../ProfilePage/FollowButton"
 
-function Person({nickname,username,profileImage,bio,isFollowed,index}){
-    const user = useSelector((state) =>state.user.user)
-    const [unfollow, setUnfollow] = useState("Following")
-    const [color, setColor] = useState("text-black dark:text-white")
-    const [bgColor, setBgColor] = useState("")
-    const [borderColor, setBorderColor] = useState("border-gray-200")
-    isFollowed=true; //just for test
-    const handleMouseOver = ()=>{
-      setUnfollow("Unfollow");
-      setColor("text-red-600");
-      setBgColor("bg-red-200 dark:bg-[#0f0303]");
-      setBorderColor("border-red-400");
-    }
+function Person({ nickname, username, profile_image, bio, isFollowed }) {
+  const user = useSelector((state) => state.user.user)
+  const [unfollow, setUnfollow] = useState("Following")
+  const [color, setColor] = useState("text-black dark:text-white")
+  const [bgColor, setBgColor] = useState("")
+  const [borderColor, setBorderColor] = useState("border-gray-200")
+  isFollowed = true //just for test
+  const handleMouseOver = () => {
+    setUnfollow("Unfollow")
+    setColor("text-red-600")
+    setBgColor("bg-red-200 dark:bg-[#0f0303]")
+    setBorderColor("border-red-400")
+  }
 
-    const handleMouseLeave = ()=>{
-      setUnfollow("Following");
-      setColor("text-black dark:text-white");
-      setBgColor("dark:bg-black");
-      setBorderColor("border-gray-200");
-    }
-    return(
-      <Link to={`/${username}`}>
-        <div  className=" flex w-full hover:bg-gray-100 dark:hover:bg-[#080808] xs:!p-3">
-          <div className="mr-3">
-          <Avatar alt={nickname} src={profileImage} />
-          </div>
-          <div className="flex w-full items-center flex-wrap">
+  const handleMouseLeave = () => {
+    setUnfollow("Following")
+    setColor("text-black dark:text-white")
+    setBgColor("dark:bg-black")
+    setBorderColor("border-gray-200")
+  }
+  return (
+    <Link to={`/${username}`}>
+      <div className=" flex w-full hover:bg-gray-100 dark:hover:bg-[#080808] xs:!p-3">
+        <div className="mr-3">
+          <Avatar alt={nickname} src={profile_image} />
+        </div>
+        <div className="flex w-full flex-wrap items-center">
           <div className="flex w-full items-center justify-between">
-          <div>
-            <div className="truncate font-semibold hover:underline" id="mahmoud_name">{nickname}</div>
-            <div className="truncate text-secondary" id="mahmoud_username">@{username}</div>
+            <div>
+              <div className="truncate font-semibold hover:underline" id="mahmoud_name">
+                {nickname}
+              </div>
+              <div className="truncate text-secondary" id="mahmoud_username">
+                @{username}
+              </div>
+            </div>
+            {user.username !== username && <FollowButton buttonName="Follow" tag={username} />}
           </div>
-          {user.username!==username && <FollowButton buttonName="Follow" tag={username}/>}
-          </div>
-          {bio && <div className="w-full">{bio}</div>} 
-          </div>         
-          </div>
-          </Link>
-    )
+          {bio && <div className="w-full">{bio}</div>}
+        </div>
+      </div>
+    </Link>
+  )
 }
 export default Person

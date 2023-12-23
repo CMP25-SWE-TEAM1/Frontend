@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import HorizontalNavbar from '../General/HorizontalNavbar'
-import Widgets from '../Widgets'
+import Widgets from '../Widgets/Widgets'
 import WestIcon from '@mui/icons-material/West'
 import { Link } from "react-router-dom"
 import PersonsContainer from "./PersonsContainer"

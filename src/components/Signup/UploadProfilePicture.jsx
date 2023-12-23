@@ -143,6 +143,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
       const PictureStep = document.getElementById("Picture Step")
       PictureStep.style.display = "block"
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -155,7 +156,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
           <div className="w-fit rounded-full border border-white dark:border-black">
             <img src={profilePicURL ? profilePicURL : defaultProfilePic} alt="profile" className="h-[200px] w-[200px] rounded-full" />
           </div>
-          <button className="absolute left-[50%] top-[50%] m-auto h-[47px] w-[47px] -translate-x-[50%] -translate-y-[50%] rounded-full bg-darkHover hover:bg-darkBorder dark:bg-gray-600 dark:hover:bg-darkHover" onClick={handlePictureClick}>
+          <button className="absolute left-[50%] top-[50%] m-auto h-[47px] w-[47px] -translate-x-[50%] -translate-y-[50%] rounded-full dark:bg-secondary hover:bg-gray-600 bg-opacity-50 hover:bg-opacity-50 bg-gray-500 dark:hover:bg-darkHover" onClick={handlePictureClick}>
             <AddAPhotoOutlinedIcon className={`-ml-[3px] -mt-[5px] ${darkMode ? "text-white" : "text-black"}`} />
             <input
               type="file"
@@ -167,7 +168,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
         </div>
 
         <button
-          className="btn mt-3"
+          className="btn mt-3 dark:bg-white bg-black"
           ref={skipForNowButton}
           onClick={() => {
             console.log(userR)
@@ -178,7 +179,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
           Skip for now
         </button>
         <button
-          className="btn mt-3 hidden"
+          className="btn mt-3 hidden dark:bg-white bg-black"
           ref={completeSignupButton}
           onClick={() => {
             // console.log({ email, password })

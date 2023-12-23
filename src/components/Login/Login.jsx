@@ -15,6 +15,8 @@ import axios from "axios"
 
 import { EMAIL_REGEX } from "../../constants/signupConstants.js"
 
+import { getColor } from "../../constants"
+
 const Login = ({ openModal, handleCloseModal, setLocation }) => {
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
@@ -151,6 +153,8 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
       })
   }
 
+  const themeColor = useSelector((state) => state.theme.color)
+
   return (
     <>
       <Modal open={openModal} onClose={handleCloseModal} data-testid="loginModal" disableEscapeKeyDown disablePortal>
@@ -164,7 +168,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
             <div id="firstPage" className="m-auto w-[300px]">
               <div>
                 <h1 className="mb-4 mt-3">Log in to Gigachat</h1>
-                <GoogleLoginButton handleCloseModal={handleCloseModal} />
+                <GoogleLoginButton handleCloseModal={handleCloseModal} message={"Sign in with Google"} />
                 <div className="flex h-10 items-center justify-center">
                   <div className="flex w-full items-center">
                     <hr className="mr-2 w-full" />
@@ -180,7 +184,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                     Phone, email or username
                   </label>
                 </div>
-                <button type="button" id="next" className="btn mt-2" onClick={handleEmailCheck} disabled={userName === ""}>
+                <button type="button" id="next" className="btn mt-2 dark:bg-white bg-black" onClick={handleEmailCheck} disabled={userName === ""}>
                   Next
                 </button>
                 <Link
@@ -194,7 +198,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                   </button>
                 </Link>
                 <span className="mt-5 text-slate-400">
-                  Don't have an account? <Link to={"/Signup"}>Sign Up</Link>{" "}
+                  Don't have an account? <Link to={"/Signup"} className={`text-${getColor(themeColor)}`}>Sign Up</Link>{" "}
                 </span>
                 <Alert severity="error" data-testid="emailExistError" className={`${emailExistError ? "" : "hidden"}`}>
                   sorry we couldn't find your email
@@ -221,7 +225,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                       </label>
                     </div>
                     <span className={`toggle-password absolute right-4 top-4 cursor-pointer ${showPassword ? "active" : ""}`} onClick={togglePasswordVisibility} id="mahmoud_sees_you">
-                      <VisibilityIcon className="text-primary" />
+                      <VisibilityIcon className={`${"text-" + getColor(themeColor)}`} />
                     </span>
                   </div>
                   <Alert severity="error" sx={styles.signupPasswordCheckStyleMiddle} className={`${loginError ? "" : "hidden"}`}>
@@ -233,12 +237,12 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                       setLocation("/password_reset")
                     }}
                     to={"/password_reset"}
-                    className=" text-xs text-primary"
+                    className={` text-xs ${"text-" + getColor(themeColor)}`}
                     data-testid="forgetPassword"
                   >
                     Forgot password?
                   </Link>
-                  <button id="login" type="submit" className="btn -mb-4 mt-36 h-14 rounded-3xl" disabled={password === ""}>
+                  <button id="login" type="submit" className="btn -mb-4 mt-36 h-14 rounded-3xl dark:bg-white bg-black" disabled={password === ""}>
                     {loading ? "Loading..." : "Log In"}
                   </button>
                 </form>

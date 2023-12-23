@@ -8,8 +8,9 @@ import axios from "axios"
 import { useSelector } from "react-redux"
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt"
 import { useLocation } from "react-router-dom"
+import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
 
-const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, followingUser, setPosts, posts }) => {
+const Post = ({ userProfilePicture, postType, userName, userTag, id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, followingUser, setPosts, posts }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
   const [mediaUrls, setMediaUrls] = useState([])
   const [mediaTypes, setMediaTypes] = useState([])
@@ -107,18 +108,19 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
     if (liked) {
       // console.log(userToken)
       // console.log(id)
-      setLikesNum(likesNum - 1)
       axios
-        .post(
-          APIs.actual.unlike,
-          {},
-          {
-            headers: {
-              authorization: "Bearer " + userToken,
-            },
-          }
+      .post(
+        APIs.actual.unlike,
+        {},
+        {
+          headers: {
+            authorization: "Bearer " + userToken,
+          },
+        }
         )
         .then((response) => {
+          setLikesNum(likesNum - 1)
+          setLiked(!liked)
           // console.log("unlike success", response)
         })
         .catch((error) => {
@@ -126,7 +128,6 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
         })
     } else {
       // console.log(id)
-      setLikesNum(likesNum + 1)
       axios
         .post(
           APIs.actual.like,
@@ -136,21 +137,21 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
               authorization: "Bearer " + userToken,
             },
           }
-        )
-        .then((response) => {
-          // console.log("like success", response)
+          )
+          .then((response) => {
+            // console.log("like success", response)
+            setLikesNum(likesNum + 1)
+            setLiked(!liked)
         })
         .catch((error) => {
           console.log("like fail", error)
         })
     }
-    setLiked(!liked)
   }
   const handleRepostClick = () => {
     if (reposted) {
       // console.log(userToken)
       // console.log(id)
-      setRepostsNum(repostsNum - 1)
       axios
         .patch(
           APIs.actual.unrepost,
@@ -162,14 +163,15 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
           }
         )
         .then((response) => {
-          // console.log("unrepost success", response)
+          setRepostsNum(repostsNum - 1)
+          setReposted(!reposted)
+          console.log("unrepost success", response)
         })
         .catch((error) => {
           console.log("unrepost fail", error)
         })
     } else {
       // console.log(id)
-      setRepostsNum(repostsNum + 1)
       axios
         .patch(
           APIs.actual.repost,
@@ -179,15 +181,16 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
               authorization: "Bearer " + userToken,
             },
           }
-        )
-        .then((response) => {
-          // console.log("repost success", response)
+          )
+          .then((response) => {
+            setRepostsNum(repostsNum + 1)
+            setReposted(!reposted)
+            console.log("repost success", response)
         })
         .catch((error) => {
           console.log("repost fail", error)
         })
     }
-    setReposted(!reposted)
   }
 
   //"Thu Oct 26 2023 23:18:01 GMT+0200 (Eastern European Standard Time)" we need date in this format
@@ -216,6 +219,15 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
     <Link className={`w-full ${pathname.search(id) === -1 ? "" : "pointer-events-none"}`} to={`/${userTag}/status/${id}`}>
       <div className={` h-fit border border-l-0 border-r-0 ${pathname.search(id) === -1 ? "hover:bg-gray-100 dark:hover:bg-[#080808]" : ""} border-lightBorder p-3  dark:border-darkBorder `} data-testid="postId">
         <div></div>
+        <div className={`ml-5 text-sm flex items-center text-ternairy dark:text-secondary ${postType==="retweet"?"":"hidden"}`}>
+             <CachedOutlinedIcon 
+             sx={{
+                    width: 16,
+                    height: 16,
+                  }}
+                  />
+                  <span className="ml-2 hover:underline">{followingUser? followingUser.username===userTag?"You":followingUser.username:""} reposted</span>
+            </div>
         <div className="flex">
           <div className=" h-fit w-10 sm:mr-3">
             <Link className="pointer-events-auto hover:brightness-90" to={`/${userTag}`}>
@@ -223,7 +235,7 @@ const Post = ({ userProfilePicture, userName, userTag, id, date, replyCount, rep
             </Link>
           </div>
           <div className=" w-full sm:mr-2">
-            <PostHeader pathname={pathname} userTag={userTag} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={followingUser} setPosts={setPosts} posts={posts} />
+            <PostHeader pathname={pathname} postType={postType} userTag={userTag} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={followingUser} setPosts={setPosts} posts={posts} />
           </div>
         </div>
         <PostBody descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes} />

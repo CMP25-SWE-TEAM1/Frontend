@@ -21,4 +21,32 @@ for (let i = 0; i < 120; i++) {
   const year = currentYear - i
   last120Years.push(year)
 }
-export const DefaultCoverPage = "https://wallpaperaccess.com/full/2969070.jpg";
+export const DefaultCoverPage = "https://wallpaperaccess.com/full/2969070.jpg"
+
+export const getColor = (themeColor) => {
+  let c
+  switch (themeColor) {
+    case 1:
+      c = "primary"
+      break
+    case 2:
+      c = "secondColor"
+      break
+    case 3:
+      c = "thirdColor"
+      break
+    case 4:
+      c = "forthColor"
+      break
+    case 5:
+      c = "fifthColor"
+      break
+    case 6:
+      c = "sixthColor"
+      break
+    default:
+      c = "primary"
+  }
+  
+  return c
+}

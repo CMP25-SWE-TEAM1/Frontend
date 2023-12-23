@@ -1,8 +1,8 @@
-import Widgets from "../Widgets"
+import Widgets from "../Widgets/Widgets"
 
-import { useSelector } from "react-redux"
+import { useSelector,useDispatch } from "react-redux"
 
-import { useState } from "react"
+import { useState,useEffect } from "react"
 
 import SettingsIcon from "@mui/icons-material/Settings"
 
@@ -12,6 +12,9 @@ import HorizontalNavbar from "../General/HorizontalNavbar"
 
 import { useNavigate } from "react-router-dom"
 
+import { initializeSocket } from "./notificationSocketService"
+import { setNotificationSocket } from "../../store/NotificationSocketSlice"
+
 const notificationsNavLinks = [
   { title: "All", location: "all" },
   { title: "Verified", location: "verified" },
@@ -20,7 +23,16 @@ const notificationsNavLinks = [
 
 const Notifications = () => {
   const user = useSelector((state) => state.user.user)
+  const userToken = useSelector((state) => state.user.token)
+
   const navigate = useNavigate()
+
+  const dispatch = useDispatch()
+
+  // useEffect(() => {
+  //   const socket = initializeSocket(userToken)
+  //   dispatch(setNotificationSocket(socket))
+  // }, [dispatch, userToken])
 
   return (
     <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
@@ -38,7 +50,7 @@ const Notifications = () => {
                 }}
                 title="Settings"
               >
-                <SettingsIcon />
+                <SettingsIcon className="cursor-pointer"/>
               </div>
             </div>
           </div>

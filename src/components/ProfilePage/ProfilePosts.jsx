@@ -8,6 +8,7 @@ import { useState } from "react"
 import PostsContainer from "../Home/Posts/PostsContainer"
 
 import { useLocation } from "react-router"
+import ProfileRequests from "./profilerequests"
 
 const ProfilePosts = () => {
   const user = useSelector((state) => state.user.user)
@@ -16,9 +17,9 @@ const ProfilePosts = () => {
   const location = useLocation()
   const [root, setRoot] = useState("")
   useEffect(() => {
-    // console.log(location.pathname.split("/"))
+    console.log(location.pathname.split("/"))
     setRoot(location.pathname.split("/")[1])
-  }, [])
+  }, [location])
 
   const APIs = {
     mock: { getAllTweetsAPI: "https://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/posts" },
@@ -31,21 +32,7 @@ const ProfilePosts = () => {
 
   const [profile, setProfile] = useState()
   useEffect(() => {
-    if (root !== "")
-      axios
-        .get(APIs.actual.getProfileAPI + `${root}`, {
-          headers: {
-            authorization: `Bearer ${userToken}`,
-          },
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            setProfile(res.data.user)
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+    if (root !== "" && root !== user.username) ProfileRequests.getOtherprofile(false, APIs, root)
   }, [root])
 
   const [posts, setPosts] = useState([])
@@ -68,13 +55,12 @@ const ProfilePosts = () => {
           if (res.status === 200) {
             if (res.data.posts) {
               console.log(res.data)
-              setPosts((prevState) => [
-                ...prevState,
-                ...res.data.posts.map((post) => ({
+              setPosts(
+                res.data.posts.map((post) => ({
                   tweetDetails: post,
-                  followingUser: post.tweet_owner,
-                })),
-              ])
+                  followingUser: { username: root },
+                }))
+              )
             }
           }
         })
@@ -83,7 +69,7 @@ const ProfilePosts = () => {
         })
   }, [root])
   return (
-    <div className="pt-5">
+    <div className="">
       <PostsContainer posts={posts} setPosts={setPosts} />
     </div>
   )

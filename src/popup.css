@@ -18,9 +18,9 @@
     margin-top: 50px;
   }
 
-  .pop-up a {
+  /* .pop-up a {
     @apply text-primary;
-  }
+  } */
 
   .pop-up a:hover {
     text-decoration: underline;
@@ -51,7 +51,7 @@
   }
 
   .btn {
-    @apply mb-2 mt-auto h-[45px] min-h-[45px] w-full border !border-lightHover dark:!border-darkHover rounded-3xl font-semibold !bg-black dark:!bg-white !text-white dark:!text-black hover:!bg-darkHover dark:hover:!bg-lightHover disabled:pointer-events-none disabled:brightness-50;
+    @apply mb-2 mt-auto h-[45px] min-h-[45px] w-full border !border-lightHover dark:!border-darkHover rounded-3xl font-semibold !text-white dark:!text-black  disabled:pointer-events-none disabled:brightness-50;
   }
 
   .form-input {

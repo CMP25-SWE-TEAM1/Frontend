@@ -2,19 +2,19 @@ import "../../styles/home.css"
 import PostsContainer from "./Posts/PostsContainer"
 import HorizontalNavbar from "../General/HorizontalNavbar"
 import { useState, useEffect, useRef } from "react"
-import Widgets from "../Widgets"
+import Widgets from "../Widgets/Widgets"
 import getUser from "../../constants/index"
-
+import PostPopup from "./ComposePost/PostPopup"
 import RepliesContainer from "../PostPage/RepliesContainer"
-import ComposePost from "./ComposePost"
+import ComposePost from "./ComposePost/ComposePost"
 import axios from "axios"
 import { useSelector } from "react-redux"
 
-const Home = () => {
+const Home = ({composePostPopup}) => {
   const user = useSelector((state) => state.user.user)
   const userToken = useSelector((state) => state.user.token)
   // const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY"
-
+  // setComposePostPopup?setComposePostPopup(true):setComposePostPopup(false);
   const [posts, setPosts] = useState([])
 
   const homeNavLinks = [
@@ -47,7 +47,6 @@ const Home = () => {
         // console.log(response)
         if (response.status === 200) {
           // console.log("in then ");
-          // console.log(response.data.tweetList)
           if (response.data.tweetList) {
             setPosts((prevState) => [...prevState, ...response.data.tweetList.sort(() => Math.random() - 0.5)])
           }
@@ -125,164 +124,7 @@ const Home = () => {
     console.log(posts)
   }
 
-  const postsTst = [
-    {
-      status: "Tweet Get Success",
-      data: {
-        id: "652c16b01e15482dcdd5c361",
-        referredTweetId: "tweetId",
-        description: "tweet 1",
-        viewsNum: 214,
-        likesNum: 50,
-        repliesNum: 6,
-        repostsNum: 7,
-        media: [
-          {
-            type: "jpg",
-            data: "www.photo.png",
-          },
-        ],
-        type: "tweet",
-        creation_time: "2013-10-02T01:11:18.965+00:00",
-        tweet_owner: {
-          id: "652c16b01e15482dcdd5c361",
-          username: "loca22_eng",
-          nickname: "malek hossam",
-          bio: "I'm the Real Batman",
-          profile_image: "photo.jpg",
-          followers_num: 36,
-          following_num: 36,
-        },
-        isLiked: true,
-        isRetweeted: true,
-      },
-    },
-    {
-      status: "Tweet Get Success",
-      data: {
-        id: "652c16b01e15482dcdd5c361",
-        referredTweetId: "tweetId",
-        description: "tweet 1",
-        viewsNum: 214,
-        likesNum: 50,
-        repliesNum: 6,
-        repostsNum: 7,
-        media: [
-          {
-            type: "jpg",
-            data: "www.photo.png",
-          },
-        ],
-        type: "tweet",
-        creation_time: "2013-10-02T01:11:18.965+00:00",
-        tweet_owner: {
-          id: "652c16b01e15482dcdd5c361",
-          username: "loca22_eng",
-          nickname: "malek hossam",
-          bio: "I'm the Real Batman",
-          profile_image: "photo.jpg",
-          followers_num: 36,
-          following_num: 36,
-        },
-        isLiked: true,
-        isRetweeted: true,
-      },
-    },
-    {
-      status: "Tweet Get Success",
-      data: {
-        id: "652c16b01e15482dcdd5c361",
-        referredTweetId: "tweetId",
-        description: "tweet 1",
-        viewsNum: 214,
-        likesNum: 50,
-        repliesNum: 6,
-        repostsNum: 7,
-        media: [
-          {
-            type: "jpg",
-            data: "www.photo.png",
-          },
-        ],
-        type: "tweet",
-        creation_time: "2013-10-02T01:11:18.965+00:00",
-        tweet_owner: {
-          id: "652c16b01e15482dcdd5c361",
-          username: "loca22_eng",
-          nickname: "malek hossam",
-          bio: "I'm the Real Batman",
-          profile_image: "photo.jpg",
-          followers_num: 36,
-          following_num: 36,
-        },
-        isLiked: true,
-        isRetweeted: true,
-      },
-    },
-    {
-      status: "Tweet Get Success",
-      data: {
-        id: "652c16b01e15482dcdd5c361",
-        referredTweetId: "tweetId",
-        description: "tweet 1",
-        viewsNum: 214,
-        likesNum: 50,
-        repliesNum: 6,
-        repostsNum: 7,
-        media: [
-          {
-            type: "jpg",
-            data: "www.photo.png",
-          },
-        ],
-        type: "tweet",
-        creation_time: "2013-10-02T01:11:18.965+00:00",
-        tweet_owner: {
-          id: "652c16b01e15482dcdd5c361",
-          username: "loca22_eng",
-          nickname: "malek hossam",
-          bio: "I'm the Real Batman",
-          profile_image: "photo.jpg",
-          followers_num: 36,
-          following_num: 36,
-        },
-        isLiked: true,
-        isRetweeted: true,
-      },
-    },
-    {
-      status: "Tweet Get Success",
-      data: {
-        id: "652c16b01e15482dcdd5c361",
-        referredTweetId: "tweetId",
-        description: "tweet 1",
-        viewsNum: 214,
-        likesNum: 50,
-        repliesNum: 6,
-        repostsNum: 7,
-        media: [
-          {
-            type: "jpg",
-            data: "www.photo.png",
-          },
-        ],
-        type: "tweet",
-        creation_time: "2013-10-02T01:11:18.965+00:00",
-        tweet_owner: {
-          id: "652c16b01e15482dcdd5c361",
-          username: "loca22_eng",
-          nickname: "malek hossam",
-          bio: "I'm the Real Batman",
-          profile_image: "photo.jpg",
-          followers_num: 36,
-          following_num: 36,
-        },
-        isLiked: true,
-        isRetweeted: true,
-      },
-    },
-  ]
-
+  
   const feedRef = useRef()
 
   useEffect(() => {
@@ -315,7 +157,8 @@ const Home = () => {
         {/* <HorizontalNavbar urls={homeNavLinks} originalUrl={"/home"} /> */}
         {/* </div> */}
         {/* </div> */}
-        <ComposePost buttonName="Post" handleNewPost={(newPost) => handleNewPost(newPost)} postType="tweet"/>
+        <ComposePost buttonName="Post" handleNewPost={(newPost) => handleNewPost(newPost)} postType="tweet" />
+        {composePostPopup&&<PostPopup open={composePostPopup}/>}
         <PostsContainer posts={posts} setPosts={setPosts} />
         {/* .sort(() => Math.random() - 0.5) */}
       </div>

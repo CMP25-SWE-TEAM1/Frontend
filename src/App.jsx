@@ -1,6 +1,5 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom"
 import Sidebar from "./components/Sidebar/Sidebar"
-import Widgets from "./components/Widgets"
 import Home from "./components/Home/Home"
 import Login from "./components/Login/Login"
 import PasswordReset from "./components/PasswordReset/PasswordReset"
@@ -25,7 +24,7 @@ import PostPage from "./components/PostPage/PostPage"
 import Messages from "./components/messages-page/Messages"
 import MessageCompose from "./components/messages-page/compose/MessageCompose"
 import ProfilePage from "./components/ProfilePage/ProfilePage"
-import ProfilePageEdit from "./components/ProfilePage/ProfilePageEdit"
+import ProfilePageEdit from "./components/ProfilePage/ProfilePageEdit/ProfilePageEdit"
 import NotFound from "./components/NotFound"
 import Explore from "./components/Explore/Explore"
 import Notifications from "./components/Notifications/Notifications"
@@ -146,16 +145,16 @@ const App = () => {
             <Route path="display" element={<Display />}></Route>
           </Route>
           <Route path={`/:tag`} element={<ProfilePage handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal} />}>
-            <Route path="posts" element={<ProfilePosts />}></Route>
-            <Route path="replies" element={<ProfileReplies />}></Route>
-            <Route path="media" element={<ProfileMedia />}></Route>
+            <Route  element={<ProfilePosts />}></Route>
+            <Route path="with_replies" element={<ProfileReplies />}></Route>
             <Route path="likes" element={<ProfileLikes />}></Route>
             <Route path="" element={<ProfilePosts />}></Route>
           </Route>
           <Route path={`settings/profile`} element={<ProfilePageEdit handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
-          <Route path="/signup" element={<SignUp openModal={openProfileEditModal} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
+          <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/:tag/status/:id" element={<PostPage post={testPost} />}></Route>
           <Route path="/:tag/status/:id/:NavbarLink" element={<PostEngagement />}></Route>
+          <Route path="/compose/tweet" element={<Home composePostPopup={true}/>}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>

@@ -6,11 +6,14 @@ import logoLight from "../../assets/imgs/gigachatLogoOne_light_v2-removebg-previ
 import { useSelector } from "react-redux"
 
 import axios from "axios"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { APIs } from "../../constants/signupConstants"
 
 const All = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
+  const userToken = useSelector((state) => state.user.token)
+
+  const [allNotifications, setAllNotifications] = useState([])
 
   const notTest = [
     {
@@ -79,13 +82,48 @@ const All = () => {
     },
   ]
 
-  // useEffect(() => {
-  //     axios.get(APIs.actual.getNotifications)
-  // },[])
+  useEffect(() => {
+    axios
+      .get(APIs.actual.getAllNotifications, {
+        params: {
+          page: 1,
+          count: 1000,
+        },
+        headers: {
+          authorization: "Bearer " + userToken,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data.notifications)
+        setAllNotifications(res.data.data.notifications)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
+
+  useEffect(() => {
+    axios
+      .post(
+        APIs.actual.markNotificationSeen,
+        {},
+        {
+          headers: {
+            authorization: "Bearer " + userToken,
+          },
+        }
+      )
+      .then((res) => {
+        // console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
 
   return (
     <div>
-      <NotificationsContainer list={notTest} type={"all"} />
+      <NotificationsContainer list={allNotifications} type={"all"} />
     </div>
   )
 }
