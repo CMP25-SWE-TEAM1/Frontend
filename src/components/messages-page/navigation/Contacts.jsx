@@ -21,10 +21,15 @@ const Contacts = (props) => {
     const currentDate = new Date()
 
     const timeDiff = currentDate - messageDate
+    const secondsDiff = Math.floor(timeDiff / 1000)
     const minutesDiff = Math.floor(timeDiff / (1000 * 60))
     const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60))
 
-    if (minutesDiff < 60) {
+    if (secondsDiff < 5) {
+      return "Now"
+    } else if (secondsDiff < 60) {
+      return `${secondsDiff} sec`
+    } else if (minutesDiff < 60) {
       return `${minutesDiff} min`
     } else if (hoursDiff < 24) {
       const formattedHours = messageDate.toLocaleString("en-US", {
