@@ -47,7 +47,6 @@ const Home = ({composePostPopup}) => {
         // console.log(response)
         if (response.status === 200) {
           // console.log("in then ");
-          // console.log(response.data.tweetList)
           if (response.data.tweetList) {
             setPosts((prevState) => [...prevState, ...response.data.tweetList.sort(() => Math.random() - 0.5)])
           }

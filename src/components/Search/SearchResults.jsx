@@ -97,7 +97,11 @@ const SearchResults = () => {
             },
           })
           .then((res) => {
-            setTrendResults((prevResults) => [...prevResults, ...res.data.data])
+            const nn = res.data.data.map((d) => {
+              const n = { ...d, type: "tweet" }
+              return n
+            })
+            setTrendResults((prevResults) => [...prevResults, ...nn])
             if (res.data.data.length < 10) noMoreTrends = true
           })
           .catch((err) => {
@@ -119,7 +123,7 @@ const SearchResults = () => {
     <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
       <div id="scrolledElement" className="no-scrollbar ml-0 mr-1 max-w-[620px] flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-fit md:shrink-0">
         <div className="flex h-[53px] flex-col items-center">
-          <SearchComponent query={searchQuery}/>
+          <SearchComponent query={searchQuery} />
           <CustomTabs tabValue={tabValue} handleChangeTabValue={handleChangeTabValue} tabsNames={tabNames} />
           <CustomTabPanel value={tabValue} index={0} className="w-full">
             {userResults[0] && (
