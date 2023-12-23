@@ -15,6 +15,32 @@ const SearchMessages = (props) => {
   const selectedContact = props.selectedContact
   const setSelectedContact = props.setSelectedContact
 
+  const getMessageTime = (lastMessageTime) => {
+    const messageDate = new Date(lastMessageTime)
+    const currentDate = new Date()
+
+    const timeDiff = currentDate - messageDate
+    const minutesDiff = Math.floor(timeDiff / (1000 * 60))
+    const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60))
+
+    if (minutesDiff < 60) {
+      return `${minutesDiff} min`
+    } else if (hoursDiff < 24) {
+      const formattedHours = messageDate.toLocaleString("en-US", {
+        hour: "numeric",
+        // minute: "numeric",
+        hour12: true,
+      })
+      return `${formattedHours}`
+    } else {
+      // If the difference is greater than or equal to 24 hours, display the date
+      return messageDate.toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+      })
+    }
+  }
+
   return (
     <>
       {messages.filter((message) => message.text.toUpperCase().includes(searchValue.toUpperCase())).length !== 0 && (
@@ -35,12 +61,16 @@ const SearchMessages = (props) => {
                     setSelectedContact(message.contactId)
                   }}
                 >
-                  <div>
+                  <div
+                    style={{
+                      maxWidth: "100%",
+                    }}
+                  >
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <ListItemAvatar>
                         <Avatar alt={message.contactName} src={message.contactAvatarLink} />
                       </ListItemAvatar>
-                      <ListItemText primary={message.contactName} secondary={message.date} />
+                      <ListItemText primary={message.contactName} secondary={message.date ? getMessageTime(message.date) : ""} />
                     </div>
                     <div style={{ marginTop: "5px" }}>
                       <HighlightedMessage mainText={message.text} subText={searchValue} />

@@ -2,13 +2,6 @@ import { useState } from "react"
 
 import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
-import ListItemButton from "@mui/material/ListItemButton"
-import ListItemAvatar from "@mui/material/ListItemAvatar"
-import Avatar from "@mui/material/Avatar"
-import ListItemText from "@mui/material/ListItemText"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import FaceIcon from "@mui/icons-material/Face"
-import CheckIcon from "@mui/icons-material/Check"
 
 import Search from "./Search"
 
@@ -19,51 +12,44 @@ import Box from "@mui/material/Box"
 import SearchPeople from "./SearchPeople"
 import SearchMessages from "./SearchMessages"
 import NoResultFound from "./NoResultFound"
-import HighlightedMessage from "./HighlightedMessage"
+import Contacts from "./Contacts"
+import useGetChatSearch from "../customHooks/get/useGetChatSearch"
+import { useSelector } from "react-redux"
+import { BACKEND_ON } from "../constants/MessagesConstants"
+import * as DataInit from "../constants/MessagesInit"
 
 const InfoChat = (props) => {
   const contacts = props.contacts
   const selectedContact = props.selectedContact
   const setSelectedContact = props.setSelectedContact
 
-  const [messages, setMessages] = useState([
-    {
-      text: "A message",
-      date: "date",
+  const userToken = useSelector((state) => state.user.token)
+  const handleGetChatSearch = useGetChatSearch
 
-      contactName: "Khaled",
-      contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      contactId: 103,
-    },
-    {
-      text: "New message",
-      date: "date",
-
-      contactName: "Khaled",
-      contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      contactId: 103,
-    },
-    {
-      text: "Old message",
-      date: "date",
-
-      contactName: "Hamza",
-      contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      contactId: 104,
-    },
-    {
-      text: "Gold message",
-      date: "date",
-
-      contactName: "Hamza",
-      contactAvatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      contactId: 104,
-    },
-  ])
+  const [messages, setMessages] = useState(DataInit.InfoChat_messages)
 
   const [searchValue, setSearchValue] = useState("")
   const handleSearchValueChange = (event) => {
     setSearchValue(event.target.value)
+    if (BACKEND_ON && event.target.value !== "") {
+      handleGetChatSearch(event.target.value, userToken).then((response) => {
+        console.log("GetMessagesSearch response", response)
+        if (!response.data) setMessages([])
+        else {
+          const newMessages = response.data.map((message) => ({
+            text: message.lastMessage.description,
+            date: message.lastMessage.sendTime,
+
+            contactName: message.chat_members[0].nickname,
+            contactAvatarLink: message.chat_members[0].profile_image,
+            contactId: message.chat_members[0].id,
+          }))
+          setMessages(newMessages)
+        }
+      })
+    } else {
+      setMessages([])
+    }
   }
 
   const [tabValue, setTabValue] = useState("all")
@@ -76,7 +62,7 @@ const InfoChat = (props) => {
 
   return (
     <div className="info chat">
-      <List dense={false}>
+      <List dense={false} sx={{ width: "450px" }}>
         {/* Search */}
         <ListItem sx={{ paddingLeft: "24px" }}>
           <Search searchValue={searchValue} handleSearchValueChange={handleSearchValueChange} setSearchValue={setSearchValue} searchActive={searchActive} setSearchActive={setSearchActive} />
@@ -117,36 +103,7 @@ const InfoChat = (props) => {
           </>
         )}
         {/* Contacts */}
-        {!searchActive &&
-          contacts.map((contact, index) => (
-            <ListItem disablePadding key={index} sx={selectedContact === contact.id ? { backgroundColor: "#EFF3F4", borderRight: "4px solid #1D9BF0" } : {}}>
-              <ListItemButton
-                onClick={() => {
-                  setSelectedContact(contact.id)
-                }}
-              >
-                <div>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <ListItemAvatar>
-                      <Avatar alt={contact.name || "Hamza"} src={contact.avatarLink || "https://64.media.tumblr.com/avatar_f71055191601_128.pnj"} />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={contact.name || "Hamza"}
-                      secondary={`@${contact.userName || "hamza_xyz"} . ${
-                        new Date(contact.lastMessageDate).toLocaleString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                        }) || "Dec 2"
-                      }`}
-                    />
-                  </div>
-                  <div style={{ marginTop: "5px" }}>
-                    <HighlightedMessage mainText={contact.lastMessage || "none"} subText={""} />
-                  </div>
-                </div>
-              </ListItemButton>
-            </ListItem>
-          ))}
+        {!searchActive && <Contacts contacts={contacts} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />}
       </List>
     </div>
   )

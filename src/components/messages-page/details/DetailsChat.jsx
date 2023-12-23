@@ -6,14 +6,17 @@ import Divider from "@mui/material/Divider"
 import Chip from "@mui/material/Chip"
 
 import useGetChat from "../customHooks/get/useGetChat"
+import * as DataInit from "../constants/MessagesInit"
 
 // Socket.io
-import { SOCKET_ON, BACKEND_ON } from "../MessagesConstants"
+import { SOCKET_ON, BACKEND_ON } from "../constants/MessagesConstants"
 import { useDispatch, useSelector } from "react-redux"
 import { selectSocket } from "../../../store/SocketSlice"
 
 const DetailsChat = (props) => {
   const userToken = useSelector((state) => state.user.token)
+  const [messagesData, setMessagesData] = useState(DataInit.DetailsChat_messages)
+  const handleNavNewMessage = props.handleNavNewMessage
 
   const dispatch = useDispatch()
   const socket = useSelector(selectSocket)
@@ -25,87 +28,45 @@ const DetailsChat = (props) => {
   const two = true
   const navigate = useNavigate()
   // Messages mapping
-  let msgIdCounter = 0
-  const [messagesData, setMessagesData] = useState([
-    // - Message right
-    // -- Text only
-    // -- media only
-    // -- Gif only
-    // -- Text + media
-    // -- Text + Gif
-    // - Message left
-    // -- Text only
-    // -- media only
-    // -- Gif only
-    // -- Text + media
-    // -- Text + Gif
-    {
-      id: msgIdCounter++,
-      direction: "R",
-      messageText: "First message for me 👋",
-      messageMedia: "https://www.harrisburgu.edu/wp-content/uploads/189dce017fb19e3ca1b94b2095d519cc514df22c.jpg",
-      mediaType: "Img",
-    },
-    {
-      id: msgIdCounter++,
-      direction: "L",
-      messageText: "Another one 😄",
-    },
-    {
-      id: msgIdCounter++,
-      direction: "R",
-      messageText: "Read next carefully 😈😈",
-    },
-    {
-      id: msgIdCounter++,
-      direction: "R",
-      messageText: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-      // messageMedia: "https://m.media-amazon.com/images/M/MV5BMTQ2NDg4MDA2MV5BMl5BanBnXkFtZTgwNzQxOTQ1MjE@._V1_.jpg",
-      // mediaType: "Img",
-    },
-    {
-      id: msgIdCounter++,
-      direction: "L",
-      messageText: "No.. no.. no.. nooooooooo",
-    },
-    {
-      id: msgIdCounter++,
-      direction: "R",
-      messageText: "Encrypted message to Hefeny",
-      messageMedia: "https://media.tenor.com/JJquxnSAmJwAAAPo/seal-hibo-heart.mp4",
-      mediaType: "GIF",
-    },
-  ])
-  const [msgIdCounterS, setMsgIdCounterS] = useState(messagesData.length)
-  // const [msgData, setMsgData] = useState({
-  //   direction: "L", // "L" or "R"
-  //   messageText: "", // (if exist) "<some text>"
-  //   messageMedia: "", // (if exist) "<a link>"
-  //   mediaType: "", // (if exist) "Img" or "GIF"
-  //   metaData: "", // {obj}
-  // })
+  // const [msgData, setMsgData] = useState(
+  // )
   // scroll to bottom button
   const endOfChat = useRef(null)
+  const startOfUnseenChat = useRef(null)
+
+  const [chatPage, setChatPage] = useState(1)
   useEffect(() => {
     if (BACKEND_ON) {
-      handleGetChat(contact.id, userToken).then((response) => {
+      console.log("chatPage", chatPage)
+      handleGetChat(contact.id, userToken, chatPage).then((response) => {
         console.log("response", response)
-        if (!response.data) setMessagesData([])
-        else {
+        if (response && response.data) {
           const newChat = response.data.map((message) => ({
             id: message._id,
             messageText: message.description,
-            // Need some update
+
             messageMedia: message.media && message.media.link ? message.media.link : undefined,
-            mediaType: () => {
-              return message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined
-            },
+            mediaType: message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined,
             direction: message.mine ? "R" : "L",
-            // not handled yet! (in FE ): )
+
             seen: message.seen,
             time: message.sendTime,
           }))
           setMessagesData(newChat)
+          // setChatPage((prevChatPage) => prevChatPage + 1)
+
+          // setTimeout(() => {
+          //   console.log("This will be logged after the pause")
+          //   console.log("chatPage", chatPage)
+          //   // Fetch messages until the user sees all unread messages
+          //   while (response.data && response.data.length !== 0 && response.data[0].seen === false) {
+          //     const currentChatPage = chatPage // Capture the current value
+          //     handleGetChat(contact.id, userToken, currentChatPage).then((response) => {
+          //       console.log(`response of chatPage(${currentChatPage})`, response)
+          //       setChatPage((prevChatPage) => prevChatPage + 1) // Update chatPage using the latest value
+          //     })
+          //   }
+          // }, 4000)
         }
       })
     }
@@ -128,7 +89,7 @@ const DetailsChat = (props) => {
     // console.log("Sent message:", messageText)
     // Add message to the chat
     // setMessagesData([...messagesData, { id: msgIdCounterS, direction: "R", messageText, messageMedia, mediaType: messageMediaType }])
-    setMsgIdCounterS(msgIdCounterS + 1)
+    // setMsgIdCounterS(msgIdCounterS + 1)
     // scrollToBottom()
     // Send message in BackEnd
     const message = { messageText, messageMedia, messageMediaType }
@@ -151,6 +112,9 @@ const DetailsChat = (props) => {
   useEffect(() => {
     if (SOCKET_ON) {
       socket.on("receive_message", (data) => {
+        // Update nav
+        handleNavNewMessage(data.chat_ID, data.message)
+        // Update chat
         if (data.chat_ID == contact.id) {
           console.log("received_message:", data)
           setScrollToBottomFlag(true)
@@ -164,9 +128,7 @@ const DetailsChat = (props) => {
               messageText: message.description,
               // Need some update
               messageMedia: message.media && message.media.link ? message.media.link : undefined,
-              mediaType: () => {
-                return message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined
-              },
+              mediaType: message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined,
               direction: message.mine ? "R" : "L",
               // not handled yet! (in FE ): )
               seen: message.seen,
@@ -174,12 +136,12 @@ const DetailsChat = (props) => {
             },
           ])
           // setMessagesData([...messagesData, { id: msgIdCounterS, messageText: message.messageText, messageMedia: message.messageMedia, mediaType: message.messageMediaType }])
-          setMsgIdCounterS(msgIdCounterS + 1)
+          // setMsgIdCounterS(msgIdCounterS + 1)
           // scrollToBottom()
         }
       })
     }
-  }, [messagesData, msgIdCounterS])
+  }, [socket, messagesData, contact.id])
   // Send message to socket sercer
   const sendMessage_toServer = (message) => {
     console.log("message sending...", message)
@@ -190,13 +152,28 @@ const DetailsChat = (props) => {
       //  sender_ID:
       reciever_ID: contact.id,
       data: {
-        ...(message.messageMedia && { media: message.messageMedia }),
-        ...(message.messageMediaType && { mediaType: message.messageMediaType }),
         ...(message.messageText && { text: message.messageText }),
+        ...(message.messageMedia && {
+          media: {
+            link: message.messageMedia,
+            type: message.messageMediaType === "GIF" ? "video" : "image",
+          },
+        }),
       },
     })
   }
 
+  const handleMessageMetaCheck = (message, nextMessage) => {
+    if (!nextMessage) return true
+    else {
+      const messageDate = new Date(message.date)
+      const nextMessageDate = new Date(nextMessage.date)
+
+      const timeDiff = (nextMessageDate - messageDate) / 1000
+
+      return timeDiff < 60
+    }
+  }
   // Handle get chat of specific user
 
   return (
@@ -251,20 +228,25 @@ const DetailsChat = (props) => {
                   {/* Messages */}
                   <div className="messages">
                     {messagesData
-                      .filter((msg) => msg.seen)
-                      .map((msg) => (
-                        <Message messageMeta={msg.time} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
-                      ))}
-                    {messagesData.filter((msg) => !msg.seen).length !== 0 && (
-                      <Divider>
+                      .filter((msg) => msg.seen === true)
+                      .map((msg, index, array) => {
+                        const nextMsg = index < array.length - 1 ? array[index + 1] : null
+                        const withMeta = handleMessageMetaCheck(msg, nextMsg)
+                        return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
+                      })}
+                    {messagesData.filter((msg) => msg.seen === false).length !== 0 && (
+                      <Divider sx={{ marginBottom: "24px" }}>
                         <Chip label="unread messages" />
                       </Divider>
                     )}
+                    <div ref={startOfUnseenChat}></div>
                     {messagesData
-                      .filter((msg) => !msg.seen)
-                      .map((msg) => (
-                        <Message messageMeta={msg.time} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
-                      ))}
+                      .filter((msg) => msg.seen === false)
+                      .map((msg, index, array) => {
+                        const nextMsg = index < array.length - 1 ? array[index + 1] : null
+                        const withMeta = handleMessageMetaCheck(msg, nextMsg)
+                        return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
+                      })}
                   </div>
                   <div ref={endOfChat}></div>
                 </div>

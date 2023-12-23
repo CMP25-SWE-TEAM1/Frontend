@@ -1,5 +1,5 @@
 import { io } from "socket.io-client"
-import { SOCKET_IO } from "../MessagesConstants"
+import { SOCKET_IO } from "../constants/MessagesConstants"
 let socket
 
 export const initializeSocket = (userToken) => {

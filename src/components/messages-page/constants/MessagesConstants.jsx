@@ -24,11 +24,14 @@ export const APIs = {
     getChat: MOCK_DOMAIN + "/user/chat",
     getChatAll: MOCK_DOMAIN + "/user/chat/all",
     deleteMessage: MOCK_DOMAIN + "/user/chat/message",
+    getUsersSearch: MOCK_DOMAIN + "/user/search",
   },
   actual: {
     postMedia: ACTUAL_DOMAIN + "/media",
     getChat: ACTUAL_DOMAIN + "/user/chat",
     getChatAll: ACTUAL_DOMAIN + "/user/chat/all",
+    getChatAllSearch: ACTUAL_DOMAIN + "/user/chat/search",
     deleteMessage: ACTUAL_DOMAIN + "/user/chat/message",
+    getUsersSearch: ACTUAL_DOMAIN + "/user/search",
   },
 }

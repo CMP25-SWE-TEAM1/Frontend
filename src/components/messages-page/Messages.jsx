@@ -7,16 +7,20 @@ import InfoNoChat from "./navigation/InfoNoChat"
 
 import { useState, useEffect } from "react"
 
-import { BACKEND_ON } from "./MessagesConstants"
+import { BACKEND_ON } from "./constants/MessagesConstants"
 import useGetContacts from "./customHooks/get/useGetContacts"
 import { useDispatch, useSelector } from "react-redux"
 import { initializeSocket } from "./customHooks/socketService"
 import { setSocket } from "../../store/SocketSlice"
+import * as DataInit from "./constants/MessagesInit"
 
 const Messages = (props) => {
+  const darkMode = useSelector((state) => state.theme.darkMode)
   const userToken = useSelector((state) => state.user.token)
+  const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
 
+  const [contacts, setContacts] = useState(DataInit.Messages_contacts)
   useEffect(() => {
     const socket = initializeSocket(userToken)
     dispatch(setSocket(socket))
@@ -24,13 +28,24 @@ const Messages = (props) => {
 
   const handleGetContacts = useGetContacts
 
-  // Compose message
-  const composeModalOpen = props.composeModalOpen
-  const handleComposeModalOpen = props.handleComposeModalOpen
-  const handleComposeModalClose = props.handleComposeModalClose
-
-  useEffect(() => {
-    if (BACKEND_ON) {
+  const handleNavNewMessage = (chatId, message) => {
+    const chatContact = contacts.filter((contact) => contact.id === chatId)[0]
+    if (chatContact) {
+      setContacts(
+        contacts.map((contact) =>
+          contact.id === chatId
+            ? {
+                ...contact,
+                lastMessage: message.description,
+                lastMessageMediaType: message.media ? (message.media.type === "image" ? "Img" : "GIF") : undefined,
+                lastMessageDate: message.sendTime,
+                lastMessageSeen: message.mine ? true : false,
+                lastMessageSender: message.mine ? user.user.username : contact.userName,
+              }
+            : contact
+        )
+      )
+    } else {
       handleGetContacts(userToken).then((response) => {
         console.log("GetContacts response", response)
         const newChats = response.data.map((chat) => ({
@@ -41,6 +56,7 @@ const Messages = (props) => {
           avatarLink: chat.chat_members[0].profile_image,
 
           lastMessage: chat.lastMessage.description,
+          lastMessageMediaType: chat.lastMessage.media ? (chat.lastMessage.media.type === "image" ? "Img" : "GIF") : undefined,
           lastMessageDate: chat.lastMessage.sendTime,
           lastMessageSeen: chat.lastMessage.seen,
           lastMessageSender: chat.lastMessage.sender,
@@ -48,62 +64,44 @@ const Messages = (props) => {
         setContacts(newChats)
       })
     }
-  }, [])
+  }
 
-  const [contacts, setContacts] = useState([
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U74",
-      name: "Khaled",
-      id: 103,
-      bio: "I am the real batman",
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U66",
-      name: "Moaz",
-      id: 106,
-      bio: "I am the real batman",
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U55",
-      name: "Ali",
-      id: 105,
-      bio: "I am the real batman",
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U44",
-      name: "Hamza",
-      id: 104,
-      bio: "I am the real batman",
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-    {
-      avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-      userName: "U77",
-      name: "Abd El-Rahman",
-      id: 107,
-      bio: "I am the real batman",
-      lastMessage: "last message",
-      lastMessageDate: "date",
-    },
-  ])
+  // Compose message
+  const composeModalOpen = props.composeModalOpen
+  const handleComposeModalOpen = props.handleComposeModalOpen
+  const handleComposeModalClose = props.handleComposeModalClose
+
+  useEffect(() => {
+    if (BACKEND_ON) {
+      handleGetContacts(userToken).then((response) => {
+        // console.log("userToken",userToken)
+        console.log("GetContacts response", response)
+        if (response && response.data) {
+          const newChats = response.data.map((chat) => ({
+            id: chat.chat_members[0].id,
+
+            userName: chat.chat_members[0].username,
+            name: chat.chat_members[0].nickname,
+            avatarLink: chat.chat_members[0].profile_image,
+
+            lastMessage: chat.lastMessage.description,
+            lastMessageMediaType: chat.lastMessage.media ? (chat.lastMessage.media.type === "image" ? "Img" : "GIF") : undefined,
+            lastMessageDate: chat.lastMessage.sendTime,
+            lastMessageSeen: chat.lastMessage.seen,
+            lastMessageSender: chat.lastMessage.sender,
+          }))
+          setContacts(newChats)
+        }
+      })
+    }
+  }, [])
 
   const [selectedContact, setSelectedContact] = useState()
 
   return (
     <>
       {/* <div className="sidebar">Sidebar</div> */}
-      <div className="messages-page">
+      <div className={`messages-page ${darkMode ? "dark" : "light"}`}>
         <div className="navigation">
           <div className="header">
             <h2>Messages</h2>
@@ -143,10 +141,10 @@ const Messages = (props) => {
           {contacts.length !== 0 && <InfoChat contacts={contacts} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />}
         </div>
         {(!selectedContact || !contacts.filter((contact) => contact.id === selectedContact)[0]) && <DetailsNoChat handleComposeModalOpen={handleComposeModalOpen} />}
-        {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} />}
+        {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} handleNavNewMessage={handleNavNewMessage} />}
       </div>
 
-      <MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} />
+      <MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} setSelectedContact={setSelectedContact} setContacts={setContacts} contacts={contacts} />
     </>
   )
 }
