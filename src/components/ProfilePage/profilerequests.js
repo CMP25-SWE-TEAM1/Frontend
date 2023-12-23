@@ -1,67 +1,67 @@
 import axios from "axios"
 import { DefaultCoverPage } from "../../constants"
-class ProfileRequests {
-  static getOtherprofile = (mock, APIs, tag, setProfile, setProfilePicURL, setCoverPicURL, setDetailsPos, token) => {
-    console.log(tag)
-    axios
-      .get(mock ? APIs.mock.getProfileAPI + `${tag}` : APIs.actual.getProfileAPI + `${tag}`, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          console.log(res)
-          //console.log(`Bearer ${token}`)
-          //console.log(`Bearer ${token}`)
-          res.data.user.is_wanted_user_followed ? setDetailsPos(`right-[140px]`) : setDetailsPos(`right-[100px]`)
-          setProfilePicURL(res.data.user.profile_image)
-          const banner_image = res.data.user.banner_image ? res.data.user.banner_image : DefaultCoverPage
-          setCoverPicURL(banner_image)
-          const newUser = { ...res.data.user, banner_image: banner_image }
-          setProfile(newUser)
-        }
-      })
-      .catch((err) => {
-        //console.log(tag)
-        //console.log(err)
-      })
-  }
-  static getMyprofile = (mock, APIs, token, setProfile, setProfilePicURL, setCoverPicURL) => {
-    axios
-      .get(mock ? APIs.mock.getProfileAPI : APIs.actual.getProfileAPI, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          // //console.log(`Bearer ${token}`)
-          // //console.log(res)
-          setProfilePicURL(res.data.user.profile_image)
-          const banner_image = res.data.user.banner_image ? res.data.user.banner_image : DefaultCoverPage
-          setCoverPicURL(banner_image)
-          const newUser = { ...res.data.user, banner_image: banner_image }
-          setProfile(newUser)
-        }
-      })
-      .catch((err) => {
-        //console.log(tag)
-        //console.log(err)
-      })
-  }
-  static block = (mock, APIs, token) => {
-    axios
-      .patch(
-        mock ? APIs.blockmock.Block : APIs.blockactual.Block,
-        {},
-        {
+class ProfileRequests{
+    static  getOtherprofile = (mock,APIs,tag,setProfile,token,setProfilePicURL,setCoverPicURL,setDetailsPos,setButtonstate) => {
+      console.log(APIs);
+        axios
+        .get(mock ? APIs.mock.getProfileAPI + `${tag}` : APIs.actual.getProfileAPI + `${tag}`, {
           headers: {
-            authorization: "Bearer " + token,
+            authorization: `Bearer ${token}`,
           },
-        }
-      )
-      .then((res) => {
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            console.log(res)
+           
+            res.data.user.is_wanted_user_followed? setDetailsPos(`right-[140px]`):setDetailsPos(`right-[100px]`)
+            setProfilePicURL(res.data.user.profile_image)
+            const banner_image = res.data.user.banner_image ? res.data.user.banner_image : DefaultCoverPage
+            setCoverPicURL(banner_image)
+            const newUser = {...res.data.user, banner_image:banner_image }   
+            setButtonstate(res.data.user.is_wanted_user_followed? `Following`:`Follow`)
+            setProfile(newUser)
+          }
+        })
+        .catch((err) => {
+          //console.log(tag)
+          //console.log(err)
+        })
+    }
+    static getMyprofile = (mock,APIs,token,setProfile,setProfilePicURL,setCoverPicURL) =>{
+        axios
+            .get(mock ? APIs.mock.getProfileAPI : APIs.actual.getProfileAPI, {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            })
+            .then((res) => {
+              if (res.status === 200) {
+                console.log(res)
+                // //console.log(`Bearer ${token}`)
+               // //console.log(res)
+                setProfilePicURL(res.data.user.profile_image)
+                const banner_image = res.data.user.banner_image ? res.data.user.banner_image : DefaultCoverPage
+                setCoverPicURL(banner_image)
+                const newUser = {...res.data.user, banner_image:banner_image }   
+                setProfile(newUser)
+              }
+            })
+            .catch((err) => {
+              //console.log(tag)
+              //console.log(err)
+            })
+
+    }
+    static  block = (mock,APIs,token) =>  {
+        axios.patch(
+          mock? APIs.blockmock.Block : APIs.blockactual.Block,
+          {},
+          {
+              headers:{
+                  authorization : "Bearer " + token,
+              },
+          }
+      ).then((res)=>{
         console.log(res)
         window.location.reload()
       })
