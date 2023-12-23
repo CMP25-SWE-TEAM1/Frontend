@@ -15,6 +15,7 @@ import { setSocket } from "../../store/SocketSlice"
 import * as DataInit from "./constants/MessagesInit"
 
 const Messages = (props) => {
+  const darkMode = useSelector((state) => state.theme.darkMode)
   const userToken = useSelector((state) => state.user.token)
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
@@ -100,7 +101,7 @@ const Messages = (props) => {
   return (
     <>
       {/* <div className="sidebar">Sidebar</div> */}
-      <div className="messages-page">
+      <div className={`messages-page ${darkMode ? "dark" : "light"}`}>
         <div className="navigation">
           <div className="header">
             <h2>Messages</h2>
