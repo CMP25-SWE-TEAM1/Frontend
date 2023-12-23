@@ -116,6 +116,7 @@ const SearchResults = () => {
               const n = { ...d, type: "tweet" }
               return n
             })
+            console.log(nn)
             setTrendResults((prevResults) => [...prevResults, ...nn])
             if (res.data.data.length < 10) noMoreTrends = true
           })
@@ -151,7 +152,7 @@ const SearchResults = () => {
         <div className="flex h-[53px] flex-col items-center">
           <div className="flex w-full items-center justify-around pr-2">
             <SearchComponent query={searchQuery} />
-            <div className="w-[10%]" id="mahmoud_account_options">
+            <div className="w-[10%]">
               <MoreHorizOutlinedIcon className="cursor-pointer" id="demo-positioned-button" aria-controls={openMenu ? "demo-positioned-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleClickMenu} />
 
               <Menu
