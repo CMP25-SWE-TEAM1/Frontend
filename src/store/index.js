@@ -3,6 +3,7 @@ import userReducer from "./UserSlice"
 import themeReducer from "./ThemeSlice"
 import socketReducer from "./SocketSlice"
 import notificationSocketReducer from "./NotificationSocketSlice"
+import PreferencesSlice from "./PreferencesSlice"
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     theme: themeReducer,
     socket: socketReducer,
     notificationSocket: notificationSocketReducer,
+    preferences: PreferencesSlice,
   },
 })
 

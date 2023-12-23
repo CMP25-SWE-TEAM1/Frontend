@@ -17,6 +17,8 @@ const SearchComponent = ({ query }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const userToken = useSelector((state) => state.user.token)
 
+  const preferences = useSelector((state) => state.preferences)
+
   const [searchQuery, setSearchQuery] = useState("")
 
   const [searchUsers, setSearchUsers] = useState([])
@@ -121,7 +123,13 @@ const SearchComponent = ({ query }) => {
       })
       .then((res) => {
         // console.log(res.data.results)
-        setSearchUsers(res.data.results)
+        let us = res.data.results
+
+        if (!preferences.showBlockedandMuted) {
+          us = us.filter((r) => r.isBlocked === false)
+        }
+
+        setSearchUsers(us)
       })
       .catch((error) => {
         setSearchUsers([])
