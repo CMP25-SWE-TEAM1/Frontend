@@ -184,7 +184,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                     Phone, email or username
                   </label>
                 </div>
-                <button type="button" id="next" className="btn mt-2 dark:bg-white" onClick={handleEmailCheck} disabled={userName === ""}>
+                <button type="button" id="next" className="btn mt-2 dark:bg-white bg-black" onClick={handleEmailCheck} disabled={userName === ""}>
                   Next
                 </button>
                 <Link
@@ -242,7 +242,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                   >
                     Forgot password?
                   </Link>
-                  <button id="login" type="submit" className="btn -mb-4 mt-36 h-14 rounded-3xl dark:bg-white" disabled={password === ""}>
+                  <button id="login" type="submit" className="btn -mb-4 mt-36 h-14 rounded-3xl dark:bg-white bg-black" disabled={password === ""}>
                     {loading ? "Loading..." : "Log In"}
                   </button>
                 </form>

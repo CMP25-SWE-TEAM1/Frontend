@@ -33,7 +33,7 @@ const ProfilePosts = () => {
   const [profile, setProfile] = useState()
   useEffect(() => {
     if (root !== "" && root !== user.username)
-    ProfileRequests.getOtherprofile(false,APIs.getProfileAPI,root)
+    ProfileRequests.getOtherprofile(false,APIs,root)
   }, [root])
 
   const [posts, setPosts] = useState([])
