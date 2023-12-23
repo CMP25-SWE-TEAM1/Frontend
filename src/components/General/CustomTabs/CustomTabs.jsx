@@ -73,6 +73,7 @@ const CustomTabs = ({ tabValue, handleChangeTabValue, tabsNames }) => {
                   fontWeight: tabValue === index ? "550" : "100",
                   fontSize: "12px",
                   padding: 0,
+                  color: tabValue === index && darkMode ? "white" : tabValue === index ? "black" : darkMode ? "#9aa1ad" : "",
                   "&.Mui-selected": {
                     color: getColor(),
                   },
