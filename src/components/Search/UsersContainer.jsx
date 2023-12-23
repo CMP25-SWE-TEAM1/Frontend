@@ -8,7 +8,7 @@ const UsersContainer = (props) => {
     <div className="user-container">
       {users.map((user) => (
         <Link key={user._id} to={`/${user.username}`}>
-          <div className="flex h-[85px] w-[600px] hover:bg-lightHover dark:hover:bg-darkHover">
+          <div className="flex h-[85px] w-full hover:bg-lightHover dark:hover:bg-darkHover">
             <div className="w-[10%] pl-2">
               <img src={user.profile_image} alt="Profile Image" className="h-10 w-10 rounded-3xl" />
             </div>
