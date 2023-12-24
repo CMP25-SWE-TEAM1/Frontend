@@ -76,4 +76,3 @@ export function requestPermission(callback) {
 navigator.serviceWorker.addEventListener("message", (message) => {
   console.log(message)
 })
-*/
