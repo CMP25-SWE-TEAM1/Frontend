@@ -34,47 +34,67 @@ const DetailsChat = (props) => {
   const endOfChat = useRef(null)
   const startOfUnseenChat = useRef(null)
 
-  const [chatPage, setChatPage] = useState(1)
+  let chatPage = 1
   useEffect(() => {
     if (BACKEND_ON) {
-      console.log("chatPage", chatPage)
-      handleGetChat(contact.id, userToken, chatPage).then((response) => {
-        console.log("response", response)
-        if (response && response.data) {
-          const newChat = response.data.map((message) => ({
-            id: message._id,
-            messageText: message.description,
+      setMessagesData([])
+      function fetchChatMessages() {
+        console.log("fetching page", chatPage)
 
-            messageMedia: message.media && message.media.link ? message.media.link : undefined,
-            mediaType: message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined,
-            direction: message.mine ? "R" : "L",
+        handleGetChat(contact.id, userToken, chatPage).then((response) => {
+          if (response && response.data) {
+            const newChat = response.data.map((message) => ({
+              id: message._id,
+              messageText: message.description,
+              messageMedia: message.media && message.media.link ? message.media.link : undefined,
+              mediaType: message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined,
+              direction: message.mine ? "R" : "L",
+              seen: message.seen,
+              time: message.sendTime,
+            }))
+            setMessagesData((prevChat) => [...newChat, ...prevChat])
 
-            seen: message.seen,
-            time: message.sendTime,
-          }))
-          setMessagesData(newChat)
-          // setChatPage((prevChatPage) => prevChatPage + 1)
+            chatPage++
+            console.log("fetch another chat page? ", response.data && response.data.length !== 0 && response.data[0].seen === false)
+            if (response.data && response.data.length !== 0 && response.data[0].seen === false) {
+              // 5-second - Plz no infinite again :(
+              // setTimeout(() => {
+              fetchChatMessages()
+              // }, 5000)
+            }
+          }
+        })
+      }
 
-          // setTimeout(() => {
-          //   console.log("This will be logged after the pause")
-          //   console.log("chatPage", chatPage)
-          //   // Fetch messages until the user sees all unread messages
-          //   while (response.data && response.data.length !== 0 && response.data[0].seen === false) {
-          //     const currentChatPage = chatPage // Capture the current value
-          //     handleGetChat(contact.id, userToken, currentChatPage).then((response) => {
-          //       console.log(`response of chatPage(${currentChatPage})`, response)
-          //       setChatPage((prevChatPage) => prevChatPage + 1) // Update chatPage using the latest value
-          //     })
-          //   }
-          // }, 4000)
-        }
-      })
+      // initial fetch
+      fetchChatMessages()
     }
     scrollToBottom()
-  }, [contact.id, handleGetChat])
+    // scrollToLastSeen()
+    // setScrollToBottomFlag(true)
+  }, [chatPage, contact.id, handleGetChat, userToken])
   const scrollToBottom = () => {
+    console.log("Bottom Scrolling")
     // endOfChat?.current?.scrollIntoView({ behavior: "smooth" })
     endOfChat?.current?.scrollIntoView()
+  }
+  const scrollToLastSeen = () => {
+    console.log("LastSeen Scrolling")
+    if (startOfUnseenChat?.current) {
+      const windowHeight = window.innerHeight
+      const elementHeight = startOfUnseenChat.current.offsetHeight
+
+      // Calculate the offset to position the element at the mid height of the window
+      const offset = Math.max(0, (elementHeight - windowHeight) / 2)
+
+      // Use scrollIntoView with options
+      startOfUnseenChat.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center", // Scroll the element to the center of the view
+        inline: "nearest", // Keep the element aligned to the nearest edge
+        offset: { top: offset },
+      })
+    }
   }
   const handleBackToBottom = () => {
     if (chatBtnDwnAppear) scrollToBottom()
@@ -234,11 +254,10 @@ const DetailsChat = (props) => {
                         return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
                       })}
                     {messagesData.filter((msg) => msg.seen === false).length !== 0 && (
-                      <Divider sx={{ marginBottom: "24px" }}>
+                      <Divider sx={{ marginBottom: "24px" }} ref={startOfUnseenChat}>
                         <Chip label="unread messages" />
                       </Divider>
                     )}
-                    <div ref={startOfUnseenChat}></div>
                     {messagesData
                       .filter((msg) => msg.seen === false)
                       .map((msg, index, array) => {
