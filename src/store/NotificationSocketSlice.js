@@ -1,17 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const notificationSocketSlice = createSlice({
-  name: "notificationSocket",
+const initState= localStorage.getItem("FCMToken")
+
+const notificationSlice = createSlice({
+  name: "notification",
   initialState: {
-    value: null,
+    FCMToken:initState?initState:null,
   },
   reducers: {
-    setNotificationSocket: (state, action) => {
-      state.value = action.payload
+    setNotificationToken: (state, action) => {
+      state.FCMToken = action.payload
     },
   },
 })
 
-export const { setNotificationSocket } = notificationSocketSlice.actions
+export const { setNotificationToken } = notificationSlice.actions
 export const selectNotificationSocket = (state) => state.notificationSocket.value
-export default notificationSocketSlice.reducer
+export default notificationSlice.reducer

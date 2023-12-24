@@ -43,5 +43,6 @@ export const APIs = {
     getNotificationUnseenCount: "http://backend.gigachat.cloudns.org/api/user/notifications/unseenCount",
     markNotificationSeen: "http://backend.gigachat.cloudns.org/api/user/notifications/markAllAsSeen",
     getMentions: "http://backend.gigachat.cloudns.org/api/homepage/mention",
+    getProfileByID: "http://backend.gigachat.cloudns.org/api/user/profileById/",
   },
 }

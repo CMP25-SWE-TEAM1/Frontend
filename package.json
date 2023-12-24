@@ -14,6 +14,7 @@
     "@testing-library/user-event": "^14.5.1",
     "axios": "^1.6.2",
     "emoji-picker-react": "^4.5.16",
+    "firebase": "^10.7.1",
     "gapi-script": "^1.2.0",
     "gif-picker-react": "^1.3.2",
     "jwt-decode": "^4.0.0",
@@ -38,7 +39,7 @@
     }
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --host 192.168.100.4",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

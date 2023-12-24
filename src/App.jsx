@@ -39,7 +39,43 @@ import PostEngagement from "./components/PostEngagement/PostEngagement"
 import SearchResults from "./components/Search/SearchResults"
 import Followpage from "./components/ProfilePage/FollowPage/FollowPage"
 
+import "./firebase-config"
+
+import { requestPermission } from "./firebase-config"
+import { setNotificationToken } from "./store/NotificationSocketSlice"
+import { getMessaging, getToken } from "firebase/messaging"
+// import { onMessageListener } from "./firebase-config"
+
+// if ("serviceWorker" in navigator) {
+//   navigator.serviceWorker
+//     .register("./firebase-messaging-sw.js")
+//     .then(function (registration) {
+//       console.log("Registration successful, scope is:", registration.scope)
+//     })
+//     .catch(function (err) {
+//       console.log("Service worker registration failed, error:", err)
+//     })
+// }
+
+// let fireapp
 const App = () => {
+  useEffect(() => {
+    requestPermission((token, app) => {
+      if (token) {
+        dispatch(setNotificationToken(token))
+      }
+      // fireapp = app
+      // console.log(app)
+      // console.log(token)
+    })
+  }, [])
+
+  // onMessageListener()
+  //   .then((payload) => {
+  //     console.log(payload)
+  //   })
+  //   .catch((err) => console.log("failed: ", err))
+
   const [location, setLocation] = useState(window.location.pathname)
   const [passwordIsConfirmed] = useState(sessionStorage.getItem("passwordIsConfirmed"))
 
@@ -146,17 +182,17 @@ const App = () => {
             <Route path="display" element={<Display />}></Route>
           </Route>
           <Route path={`/:tag`} element={<ProfilePage handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal} />}>
-            <Route  element={<ProfilePosts />}></Route>
+            <Route element={<ProfilePosts />}></Route>
             <Route path="with_replies" element={<ProfileReplies />}></Route>
             <Route path="likes" element={<ProfileLikes />}></Route>
             <Route path="" element={<ProfilePosts />}></Route>
           </Route>
-          <Route path={"/following"} element ={<Followpage></Followpage>}></Route>
+          <Route path={"/following"} element={<Followpage></Followpage>}></Route>
           <Route path={`settings/profile`} element={<ProfilePageEdit handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
           <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/:tag/status/:id" element={<PostPage post={testPost} />}></Route>
           <Route path="/:tag/status/:id/:NavbarLink" element={<PostEngagement />}></Route>
-          <Route path="/compose/tweet" element={<Home composePostPopup={true}/>}></Route>
+          <Route path="/compose/tweet" element={<Home composePostPopup={true} />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
