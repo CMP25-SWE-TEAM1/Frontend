@@ -342,7 +342,7 @@ const DetailsChat = (props) => {
 
                     <ListItemIcon>
                       <button
-                        className={`change-follow${contact.isFollowed ? " followed" : ""}`}
+                        className={`change-follow${contact.isBlocked ? " blocked" : contact.isFollowed ? " followed" : ""}`}
                         onMouseEnter={() => {
                           setIsFollowBtnHovered(true)
                         }}
@@ -354,9 +354,24 @@ const DetailsChat = (props) => {
                           console.log("isFollowed? ", contact.isFollowed)
                         }}
                       >
-                        {contact.isFollowed ? (isFollowBtnHovered ? "Unfollow" : "Following") : "Follow"}
+                        {contact.isBlocked ? (isFollowBtnHovered ? "Unblock" : "Blocked") : contact.isFollowed ? (isFollowBtnHovered ? "Unfollow" : "Following") : "Follow"}
                       </button>
                     </ListItemIcon>
+                  </ListItemButton>
+                </ListItem>
+                <Divider />
+                <ListItem disablePadding>
+                  <ListItemButton
+                    onClick={() => {
+                      // block / unblock user
+                    }}
+                    style={{
+                      fontSize: "15px",
+                      justifyContent: "center",
+                      minHeight: "70px",
+                    }}
+                  >
+                    {contact.isBlocked ? "Unblock" : "Block"} @{contact.userName}
                   </ListItemButton>
                 </ListItem>
               </List>

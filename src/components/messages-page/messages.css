@@ -244,11 +244,21 @@
     border: 1px solid #ddd;
   }
 
+  .messages-page .details.chat .body.allowed .change-follow.blocked,
   .messages-page .details.chat .body.allowed .change-follow.followed {
     width: 100px;
     justify-content: center;
+    background-color: #F4212E;
+    color: white;
+  }
+
+  .messages-page .details.chat .body.allowed .change-follow.followed {
     background-color: white;
     color: black;
+  }
+
+  .messages-page .details.chat .body.allowed .change-follow.blocked:hover {
+    background-color: #DC1E29;
   }
 
   .messages-page .details.chat .body.allowed .change-follow.followed:hover {
