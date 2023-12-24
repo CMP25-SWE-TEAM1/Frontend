@@ -23,7 +23,7 @@ const MessageTools = (props) => {
   // }
   const handleCopy = () => {
     hideMsgTools()
-    copyToClipboard(`${messageText ? messageMedia : ""}${messageText ? `\n` : ""}${messageMedia ? messageMedia : ""}`)
+    copyToClipboard(`${messageText ? messageText : ""}${messageText && messageMedia ? `\n` : ""}${messageMedia ? messageMedia : ""}`)
     clearTimeout(alertVTimeOut)
     setIsAlertVisible(true)
     setAlertVTimeOut(
