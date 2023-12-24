@@ -177,7 +177,7 @@ const MessageInput = (props) => {
             </div>
             <div style={{ position: "relative" }}>
               <div
-                className="giga-emoji-picker-bglock"
+                className="giga-bglock"
                 onClick={() => {
                   handleEmojiPickerVisibilty()
                 }}
