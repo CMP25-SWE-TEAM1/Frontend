@@ -1,7 +1,7 @@
 import axios from "axios"
 import { DefaultCoverPage } from "../../constants"
 class ProfileRequests{
-    static  getOtherprofile = (mock,APIs,tag,setProfile,token,setProfilePicURL,setCoverPicURL,setDetailsPos,setButtonstate) => {
+    static  getOtherprofile = (mock,APIs,tag,setProfile,token,setProfilePicURL,setCoverPicURL,setDetailsPos,setButtonstate,setViewPost) => {
       console.log(APIs);
         axios
         .get(mock ? APIs.mock.getProfileAPI + `${tag}` : APIs.actual.getProfileAPI + `${tag}`, {
@@ -12,8 +12,9 @@ class ProfileRequests{
         .then((res) => {
           if (res.status === 200) {
             console.log(res)
-           
             res.data.user.is_wanted_user_followed? setDetailsPos(`right-[140px]`):setDetailsPos(`right-[100px]`)
+            if(res.data.user.is_curr_user_blocked) setDetailsPos('right-[25px]') 
+            res.data.user.is_wanted_user_blocked? setViewPost(false) : setViewPost(true)
             setProfilePicURL(res.data.user.profile_image)
             const banner_image = res.data.user.banner_image ? res.data.user.banner_image : DefaultCoverPage
             setCoverPicURL(banner_image)
@@ -37,6 +38,7 @@ class ProfileRequests{
             .then((res) => {
               if (res.status === 200) {
                 console.log(res)
+                
                 // //console.log(`Bearer ${token}`)
                // //console.log(res)
                 setProfilePicURL(res.data.user.profile_image)
