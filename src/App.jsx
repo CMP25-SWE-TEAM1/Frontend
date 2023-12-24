@@ -33,6 +33,7 @@ import Verified from "./components/Notifications/Verified"
 import Mentions from "./components/Notifications/Mentions"
 import ProfilePosts from "./components/ProfilePage/ProfilePosts"
 import ProfileReplies from "./components/ProfilePage/ProfileReplies"
+
 import ProfileLikes from "./components/ProfilePage/ProfileLikes"
 import PostEngagement from "./components/PostEngagement/PostEngagement"
 import SearchResults from "./components/Search/SearchResults"
@@ -40,9 +41,9 @@ import Followpage from "./components/ProfilePage/FollowPage/FollowPage"
 
 import "./firebase-config"
 
-//import { requestPermission } from "./firebase-config.js"
-//import { setNotificationToken } from "./store/NotificationSocketSlice"
-//import { getMessaging, getToken } from "firebase/messaging"
+import { requestPermission } from "./firebase-config"
+import { setNotificationToken } from "./store/NotificationSocketSlice"
+import { getMessaging, getToken } from "firebase/messaging"
 // import { onMessageListener } from "./firebase-config"
 
 // if ("serviceWorker" in navigator) {
@@ -58,7 +59,7 @@ import "./firebase-config"
 
 // let fireapp
 const App = () => {
-  /*useEffect(() => {
+  useEffect(() => {
     requestPermission((token, app) => {
       if (token) {
         dispatch(setNotificationToken(token))
@@ -67,7 +68,7 @@ const App = () => {
       // console.log(app)
       // console.log(token)
     })
-  }, [])*/
+  }, [])
 
   // onMessageListener()
   //   .then((payload) => {
