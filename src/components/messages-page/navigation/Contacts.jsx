@@ -24,6 +24,7 @@ const Contacts = (props) => {
     const secondsDiff = Math.floor(timeDiff / 1000)
     const minutesDiff = Math.floor(timeDiff / (1000 * 60))
     const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60))
+    const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24))
 
     if (secondsDiff < 5) {
       return "Now"
@@ -34,15 +35,19 @@ const Contacts = (props) => {
     } else if (hoursDiff < 24) {
       const formattedHours = messageDate.toLocaleString("en-US", {
         hour: "numeric",
-        // minute: "numeric",
         hour12: true,
       })
       return `${formattedHours}`
-    } else {
-      // If the difference is greater than or equal to 24 hours, display the date
+    } else if (daysDiff < 365) {
       return messageDate.toLocaleString("en-US", {
         month: "short",
         day: "numeric",
+      })
+    } else {
+      return messageDate.toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
       })
     }
   }
