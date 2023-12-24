@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app"
+/*import { initializeApp } from "firebase/app"
 import { getMessaging, getToken, onMessage } from "firebase/messaging"
 
 import { getAnalytics } from "firebase/analytics"
@@ -76,3 +76,4 @@ export function requestPermission(callback) {
 navigator.serviceWorker.addEventListener("message", (message) => {
   console.log(message)
 })
+*/
