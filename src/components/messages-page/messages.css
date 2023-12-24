@@ -477,7 +477,7 @@
     padding-left: 12px;
   }
 
-  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-data {
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-data {
     max-width: 100%;
   }
 
@@ -551,6 +551,7 @@
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-media+.message-text {
+    max-width: 100%;
     width: fit-content;
     margin-top: 4px;
   }
