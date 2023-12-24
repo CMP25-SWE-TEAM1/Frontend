@@ -17,7 +17,7 @@ const ProfileICons = ({profilelocation,profilewebsite,profilejoindate,profilebir
     }
   },[profilebirthdate, profilebirthdate])
   return (
-    <div id="icons" className={`flex flex-row w-[100%] h-[10%] flex-wrap space-x-[10px] mb-[5%] `}>
+    <div id="icons" className={`flex flex-row w-[100%] h-[5%] flex-wrap space-x-[10px] mb-[5%] `}>
             <div id="PlaceDiv" className={`flex flex-row ml-[10px] mr-[3px] ${!profilelocation? `hidden`:`block`}`}>
                 <LocationOnSharp className="fill-[#808080] mt-[2px] w-[16px] p-0 mr-[3.3%]"></LocationOnSharp>
                 <p id="LocationP" className="text-[13px] mt-[5px] whitespace-nowrap  text-[rgb(150,150,150)] font-light">{profilelocation}</p>
@@ -36,10 +36,10 @@ const ProfileICons = ({profilelocation,profilewebsite,profilejoindate,profilebir
                 Born {birthhtmldate}
             </p>
             </div>
-            <div id="WebsiteDiv" className={`flex flex-row mr-[3px] w-[25%]  ${!profilewebsite? `hidden`:`block`}`}>
+            <div id="WebsiteDiv" className={`flex flex-row mr-[3px] w-[25%] text-ellipsis  ${!profilewebsite? `hidden`:`block`}`}>
             <LinkSharpIcon className="fill-[#808080] mt-[2px] w-[16px] p-0 mr-[3.3%] " />
             <a href={`//${profilewebsite}`}>
-            <p id="WebSiteP" className="text-[13px] mt-[5px] truncate text-[rgb(150,150,150)] whitespace-nowrap font-light ">
+            <p id="WebSiteP" className="text-[13px] mt-[5px] w-[10em] truncate text-[rgb(150,150,150)] hover:underline  whitespace-nowrap font-light ">
                 {/*date of join*/}
                 {profilewebsite}
             </p>
