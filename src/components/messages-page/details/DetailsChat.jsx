@@ -164,14 +164,13 @@ const DetailsChat = (props) => {
   }
 
   const handleMessageMetaCheck = (message, nextMessage) => {
-    if (!nextMessage) return true
+    if (!nextMessage || message.direction !== nextMessage.direction) return true
     else {
-      const messageDate = new Date(message.date)
-      const nextMessageDate = new Date(nextMessage.date)
+      const messageDate = new Date(message.time)
+      const nextMessageDate = new Date(nextMessage.time)
 
       const timeDiff = (nextMessageDate - messageDate) / 1000
-
-      return timeDiff < 60
+      return timeDiff >= 60
     }
   }
   // Handle get chat of specific user
