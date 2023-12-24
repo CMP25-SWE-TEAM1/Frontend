@@ -20,14 +20,44 @@ const Message = (props) => {
   const messageId = props.messageId
   const messageMeta = props.messageMeta
 
-  const formattedDate = new Date(messageMeta).toLocaleString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  })
+  const getMessageTime = (messageTime) => {
+    const messageDate = new Date(messageTime)
+    const currentDate = new Date()
+
+    const isSameDay = messageDate.getDate() === currentDate.getDate()
+    const isYesterday = messageDate.getDate() === currentDate.getDate() - 1
+    const isSameWeek = messageDate.getFullYear() === currentDate.getFullYear() && messageDate.getMonth() === currentDate.getMonth() && messageDate.getDate() >= currentDate.getDate() - currentDate.getDay()
+
+    if (isSameDay) {
+      return messageDate.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      })
+    } else if (isYesterday) {
+      return `Yesterday, ${messageDate.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      })}`
+    } else if (isSameWeek) {
+      return messageDate.toLocaleString("en-US", {
+        weekday: "short",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      })
+    } else {
+      return messageDate.toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      })
+    }
+  }
 
   const [gifPaused, setGifPaused] = useState(false)
   const gifRef = useRef(null)
@@ -131,7 +161,7 @@ const Message = (props) => {
       </div>
       {messageMeta && (
         <div className="message-meta">
-          <span>{formattedDate}</span>
+          <span>{getMessageTime(messageMeta)}</span>
         </div>
       )}
     </div>
