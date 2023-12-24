@@ -37,8 +37,8 @@ const MessageInput = (props) => {
     setSndMsgActv("active")
   }
   const handleEmojiPickerVisibilty = () => {
+    !emojiPickerVisible ? setEmojiPickerVisibiltyStyle("block") : setEmojiPickerVisibiltyStyle("none")
     setEmojiPickerVisible(!emojiPickerVisible)
-    emojiPickerVisible ? setEmojiPickerVisibiltyStyle("block") : setEmojiPickerVisibiltyStyle("none")
   }
   const handleSndMsg = () => {
     if (newMessageText !== "" || newMessageMedia !== undefined) {
