@@ -7,11 +7,11 @@ const Message = (props) => {
   const [msgToolsVisibile, setMsgToolsVisibile] = useState(false)
   const [msgToolsVisibiltyStyle, setMsgToolsVisibiltyStyle] = useState("none")
   const handleMsgToolsVisibilty = () => {
-    setMsgToolsVisibile(!msgToolsVisibile)
     const rectMsgTools = msgToolsRef.current.getBoundingClientRect()
     if (rectMsgTools.bottom >= window.innerHeight - rectMsgTools.bottom) setMsgToolsPosition("T")
     else setMsgToolsPosition("B")
-    msgToolsVisibile ? setMsgToolsVisibiltyStyle("block") : setMsgToolsVisibiltyStyle("none")
+    !msgToolsVisibile ? setMsgToolsVisibiltyStyle("block") : setMsgToolsVisibiltyStyle("none")
+    setMsgToolsVisibile(!msgToolsVisibile)
   }
   const messageText = props.messageText
   const messageMedia = props.messageMedia
