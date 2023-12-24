@@ -7,8 +7,9 @@ import InfoNoChat from "./navigation/InfoNoChat"
 
 import { useState, useEffect } from "react"
 
-import { BACKEND_ON } from "./constants/MessagesConstants"
+import { BACKEND_ON, SOCKET_ON } from "./constants/MessagesConstants"
 import useGetContacts from "./customHooks/get/useGetContacts"
+import { selectSocket } from "../../store/SocketSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { initializeSocket } from "./customHooks/socketService"
 import { setSocket } from "../../store/SocketSlice"
@@ -19,6 +20,7 @@ const Messages = (props) => {
   const userToken = useSelector((state) => state.user.token)
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
+  const socket = useSelector(selectSocket)
 
   const [contacts, setContacts] = useState(DataInit.Messages_contacts)
   useEffect(() => {
@@ -115,6 +117,16 @@ const Messages = (props) => {
       )
     )
   }
+
+  // Sockets
+  useEffect(() => {
+    if (SOCKET_ON && socket) {
+      socket.on("receive_message", (data) => {
+        // Update nav
+        handleNavNewMessage(data.chat_ID, data.message)
+      })
+    }
+  }, [socket])
 
   return (
     <>

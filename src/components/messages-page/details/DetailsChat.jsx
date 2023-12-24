@@ -144,8 +144,6 @@ const DetailsChat = (props) => {
   useEffect(() => {
     if (SOCKET_ON) {
       socket.on("receive_message", (data) => {
-        // Update nav
-        handleNavNewMessage(data.chat_ID, data.message)
         // Update chat
         if (data.chat_ID == contact.id) {
           console.log("received_message:", data)
