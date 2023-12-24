@@ -301,6 +301,16 @@
     /* height: 1200px; */
   }
 
+
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .blocked-text {
+    color: rgb(83, 100, 113);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: center;
+  }
+
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info {
     cursor: pointer;
     border-bottom: 1px solid #eee;

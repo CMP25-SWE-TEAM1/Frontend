@@ -308,6 +308,7 @@ const DetailsChat = (props) => {
                             return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
                           })}
                       </div>
+                      {contact.isBlocked && <div className="blocked-text">You can no longer send messages to this person.</div>}
                       <div ref={endOfChat}></div>
                     </div>
                   )}
@@ -322,7 +323,7 @@ const DetailsChat = (props) => {
                     </div>
                   </div>
                 </div>
-                <MessageInput handleSendMessage={handleSendMessage} />
+                {!contact.isBlocked && <MessageInput handleSendMessage={handleSendMessage} />}
               </>
             )}
             {infoVisible && (
