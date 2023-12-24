@@ -109,14 +109,14 @@ const Post = ({ userProfilePicture, postType, userName, userTag, id, date, reply
       // console.log(userToken)
       // console.log(id)
       axios
-      .post(
-        APIs.actual.unlike,
-        {},
-        {
-          headers: {
-            authorization: "Bearer " + userToken,
-          },
-        }
+        .post(
+          APIs.actual.unlike,
+          {},
+          {
+            headers: {
+              authorization: "Bearer " + userToken,
+            },
+          }
         )
         .then((response) => {
           setLikesNum(likesNum - 1)
@@ -137,11 +137,11 @@ const Post = ({ userProfilePicture, postType, userName, userTag, id, date, reply
               authorization: "Bearer " + userToken,
             },
           }
-          )
-          .then((response) => {
-            // console.log("like success", response)
-            setLikesNum(likesNum + 1)
-            setLiked(!liked)
+        )
+        .then((response) => {
+          // console.log("like success", response)
+          setLikesNum(likesNum + 1)
+          setLiked(!liked)
         })
         .catch((error) => {
           console.log("like fail", error)
@@ -181,11 +181,11 @@ const Post = ({ userProfilePicture, postType, userName, userTag, id, date, reply
               authorization: "Bearer " + userToken,
             },
           }
-          )
-          .then((response) => {
-            setRepostsNum(repostsNum + 1)
-            setReposted(!reposted)
-            console.log("repost success", response)
+        )
+        .then((response) => {
+          setRepostsNum(repostsNum + 1)
+          setReposted(!reposted)
+          console.log("repost success", response)
         })
         .catch((error) => {
           console.log("repost fail", error)
@@ -219,15 +219,15 @@ const Post = ({ userProfilePicture, postType, userName, userTag, id, date, reply
     <Link className={`w-full ${pathname.search(id) === -1 ? "" : "pointer-events-none"}`} to={`/${userTag}/status/${id}`}>
       <div className={` h-fit border border-l-0 border-r-0 ${pathname.search(id) === -1 ? "hover:bg-gray-100 dark:hover:bg-[#080808]" : ""} border-lightBorder p-3  dark:border-darkBorder `} data-testid="postId">
         <div></div>
-        <div className={`ml-5 text-sm flex items-center text-ternairy dark:text-secondary ${postType==="retweet"?"":"hidden"}`}>
-             <CachedOutlinedIcon 
-             sx={{
-                    width: 16,
-                    height: 16,
-                  }}
-                  />
-                  <span className="ml-2 hover:underline">{followingUser? followingUser.username===userTag?"You":followingUser.username:""} reposted</span>
-            </div>
+        <div className={`ml-5 flex items-center text-sm text-ternairy dark:text-secondary ${postType === "retweet" ? "" : "hidden"}`}>
+          <CachedOutlinedIcon
+            sx={{
+              width: 16,
+              height: 16,
+            }}
+          />
+          <span className="ml-2 hover:underline">{followingUser ? (followingUser.username === user.username ? "You" : followingUser.username) : ""} reposted</span>
+        </div>
         <div className="flex">
           <div className=" h-fit w-10 sm:mr-3">
             <Link className="pointer-events-auto hover:brightness-90" to={`/${userTag}`}>

@@ -12,7 +12,7 @@ import ProfileRequests from "./profilerequests"
 
 const ProfilePosts = () => {
   const user = useSelector((state) => state.user.user)
-  const userToken = useSelector((state) => state.user.token)
+  const { token } = useSelector((state) => state.user)
 
   const location = useLocation()
   const [root, setRoot] = useState("")
@@ -32,7 +32,8 @@ const ProfilePosts = () => {
 
   const [profile, setProfile] = useState()
   useEffect(() => {
-    if (root !== "" && root !== user.username) ProfileRequests.getOtherprofile(false, APIs, root)
+    if (root !== "" && root !== user.username)
+    ProfileRequests.getOtherprofile(false,APIs,root,setProfile,token)
   }, [root])
 
   const [posts, setPosts] = useState([])
@@ -47,7 +48,7 @@ const ProfilePosts = () => {
             username: user.username,
           },
           headers: {
-            authorization: "Bearer " + userToken,
+            authorization: "Bearer " + token,
           },
         })
         .then((res) => {
