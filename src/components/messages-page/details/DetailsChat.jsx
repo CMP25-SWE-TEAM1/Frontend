@@ -170,6 +170,9 @@ const DetailsChat = (props) => {
           // scrollToBottom()
         }
       })
+      socket.on("failed_to_send_message", (response) => {
+        console.log(response.error)
+      })
     }
   }, [socket, messagesData, contact.id])
   // Send message to socket sercer
