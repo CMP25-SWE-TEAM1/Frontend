@@ -102,6 +102,19 @@ const Messages = (props) => {
   }, [])
 
   const [selectedContact, setSelectedContact] = useState()
+  const handleSelectContact = (contacId) => {
+    setSelectedContact(contacId)
+    setContacts(
+      contacts.map((contact) =>
+        contact.id === contacId
+          ? {
+              ...contact,
+              lastMessageSeen: true,
+            }
+          : contact
+      )
+    )
+  }
 
   return (
     <>
@@ -129,7 +142,7 @@ const Messages = (props) => {
             </div>
           </div>
           {contacts.length === 0 && <InfoNoChat handleComposeModalOpen={handleComposeModalOpen} />}
-          {contacts.length !== 0 && <InfoChat contacts={contacts} selectedContact={selectedContact} setSelectedContact={setSelectedContact} />}
+          {contacts.length !== 0 && <InfoChat contacts={contacts} selectedContact={selectedContact} setSelectedContact={handleSelectContact} />}
         </div>
         {(!selectedContact || !contacts.filter((contact) => contact.id === selectedContact)[0]) && <DetailsNoChat handleComposeModalOpen={handleComposeModalOpen} />}
         {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} handleNavNewMessage={handleNavNewMessage} />}
