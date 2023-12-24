@@ -3,13 +3,27 @@ import MessageTools from "./MessageTools"
 
 const Message = (props) => {
   const msgToolsRef = useRef(null)
-  const [msgToolsPosition, setMsgToolsPosition] = useState("T")
+  const msgContentRef = useRef(null)
+  const [msgToolsPositionY, setMsgToolsPositionY] = useState("T")
+  const [msgToolsPositionX, setMsgToolsPositionX] = useState("T")
   const [msgToolsVisibile, setMsgToolsVisibile] = useState(false)
   const [msgToolsVisibiltyStyle, setMsgToolsVisibiltyStyle] = useState("none")
   const handleMsgToolsVisibilty = () => {
     const rectMsgTools = msgToolsRef.current.getBoundingClientRect()
-    if (rectMsgTools.bottom >= window.innerHeight - rectMsgTools.bottom) setMsgToolsPosition("T")
-    else setMsgToolsPosition("B")
+    const rectMsgContent = msgContentRef.current.getBoundingClientRect()
+    // Top Bottom
+    if (rectMsgTools.bottom >= window.innerHeight - rectMsgTools.bottom) setMsgToolsPositionY("T")
+    else setMsgToolsPositionY("B")
+
+    // Left Right
+    if (props.direction === "R") {
+      if (rectMsgContent.right - rectMsgTools.left >= 180) setMsgToolsPositionX("R")
+      else setMsgToolsPositionX("L")
+    } else {
+      if (rectMsgTools.right - rectMsgContent.left >= 180) setMsgToolsPositionX("L")
+      else setMsgToolsPositionX("R")
+    }
+
     !msgToolsVisibile ? setMsgToolsVisibiltyStyle("block") : setMsgToolsVisibiltyStyle("none")
     setMsgToolsVisibile(!msgToolsVisibile)
   }
@@ -75,7 +89,7 @@ const Message = (props) => {
   return (
     <div className={`message ${props.direction === "R" ? "right" : "left"}`}>
       {/* Message-content */}
-      <div className="message-content">
+      <div className="message-content" ref={msgContentRef}>
         {/* Message-text + Message-interact */}
         <div className="message-box">
           <div className="message-data">
@@ -140,7 +154,7 @@ const Message = (props) => {
                 }}
                 style={{ display: msgToolsVisibiltyStyle }}
               ></div>
-              <MessageTools messageMedia={messageMedia} messageText={messageText} hideMsgTools={handleMsgToolsVisibilty} msgToolsPosition={msgToolsPosition} visibiltyStyle={msgToolsVisibiltyStyle} deleteMessage={deleteMessage} messageId={messageId} />
+              <MessageTools messageMedia={messageMedia} messageText={messageText} hideMsgTools={handleMsgToolsVisibilty} msgToolsPositionX={msgToolsPositionX} msgToolsPositionY={msgToolsPositionY} visibiltyStyle={msgToolsVisibiltyStyle} deleteMessage={deleteMessage} messageId={messageId} />
               <div
                 className="message-more"
                 title="More"

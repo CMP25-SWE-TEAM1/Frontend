@@ -811,11 +811,11 @@
   }
 
   /* ================== Chat - Message - More (Copy/Reply/Delte) ================== */
-  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-interaction .message-tools {
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools.to-right {
     left: 0;
   }
 
-  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-box .message-interaction .message-tools {
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools.to-left {
     right: 0;
   }
 
