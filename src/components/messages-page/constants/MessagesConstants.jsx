@@ -6,7 +6,7 @@ export const SOCKET_ON = true
 
 export const SOCKET_IO = {
   mock: "http://localhost:3001",
-  actual: "http://51.116.199.56:5750",
+  actual: " https://websocket.gigachat.cloudns.org/",
 }
 
 // APIs
@@ -16,7 +16,7 @@ export const BACKEND_ON = true // flag for using APIs(true) or not(false)
 export const SERVER_ON = true // flag for using Mock(false) or actual(true)
 // domains
 const MOCK_DOMAIN = "http://localhost:3001/api"
-const ACTUAL_DOMAIN = "http://backend.gigachat.cloudns.org/api"
+const ACTUAL_DOMAIN = "https://backend.gigachat.cloudns.org/api"
 // sub-domains
 export const APIs = {
   mock: {
