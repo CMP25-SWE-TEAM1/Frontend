@@ -11,7 +11,7 @@ import { useLocation } from "react-router-dom"
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
 import ReplyingTo from "../../General/ReplyingTo"
 
-const Post = ({ userProfilePicture, postType, isFollowed, replyReferredTweetId, userName, userTag, bio,id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, followingUser, setPosts, posts }) => {
+const Post = ({ cascade, inPostPage, userProfilePicture, postType, isFollowed, replyReferredTweetId, userName, userTag, bio,id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, followingUser, setPosts, posts }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
   const [mediaUrls, setMediaUrls] = useState([])
   const [mediaTypes, setMediaTypes] = useState([])
@@ -253,11 +253,11 @@ const Post = ({ userProfilePicture, postType, isFollowed, replyReferredTweetId, 
             </Link>
           </div>
           <div className=" w-full sm:mr-2">
-            <PostHeader pathname={pathname} postType={postType} isFollowed={isFollowed} userTag={userTag} bio={bio} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={followingUser} setPosts={setPosts} posts={posts} />
-            {postType==="reply"&&<ReplyingTo username={replyingToUsername} leftMargin="7"/>}
+            <PostHeader pathname={pathname} postType={postType} replyingToUsername={replyingToUsername} isFollowed={isFollowed} userTag={userTag} bio={bio} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={followingUser} setPosts={setPosts} posts={posts} />
+        {!inPostPage&&<PostBody descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes} />}
           </div>
         </div>
-        <PostBody descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes} />
+        {inPostPage&&<PostBody cascade={cascade} descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes} />}
         <div className={`${pathname.search(id) !== -1 ? "" : "hidden"}`}>
           <Link className={`pointer-events-auto`} to={`/${userTag}/status/${id}/retweets`}>
             <div className="flex h-14 items-center border-b border-t border-lightBorder text-sm text-ternairy dark:border-lightBorder dark:text-secondary">
