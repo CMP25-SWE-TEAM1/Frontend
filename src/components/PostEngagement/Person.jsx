@@ -7,20 +7,19 @@ import FollowButton from "../ProfilePage/FollowButton"
 
 function Person({ nickname, username, profile_image, bio, isFollowed }) {
   const user = useSelector((state) => state.user.user)
-  const [unfollow, setUnfollow] = useState("Following")
+  
   const [color, setColor] = useState("text-black dark:text-white")
   const [bgColor, setBgColor] = useState("")
   const [borderColor, setBorderColor] = useState("border-gray-200")
+  const[buttonstate,setButtonState]=useState(isFollowed? "Following":"Follow")
   isFollowed = true //just for test
   const handleMouseOver = () => {
-    setUnfollow("Unfollow")
     setColor("text-red-600")
     setBgColor("bg-red-200 dark:bg-[#0f0303]")
     setBorderColor("border-red-400")
   }
 
   const handleMouseLeave = () => {
-    setUnfollow("Following")
     setColor("text-black dark:text-white")
     setBgColor("dark:bg-black")
     setBorderColor("border-gray-200")
@@ -41,7 +40,9 @@ function Person({ nickname, username, profile_image, bio, isFollowed }) {
                 @{username}
               </div>
             </div>
-            {user.username !== username && <FollowButton buttonName="Follow" tag={username} />}
+            <div className="z-100">
+            {user.username !== username && <FollowButton buttonName={buttonstate} setButtonState={setButtonState} tag={username} />}
+            </div>
           </div>
           {bio && <div className="w-full">{bio}</div>}
         </div>
