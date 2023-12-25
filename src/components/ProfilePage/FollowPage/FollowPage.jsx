@@ -4,14 +4,28 @@ import { Outlet } from "react-router"
 import HorizontalNavbar from '../../General/HorizontalNavbar'
 import { useSelector } from "react-redux"
 import Header from '../Header'
+import { useState, useEffect } from "react"
+import ProfileRequests from '../profilerequests'
+
 const  FollowPage = () => {
   const FollowNavLinks = [
     { title: "Following", location: "Following" },
     { title: "Followers", location: "Followers" },
   ]
+  const {token} = useSelector((state)=>state.user)
+  const [profileres,setProfile]=useState()
+  const APIs = {
+    mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
+    actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/` },
+  }
   const {tag} = useParams()
   const {user} = useSelector((state)=>(state.user))
-  console.log(tag);
+  useEffect(() => {
+    if(tag !== user.username)
+    ProfileRequests.getOtherprofile(false,APIs,tag,setProfile,token)
+    
+  }, [tag])
+
   return (
     <div className=" flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
       <div
@@ -19,7 +33,7 @@ const  FollowPage = () => {
       overflow-y-scroll border border-b-0 border-t-0 border-lightBorder 
       dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-[600px]"
       >
-      <Header profilename={user.nickname}></Header>
+      { profileres && <Header profilename={user.username=== tag? user.nickname : profileres.nickname} profiletag={user.username=== tag? tag: profileres.nickname}></Header>}
       <div id="FollowNavbar-div" className={`flex flex-row w-[100%] h-[50px] `}>
         <HorizontalNavbar urls={FollowNavLinks} originalUrl={`/${tag}`} handlers={[]}/>
       </div>
