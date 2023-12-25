@@ -1,34 +1,45 @@
-import { useState } from "react"
-
-import List from "@mui/material/List"
-import ListItem from "@mui/material/ListItem"
-
+// Components
 import Search from "./Search"
-
-import Tabs from "@mui/material/Tabs"
-import Tab from "@mui/material/Tab"
-import Box from "@mui/material/Box"
-
 import SearchPeople from "./SearchPeople"
 import SearchMessages from "./SearchMessages"
 import NoResultFound from "./NoResultFound"
 import Contacts from "./Contacts"
-import useGetChatSearch from "../customHooks/get/useGetChatSearch"
-import { useSelector } from "react-redux"
+// MUI
+import List from "@mui/material/List"
+import ListItem from "@mui/material/ListItem"
+import Tabs from "@mui/material/Tabs"
+import Tab from "@mui/material/Tab"
+import Box from "@mui/material/Box"
+// Const
 import { BACKEND_ON } from "../constants/MessagesConstants"
 import * as DataInit from "../constants/MessagesInit"
+// Hooks
+import { useState } from "react"
+import useGetChatSearch from "../customHooks/get/useGetChatSearch"
+// Redux
+import { useSelector } from "react-redux"
 
 const InfoChat = (props) => {
+  // ==============  Props   ==============
   const contacts = props.contacts
   const selectedContact = props.selectedContact
   const setSelectedContact = props.setSelectedContact
 
+  // ==============  Redux   ==============
+  // User
   const userToken = useSelector((state) => state.user.token)
+
+  // ==============  Data   ==============
+  const [messages, setMessages] = useState(DataInit.InfoChat_messages)
+  const [searchValue, setSearchValue] = useState("")
+  const [tabValue, setTabValue] = useState("all")
+  const [searchActive, setSearchActive] = useState(false)
+
+  // ==============  Hooks   ==============
+  // -------- Custom --------
   const handleGetChatSearch = useGetChatSearch
 
-  const [messages, setMessages] = useState(DataInit.InfoChat_messages)
-
-  const [searchValue, setSearchValue] = useState("")
+  // ==============  Functions   ==============
   const handleSearchValueChange = (event) => {
     setSearchValue(event.target.value)
     if (BACKEND_ON && event.target.value !== "") {
@@ -51,14 +62,9 @@ const InfoChat = (props) => {
       setMessages([])
     }
   }
-
-  const [tabValue, setTabValue] = useState("all")
-
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue)
   }
-
-  const [searchActive, setSearchActive] = useState(false)
 
   return (
     <div className="info chat">
