@@ -17,7 +17,7 @@ const ProfileLikes = () => {
   const location = useLocation()
   const [root, setRoot] = useState("")
   useEffect(() => {
-    console.log(location.pathname.split("/"))
+   
     setRoot(location.pathname.split("/")[1])
   }, [location])
 
@@ -52,10 +52,10 @@ const ProfileLikes = () => {
           },
         })
         .then((res) => {
-          // console.log("Here")
+         
           if (res.status === 200) {
             if (res.data.posts) {
-              console.log(res.data)
+              
               setPosts(
                 res.data.posts.map((post) => ({
                   tweetDetails: post,
@@ -66,11 +66,11 @@ const ProfileLikes = () => {
           }
         })
         .catch((error) => {
-          console.log(error)
+          
         })
   }, [root])
   return (
-    <div className="">
+    <div id="profile-Likes" className="">
       <PostsContainer posts={posts} setPosts={setPosts} />
     </div>
   )

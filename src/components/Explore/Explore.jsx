@@ -1,12 +1,14 @@
 import { useSelector } from "react-redux"
 import Widgets from "../Widgets/Widgets"
 
-import { useState } from "react"
+import { useState,useEffect } from "react"
 
 import CustomTabPanel from "../General/CustomTabs/CustomTabPanel"
 import CustomTabs from "../General/CustomTabs/CustomTabs"
 import WithConditionalDataFetching from "./WithDataFetching"
 import SearchComponent from "./SearchComponent"
+
+import { useNavigate } from "react-router-dom"
 
 const Explore = () => {
   const user = useSelector((state) => state.user.user)
@@ -18,6 +20,13 @@ const Explore = () => {
   }
 
   const tabsNames = ["FOR YOU", "TRENDING", "NEWS", "SPORTS", "ENTERTAINMENT"]
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [])
 
   return (
     <div className="flex flex-1 flex-grow-[8] max-xs:max-w-[475]">

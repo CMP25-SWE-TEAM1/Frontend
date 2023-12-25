@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { setSocket } from "../../store/SocketSlice"
 import { Link } from "react-router-dom"
 
+
 const Messages = (props) => {
   // ==============  Props   ==============
   const { contactId: paramContactId } = useParams()
@@ -66,6 +67,12 @@ const Messages = (props) => {
       }
     }
   }, [socket])
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [])
 
   // Fetch data
   useEffect(() => {

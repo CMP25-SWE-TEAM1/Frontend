@@ -13,6 +13,8 @@ import ComposeReply from "../Home/ComposePost/ComposePost"
 import { getColor } from "../../constants"
 import ReplyingTo from "../General/ReplyingTo"
 
+import { useNavigate } from "react-router-dom"
+
 function PostPage() {
   const [postLoaded, setPostLoaded] = useState(false)
   const [post, setPost] = useState({})
@@ -29,6 +31,7 @@ function PostPage() {
     },
   }
   useEffect(() => {
+    setPostLoaded(false); 
     console.log(userToken)
     axios
       .get(APIs.actual.getPost, {
@@ -61,7 +64,7 @@ function PostPage() {
       .catch((error) => {
         console.log("get post replies fail", error)
       })
-  }, [])
+  }, [postId])
 
   const replies = [
     {
@@ -82,6 +85,13 @@ function PostPage() {
 
   const themeColor = useSelector((state) => state.theme.color)
 
+   const navigate = useNavigate()
+   useEffect(() => {
+     if (!user) {
+       navigate("/")
+     }
+   }, [])
+
   return (
     <div className="flex flex-1">
       <div className="ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder sm:w-[600px]">
@@ -94,6 +104,7 @@ function PostPage() {
             <ReplyingTo username={post.tweet_owner.username} leftMargin="14"/>
             <ComposeReply buttonName="Reply" handleNewPost={(newReply) => handleNewReply(newReply)} postType="reply" referredTweetId={post.id} />
             <RepliesContainer replies={postReplies} />
+            
           </>
         )}
       </div>

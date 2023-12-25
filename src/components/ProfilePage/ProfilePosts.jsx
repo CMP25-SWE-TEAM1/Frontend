@@ -17,7 +17,7 @@ const ProfilePosts = () => {
   const location = useLocation()
   const [root, setRoot] = useState("")
   useEffect(() => {
-    console.log(location.pathname.split("/"))
+   
     setRoot(location.pathname.split("/")[1])
   }, [location])
 
@@ -32,8 +32,7 @@ const ProfilePosts = () => {
 
   const [profile, setProfile] = useState()
   useEffect(() => {
-    if (root !== "" && root !== user.username)
-    ProfileRequests.getOtherprofile(false,APIs,root,setProfile,token)
+    if (root !== "" && root !== user.username) ProfileRequests.getOtherprofile(false, APIs, root, setProfile, token)
   }, [root])
 
   const [posts, setPosts] = useState([])
@@ -52,13 +51,18 @@ const ProfilePosts = () => {
           },
         })
         .then((res) => {
-          // console.log("Here")
+          
           if (res.status === 200) {
             if (res.data.posts) {
-              console.log(res.data)
+             
               setPosts(
                 res.data.posts.map((post) => ({
+                  isFollowed: post.isFollowed,
+                  isFollowingMe: post.isFollowingMe,
+                  isLiked: post.isLiked,
+                  isRtweeted:post.isRetweeted,
                   tweetDetails: post,
+                  type:post.type,
                   followingUser: { username: root },
                 }))
               )
@@ -66,11 +70,11 @@ const ProfilePosts = () => {
           }
         })
         .catch((error) => {
-          console.log(error)
+          
         })
   }, [root])
   return (
-    <div className="">
+    <div id="Profile-Posts-test" className="">
       <PostsContainer posts={posts} setPosts={setPosts} />
     </div>
   )

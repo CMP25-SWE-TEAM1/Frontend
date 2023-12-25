@@ -7,6 +7,9 @@ import PersonsContainer from "./PersonsContainer"
 import { useLocation } from "react-router-dom"
 import { HashLink } from 'react-router-hash-link' 
 
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
 function PostEngagement() {
   const [navbarActiveLink, setNavbarActiveLink] = useState("Reposts");
   const location = useLocation();
@@ -22,7 +25,15 @@ function PostEngagement() {
     setNavbarActiveLink("Likes");
   }
   
-  const engagementNavLinks = [{title :"Reposts" , location:"retweets"},{ title: "Likes", location: "likes" }];
+  const engagementNavLinks = [{ title: "Reposts", location: "retweets" }, { title: "Likes", location: "likes" }];
+  
+  const user=useSelector((state)=>state.user.user)
+   const navigate = useNavigate()
+   useEffect(() => {
+     if (!user) {
+       navigate("/")
+     }
+   }, [])
  
   return (
     <div className="flex flex-1">

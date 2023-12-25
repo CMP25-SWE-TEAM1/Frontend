@@ -10,6 +10,8 @@ import ComposePost from "./ComposePost/ComposePost"
 import axios from "axios"
 import { useSelector } from "react-redux"
 
+import { useNavigate } from "react-router-dom"
+
 const Home = () => {
   const user = useSelector((state) => state.user.user)
   const userToken = useSelector((state) => state.user.token)
@@ -142,6 +144,13 @@ const Home = () => {
       container.removeEventListener("scroll", handleScroll)
     }
   }, [feedRef])
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [])
 
   return (
     <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">

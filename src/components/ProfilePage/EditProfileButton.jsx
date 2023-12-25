@@ -5,7 +5,7 @@ const EditProfileButton = ({handleOpenProfileEditModal,display}) => {
     const navigate = useNavigate();
     const {darkMode} = useSelector((state)=>state.theme)
   return (
-    <button onClick={()=>{
+    <button id="Edit-Profile" onClick={()=>{
         handleOpenProfileEditModal()
         navigate('/settings/profile')
     }} className={`relative right-[10px] ${display} ${darkMode? `bg-black text-white hover:bg-lightHover dark:hover:bg-darkHover`: `bg-white text-black hover:bg-lightHover dark:hover:bg-darkHover` }

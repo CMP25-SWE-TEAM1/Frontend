@@ -16,8 +16,17 @@ import { toggleBlockedMutedMode } from "../../store/PreferencesSlice"
 import Person from "../PostEngagement/Person"
 import { getColor } from "../../constants"
 
+import { useNavigate } from "react-router-dom"
+
 const SearchResults = () => {
   const { user, token } = useSelector((state) => state.user)
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [])
 
   const preferences = useSelector((state) => state.preferences)
   const dispatch = useDispatch()
