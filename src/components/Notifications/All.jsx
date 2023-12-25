@@ -6,15 +6,17 @@ import logoLight from "../../assets/imgs/gigachatLogoOne_light_v2-removebg-previ
 import { useDispatch, useSelector } from "react-redux"
 
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { APIs } from "../../constants/signupConstants"
 import { setUnseenCount } from "../../store/NotificationSocketSlice"
+import { CircularProgress } from "@mui/material"
 
 const All = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const userToken = useSelector((state) => state.user.token)
 
   const [allNotifications, setAllNotifications] = useState([])
+  const [newAllNotifications, setNewAllNotifications] = useState([])
 
   const notTest = [
     {
@@ -85,12 +87,17 @@ const All = () => {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
+  const [pageNumber, setPageNumber] = useState(1)
+  const [finshed, setFinished] = useState(false)
+
+  const fetchNotifications = () => {
+    // console.log("fetching new notifications...")
+
     axios
       .get(APIs.actual.getAllNotifications, {
         params: {
-          page: 1,
-          count: 1000,
+          page: pageNumber,
+          count: 10,
         },
         headers: {
           authorization: "Bearer " + userToken,
@@ -98,12 +105,22 @@ const All = () => {
       })
       .then((res) => {
         // console.log(res.data.data.notifications)
-        setAllNotifications(res.data.data.notifications)
+        setNewAllNotifications(res.data.data.notifications)
+
+        if (res.data.data.notifications.length < 10) setFinished(true)
       })
       .catch((err) => {
         console.log(err)
       })
-  }, [])
+  }
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (finshed === false) {
+      setLoading(true)
+      fetchNotifications()
+    }
+  }, [pageNumber])
 
   useEffect(() => {
     axios
@@ -125,9 +142,59 @@ const All = () => {
       })
   }, [])
 
+  const feedRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setPageNumber((prevState) => prevState + 1)
+        }
+      })
+    })
+
+    if (feedRef.current) {
+      observer.observe(feedRef.current)
+    }
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    async function handleNotifications() {
+      try {
+        const promises = newAllNotifications.map((n) => {
+          return axios.get(APIs.actual.getProfileByID + n.notifier, {
+            headers: {
+              authorization: "Bearer " + userToken,
+            },
+          })
+        })
+
+        const responses = await Promise.all(promises)
+        const updatedNotifications = newAllNotifications.map((n, index) => ({
+          ...n,
+          notifierUser: responses[index].data.user,
+        }))
+
+        const t = updatedNotifications
+        if (t.length > 0) setAllNotifications((prevState) => [...prevState, ...t])
+
+        setLoading(false)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    handleNotifications()
+  }, [newAllNotifications])
+
   return (
-    <div>
-      <NotificationsContainer list={allNotifications} type={"all"} />
+    <div className="flex flex-col">
+      <NotificationsContainer list={allNotifications} type={"all"} feedRef={feedRef} loading={loading} />
+      <CircularProgress className={`${loading ? "" : "hidden"} mt-2 self-center text-sm`} />
     </div>
   )
 }
