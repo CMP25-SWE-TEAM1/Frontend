@@ -68,8 +68,7 @@ const DetailsChat = (props) => {
               time: message.sendTime,
             }))
             setMessagesData((prevChat) => [...newChat, ...prevChat])
-
-            chatPage++
+            if (response.data.length !== 0) chatPage++
             console.log("fetch another chat page? ", response.data && response.data.length !== 0 && response.data[0].seen === false)
             if (response.data && response.data.length !== 0 && response.data[0].seen === false) {
               // 5-second - Plz no infinite again :(
@@ -259,8 +258,7 @@ const DetailsChat = (props) => {
                 time: message.sendTime,
               }))
               setMessagesData((prevChat) => [...newChat, ...prevChat])
-
-              chatPage++
+              if (response.data.length !== 0) chatPage++
             }
           })
         }
