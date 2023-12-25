@@ -118,11 +118,11 @@ class ProfileRequests{
         console.log(err)
       })
   }
-  static unmute = (mock, APIs, token) => {
-    console.log("tete")
+  static unmute = (mock, APIs, token,tag) => {
+    console.log(APIs)
     axios
       .patch(
-        mock ? APIs.blockmock.Block : APIs.unmuteactual.unmute,
+        mock ? APIs.blockmock.Block : `${APIs.unmuteactual.unmute}/${tag}/unmute`,
         {},
         {
           headers: {
