@@ -20,7 +20,7 @@ function Following() {
       unfollowactual: { postfollowProfileAPI: `https://backend.gigachat.cloudns.org/api/user/` },
     }
     useEffect(()=>{
-      console.log(followPagerequests.getfollowings)
+      
       followPagerequests.getfollowings(false,APIs,token,setFollowings)
     }
     ,[])

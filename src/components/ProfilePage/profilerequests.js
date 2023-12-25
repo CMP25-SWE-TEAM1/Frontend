@@ -1,8 +1,8 @@
 import axios from "axios"
 import { DefaultCoverPage } from "../../constants"
 class ProfileRequests{
-    static  getOtherprofile = (mock,APIs,tag,setProfile,token,setProfilePicURL,setCoverPicURL,setDetailsPos,setButtonstate,setViewPost) => {
-      console.log(APIs);
+    static  getOtherprofile = (mock,APIs,tag,setProfile,token,setProfilePicURL,setCoverPicURL,setDetailsPos,setButtonstate,setViewPost,setFollowersnum,setFollowingsnum) => {
+      //cl(APIs);
         axios
         .get(mock ? APIs.mock.getProfileAPI + `${tag}` : APIs.actual.getProfileAPI + `${tag}`, {
           headers: {
@@ -26,16 +26,18 @@ class ProfileRequests{
             const newUser = {...res.data.user, banner_image:banner_image }
             if(setButtonstate !== undefined)   
             setButtonstate(res.data.user.is_wanted_user_followed? `Following`:`Follow`)
+            setFollowersnum(res.data.user.followers_num)
+            setFollowingsnum(res.data.user.followings_num)
             setProfile(newUser)
           }
         })
         .catch((err) => {
-          console.log(err)
-          //console.log(tag)
-          //console.log(err)
+          //cl(err)
+          ////cl(tag)
+          ////cl(err)
         })
     }
-    static getMyprofile = (mock,APIs,token,setProfile,setProfilePicURL,setCoverPicURL) =>{
+    static getMyprofile = (mock,APIs,token,setProfile,setProfilePicURL,setCoverPicURL,setFollowersnum,setFollowingsnum) =>{
         axios
             .get(mock ? APIs.mock.getProfileAPI : APIs.actual.getProfileAPI, {
               headers: {
@@ -44,20 +46,22 @@ class ProfileRequests{
             })
             .then((res) => {
               if (res.status === 200) {
-                console.log(res)
+                //cl(res)
                 
-                // //console.log(`Bearer ${token}`)
-               // //console.log(res)
+                // ////cl(`Bearer ${token}`)
+               // ////cl(res)
                 setProfilePicURL(res.data.user.profile_image)
                 const banner_image = res.data.user.banner_image ? res.data.user.banner_image : DefaultCoverPage
                 setCoverPicURL(banner_image)
                 const newUser = {...res.data.user, banner_image:banner_image,is_curr_user:true }   
+                setFollowersnum(res.data.user.followers_num)
+              setFollowingsnum(res.data.user.followings_num)
                 setProfile(newUser)
               }
             })
             .catch((err) => {
-              //console.log(tag)
-              //console.log(err)
+              ////cl(tag)
+              ////cl(err)
             })
 
     }
@@ -71,11 +75,11 @@ class ProfileRequests{
               },
           }
       ).then((res)=>{
-        console.log(res)
+        //cl(res)
         window.location.reload()
       })
       .catch((err) => {
-        console.log(err)
+        //cl(err)
       })
   }
   static unblock = (mock, APIs, token) => {
@@ -90,12 +94,12 @@ class ProfileRequests{
         }
       )
       .then((res) => {
-        console.log(res)
+        //cl(res)
         window.location.reload()
       })
       .catch((err) => {
-        console.log("hello")
-        console.log(err)
+        //cl("hello")
+        //cl(err)
       })
   }
   static mute = (mock, APIs, token) => {
@@ -110,16 +114,16 @@ class ProfileRequests{
         }
       )
       .then((res) => {
-        console.log(res)
+        //cl(res)
         window.location.reload()
       })
       .catch((err) => {
-        console.log("hello")
-        console.log(err)
+        //cl("hello")
+        //cl(err)
       })
   }
   static unmute = (mock, APIs, token,tag) => {
-    console.log(APIs)
+    //cl(APIs)
     axios
       .patch(
         mock ? APIs.blockmock.Block : `${APIs.unmuteactual.unmute}/${tag}/unmute`,
@@ -131,15 +135,15 @@ class ProfileRequests{
         }
       )
       .then((res) => {
-        console.log(res)
+        //cl(res)
         window.location.reload()
       })
       .catch((err) => {
-        console.log("hello")
-        console.log(err)
+        //cl("hello")
+        //cl(err)
       })
   }
-  static follow = (mock, APIs, token, setbuttonstate, setDetailsPos) => {
+  static follow = (mock, APIs, token, setbuttonstate, setDetailsPos,setFollowersnum,followersnum) => {
     axios
       .post(
         mock ? APIs.followmock.postfollowProfileAPI : APIs.followactual.postfollowProfileAPI,
@@ -152,15 +156,19 @@ class ProfileRequests{
       )
       .then((res) => {
         if (res.status === 204) {
+          console.log(followersnum);
           setbuttonstate("Following")
           setDetailsPos("right-[140px]")
+          setFollowersnum(followersnum+1)
+          
+          
         }
       })
       .catch((err) => {
-        console.log(err)
+        //cl(err)
       })
   }
-  static unfollow = (mock, APIs, token, setbuttonstate, setDetailsPos) => {
+  static unfollow = (mock, APIs, token, setbuttonstate, setDetailsPos,setFollowersnum,followersnum) => {
     axios
       .post(
         mock ? APIs.unfollowmock.postfollowProfileAPI : APIs.unfollowactual.postfollowProfileAPI,
@@ -175,10 +183,11 @@ class ProfileRequests{
         if (res.status === 204) {
           setbuttonstate("Follow")
           setDetailsPos("right-[100px]")
+          setFollowersnum(followersnum-1)
         }
       })
       .catch((err) => {
-        console.log(err)
+        //cl(err)
       })
   }
 }

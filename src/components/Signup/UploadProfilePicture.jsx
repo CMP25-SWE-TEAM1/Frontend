@@ -160,6 +160,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
             <AddAPhotoOutlinedIcon className={`-ml-[3px] -mt-[5px] ${darkMode ? "text-white" : "text-black"}`} />
             <input
               type="file"
+              accept= ""
               onChange={handlePictureChange}
               ref={hiddenFileInput}
               style={{ display: "none" }} // Make the file input element invisible
@@ -191,7 +192,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
         </button>
       </div>
       <div className={`${openCrop ? "!block" : "!hidden"}  !mt-0`}>
-        <Crop photoURL={profilePicURL} setOpenCrop={setOpenCrop} setPhotoURL={setProfilePicURL} setFile={setProfilePic} aspect={1} />
+        <Crop photoURL={profilePicURL} setOpenCrop={setOpenCrop} setPhotoURL={setProfilePicURL} setFile={setProfilePic} aspect={1} originalPhoto={user? user.profileImage : defaultProfilePic} />
       </div>
     </div>
   )

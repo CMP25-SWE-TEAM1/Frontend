@@ -5,7 +5,7 @@ import React, {  useState } from "react"
 import Cropper from "react-easy-crop"
 import getCroppedImg from "./utils/CropImage"
 
-const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect }) => {
+const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect,originalPhoto }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [rotation, setRotation] = useState(0)
@@ -72,7 +72,7 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect }) => {
               variant="outlined"
               startIcon={<Cancel />}
               onClick={() => {
-                // setPhotoURL(originalPhoto)
+                setPhotoURL(originalPhoto)
                 setOpenCrop(false)
               }}
               className="mr-5 "

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom"
  const Followers = (props) =>  {
-  console.log(props)
+  
   return (
     <div id="Followers-Following-div" className="flex flex-row md:w-[50%] lg:w-[35%] h-[5%]    mb-[5%] ">
       <Link to='following' className='w-[calc(95%/2)]'>

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const DetailsNoChat = (props) => {
   const handleComposeModalOpen = props.handleComposeModalOpen
   return (
@@ -6,15 +8,14 @@ const DetailsNoChat = (props) => {
         <div className="info">
           <div className="title">Select a message</div>
           <div className="text">Choose from your existing conversations, start a new one, or just keep swimming.</div>
-          <a
-            href="/messages/compose"
+          <Link
+            to="/messages/compose"
             onClick={(event) => {
-              event.preventDefault()
               handleComposeModalOpen()
             }}
           >
             New message
-          </a>
+          </Link>
         </div>
       </div>
     </div>

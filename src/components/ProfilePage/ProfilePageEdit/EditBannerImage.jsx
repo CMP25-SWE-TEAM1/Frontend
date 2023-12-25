@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 const EditBannerImage = ({coverpage,handlecoverPictureChange,handlecoverPictureClick,hiddencoverFileInput,setCoverpage}) => {
     const {darkMode} = useSelector((state)=>state.theme)
-    console.log({coverpage,handlecoverPictureChange,handlecoverPictureClick,hiddencoverFileInput,setCoverpage})
+
   return (
     <div id="edit-cover-image-test" className="relative h-[135px]  w-[100%]">
     <CoverImage  coverimage={coverpage} height="h-[200px]" ></CoverImage>
@@ -17,6 +17,7 @@ const EditBannerImage = ({coverpage,handlecoverPictureChange,handlecoverPictureC
         <AddAPhotoOutlinedIcon  className={`-ml-[3px] -mt-[5px] ${darkMode ? "text-white" : "text-black"}`} />
         <input
           type="file"
+          accept="image/png, image/jpeg"
           onChange={handlecoverPictureChange}
           ref={hiddencoverFileInput}
           style={{ display: "none" }} // Make the file input element invisible

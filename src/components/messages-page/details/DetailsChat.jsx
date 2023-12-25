@@ -26,6 +26,7 @@ import debounce from "lodash.debounce"
 import { SOCKET_ON, BACKEND_ON } from "../constants/MessagesConstants"
 import { useDispatch, useSelector } from "react-redux"
 import { selectSocket } from "../../../store/SocketSlice"
+import { Link } from "react-router-dom"
 
 const DetailsChat = (props) => {
   const userToken = useSelector((state) => state.user.token)
@@ -268,9 +269,9 @@ const DetailsChat = (props) => {
       <div className="content">
         <div className="head">
           <div>
-            <a href="#/username">
+            <Link to={`/${contact.userName}`}>
               <img src={contact.avatarLink || "https://64.media.tumblr.com/avatar_f71055191601_128.pnj"} alt="profile img" />
-            </a>
+            </Link>
             <h2>{contact.name || "Hamza"}</h2>
           </div>
         </div>
@@ -289,15 +290,15 @@ const DetailsChat = (props) => {
                 {two && (
                   <div className="chatbox-content">
                     {/* User info */}
-                    <div className="contact-info" onClick={() => navigate(`#/${contact.userName || "username"}`)}>
+                    <div className="contact-info" onClick={() => navigate(`/${contact.userName || "username"}`)}>
                       {/* Image */}
                       <div className="image">
                         <img src={contact.avatarLink || "https://64.media.tumblr.com/avatar_f71055191601_128.pnj"} alt="profile img" />
                       </div>
                       {/* Name + contact name */}
                       <div className="contact-data">
-                        <a href="#/username">{contact.name || "Hamza"}</a>
-                        <a href="#/username">@{contact.userName || "hamza_xyz"}</a>
+                        <Link to={`/${contact.userName}`}>{contact.name || "Hamza"}</Link>
+                        <Link to={`/${contact.userName}`}>@{contact.userName || "hamza_xyz"}</Link>
                       </div>
                     </div>
                     {/* Messages */}

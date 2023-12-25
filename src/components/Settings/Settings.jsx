@@ -3,6 +3,9 @@ import { Link } from "react-router-dom"
 import { Outlet } from "react-router-dom"
 import SearchIcon from "@mui/icons-material/Search"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { useSelector } from "react-redux"
 
 const Settings = () => {
   const [selectedSettings, setSelectedSettings] = useState("")
@@ -39,6 +42,13 @@ const Settings = () => {
     document.getElementById("settings-no-results").classList.add("hidden")
   }
 
+  const user = useSelector((state) => state.user.user)
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [])
   return (
     <div className="flex h-screen dark:bg-black dark:text-white ">
       <div className="flex h-full w-[400px] flex-col border-r border-lightBorder dark:border-darkBorder max-lg:hidden">
@@ -149,7 +159,7 @@ const Settings = () => {
         </Link>
       </div>
 
-      <div className="flex h-full w-[600px] max-lg:w-[85vw] max-xs:w-screen flex-col border-r border-lightBorder dark:border-darkBorder">
+      <div className="flex h-full w-[600px] flex-col border-r border-lightBorder dark:border-darkBorder max-lg:w-[85vw] max-xs:w-screen">
         <Outlet />
       </div>
     </div>

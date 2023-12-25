@@ -19,10 +19,12 @@ import { initializeSocket } from "./customHooks/socketService"
 import { selectSocket } from "../../store/SocketSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { setSocket } from "../../store/SocketSlice"
+import { Link } from "react-router-dom"
+
 
 const Messages = (props) => {
   // ==============  Props   ==============
-  const { paramContactId } = useParams()
+  const { contactId: paramContactId } = useParams()
   // Compose message
   const composeModalOpen = props.composeModalOpen
   const handleComposeModalOpen = props.handleComposeModalOpen
@@ -65,6 +67,12 @@ const Messages = (props) => {
       }
     }
   }, [socket])
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [])
 
   // Fetch data
   useEffect(() => {
@@ -174,10 +182,9 @@ const Messages = (props) => {
           <div className="header">
             <h2>Messages</h2>
             <div>
-              <a
-                href="/messages/compose"
+              <Link
+                to="/messages/compose"
                 onClick={(event) => {
-                  event.preventDefault()
                   handleComposeModalOpen()
                 }}
                 title="New message"
@@ -188,7 +195,7 @@ const Messages = (props) => {
                     <path d="M1.998 5.5c0-1.381 1.119-2.5 2.5-2.5h15c1.381 0 2.5 1.119 2.5 2.5V12h-2v-1.537l-8 3.635-8-3.635V18.5c0 .276.224.5.5.5H13v2H4.498c-1.381 0-2.5-1.119-2.5-2.5v-13zm2 2.766l8 3.635 8-3.635V5.5c0-.276-.224-.5-.5-.5h-15c-.276 0-.5.224-.5.5v2.766zM19 18v-3h2v3h3v2h-3v3h-2v-3h-3v-2h3z"></path>
                   </g>
                 </svg>
-              </a>
+              </Link>
             </div>
           </div>
           {contacts.length === 0 && <InfoNoChat handleComposeModalOpen={handleComposeModalOpen} />}
