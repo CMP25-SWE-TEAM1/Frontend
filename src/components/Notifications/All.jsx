@@ -3,11 +3,12 @@ import NotificationsContainer from "./NotificationsContainer"
 import logoDark from "../../assets/imgs/gigachatLogoOne_dark-removebg-preview.png"
 import logoLight from "../../assets/imgs/gigachatLogoOne_light_v2-removebg-preview.png"
 
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { APIs } from "../../constants/signupConstants"
+import { setUnseenCount } from "../../store/NotificationSocketSlice"
 
 const All = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
@@ -82,6 +83,8 @@ const All = () => {
     },
   ]
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
     axios
       .get(APIs.actual.getAllNotifications, {
@@ -115,6 +118,7 @@ const All = () => {
       )
       .then((res) => {
         // console.log(res)
+        dispatch(setUnseenCount(0))
       })
       .catch((err) => {
         console.log(err)

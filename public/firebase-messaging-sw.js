@@ -1,29 +1,36 @@
-importScripts("https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js")
-importScripts("https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js")
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/firebase-messaging-sw.js")
+  })
+}
 
-firebase.initializeApp({
-  // Project Settings => Add Firebase to your web app
-  messagingSenderId: "1062407524656",
-})
+// Scripts for firebase and firebase messaging
+importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js")
+importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js")
+
+// Initialize the Firebase app in the service worker by passing the generated config
+const firebaseConfig = {
+  apiKey: "AIzaSyBU8-zNFY_WQ9OZjre5HsFg4ynUFEazXY8",
+  authDomain: "push-notification-test-342a7.firebaseapp.com",
+  projectId: "push-notification-test-342a7",
+  storageBucket: "push-notification-test-342a7.appspot.com",
+  messagingSenderId: "237962392808",
+  appId: "1:237962392808:web:1a860746f4b2fb2033855d",
+  measurementId: "G-6XCKMCL56J",
+}
+
+firebase.initializeApp(firebaseConfig)
+
+// Retrieve firebase messaging
 const messaging = firebase.messaging()
-messaging.setBackgroundMessageHandler(function (payload) {
-  const promiseChain = clients
-    .matchAll({
-      type: "window",
-      includeUncontrolled: true,
-    })
-    .then((windowClients) => {
-      for (let i = 0; i < windowClients.length; i++) {
-        const windowClient = windowClients[i]
-        windowClient.postMessage(payload)
-      }
-    })
-    .then(() => {
-      return registration.showNotification("my notification title")
-    })
-  return promiseChain
-})
-self.addEventListener("notificationclick", function (event) {
-  // do what you want
-  // ...
+
+messaging.onBackgroundMessage(function (payload) {
+  console.log("Received background message ", payload)
+  // Customize notification here
+  const notificationTitle = payload.notification.title
+  const notificationOptions = {
+    body: payload.notification.body,
+  }
+
+  self.registration.showNotification(notificationTitle, notificationOptions)
 })

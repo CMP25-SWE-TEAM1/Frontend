@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app"
 import { getMessaging, getToken, onMessage } from "firebase/messaging"
 
+
 import { getAnalytics } from "firebase/analytics"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -44,35 +45,41 @@ export function requestPermission(callback) {
     }
   })
 }
-// requestPermission()
 
-// messaging.serviceWorker.setBackgroundMessageHandler((payload) => {
-//   console.log("Received background message ", payload)
+
+export const onMessageListener = () =>
+  new Promise((resolve) => {
+    onMessage(messaging, (payload) => {
+      // console.log("payload", payload)
+      resolve(payload)
+    })
+  })
+
+
+
+
+// navigator.serviceWorker.addEventListener("message", (message) => {
+//   console.log(message)
 // })
 
-// onMessage((payload) => {
-//   console.log("Received foreground message ", payload)
-//   // Display notification or handle data as needed
-// })
 
-// messaging.onBackgroundMessage(function (payload) {
-//   console.log("Received background message ", payload)
+//....
 
-//   const notificationTitle = payload.notification.title
-//   const notificationOptions = {
-//     body: payload.notification.body,
-//   }
+//....
 
-// //   registration.showNotification(notificationTitle, notificationOptions)
-// })
-
-// export const onMessageListener = () =>
-//   new Promise((resolve) => {
-//     onMessage(messaging, (payload) => {
-//       resolve(payload)
-//     })
-//   })
-
-navigator.serviceWorker.addEventListener("message", (message) => {
-  console.log(message)
-})
+export const requestForToken = (callback) => {
+  return getToken(messaging, { vapidKey: "BJL6hYmNbSjl7nWRN_DPkHaqkm-Ig9Bu82Q12cHGsxi4kj0Rcihd-9NH3COqxmGKIuo3Fdjliwc03bJSvjjkUrE" })
+    .then((currentToken) => {
+      if (currentToken) {
+        console.log("current token for client: ", currentToken)
+        callback(currentToken)
+        // Perform any other neccessary action with the token
+      } else {
+        // Show permission request UI
+        console.log("No registration token available. Request permission to generate one.")
+      }
+    })
+    .catch((err) => {
+      console.log("An error occurred while retrieving token. ", err)
+    })
+};

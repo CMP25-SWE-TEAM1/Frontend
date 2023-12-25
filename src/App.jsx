@@ -41,40 +41,49 @@ import Followpage from "./components/ProfilePage/FollowPage/FollowPage"
 
 import "./firebase-config"
 
-import { requestPermission } from "./firebase-config"
-import { setNotificationToken } from "./store/NotificationSocketSlice"
-import { getMessaging, getToken } from "firebase/messaging"
-// import { onMessageListener } from "./firebase-config"
+import { setNotificationToken, setUnseenCount } from "./store/NotificationSocketSlice"
+import { requestForToken, onMessageListener } from "./firebase-config"
+import NotificationPopup from "./components/Notifications/NotificationPopup"
 
-// if ("serviceWorker" in navigator) {
-//   navigator.serviceWorker
-//     .register("./firebase-messaging-sw.js")
-//     .then(function (registration) {
-//       console.log("Registration successful, scope is:", registration.scope)
-//     })
-//     .catch(function (err) {
-//       console.log("Service worker registration failed, error:", err)
-//     })
-// }
+import axios from "axios"
 
-// let fireapp
+import { APIs } from "./constants/signupConstants"
+
+
 const App = () => {
+  const userToken = useSelector((state) => state.user.token)
+
   useEffect(() => {
-    requestPermission((token, app) => {
+    requestForToken((token) => {
       if (token) {
         dispatch(setNotificationToken(token))
       }
-      // fireapp = app
-      // console.log(app)
-      // console.log(token)
     })
   }, [])
 
-  // onMessageListener()
-  //   .then((payload) => {
-  //     console.log(payload)
-  //   })
-  //   .catch((err) => console.log("failed: ", err))
+  const [not, setNot] = useState()
+
+  onMessageListener()
+    .then((payload) => {
+      // console.log(JSON.parse(payload.data.notification))
+      setNot(JSON.parse(payload.data.notification))
+      axios
+        .get(APIs.actual.getNotificationUnseenCount, {
+          params: {},
+          headers: {
+            authorization: "Bearer " + userToken,
+          },
+        })
+        .then((res) => {
+          // console.log(res.data.data.notificationsCount)
+          dispatch(setUnseenCount(res.data.data.notificationsCount))
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      handleClick()
+    })
+    .catch((err) => console.log("failed: ", err))
 
   const [location, setLocation] = useState(window.location.pathname)
   const [passwordIsConfirmed] = useState(sessionStorage.getItem("passwordIsConfirmed"))
@@ -138,9 +147,26 @@ const App = () => {
     likeCount: "64K",
     viewCount: "1M",
   }
+
+  const [open, setOpen] = useState(false)
+
+  const handleClick = () => {
+    setOpen(true)
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return
+    }
+
+    setOpen(false)
+  }
+
   return (
     <div className="app relative flex min-h-[100vh] flex-col-reverse bg-white text-black dark:bg-black dark:text-white max-xs:max-w-[475px] xs:h-[100vh] xs:w-full xs:flex-row">
       <BrowserRouter>
+        <NotificationPopup notification={not} open={open} handleClick={handleClick} handleClose={handleClose} />
+
         {user && location !== "/password_reset" && <Sidebar />}
         {/* {location !== "/login" && location !== "/password_reset" && <Sidebar />} */}
         {/* true will be replaced by authorization*/}
