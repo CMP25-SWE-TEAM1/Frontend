@@ -118,20 +118,20 @@ function PostHeader({ pathname, postType, isFollowed, userTag, bio, userProfileP
       <div className="post-header flex items-center justify-between">
           <div className=" relative flex items-center" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             {isVisible && (
-              <Box className="transition-all" sx={{ zIndex: 5, position: "absolute", top:"20px", backgroundColor: darkMode ? "black" : "white", color: darkMode ? "white" : "black", padding: "10px", borderRadius: "10px", boxShadow: darkMode ? "0px 0px 1px 1px gray" : "0px 0px 1px 1px black", width: "250px" }}>
-                  <div className="w-full flex justify-between">
+              <Box className="cursor-auto transition-all" sx={{ zIndex: 5, position: "absolute", top:"20px", backgroundColor: darkMode ? "black" : "white", color: darkMode ? "white" : "black", padding: "10px", borderRadius: "10px", boxShadow: darkMode ? "0px 0px 1px 1px gray" : "0px 0px 1px 1px black", width: "250px" }}>
+                  <div className="w-full flex justify-between ">
                     <Link className="pointer-events-auto hover:brightness-90" to={`/${userTag}`}>
                       <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 50, height: 50 }} />
                     </Link>
                   <div>{userTag !== user.username && <FollowButton tag={userTag} buttonName={hoveredProfile.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>}</div>
                   </div>
-                    <div className="w-full hover:underline font-semibold">{userName}<VerifiedIcon className="pl-1 text-primary" sx={{ fontSize: "22px" }} /></div>
-                    <div className="text-secondary">@{userTag}</div>
+                    <Link className="block w-full hover:underline hover:pointer-events-pointer font-semibold" to={`/${userTag}`}>{userName}<VerifiedIcon className="pl-1 text-primary" sx={{ fontSize: "22px" }} /></Link>
+                    <Link className="block w-fit text-secondary" to={`/${userTag}`}>@{userTag}</Link>
                 <div className="mt-2">
                   <div className="text-sm">{bio}</div>
                   <div className="mt-2 flex w-full ">
-                    <div className="text-sm mr-2"><span className="font-semibold">{user.username !== userTag ? hoveredProfile.followings_num : user.followings_num}</span> <span className="text-secondary">Following</span></div>
-                    <div className="text-sm "><span className="font-semibold">{user.username !== userTag ? hoveredProfile.followers_num : user.followers_num}</span> <span className="text-secondary">Followers</span></div>
+                    <Link className="text-sm mr-2 hover:underline" to={`/${userTag}/following`}><span className="font-semibold">{user.username !== userTag ? hoveredProfile.followings_num : user.followings_num}</span> <span className="text-secondary">Following</span></Link>
+                    <Link className="text-sm hover:underline" to={`/${userTag}/followers`}><span className="font-semibold">{user.username !== userTag ? hoveredProfile.followers_num : user.followers_num}</span> <span className="text-secondary">Followers</span></Link>
                   </div>
                 </div>
               </Box>
