@@ -50,22 +50,25 @@ const DetailsChat = (props) => {
   let chatPage = 1
   useEffect(() => {
     if (BACKEND_ON) {
-      setMessagesData([])
+      // setMessagesData([])
       function fetchChatMessages() {
         console.log("fetching page", chatPage)
 
         handleGetChat(contact.id, userToken, chatPage).then((response) => {
           if (response && response.data) {
-            const newChat = response.data.map((message) => ({
-              id: message._id,
-              messageText: message.description,
-              messageMedia: message.media && message.media.link ? message.media.link : undefined,
-              mediaType: message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined,
-              direction: message.mine ? "R" : "L",
-              seen: message.seen,
-              time: message.sendTime,
-            }))
-            setMessagesData((prevChat) => [...newChat, ...prevChat])
+            newChat = [
+              ...newChat,
+              ...response.data.map((message) => ({
+                id: message._id,
+                messageText: message.description,
+                messageMedia: message.media && message.media.link ? message.media.link : undefined,
+                mediaType: message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined,
+                direction: message.mine ? "R" : "L",
+                seen: message.seen,
+                time: message.sendTime,
+              })),
+            ]
+            // setMessagesData((prevChat) => [...newChat, ...prevChat])
 
             chatPage++
             console.log("fetch another chat page? ", response.data && response.data.length !== 0 && response.data[0].seen === false)
@@ -79,8 +82,10 @@ const DetailsChat = (props) => {
         })
       }
 
+      let newChat = []
       // initial fetch
       fetchChatMessages()
+      setMessagesData(newChat)
     }
     scrollToBottom()
     // scrollToLastSeen()
