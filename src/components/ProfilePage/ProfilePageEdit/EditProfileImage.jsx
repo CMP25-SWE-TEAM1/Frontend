@@ -15,6 +15,7 @@ const EditProfileImage = ({profileimage,handlePictureClick,handlePictureChange,h
             <AddAPhotoOutlinedIcon className={`-ml-[3px] -mt-[5px] ${darkMode ? "text-white" : "text-black"}`} />
             <input
               type="file"
+              accept="image/png, image/jpeg"
               onChange={handlePictureChange}
               ref={hiddenFileInput}
               style={{ display: "none" }} // Make the file input element invisible

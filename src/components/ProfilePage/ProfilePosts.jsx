@@ -17,7 +17,7 @@ const ProfilePosts = () => {
   const location = useLocation()
   const [root, setRoot] = useState("")
   useEffect(() => {
-    console.log(location.pathname.split("/"))
+   
     setRoot(location.pathname.split("/")[1])
   }, [location])
 
@@ -51,10 +51,10 @@ const ProfilePosts = () => {
           },
         })
         .then((res) => {
-          // console.log("Here")
+          
           if (res.status === 200) {
             if (res.data.posts) {
-              console.log(res.data)
+             
               setPosts(
                 res.data.posts.map((post) => ({
                   isFollowed: post.isFollowed,
@@ -70,7 +70,7 @@ const ProfilePosts = () => {
           }
         })
         .catch((error) => {
-          console.log(error)
+          
         })
   }, [root])
   return (

@@ -35,6 +35,8 @@ const ProfilePage = (props) => {
   const [bannerPicURL, setCoverPicURL] = useState()
   const [detailspos, setDetailsPos] = useState()
   const [viewpoststate,setViewPost] = useState()
+  const [followingnum,setFollowingnum]= useState()
+  const [followersnum,setFollowersnum]= useState()
   const { tag } = useParams()
   const APIs = {
     mock: { getProfileAPI: `https://localhost:3001/api/profile/` },
@@ -47,9 +49,9 @@ const ProfilePage = (props) => {
       if(user)
       {
       if (user.username !== tag) {
-        ProfileRequests.getOtherprofile(false,APIs,tag,setProfile,token,setProfilePicURL,setCoverPicURL,setDetailsPos,setButtonstate,setViewPost)
+        ProfileRequests.getOtherprofile(false,APIs,tag,setProfile,token,setProfilePicURL,setCoverPicURL,setDetailsPos,setButtonstate,setViewPost,setFollowersnum,setFollowingnum)
        } else {
-        ProfileRequests.getMyprofile(false,APIs,token,setProfile,setProfilePicURL,setCoverPicURL)
+        ProfileRequests.getMyprofile(false,APIs,token,setProfile,setProfilePicURL,setCoverPicURL,setFollowersnum,setFollowingnum)
        }
       }
     }
@@ -84,7 +86,7 @@ const ProfilePage = (props) => {
              {profileres.is_curr_user === false && <Details position={detailspos} ismuted={profileres.is_wanted_user_muted} isblocked={profileres.is_wanted_user_blocked}  tag={tag} display={`${profileres.is_curr_user  ? `hidden`: `block`}`}></Details> }
              <div id="Button-div" className={`absolute ${profileres.is_curr_user ? `right-[0px]`:`right-[10px]`} top-[90px] m-0  `}>
              {profileres.is_wanted_user_blocked && !profileres.is_curr_user && !profileres.is_curr_user_blocked && <BlockButton isblocked={profileres.is_wanted_user_blocked && !(profileres.is_curr_user ) } tag = {tag}></BlockButton>}
-              {profileres.is_curr_user && profileres.is_wanted_user_blocked === false && profileres.is_curr_user_blocked === false && <FollowButton  setButtonstate={setButtonstate} setDetailsPos={setDetailsPos} display={profileres.is_wanted_user_blocked || profileres.is_curr_user ? 'hidden':'block'}  tag={tag} buttonName={ buttonstate}></FollowButton>}
+              {!profileres.is_curr_user && profileres.is_wanted_user_blocked === false && profileres.is_curr_user_blocked === false && <FollowButton  setButtonstate={setButtonstate} setDetailsPos={setDetailsPos} setFollowersnum={setFollowersnum} followersnum={followersnum} display={profileres.is_wanted_user_blocked || profileres.is_curr_user ? 'hidden':'block'}  tag={tag} buttonName={ buttonstate}></FollowButton>}
               <EditProfileButton handleOpenProfileEditModal={props.handleOpenProfileEditModal} display={profileres.is_curr_user  ? `display`:`hidden` }></EditProfileButton>
               </div>
             </div>
@@ -103,7 +105,7 @@ const ProfilePage = (props) => {
             <button className="whitespace-nowrap before:text-white  bg-transparent
             hover:underline text-sm font-light text-[rgb(23,129,200)]" onClick={()=>{ProfileRequests.unmute(false, APIs, token,tag)}}> unmute</button>
           </div>}
-          <Followers followers={profileres.followers_num} following={profileres.followings_num}></Followers>
+          <Followers followers={followersnum} following={followingnum}></Followers>
           <ProfilePageEdit openModal={props.openModal} handleCloseModal={props.handleCloseModal}></ProfilePageEdit>
           {(viewpoststate === true || profileres.is_curr_user)  && <ProfileMediabuttons></ProfileMediabuttons>}
           </>}

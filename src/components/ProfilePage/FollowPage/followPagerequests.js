@@ -28,7 +28,7 @@ class followPagerequests
             }
           })
           .catch((err) => {
-            console.log(err)
+            //(err)
           })
     }
 
@@ -59,7 +59,7 @@ class followPagerequests
             }
           })
           .catch((err) => {
-            console.log(err)
+            //cl(err)
           })
       }
       
@@ -79,13 +79,13 @@ class followPagerequests
                     res.data.users.forEach(user =>{
                       user.Followstate = user.isFollowed? 'Following' : 'Follow' 
                     })
-                    console.log(res.data.users)
+                    //cl(res.data.users)
                     setFollowings(res.data.users)
                   }
                 })
                 .catch((err) => {
-                  //console.log(tag)
-                  //console.log(err)
+                  ////cl(tag)
+                  ////cl(err)
                 })
       }
     static getfollowers = (mock,APIs,token,setFollowers,page,count) =>{
@@ -109,8 +109,8 @@ class followPagerequests
               }
             })
             .catch((err) => {
-              //console.log(tag)
-              //console.log(err)
+              ////cl(tag)
+              ////cl(err)
             })
       }
 }
