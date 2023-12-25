@@ -13,10 +13,10 @@ const usePostMedia = async (mediaFile, userToken) => {
       },
     })
     console.log(res.data)
-    return res.data
+    return { response: res.data, error: null } // syntax err
   } catch (err) {
     console.log(err)
-    return null
+    return { response: null, error: err } // syntax err
   }
 }
 

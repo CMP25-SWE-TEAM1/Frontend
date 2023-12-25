@@ -3,7 +3,11 @@ import Post from "./Post"
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
 
 const PostsContainer = ({ posts, setPosts }) => {
-  const handlePostClick = (p) => {}
+  const handlePostClick = (p) => { }
+  
+  useEffect(() => {
+    console.log(posts)
+  },[posts])
 
   return (
     <div className="post-container">
@@ -12,7 +16,10 @@ const PostsContainer = ({ posts, setPosts }) => {
           <div key={index}>
             <Post
               userProfilePicture={p.tweetDetails ? p.tweetDetails.tweet_owner.profile_image : p.tweet_owner.profile_image}
-              postType={p.tweetDetails ? p.tweetDetails.type : p.type}
+              postType={p.type ? p.type : p.type}
+              isFollowed={p.isFollowed ? p.isFollowed : p.isFollowed}
+              replyReferredTweetId={p.tweetDetails?(p.tweetDetails.referredTweetId?p.tweetDetails.referredTweetId:undefined):undefined}
+              // replyReferredTweetId={p.tweetDetails.referredTweetId ? p.tweetDetails.referredTweetId : undefined}
               userName={p.tweetDetails ? p.tweetDetails.tweet_owner.nickname : p.tweet_owner.nickname}
               userTag={p.tweetDetails ? p.tweetDetails.tweet_owner.username : p.tweet_owner.username}
               id={p.tweetDetails ? (p.tweetDetails._id ? p.tweetDetails._id : p.tweetDetails.id) : p._id ? p._id : p.id}
@@ -23,10 +30,11 @@ const PostsContainer = ({ posts, setPosts }) => {
               repostCount={p.tweetDetails ? p.tweetDetails.repostsNum : p.repostsNum}
               likeCount={p.tweetDetails ? p.tweetDetails.likesNum : p.likesNum}
               viewCount={p.tweetDetails ? p.tweetDetails.viewsNum : p.viewsNum}
-              isLiked={p.tweetDetails ? p.tweetDetails.isLiked : p.isLiked}
-              isReposted={p.tweetDetails ? p.tweetDetails.isRtweeted : p.isRtweeted}
+              isLiked={p.isLiked ? p.isLiked : p.isLiked}
+              isReposted={p.isRtweeted ? p.isRtweeted : p.isRetweeted}
               key={p.tweetDetails ? p.tweetDetails.id : p.id}
               followingUser={p.tweetDetails ? p.followingUser : p.repostingUser}
+              bio={p.tweetDetails ? p.tweetDetails.tweet_owner.bio : p.bio}
               setPosts={setPosts}
               posts={posts}
             />

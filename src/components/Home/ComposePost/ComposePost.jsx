@@ -47,8 +47,11 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId, han
   }, [description, media])
 
   const APIs = {
-    mock: { postTweetAPI: "https://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/post/addPost" },
-    actual: { postTweetAPI: "http://backend.gigachat.cloudns.org/api/tweets/", uploadMedia: "http://backend.gigachat.cloudns.org/api/media", deleteMedia: "http://backend.gigachat.cloudns.org/api/media" },
+    mock: { postTweetAPI: "httpss://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/post/addPost" },
+    actual: { postTweetAPI: "https://backend.gigachat.cloudns.org/api/tweets/", 
+              uploadMedia: "https://backend.gigachat.cloudns.org/api/media", 
+              deleteMedia: "https://backend.gigachat.cloudns.org/api/media" 
+  },
   }
   const getComposeTweet = () => {
     return {
@@ -223,6 +226,7 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId, han
           placeholder={`${buttonName === "Post" ? "What is happening?!" : "Post your reply"}`}
           onChange={(e) => handleDescriptionChange(e)}
           multiline
+          value={description}
           fullWidth
           maxRows={23}
           sx={{
@@ -232,8 +236,9 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId, han
             },
           }}
         >
-          <span className="bg-[#f4212e]">{description.slice(0, 280)}</span>
-          <span className="text-[#f4212e]">{description.slice(280, description.length)}</span>
+          {/* {description} */}
+          {/* <span className="bg-[#f4212e]">{description.slice(0, 280)}</span>
+          <span className="text-[#f4212e]">{description.slice(280, description.length)}</span> */}
         </TextField>
         <DisplayMedia mediaUrls={mediaUrls} mediaTypes={getMediaTypes()} margin={1.5} handleDeleteMedia={handleDeleteMedia} showCancelButton={true} />
         <div className={`replyPermission ${buttonName === "Post" ? "" : "hidden"}`}>

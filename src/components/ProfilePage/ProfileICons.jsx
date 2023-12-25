@@ -17,7 +17,7 @@ const ProfileICons = ({profilelocation,profilewebsite,profilejoindate,profilebir
     }
   },[profilebirthdate, profilebirthdate])
   return (
-    <div id="icons" className={`flex flex-row w-[100%] h-[5%] flex-wrap space-x-[10px] mb-[5%] `}>
+    <div id="icons-test" className={`flex flex-row w-[100%] h-[5%] flex-wrap space-x-[10px] mb-[5%] `}>
             <div id="PlaceDiv" className={`flex flex-row ml-[10px] mr-[3px] ${!profilelocation? `hidden`:`block`}`}>
                 <LocationOnSharp className="fill-[#808080] mt-[2px] w-[16px] p-0 mr-[3.3%]"></LocationOnSharp>
                 <p id="LocationP" className="text-[13px] mt-[5px] whitespace-nowrap  text-[rgb(150,150,150)] font-light">{profilelocation}</p>

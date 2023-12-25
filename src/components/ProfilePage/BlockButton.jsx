@@ -5,8 +5,8 @@ const BlockButton =({isblocked,tag}) => {
     const [display, setDisplay] = useState()
     const {token} = useSelector((state)=>state.user)
     const APIs = {
-        unblockmock: { unBlock:   `http://localhost:3001/api/profile/` },
-        unblockactual: { unBlock: `http://backend.gigachat.cloudns.org/api/user/${tag}/unblock` },
+        unblockmock: { unBlock:   `https://localhost:3001/api/profile/` },
+        unblockactual: { unBlock: `https://backend.gigachat.cloudns.org/api/user/${tag}/unblock` },
       }
     useEffect(()=>{
         isblocked? setDisplay('block') : setDisplay('hidden')

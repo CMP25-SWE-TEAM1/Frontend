@@ -10,11 +10,10 @@ import ComposePost from "./ComposePost/ComposePost"
 import axios from "axios"
 import { useSelector } from "react-redux"
 
-const Home = ({composePostPopup}) => {
+const Home = () => {
   const user = useSelector((state) => state.user.user)
   const userToken = useSelector((state) => state.user.token)
   // const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY"
-  // setComposePostPopup?setComposePostPopup(true):setComposePostPopup(false);
   const [posts, setPosts] = useState([])
 
   const homeNavLinks = [
@@ -22,10 +21,10 @@ const Home = ({composePostPopup}) => {
     { title: "Following", location: "following" },
   ]
   const APIs = {
-    mock: { getAllTweetsAPI: "https://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/posts" },
+    mock: { getAllTweetsAPI: "httpss://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/posts" },
     actual: {
-      getAllTweetsAPI: "http://backend.gigachat.cloudns.org/api/homepage/following",
-      getUserTweets: `http://backend.gigachat.cloudns.org/api/profile/${user.username}/tweets`,
+      getAllTweetsAPI: "https://backend.gigachat.cloudns.org/api/homepage/following",
+      getUserTweets: `https://backend.gigachat.cloudns.org/api/profile/${user.username}/tweets`,
     },
   }
   const [pageNumber, setPageNumber] = useState(1)
@@ -44,7 +43,7 @@ const Home = ({composePostPopup}) => {
         },
       })
       .then((response) => {
-        // console.log(response)
+        console.log(response.data.tweetList)
         if (response.status === 200) {
           // console.log("in then ");
           if (response.data.tweetList) {
@@ -158,7 +157,6 @@ const Home = ({composePostPopup}) => {
         {/* </div> */}
         {/* </div> */}
         <ComposePost buttonName="Post" handleNewPost={(newPost) => handleNewPost(newPost)} postType="tweet" />
-        {composePostPopup&&<PostPopup open={composePostPopup}/>}
         <PostsContainer posts={posts} setPosts={setPosts} />
         {/* .sort(() => Math.random() - 0.5) */}
       </div>

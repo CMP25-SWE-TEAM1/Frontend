@@ -24,9 +24,9 @@ const ProfileReplies = () => {
   const APIs = {
     mock: { getAllTweetsAPI: "https://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/posts" },
     actual: {
-      getAllTweetsAPI: "http://backend.gigachat.cloudns.org/api/homepage/following",
-      getUserTweets: `http://backend.gigachat.cloudns.org/api/profile/${root}/tweets`,
-      getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/`,
+      getAllTweetsAPI: "https://backend.gigachat.cloudns.org/api/homepage/following",
+      getUserTweets: `https://backend.gigachat.cloudns.org/api/profile/${root}/tweets`,
+      getProfileAPI: `https://backend.gigachat.cloudns.org/api/user/profile/`,
     },
   }
 
@@ -70,7 +70,7 @@ const ProfileReplies = () => {
         })
   }, [root])
   return (
-    <div className="">
+    <div id="Profile-Replies-test" className="">
       <PostsContainer posts={posts} setPosts={setPosts} />
     </div>
   )

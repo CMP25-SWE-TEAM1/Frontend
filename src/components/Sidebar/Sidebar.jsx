@@ -44,32 +44,31 @@ import { setUnseenCount } from "../../store/NotificationSocketSlice"
 
 const Sidebar = () => {
   const unseenCount = useSelector((state) => state.notification.unseenCount)
-
+  const [composePostPopup, setComposePostPopup] = useState(false);
   const user = useSelector((state) => state.user.user)
   const userToken = useSelector((state) => state.user.token)
-  const pathname = useLocation().pathname
+  const darkMode = useSelector((state) => state.theme.darkMode)
+
+  const pathname = useLocation().pathname;
   const userTag = user.username
   const optionsNames = ["Home", "Explore", "Notifications", "Messages", "Lists", "Bookmarks", "Profile", "Settings"]
   const optionsIcons = [
-    [<HomeOutlinedIcon />, <HomeIcon />],
-    [<SearchRoundedIcon />, <SearchIcon sx={{ color: "#000000" }} />],
-    [
-      <Badge badgeContent={unseenCount} color="primary">
-        <NotificationsNoneRoundedIcon />
-      </Badge>,
-      <Badge badgeContent={unseenCount} color="primary">
-        <NotificationsIcon />
-      </Badge>,
-    ],
-    [<MailOutlineRoundedIcon />, <EmailIcon />],
-    [<ListAltRoundedIco />, <ListAltIcon sx={{ color: "#000000" }} />],
-    [<PeopleOutlinedIcon />, <PeopleIcon />],
-    [<PersonOutlinedIcon />, <PersonIcon />],
-    [<SettingsOutlinedIcon />, <SettingsIcon />],
+    [<HomeOutlinedIcon />,<HomeIcon />],
+    [<SearchRoundedIcon sx={{color:darkMode?"#d9d9d9":"#1f1f1f"}}/>,<SearchIcon sx={{color:darkMode?"#ffffff":"#000000"}}/>],
+    [<Badge badgeContent={unseenCount} color="primary">
+      <NotificationsNoneRoundedIcon />
+    </Badge>,
+    <Badge badgeContent={unseenCount} color="primary">
+      <NotificationsIcon/>
+    </Badge>],
+    [<MailOutlineRoundedIcon />,<EmailIcon/>],
+    [<ListAltRoundedIco sx={{color:darkMode?"#d9d9d9":"#1f1f1f"}}/>,<ListAltIcon sx={{color:darkMode?"#ffffff":"#000000"}}/>],
+    [<PeopleOutlinedIcon />,<PeopleIcon/>],
+    [<PersonOutlinedIcon />,<PersonIcon/>],
+    [<SettingsOutlinedIcon />,<SettingsIcon/>],
   ]
   const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}`, "/settings/account"]
-
-  const darkMode = useSelector((state) => state.theme.darkMode)
+  
   const [shrink, setShrink] = useState(window.innerWidth < 1278)
   const [selected, setSelected] = useState(optionLinks.indexOf(pathname))
   const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} alt="sidebarOption" select={selected === index ? true : false} />)
@@ -174,6 +173,9 @@ const Sidebar = () => {
   }
 
   const themeColor = useSelector((state) => state.theme.color)
+  const handlePostClick = ()=>{
+    setComposePostPopup(true);
+  }
 
   return (
     <div className=" flex items-center justify-between  border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white max-xs:!sticky max-xs:bottom-0 max-xs:z-10 max-xs:backdrop-brightness-[90%] dark:max-xs:bg-black dark:max-xs:bg-opacity-50 dark:max-xs:backdrop-blur-sm dark:max-xs:backdrop-brightness-[30%] xs:max-w-[400px] xs:justify-end md:flex-grow">
@@ -181,7 +183,10 @@ const Sidebar = () => {
         <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" alt="gigaChatIcon" other={`${shrink ? "mr-3" : ""} mt-0.5`} />
 
         {options}
-        <Button name={shrink ? <HistoryEduOutlinedIcon /> : "Post"} color="text-white" backgroundColor={"bg-" + getColor(themeColor)} height={shrink ? "h-14" : "h-12"} width={shrink ? "w-14" : "w-56"} link="/compose/tweet" alt="post" title="post" other={shrink ? "mr-2" : ""} />
+        <div onClick={handlePostClick}>
+        <Button name={shrink ? <HistoryEduOutlinedIcon /> : "Post"} color="text-white" backgroundColor={"bg-" + getColor(themeColor)} height={shrink ? "h-14" : "h-12"} width={shrink ? "w-14" : "w-56"} alt="post" title="post" other={shrink ? "mr-2" : ""} />
+        </div>
+        <PostPopup open={composePostPopup} setOpen={setComposePostPopup}/>
         {shrink ? (
           <a alt="" className="group mr-2 mt-auto box-border w-fit cursor-pointer border-0">
             <div title="switchAccountContainer" className=" flex w-fit  items-center justify-around rounded-full p-3 group-hover:bg-lightHover dark:group-hover:bg-darkHover" id="mahmoud_switch_account">

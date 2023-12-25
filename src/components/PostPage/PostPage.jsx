@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom"
 import axios from "axios"
 import ComposeReply from "../Home/ComposePost/ComposePost"
 import { getColor } from "../../constants"
+import ReplyingTo from "../General/ReplyingTo"
 
 function PostPage() {
   const [postLoaded, setPostLoaded] = useState(false)
@@ -23,11 +24,12 @@ function PostPage() {
   const APIs = {
     mock: {},
     actual: {
-      getPost: `http://backend.gigachat.cloudns.org/api/tweets/${postId}`,
-      getPostReplies: `http://backend.gigachat.cloudns.org/api/tweets/replies/${postId}`,
+      getPost: `https://backend.gigachat.cloudns.org/api/tweets/${postId}`,
+      getPostReplies: `https://backend.gigachat.cloudns.org/api/tweets/replies/${postId}`,
     },
   }
   useEffect(() => {
+    setPostLoaded(false); 
     console.log(userToken)
     axios
       .get(APIs.actual.getPost, {
@@ -60,7 +62,7 @@ function PostPage() {
       .catch((error) => {
         console.log("get post replies fail", error)
       })
-  }, [])
+  }, [postId])
 
   const replies = [
     {
@@ -90,12 +92,10 @@ function PostPage() {
         {postLoaded && (
           <>
             <Post userProfilePicture={post.tweet_owner.profile_image} userName={post.tweet_owner.nickname} userTag={post.tweet_owner.username} id={post.id} date={post.creation_time} media={post.media} description={post.description} replyCount={post.repliesNum} repostCount={post.repostsNum} likeCount={post.likesNum} viewCount={post.viewsNum} isLiked={post.isLiked} isReposted={post.isRetweeted} key={post.id} />
-            <div className="ml-14 text-sm text-ternairy dark:text-secondary">
-              Replying to <span className={`${"text-" + getColor(themeColor)}`}>@{post.tweet_owner.username}</span>
-            </div>
-
+            <ReplyingTo username={post.tweet_owner.username} leftMargin="14"/>
             <ComposeReply buttonName="Reply" handleNewPost={(newReply) => handleNewReply(newReply)} postType="reply" referredTweetId={post.id} />
             <RepliesContainer replies={postReplies} />
+            
           </>
         )}
       </div>

@@ -5,8 +5,8 @@ export const TENOR_API_KEY = "AIzaSyDE0FD8utv75fMWO_i0DzKDXyLR9-hn77o"
 export const SOCKET_ON = true
 
 export const SOCKET_IO = {
-  mock: "http://localhost:3001",
-  actual: "http://51.116.199.56:5750",
+  mock: "https://localhost:3001",
+  actual: "https://51.116.199.56:5750",
 }
 
 // APIs
@@ -15,8 +15,8 @@ export const SOCKET_IO = {
 export const BACKEND_ON = true // flag for using APIs(true) or not(false)
 export const SERVER_ON = true // flag for using Mock(false) or actual(true)
 // domains
-const MOCK_DOMAIN = "http://localhost:3001/api"
-const ACTUAL_DOMAIN = "http://backend.gigachat.cloudns.org/api"
+const MOCK_DOMAIN = "https://localhost:3001/api"
+const ACTUAL_DOMAIN = "https://backend.gigachat.cloudns.org/api"
 // sub-domains
 export const APIs = {
   mock: {

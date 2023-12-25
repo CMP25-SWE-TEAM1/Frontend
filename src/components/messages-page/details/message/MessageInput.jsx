@@ -1,29 +1,99 @@
-import { useState } from "react"
-import TextField from "@mui/material/TextField"
-import { createTheme } from "@mui/material"
+// Style
+import "./img-crop-tool.css"
+// Components
+import Crop from "../../../General/Crop/Crop"
 import ReactEmojiPicker from "./ReactEmojiPicker"
+import GifPicker, { ContentFilter } from "gif-picker-react"
+// MUI
+import { createTheme } from "@mui/material"
 import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
-import GifPicker, { ContentFilter } from "gif-picker-react"
+import TextField from "@mui/material/TextField"
+// Const
 import { TENOR_API_KEY } from "../../constants/MessagesConstants"
+// Hooks
+import { useState } from "react"
 import usePostMedia from "../../customHooks/post/usePostMedia"
+// Functions
+// Redux
 import { useSelector } from "react-redux"
-import Crop from "../../../General/Crop/Crop"
-import "./img-crop-tool.css"
 
 const MessageInput = (props) => {
+  // ==============  Props   ==============
+  const handleSendMessage = props.handleSendMessage
+
+  // ==============  Redux   ==============
+  // User
   const userToken = useSelector((state) => state.user.token)
-  const handlePostMedia = usePostMedia
+
+  // ==============  Data   ==============
+  const spacingTheme = createTheme({
+    spacing: 1,
+  })
+  // Alert!
+  const [isAlertVisible, setIsAlertVisible] = useState(false)
+  const [alertVTimeOut, setAlertVTimeOut] = useState(null)
+  const [alertTxt, setAlertTxt] = useState("")
   // Message input
+  const [newMessageText, setNewMessageText] = useState("")
+  const [sndMsgActv, setSndMsgActv] = useState("")
+  // Emoji
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false)
   const [emojiPickerVisibiltyStyle, setEmojiPickerVisibiltyStyle] = useState("none")
-  const handleSendMessage = props.handleSendMessage
-  const [newMessageText, setNewMessage] = useState("")
-  const [sndMsgActv, setSndMsgActv] = useState("")
+  // Media
+  const [newMessageMedia, setNewMessageMedia] = useState()
+  const [newMessageMediaType, setNewMessageMediaType] = useState()
 
-  const handleChange = (event) => {
-    setNewMessage(event.target.value)
-    event.target.value === "" ? setSndMsgActv("") : setSndMsgActv("active")
+  const [messageImg, setMessageImg] = useState()
+  const [messageImgURL, setMessageImgURL] = useState()
+  // Crop modal
+  const [openCrop, setOpenCrop] = useState(false)
+  // GIF modal
+  const [messageGIFURL, setMessageGIFURL] = useState()
+  const [GIFsModalOpen, setGIFsModalOpen] = useState(false)
+
+  // ==============  Hooks   ==============
+  // -------- Custom --------
+  const handlePostMedia = usePostMedia
+
+  // ==============  Functions   ==============
+  // -------- Alert --------
+  const handleAlert = () => {
+    clearTimeout(alertVTimeOut)
+    setIsAlertVisible(true)
+    setAlertVTimeOut(
+      setTimeout(() => {
+        setIsAlertVisible(false)
+      }, 2250)
+    )
+  }
+  // -------- Submission --------
+  const handleSndMsg = () => {
+    if (newMessageText !== "" || newMessageMedia !== undefined) {
+      // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
+      if (newMessageMedia || messageImg) {
+        if (newMessageMediaType === "Img") {
+          handlePostMedia(messageImg, userToken).then(({ response, error }) => {
+            if (error || !response) {
+              setAlertTxt("Failed, Media size is too large..")
+              handleAlert()
+              handleMediaCancel()
+            } else {
+              console.log(response)
+              handleSendMessage(newMessageText, response.data.usls[0], newMessageMediaType)
+            }
+          }) // upload media
+          // handleSendMessage(newMessageText, "https://cdn.forumcomm.com/dims4/default/b339688/2147483647/strip/true/crop/800x800+0+0/resize/1066x1066!/quality/90/?url=https%3A%2F%2Ffcc-cue-exports-brightspot.s3.us-west-2.amazonaws.com%2Ffccnn%2Fbinary%2Fpepe_binary_796212.jpg", newMessageMediaType)
+        } else handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
+      } else handleSendMessage(newMessageText)
+    }
+    // Reset values
+    setNewMessageText("")
+    setSndMsgActv("")
+    setNewMessageMedia()
+    setNewMessageMediaType()
+    setMessageImg()
+    setMessageImgURL()
   }
 
   const handleKeyDown = (event) => {
@@ -32,48 +102,12 @@ const MessageInput = (props) => {
       handleSndMsg()
     }
   }
-  const handleAddEmoji = (emoji) => {
-    setNewMessage(newMessageText + emoji)
-    setSndMsgActv("active")
+  // -------- Text --------
+  const handleTextChange = (event) => {
+    setNewMessageText(event.target.value)
+    event.target.value === "" ? setSndMsgActv("") : setSndMsgActv("active")
   }
-  const handleEmojiPickerVisibilty = () => {
-    !emojiPickerVisible ? setEmojiPickerVisibiltyStyle("block") : setEmojiPickerVisibiltyStyle("none")
-    setEmojiPickerVisible(!emojiPickerVisible)
-  }
-  const handleSndMsg = () => {
-    if (newMessageText !== "" || newMessageMedia !== undefined) {
-      // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
-      if (newMessageMedia || messageImg) {
-        if (newMessageMediaType === "Img") {
-          handlePostMedia(messageImg, userToken).then((response) => {
-            console.log(response)
-            handleSendMessage(newMessageText, response.data.usls[0], newMessageMediaType)
-          }) // upload media
-          // handleSendMessage(newMessageText, "https://cdn.forumcomm.com/dims4/default/b339688/2147483647/strip/true/crop/800x800+0+0/resize/1066x1066!/quality/90/?url=https%3A%2F%2Ffcc-cue-exports-brightspot.s3.us-west-2.amazonaws.com%2Ffccnn%2Fbinary%2Fpepe_binary_796212.jpg", newMessageMediaType)
-        } else handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
-      } else handleSendMessage(newMessageText)
-    }
-    // Reset values
-    setNewMessage("")
-    setSndMsgActv("")
-    setNewMessageMedia()
-    setNewMessageMediaType()
-    setMediaInputPreview()
-    setMessageImg()
-    setMessageImgURL()
-  }
-
-  const spacingTheme = createTheme({
-    spacing: 1,
-  })
-
-  // Media Input
-  const [newMessageMedia, setNewMessageMedia] = useState()
-  const [newMessageMediaType, setNewMessageMediaType] = useState()
-  const [mediaInputPreview, setMediaInputPreview] = useState()
-
-  const [messageImg, setMessageImg] = useState()
-  const [messageImgURL, setMessageImgURL] = useState()
+  // -------- Media --------
 
   const handleMediaUpload = (event, MediaType) => {
     const file = event.target.files[0]
@@ -81,24 +115,16 @@ const MessageInput = (props) => {
     setMessageImgURL(URL.createObjectURL(file))
 
     // Validate if file is an image file
-    if (file && isImageFile(file)) {
-      // Load file and render it
-      const image = new FileReader()
-      console.log("my test log", image.result)
-      image.onload = function () {
-        setMediaInputPreview(image.result)
-      }
-
+    if (file && validMediaFile(file)) {
       // Change state
       setNewMessageMedia(file)
       setNewMessageMediaType(MediaType)
       setSndMsgActv("active")
       console.log(file)
     } else {
-      setNewMessageMedia()
-      setNewMessageMediaType()
-      setMediaInputPreview()
-      setSndMsgActv("")
+      setAlertTxt("Only Image/GIF")
+      handleAlert()
+      handleMediaCancel()
       return
     }
   }
@@ -106,35 +132,32 @@ const MessageInput = (props) => {
   const handleMediaCancel = () => {
     setNewMessageMedia()
     setNewMessageMediaType()
-    setMediaInputPreview()
+    setSndMsgActv("")
     setMessageImg()
     setMessageImgURL()
+    setMessageGIFURL()
   }
-  const [openCrop, setOpenCrop] = useState(false)
   const handleMediaEdit = () => {
     setOpenCrop(true)
   }
 
-  const isImageFile = (file) => {
+  const validMediaFile = (file) => {
     // Get the file's MIME type
     const mimeType = file.type
 
     // Check if the MIME type starts with "image/"
     return mimeType.startsWith("image/")
   }
-  const getImgURL = () => {}
-  // Media input - Upload image
 
+  // -------- GIF --------
   // GIFs modal
-  const [GIFsModalOpen, setGIFsModalOpen] = useState(false)
   const handleGIFsModalOpen = () => setGIFsModalOpen(true)
   const handleGIFsModalClose = () => setGIFsModalOpen(false)
-
   // GIF selection
   const handleGIFSelect = (e, MediaURL, MediaType) => {
     setNewMessageMedia(MediaURL)
-    setMediaInputPreview(MediaURL)
     setNewMessageMediaType(MediaType)
+    setMessageGIFURL(MediaURL)
     setSndMsgActv("active")
     handleGIFsModalClose()
   }
@@ -143,7 +166,6 @@ const MessageInput = (props) => {
     var lastIndex = TenorGIFLink.lastIndexOf("/")
     var charsToChange = TenorGIFLink.substring(lastIndex - 2, lastIndex)
     var newURL = TenorGIFLink.replace(charsToChange, "Po")
-
     // Change extenstion
     newURL = newURL.slice(0, -3) + "mp4"
     // return
@@ -154,11 +176,21 @@ const MessageInput = (props) => {
     handleGIFSelect(null, newURL, "GIF")
   }
 
+  // -------- Emoji --------
+  const handleAddEmoji = (emoji) => {
+    setNewMessageText(newMessageText + emoji)
+    setSndMsgActv("active")
+  }
+  const handleEmojiPickerVisibilty = () => {
+    !emojiPickerVisible ? setEmojiPickerVisibiltyStyle("block") : setEmojiPickerVisibiltyStyle("none")
+    setEmojiPickerVisible(!emojiPickerVisible)
+  }
+
   return (
     <div className="keyboard">
       <div className="content">
         {/* Left icons (Media - GIF - Emoji) */}
-        {!mediaInputPreview && !messageImgURL && (
+        {!messageImgURL && !messageGIFURL && (
           <div className="icons">
             <div className="media-icon" title="Media">
               <input type="file" id="mahmoud_file_upload" accept="image/*" onChange={(e) => handleMediaUpload(e, "Img")} />
@@ -203,7 +235,7 @@ const MessageInput = (props) => {
         )}
         {/* Message text */}
         <div className="message-text">
-          {(mediaInputPreview || messageImgURL) && (
+          {(messageImgURL || messageGIFURL) && (
             <div className="new-message-media-attach">
               <div>
                 <div className="cancel-btn" title="Remove" onClick={handleMediaCancel}>
@@ -213,18 +245,20 @@ const MessageInput = (props) => {
                     </g>
                   </svg>
                 </div>
-                <div className="edit-btn" title="edit" onClick={handleMediaEdit}>
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <g>
-                      <path d="M22.21 2.793c-1.22-1.217-3.18-1.26-4.45-.097l-10.17 9.32C5.02 12.223 3 14.376 3 17v5h5c2.62 0 4.78-2.022 4.98-4.593L22.3 7.239c1.17-1.269 1.12-3.229-.09-4.446zM8 20H5v-3c0-1.657 1.34-3 3-3s3 1.343 3 3-1.34 3-3 3zM20.83 5.888l-8.28 9.033c-.5-1.09-1.38-1.971-2.47-2.47l9.03-8.28c.48-.44 1.22-.424 1.68.036s.48 1.201.04 1.681z"></path>
-                    </g>
-                  </svg>
-                </div>
+                {messageImgURL && (
+                  <div className="edit-btn" title="edit" onClick={handleMediaEdit}>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <g>
+                        <path d="M22.21 2.793c-1.22-1.217-3.18-1.26-4.45-.097l-10.17 9.32C5.02 12.223 3 14.376 3 17v5h5c2.62 0 4.78-2.022 4.98-4.593L22.3 7.239c1.17-1.269 1.12-3.229-.09-4.446zM8 20H5v-3c0-1.657 1.34-3 3-3s3 1.343 3 3-1.34 3-3 3zM20.83 5.888l-8.28 9.033c-.5-1.09-1.38-1.971-2.47-2.47l9.03-8.28c.48-.44 1.22-.424 1.68.036s.48 1.201.04 1.681z"></path>
+                      </g>
+                    </svg>
+                  </div>
+                )}
                 {newMessageMediaType === "Img" && <img src={messageImgURL} alt="attached media" />}
                 {
                   newMessageMediaType === "GIF" && (
                     // <div className="relative cursor-pointer overflow-hidden rounded-md">
-                    <video src={mediaInputPreview} alt="attached media" loop autoPlay muted preload="auto" playsInline type="video/mp4" className="max-w-full"></video>
+                    <video src={messageGIFURL} alt="attached media" loop autoPlay muted preload="auto" playsInline type="video/mp4" className="max-w-full"></video>
                   )
                   // </div>
                 }
@@ -248,7 +282,7 @@ const MessageInput = (props) => {
                 py: spacingTheme.spacing(7),
               }}
               id="message-input-field"
-              onChange={handleChange}
+              onChange={handleTextChange}
               onKeyDown={handleKeyDown}
             />
           </div>
@@ -286,6 +320,7 @@ const MessageInput = (props) => {
           <Crop photoURL={messageImgURL} setPhotoURL={setMessageImgURL} setOpenCrop={setOpenCrop} setFile={setMessageImg} aspect={1} />
         </Box>
       </Modal>
+      {isAlertVisible && <div className="send-msg-fail-pop">{alertTxt}</div>}
     </div>
   )
 }

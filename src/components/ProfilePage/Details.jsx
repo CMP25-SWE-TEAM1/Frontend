@@ -34,14 +34,14 @@ const Details = (props) => {
   }, [props])
   // console.log(props)
   const APIs = {
-    blockmock: { Block: `http://localhost:3001/api/profile/` },
-    blockactual: { Block: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/block` },
-    unblockmock: { unBlock: `http://localhost:3001/api/profile/` },
-    unblockactual: { unBlock: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unblock` },
-    mutemock: { mute: `http://localhost:3001/api/profile/` },
-    muteactual: { mute: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/mute` },
-    unmutemock: { mute: `http://localhost:3001/api/profile/` },
-    unmuteactual: { unmute: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unmute` },
+    blockmock: { Block: `https://localhost:3001/api/profile/` },
+    blockactual: { Block: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/block` },
+    unblockmock: { unBlock: `https://localhost:3001/api/profile/` },
+    unblockactual: { unBlock: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/unblock` },
+    mutemock: { mute: `https://localhost:3001/api/profile/` },
+    muteactual: { mute: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/mute` },
+    unmutemock: { mute: `https://localhost:3001/api/profile/` },
+    unmuteactual: { unmute: `https://backend.gigachat.cloudns.org/api/user` },
   }
   document.onclick = (event) => {
     // console.log(event.target)
@@ -60,16 +60,18 @@ const Details = (props) => {
     ${props.display} h-[40px] w-[40px] 
     ${darkmode ? `bg-black text-white` : `bg-white text-black`} 
     border-t- mt-[2%] rounded-[50%] border border-b-2 border-lightBorder 
-    bg-[white] text-center hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover `}
+    
+    bg-[white] text-center  `}
     >
-      <button id="show-details-button" className="mt-[-7px] text-[25px] ">
+      <button id="show-details-button" className="hover:mt-[0] w-[100%] h-[100%] rounded-full mt-[-7px] text-[25px] hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover ">
         ...
       </button>
 
-      <div id="details-div" className={`absolute left-[-165px] top-0 z-10 flex h-[100px] w-[200px] flex-col rounded-xl bg-inherit text-inherit   ${detailsdisplay}`}>
+      <div id="details-div" className={`absolute 
+      left-[-165px] top-0 z-10 flex h-[100px] w-[200px] flex-col rounded-xl bg-inherit text-inherit   ${detailsdisplay}`}>
         <button
           id="block"
-          className={`Detailsbt relative left-[6.5%] ${blocked}`}
+          className={`Detailsbt relative hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover left-[6.5%] ${blocked}`}
           onClick={() => {
             ProfileRequests.block(false, APIs, token)
           }}
@@ -78,7 +80,7 @@ const Details = (props) => {
         </button>
         <button
           id="mute"
-          className={`Detailsbt relative left-[6.5%] ${notblocked}`}
+          className={`Detailsbt hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover relative left-[6.5%] ${notblocked}`}
           onClick={() => {
             ProfileRequests.unblock(false, APIs, token)
           }}
@@ -87,7 +89,7 @@ const Details = (props) => {
         </button>
         <button
           id="mute"
-          className={` Detailsbt relative left-[6.5%] ${muted}`}
+          className={` Detailsbt hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover relative left-[6.5%] ${muted}`}
           onClick={() => {
             ProfileRequests.mute(false, APIs, token)
           }}
@@ -96,9 +98,9 @@ const Details = (props) => {
         </button>
         <button
           id="unmute"
-          className={`Detailsbt relative left-[6.5%] ${notmuted}`}
+          className={`Detailsbt hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover relative left-[6.5%] ${notmuted}`}
           onClick={() => {
-            ProfileRequests.unmute(false, APIs, token)
+            ProfileRequests.unmute(false, APIs, token,props.tag)
           }}
         >
           <VolumeMuteOutlinedIcon/> <span>Unmute This User </span>

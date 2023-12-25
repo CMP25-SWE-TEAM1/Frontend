@@ -24,16 +24,15 @@ const ProfilePosts = () => {
   const APIs = {
     mock: { getAllTweetsAPI: "https://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/posts" },
     actual: {
-      getAllTweetsAPI: "http://backend.gigachat.cloudns.org/api/homepage/following",
-      getUserTweets: `http://backend.gigachat.cloudns.org/api/profile/${root}/tweets`,
-      getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/`,
+      getAllTweetsAPI: "https://backend.gigachat.cloudns.org/api/homepage/following",
+      getUserTweets: `https://backend.gigachat.cloudns.org/api/profile/${root}/tweets`,
+      getProfileAPI: `https://backend.gigachat.cloudns.org/api/user/profile/`,
     },
   }
 
   const [profile, setProfile] = useState()
   useEffect(() => {
-    if (root !== "" && root !== user.username)
-    ProfileRequests.getOtherprofile(false,APIs,root,setProfile,token)
+    if (root !== "" && root !== user.username) ProfileRequests.getOtherprofile(false, APIs, root, setProfile, token)
   }, [root])
 
   const [posts, setPosts] = useState([])
@@ -58,7 +57,12 @@ const ProfilePosts = () => {
               console.log(res.data)
               setPosts(
                 res.data.posts.map((post) => ({
+                  isFollowed: post.isFollowed,
+                  isFollowingMe: post.isFollowingMe,
+                  isLiked: post.isLiked,
+                  isRtweeted:post.isRetweeted,
                   tweetDetails: post,
+                  type:post.type,
                   followingUser: { username: root },
                 }))
               )
@@ -70,7 +74,7 @@ const ProfilePosts = () => {
         })
   }, [root])
   return (
-    <div className="">
+    <div id="Profile-Posts-test" className="">
       <PostsContainer posts={posts} setPosts={setPosts} />
     </div>
   )

@@ -18,9 +18,11 @@ import { useLocation } from "react-router-dom"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import axios from "axios"
 
-import { getColor } from "../../../constants"
 
-function PostHeader({ pathname, postType, userTag, userProfilePicture, userName, finalDate, id, isVisible, handleMouseEnter, handleMouseLeave, hoveredProfile, openMenu, anchorPostMenu, handleMenuClose, htmlElement, handleMenuButtonClick, followingUser, setPosts, posts }) {
+import { getColor } from "../../../constants"
+import ProfileRequests from "../../ProfilePage/profilerequests.js"
+
+function PostHeader({ pathname, postType, isFollowed, userTag, bio, userProfilePicture, userName, finalDate, id, isVisible, handleMouseEnter, handleMouseLeave, hoveredProfile, openMenu, anchorPostMenu, handleMenuClose, htmlElement, handleMenuButtonClick, followingUser, setPosts, posts }) {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const user = useSelector((state) => state.user.user)
 
@@ -34,15 +36,56 @@ function PostHeader({ pathname, postType, userTag, userProfilePicture, userName,
       deleteRepost: `/api/tweets/${id}`,
     },
     actual: {
-      like: `http://backend.gigachat.cloudns.org/api/tweets/like/${id}`,
-      unlike: `http://backend.gigachat.cloudns.org/api/tweets/unlike/${id}`,
-      repost: `http://backend.gigachat.cloudns.org/api/tweets/retweet/${id}`,
-      unrepost: `http://backend.gigachat.cloudns.org/api/tweets/unretweet/${id}`,
-      delete: `http://backend.gigachat.cloudns.org/api/tweets/${id}`,
-      getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/`,
-    },
-  }
+      like: `https://backend.gigachat.cloudns.org/api/tweets/like/${id}`,
+      unlike: `https://backend.gigachat.cloudns.org/api/tweets/unlike/${id}`,
+      repost: `https://backend.gigachat.cloudns.org/api/tweets/retweet/${id}`,
+      unrepost: `https://backend.gigachat.cloudns.org/api/tweets/unretweet/${id}`,
+      delete: `https://backend.gigachat.cloudns.org/api/tweets/${id}`,
+      getProfileAPI: `https://backend.gigachat.cloudns.org/api/user/profile/`,
 
+    },
+    followactual: { postfollowProfileAPI: `https://backend.gigachat.cloudns.org/api/user/${userTag}/follow` },
+    unfollowactual: { postfollowProfileAPI: `https://backend.gigachat.cloudns.org/api/user/${userTag}/unfollow` },
+    muteactual: { mute: `https://backend.gigachat.cloudns.org/api/user/${userTag}/mute` },
+    blockactual: { Block: `https://backend.gigachat.cloudns.org/api/user/${userTag}/block` },
+    
+  }
+  const handleFollow = () => {
+    axios
+      .post(
+        false ? APIs.followmock.postfollowProfileAPI : APIs.followactual.postfollowProfileAPI,
+        {},
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        window.location.reload()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  const handleUnfollow = () => {
+    axios
+      .post(
+        false ? APIs.unfollowmock.postfollowProfileAPI : APIs.unfollowactual.postfollowProfileAPI,
+        {},
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        window.location.reload()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
   const handleDeletePost = () => {
     axios
       .delete(APIs.actual.delete, {
@@ -69,42 +112,35 @@ function PostHeader({ pathname, postType, userTag, userProfilePicture, userName,
   // }, [finalDate])
 
   const themeColor = useSelector((state) => state.theme.color)
-
+ 
   return (
     <>
       <div className="post-header flex items-center justify-between">
-        <div className="flex items-center">
           <div className=" relative flex items-center" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             {isVisible && (
-              <Box className="transition-all" sx={{ zIndex: 5, position: "absolute", top: 0, backgroundColor: darkMode ? "black" : "white", color: darkMode ? "white" : "black", padding: "10px", borderRadius: "10px", boxShadow: darkMode ? "0px 0px 1px 1px gray" : "0px 0px 1px 1px black", width: "250px" }}>
-                <div className="flex ">
-                  <div className="w-fit">
+              <Box className="cursor-auto transition-all" sx={{ zIndex: 5, position: "absolute", top:"20px", backgroundColor: darkMode ? "black" : "white", color: darkMode ? "white" : "black", padding: "10px", borderRadius: "10px", boxShadow: darkMode ? "0px 0px 1px 1px gray" : "0px 0px 1px 1px black", width: "250px" }}>
+                  <div className="w-full flex justify-between ">
                     <Link className="pointer-events-auto hover:brightness-90" to={`/${userTag}`}>
                       <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 50, height: 50 }} />
                     </Link>
-                    <div className="text-secondary">{userName}</div>
-                    <div className="text-secondary">@{userTag}</div>
-                  </div>
                   <div>{userTag !== user.username && <FollowButton tag={userTag} buttonName={hoveredProfile.is_wanted_user_followed ? `Following` : `Follow`}></FollowButton>}</div>
-                </div>
-                <div className="mt-6">
-                  <div className="text-sm text-secondary">{user.username !== userTag ? moment(hoveredProfile.birth_date).format("DD/MM/YYYY") : moment(user.birthDate).format("DD/MM/YYYY")}</div>
-                  <div className="mt-2 flex w-full justify-around">
-                    <span className="text-sm text-secondary">{user.username !== userTag ? hoveredProfile.followings_num : user.followings_num} Following</span>
-                    <span className="text-sm text-secondary">{user.username !== userTag ? hoveredProfile.followers_num : user.followers_num} Followers</span>
+                  </div>
+                    <Link className="block w-full hover:underline hover:pointer-events-pointer font-semibold" to={`/${userTag}`}>{userName}<VerifiedIcon className="pl-1 text-primary" sx={{ fontSize: "22px" }} /></Link>
+                    <Link className="block w-fit text-secondary" to={`/${userTag}`}>@{userTag}</Link>
+                <div className="mt-2">
+                  <div className="text-sm">{bio}</div>
+                  <div className="mt-2 flex w-full ">
+                    <Link className="text-sm mr-2 hover:underline" to={`/${userTag}/following`}><span className="font-semibold">{user.username !== userTag ? hoveredProfile.followings_num : user.followings_num}</span> <span className="text-secondary">Following</span></Link>
+                    <Link className="text-sm hover:underline" to={`/${userTag}/followers`}><span className="font-semibold">{user.username !== userTag ? hoveredProfile.followers_num : user.followers_num}</span> <span className="text-secondary">Followers</span></Link>
                   </div>
                 </div>
               </Box>
             )}
-            <div className="pointer-events-auto">
-              <div className="hover:underline">
-                {userName}
-                <VerifiedIcon className={`pl-1 ${"text-" + getColor(themeColor)}`} sx={{ fontSize: "22px" }} />
-              </div>
-              <Link className={`${pathname.search(id) === -1 ? "hidden" : ""} pointer-events-auto text-sm text-ternairy dark:text-secondary`} to={`/${userTag}`}>
-                @{userTag}
-              </Link>
-            </div>
+            <div className="pointer-events-auto flex items-center">
+            <Link className="hover:underline font-semibold" to={`/${userTag}`}>
+            {userName}
+            <VerifiedIcon className={`pl-1 ${"text-" + getColor(themeColor)}`} sx={{ fontSize: "22px" }} />
+            </Link>
             <Link className={`${pathname.search(id) === -1 ? "" : "hidden"} pointer-events-auto ml-1 text-sm text-ternairy dark:text-secondary`} to={`/${userTag}`}>
               @{userTag}
             </Link>
@@ -161,19 +197,37 @@ function PostHeader({ pathname, postType, userTag, userProfilePicture, userName,
                 <DeleteOutlineIcon className="mr-3 text-base text-red-600" />
                 <span className="text-[15px] text-red-600">Delete Tweet</span>
               </MenuItem>
-              <MenuItem onClick={handleMenuClose} className="flex items-center">
+              <MenuItem onClick={handleMenuClose} 
+              className={`flex items-center ${userTag !== user.username ? "" : "hidden"}`}
+              >
                 <SentimentVeryDissatisfiedIcon className="mr-3 text-base dark:text-white" />
                 <span className="text-[15px] dark:text-white">Not interested in this post</span>
               </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
+              <MenuItem onClick={()=>{
+              isFollowed?handleUnfollow():handleFollow()
+              handleMenuClose() }}
+              className={`${userTag !== user.username ? "" : "hidden"}`}
+              >
                 <PersonAddAltIcon className="mr-3 text-base dark:text-white" />
-                <span className="text-[15px] dark:text-white">Follow @{userTag}</span>
+                <span className="text-[15px] dark:text-white">{isFollowed?"Unfollow":"Follow"} @{userTag}</span>
               </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
+              <MenuItem onClick={
+                ()=>{
+                  ProfileRequests.mute(false,APIs,userToken)
+                  handleMenuClose()
+                }}
+              className={`${userTag !== user.username ? "" : "hidden"}`}
+              >
                 <VolumeOffOutlinedIcon className="mr-3 text-base dark:text-white" />
                 <span className="text-[15px] dark:text-white">Mute @{userTag}</span>
               </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
+              <MenuItem onClick={
+                ()=>{
+                  ProfileRequests.block(false,APIs,userToken)
+                  handleMenuClose()
+                }}
+              className={`${userTag !== user.username ? "" : "hidden"}`}
+              >
                 <BlockOutlinedIcon className="mr-3 text-base dark:text-white" />
                 <span className="text-[15px] dark:text-white">Block @{userTag}</span>
               </MenuItem>

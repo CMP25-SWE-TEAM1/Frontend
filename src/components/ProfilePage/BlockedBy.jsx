@@ -2,7 +2,7 @@ import React from 'react'
 
 function BlockedBy({tag}) {
   return (
-    <div className="absolute top-[70%] left-[37.5%]">
+    <div id="blocked-by" className="absolute top-[70%] left-[37.5%]">
     <h1 className="text-3xl font-bold">
       You're blocked
     </h1>

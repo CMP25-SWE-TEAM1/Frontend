@@ -5,7 +5,7 @@ import { styles } from "../../../styles.js"
 const EditDate=({selectdatedisplay,setSelectdatedisplay,htmldate,month,setMonth,day,setDay,year,setYear})=> {
   
   return (
-     <div className="relative flex flex-col  mb-[2.5%] mx-auto w-[95%]">
+     <div id="edit-date-test" className="relative flex flex-col  mb-[2.5%] mx-auto w-[95%]">
             <div className="flex flex-row  space-x-[10px] text-[rgb(113,118,123)]">
               <p >
                 Birth date 

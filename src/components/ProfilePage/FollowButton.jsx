@@ -13,12 +13,13 @@ const FollowButton = (props) => {
   // there should be a conditional rendering by back
  
   const APIs = {
-    followmock: { postfollowProfileAPI: `http://localhost:3001/api/user/${props.tag}/follow` },
-    followactual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
-    unfollowmock: { postfollowProfileAPI: `http://localhost:3001/api/user/${props.tag}/unfollow` },
-    unfollowactual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
-    unblockmock: { unBlock:   `http://localhost:3001/api/profile/` },
-    unblockactual: { unBlock: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unblock` },
+    followmock: { postfollowProfileAPI: `https://localhost:3001/api/user/${props.tag}/follow` },
+    followactual: { postfollowProfileAPI: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
+    unfollowmock: { postfollowProfileAPI: `https://localhost:3001/api/user/${props.tag}/unfollow` },
+    unfollowactual: { postfollowProfileAPI: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
+    unblockmock: { unBlock:   `https://localhost:3001/api/profile/` },
+    unblockactual: { unBlock: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/unblock` },
+    muteactual: { mute: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/mute` },
   }
   function HandleClick() {
   if (props.buttonName === "Follow") {
@@ -51,9 +52,9 @@ const FollowButton = (props) => {
                       ? `bg-black text-white hover:bg-darkHover dark:hover:bg-lightHover  w-[80px]`
                       :
                        `bg-white text-black hover:bg-lightHover dark:hover:bg-darkHover
-                        bt hover:border-[rgb(244,33,46)]  hover:text-[rgb(244,33,46)]`
+                        bt hover:border-[rgb(244,33,46)]  hover:text-[rgb(244,33,46)] w-[120px]`
                 } 
-                h-[40px]  
+                relative h-[40px]  
                 rounded-full border border-lightBorder text-center  font-[500]
                 dark:border-darkBorder`}
       >
