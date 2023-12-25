@@ -75,7 +75,7 @@ const ProfilePage = (props) => {
              {profileres.is_curr_user === false && <Details position={detailspos} ismuted={profileres.is_wanted_user_muted} isblocked={profileres.is_wanted_user_blocked}  tag={tag} display={`${profileres.is_curr_user  ? `hidden`: `block`}`}></Details> }
              <div id="Button-div" className={`absolute ${profileres.is_curr_user ? `right-[0px]`:`right-[10px]`} top-[90px] m-0  `}>
              {profileres.is_wanted_user_blocked && !profileres.is_curr_user && !profileres.is_curr_user_blocked && <BlockButton isblocked={profileres.is_wanted_user_blocked && !(profileres.is_curr_user ) } tag = {tag}></BlockButton>}
-              {profileres.is_curr_user && profileres.is_wanted_user_blocked === false && profileres.is_curr_user_blocked === false && <FollowButton  setButtonstate={setButtonstate} setDetailsPos={setDetailsPos} display={profileres.is_wanted_user_blocked || profileres.is_curr_user ? 'hidden':'block'}  tag={tag} buttonName={ buttonstate}></FollowButton>}
+              {!profileres.is_curr_user && profileres.is_wanted_user_blocked === false && profileres.is_curr_user_blocked === false && <FollowButton  setButtonstate={setButtonstate} setDetailsPos={setDetailsPos} display={profileres.is_wanted_user_blocked || profileres.is_curr_user ? 'hidden':'block'}  tag={tag} buttonName={ buttonstate}></FollowButton>}
               <EditProfileButton handleOpenProfileEditModal={props.handleOpenProfileEditModal} display={profileres.is_curr_user  ? `display`:`hidden` }></EditProfileButton>
               </div>
             </div>
