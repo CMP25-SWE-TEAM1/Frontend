@@ -119,15 +119,7 @@ const DetailsChat = (props) => {
   }
   const handleSendMessage = (messageText, messageMedia, messageMediaType) => {
     setScrollToBottomFlag(true)
-    // TODO:send message
-    // console.log("Sent message:", messageText)
-    // Add message to the chat
-    // setMessagesData([...messagesData, { id: msgIdCounterS, direction: "R", messageText, messageMedia, mediaType: messageMediaType }])
-    // setMsgIdCounterS(msgIdCounterS + 1)
-    // scrollToBottom()
-    // Send message in BackEnd
     const message = { messageText, messageMedia, messageMediaType }
-    // console.log("message will be sent", message)
     if (SOCKET_ON) sendMessage_toServer(message)
   }
 
@@ -183,10 +175,7 @@ const DetailsChat = (props) => {
   const sendMessage_toServer = (message) => {
     console.log("message sending...", message)
     console.log("sending to...", contact.id)
-    // console.log(contact.id)
-    // console.log(typeof contact.id)
     socket.emit("send_message", {
-      //  sender_ID:
       reciever_ID: contact.id,
       data: {
         ...(message.messageText && { text: message.messageText }),
