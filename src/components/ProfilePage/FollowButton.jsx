@@ -23,9 +23,11 @@ const FollowButton = (props) => {
   }
   function HandleClick() {
   if (props.buttonName === "Follow") {
-     ProfileRequests.follow(false,APIs,token,props.setButtonstate,props.setDetailsPos)
+    console.log(props);
+     ProfileRequests.follow(false,APIs,token,props.setButtonstate,props.setDetailsPos,props.setFollowersnum,props.followersnum)
     } else if(props.buttonName === "Following") {
-     ProfileRequests.unfollow(false,APIs,token,props.setButtonstate,props.setDetailsPos)
+      console.log(props.followersnum);
+     ProfileRequests.unfollow(false,APIs,token,props.setButtonstate,props.setDetailsPos,props.setFollowersnum , props.followersnum)
     }
     else {
       ProfileRequests.unblock(false,APIs,token)
