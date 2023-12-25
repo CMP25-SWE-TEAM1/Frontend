@@ -1,45 +1,58 @@
-import { useState } from "react"
-import TextField from "@mui/material/TextField"
-import { createTheme } from "@mui/material"
+// Style
+import "./img-crop-tool.css"
+// Components
+import Crop from "../../../General/Crop/Crop"
 import ReactEmojiPicker from "./ReactEmojiPicker"
+import GifPicker, { ContentFilter } from "gif-picker-react"
+// MUI
+import { createTheme } from "@mui/material"
 import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
-import GifPicker, { ContentFilter } from "gif-picker-react"
+import TextField from "@mui/material/TextField"
+// Const
 import { TENOR_API_KEY } from "../../constants/MessagesConstants"
+// Hooks
+import { useState } from "react"
 import usePostMedia from "../../customHooks/post/usePostMedia"
+// Functions
+// Redux
 import { useSelector } from "react-redux"
-import Crop from "../../../General/Crop/Crop"
-import "./img-crop-tool.css"
 
 const MessageInput = (props) => {
+  // ==============  Props   ==============
+  const handleSendMessage = props.handleSendMessage
+
+  // ==============  Redux   ==============
+  // User
   const userToken = useSelector((state) => state.user.token)
-  const handlePostMedia = usePostMedia
+
+  // ==============  Data   ==============
+  const spacingTheme = createTheme({
+    spacing: 1,
+  })
   // Message input
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false)
   const [emojiPickerVisibiltyStyle, setEmojiPickerVisibiltyStyle] = useState("none")
-  const handleSendMessage = props.handleSendMessage
-  const [newMessageText, setNewMessage] = useState("")
+  const [newMessageText, setNewMessageText] = useState("")
   const [sndMsgActv, setSndMsgActv] = useState("")
+  // Media Input
+  const [newMessageMedia, setNewMessageMedia] = useState()
+  const [newMessageMediaType, setNewMessageMediaType] = useState()
 
-  const handleChange = (event) => {
-    setNewMessage(event.target.value)
-    event.target.value === "" ? setSndMsgActv("") : setSndMsgActv("active")
-  }
+  const [messageImg, setMessageImg] = useState()
+  const [messageImgURL, setMessageImgURL] = useState()
+  // Crop modal
+  const [openCrop, setOpenCrop] = useState(false)
+  // GIF modal
+  const [messageGIFURL, setMessageGIFURL] = useState()
+  const [GIFsModalOpen, setGIFsModalOpen] = useState(false)
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault()
-      handleSndMsg()
-    }
-  }
-  const handleAddEmoji = (emoji) => {
-    setNewMessage(newMessageText + emoji)
-    setSndMsgActv("active")
-  }
-  const handleEmojiPickerVisibilty = () => {
-    !emojiPickerVisible ? setEmojiPickerVisibiltyStyle("block") : setEmojiPickerVisibiltyStyle("none")
-    setEmojiPickerVisible(!emojiPickerVisible)
-  }
+  // ==============  Hooks   ==============
+  // -------- Custom --------
+  const handlePostMedia = usePostMedia
+
+  // ==============  Functions   ==============
+  // -------- Submission --------
   const handleSndMsg = () => {
     if (newMessageText !== "" || newMessageMedia !== undefined) {
       // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
@@ -54,26 +67,26 @@ const MessageInput = (props) => {
       } else handleSendMessage(newMessageText)
     }
     // Reset values
-    setNewMessage("")
+    setNewMessageText("")
     setSndMsgActv("")
     setNewMessageMedia()
     setNewMessageMediaType()
-    setMediaInputPreview()
     setMessageImg()
     setMessageImgURL()
   }
 
-  const spacingTheme = createTheme({
-    spacing: 1,
-  })
-
-  // Media Input
-  const [newMessageMedia, setNewMessageMedia] = useState()
-  const [newMessageMediaType, setNewMessageMediaType] = useState()
-  const [mediaInputPreview, setMediaInputPreview] = useState()
-
-  const [messageImg, setMessageImg] = useState()
-  const [messageImgURL, setMessageImgURL] = useState()
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault()
+      handleSndMsg()
+    }
+  }
+  // -------- Text --------
+  const handleTextChange = (event) => {
+    setNewMessageText(event.target.value)
+    event.target.value === "" ? setSndMsgActv("") : setSndMsgActv("active")
+  }
+  // -------- Media --------
 
   const handleMediaUpload = (event, MediaType) => {
     const file = event.target.files[0]
@@ -82,13 +95,6 @@ const MessageInput = (props) => {
 
     // Validate if file is an image file
     if (file && isImageFile(file)) {
-      // Load file and render it
-      const image = new FileReader()
-      console.log("my test log", image.result)
-      image.onload = function () {
-        setMediaInputPreview(image.result)
-      }
-
       // Change state
       setNewMessageMedia(file)
       setNewMessageMediaType(MediaType)
@@ -97,7 +103,6 @@ const MessageInput = (props) => {
     } else {
       setNewMessageMedia()
       setNewMessageMediaType()
-      setMediaInputPreview()
       setSndMsgActv("")
       return
     }
@@ -106,11 +111,10 @@ const MessageInput = (props) => {
   const handleMediaCancel = () => {
     setNewMessageMedia()
     setNewMessageMediaType()
-    setMediaInputPreview()
     setMessageImg()
     setMessageImgURL()
+    setSndMsgActv("")
   }
-  const [openCrop, setOpenCrop] = useState(false)
   const handleMediaEdit = () => {
     setOpenCrop(true)
   }
@@ -122,19 +126,16 @@ const MessageInput = (props) => {
     // Check if the MIME type starts with "image/"
     return mimeType.startsWith("image/")
   }
-  const getImgURL = () => {}
-  // Media input - Upload image
 
+  // -------- GIF --------
   // GIFs modal
-  const [GIFsModalOpen, setGIFsModalOpen] = useState(false)
   const handleGIFsModalOpen = () => setGIFsModalOpen(true)
   const handleGIFsModalClose = () => setGIFsModalOpen(false)
-
   // GIF selection
   const handleGIFSelect = (e, MediaURL, MediaType) => {
     setNewMessageMedia(MediaURL)
-    setMediaInputPreview(MediaURL)
     setNewMessageMediaType(MediaType)
+    setMessageGIFURL(MediaURL)
     setSndMsgActv("active")
     handleGIFsModalClose()
   }
@@ -143,7 +144,6 @@ const MessageInput = (props) => {
     var lastIndex = TenorGIFLink.lastIndexOf("/")
     var charsToChange = TenorGIFLink.substring(lastIndex - 2, lastIndex)
     var newURL = TenorGIFLink.replace(charsToChange, "Po")
-
     // Change extenstion
     newURL = newURL.slice(0, -3) + "mp4"
     // return
@@ -154,11 +154,21 @@ const MessageInput = (props) => {
     handleGIFSelect(null, newURL, "GIF")
   }
 
+  // -------- Emoji --------
+  const handleAddEmoji = (emoji) => {
+    setNewMessageText(newMessageText + emoji)
+    setSndMsgActv("active")
+  }
+  const handleEmojiPickerVisibilty = () => {
+    !emojiPickerVisible ? setEmojiPickerVisibiltyStyle("block") : setEmojiPickerVisibiltyStyle("none")
+    setEmojiPickerVisible(!emojiPickerVisible)
+  }
+
   return (
     <div className="keyboard">
       <div className="content">
         {/* Left icons (Media - GIF - Emoji) */}
-        {!mediaInputPreview && !messageImgURL && (
+        {!messageImgURL && !messageGIFURL && (
           <div className="icons">
             <div className="media-icon" title="Media">
               <input type="file" id="mahmoud_file_upload" accept="image/*" onChange={(e) => handleMediaUpload(e, "Img")} />
@@ -203,7 +213,7 @@ const MessageInput = (props) => {
         )}
         {/* Message text */}
         <div className="message-text">
-          {(mediaInputPreview || messageImgURL) && (
+          {(messageImgURL || messageGIFURL) && (
             <div className="new-message-media-attach">
               <div>
                 <div className="cancel-btn" title="Remove" onClick={handleMediaCancel}>
@@ -224,7 +234,7 @@ const MessageInput = (props) => {
                 {
                   newMessageMediaType === "GIF" && (
                     // <div className="relative cursor-pointer overflow-hidden rounded-md">
-                    <video src={mediaInputPreview} alt="attached media" loop autoPlay muted preload="auto" playsInline type="video/mp4" className="max-w-full"></video>
+                    <video src={messageGIFURL} alt="attached media" loop autoPlay muted preload="auto" playsInline type="video/mp4" className="max-w-full"></video>
                   )
                   // </div>
                 }
@@ -248,7 +258,7 @@ const MessageInput = (props) => {
                 py: spacingTheme.spacing(7),
               }}
               id="message-input-field"
-              onChange={handleChange}
+              onChange={handleTextChange}
               onKeyDown={handleKeyDown}
             />
           </div>

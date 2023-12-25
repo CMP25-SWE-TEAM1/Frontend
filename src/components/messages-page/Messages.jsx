@@ -53,12 +53,19 @@ const Messages = (props) => {
   // Sockets listen events
   useEffect(() => {
     if (SOCKET_ON && socket) {
-      socket.on("receive_message", (data) => {
+      const receiveMessageHandler = (data) => {
         // Update nav
         handleNavNewMessage(data.chat_ID, data.message)
-      })
+      }
+
+      socket.on("receive_message", receiveMessageHandler)
+
+      return () => {
+        socket.off("receive_message", receiveMessageHandler)
+      }
     }
   }, [socket])
+
   // Fetch data
   useEffect(() => {
     if (BACKEND_ON) {
