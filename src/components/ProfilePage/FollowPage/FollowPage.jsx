@@ -6,7 +6,7 @@ import { useSelector } from "react-redux"
 import Header from '../ProfileHeader'
 import { useState, useEffect } from "react"
 import ProfileRequests from '../profilerequests'
-
+import { Link } from 'react-router-dom'
 const  FollowPage = () => {
   const FollowNavLinks = [
     { title: "Following", location: "Following" },
@@ -21,13 +21,15 @@ const  FollowPage = () => {
   const {tag} = useParams()
   const {user} = useSelector((state)=>(state.user))
   useEffect(() => {
+    if(user )
     if(tag !== user.username)
     ProfileRequests.getOtherprofile(false,APIs,tag,setProfile,token)
     
   }, [tag])
 
   return (
-    <div id="followers-following-page-test" className=" flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
+    <>
+    {user && <div id="followers-following-page-test" className=" flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
       <div
         className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow 
       overflow-y-scroll border border-b-0 border-t-0 border-lightBorder 
@@ -41,7 +43,16 @@ const  FollowPage = () => {
       {(tag === user.username ||  profileres) && <Outlet />}
       </div>
       </div>
-    </div>
+    </div>}
+    {!user && <div className="absolute left-[45%] top-[45%] dark:bg-[white] bg-[black] text-white dark-text-[black] rounded-full
+      w-[100px] h-[100px]">
+        <Link to='/signup'>
+        <button className="w-[100%] h-[100%] ">
+          Sign up pls 
+        </button>
+        </Link>
+        </div>}
+    </>
   )
 }
 

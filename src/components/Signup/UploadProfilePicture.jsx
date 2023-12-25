@@ -191,7 +191,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
         </button>
       </div>
       <div className={`${openCrop ? "!block" : "!hidden"}  !mt-0`}>
-        <Crop photoURL={profilePicURL} setOpenCrop={setOpenCrop} setPhotoURL={setProfilePicURL} setFile={setProfilePic} aspect={1} />
+        <Crop photoURL={profilePicURL} setOpenCrop={setOpenCrop} setPhotoURL={setProfilePicURL} setFile={setProfilePic} aspect={1} originalPhoto={user? user.profileImage : defaultProfilePic} />
       </div>
     </div>
   )

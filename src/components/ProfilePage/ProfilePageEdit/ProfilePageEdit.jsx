@@ -18,6 +18,7 @@ import EditProfileImage from "./EditProfileImage.jsx"
 import EditBannerImage from "./EditBannerImage.jsx"
 import Header from "./Header.jsx"
 import BioEdit from "./BioEdit.jsx"
+import { Link } from "react-router-dom"
 const ProfilePageEdit = (props)=>{
   const APIds = {
     mock: { getProfileAPI: `https://localhost:3001/api/profile/` },
@@ -29,22 +30,22 @@ const ProfilePageEdit = (props)=>{
   const dispatch = useDispatch()
   const {user}  = useSelector((state) =>(state.user))
   const {token} = useSelector((state)=>(state.user))
-  const [name,setName]       = useState(user.nickname);
-  const [bio, setBio] = useState(user.bio? user.bio:'')
-  const [location, setLocation] = useState(user.location? user.location:'');
-  const [website, setWebsite] = useState(user.website? user.website:'');
-  const [profileimage,setProfileimage] = useState(user.profileImage);
+  const [name,setName]       = useState(user? user.nickname :'');
+  const [bio, setBio] = useState(user? user.bio? user.bio:'': '')
+  const [location, setLocation] = useState(user? user.location? user.location:'':'');
+  const [website, setWebsite] = useState(user? user.website? user.website:'':'');
+  const [profileimage,setProfileimage] = useState(user? user.profileImage: '');
   const [profileimagefile,setProfileimagefile]= useState();
   const [coverimagefile,setCoverimagefile] = useState();
-  const [coverpage, setCoverpage] = useState(user.banner_image);
+  const [coverpage, setCoverpage] = useState(user ? user.banner_image: '');
   const {darkMode} = useSelector((state)=> state.theme)
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const navigate = useNavigate();
   const locationURL = useLocation();
   const [selectdatedisplay,setSelectdatedisplay]= useState(false);
-  const [year, setYear] = useState(user.birthDate? (user.birthDate).slice(0,10).split('-')[0]: 2000)
-  const [month, setMonth] = useState(user.birthDate? months[(user.birthDate).slice(0,10).split('-')[1]-1] : months[0])
-  const [day, setDay] = useState(user.birthDate? (user.birthDate).slice(0,10).split('-')[2]: 1)
+  const [year, setYear] = useState(user? user.birthDate? (user.birthDate).slice(0,10).split('-')[0]: 2000 : '')
+  const [month, setMonth] = useState(user? user.birthDate? months[(user.birthDate).slice(0,10).split('-')[1]-1] : months[0]: '')
+  const [day, setDay] = useState(user? user.birthDate? (user.birthDate).slice(0,10).split('-')[2]: 1 : '' )
   const [openCrop, setOpenCrop] = useState(false)
   const [opencoverCrop,setOpenCoverCrop] = useState(false)
   const inverseMonth={January:"01",February:"02",March:"03",April:"04",May:"05",June:"06",July:"07",August:"08",September:"09",October:10,Novmeber:11, December:12,}
@@ -227,16 +228,19 @@ const ProfilePageEdit = (props)=>{
   }
   const handlePictureChange = (event) => {
     event.preventDefault()
+    if(event.target.files[0])
+    {
     const fileUploaded = event.target.files[0]
     setProfileimagefile(fileUploaded)
     setProfileimage(URL.createObjectURL(fileUploaded))
-
     setOpenCrop(true)
+    }
     
   }
     return(
-      <Modal open={props.openModal} onClose={()=>{props.handleCloseModal()
-        navigate(`/${user.username}`)}} data-testid="loginModal"  disableEscapeKeyDown disablePortal>
+      <>
+      {user&& <Modal open={props.openModal} onClose={()=>{props.handleCloseModal()
+        navigate(`/${user ? user.username: ''}`)}} data-testid="loginModal"  disableEscapeKeyDown disablePortal>
         <Box style={modalStyle} className={` ${darkMode?  `bg-black`:`bg-white`}`}>
           <div id="ParentDiv-test">
         <div id="ParentDiv2-test" className={`pop-up ${openCrop||opencoverCrop ? "!hidden" : ""}  flex flex-col overflow-y-auto no-scrollbar  `}>
@@ -260,14 +264,23 @@ const ProfilePageEdit = (props)=>{
         </form>
       </div>
       <div id="CROP-ForProfile" className={` ${openCrop ? "!block" : "!hidden"}  !mt-0`}>
-        <Crop photoURL={profileimage}setOpenCrop={setOpenCrop} setPhotoURL={setProfileimage} setFile={setProfileimagefile} aspect={1} originalPhoto={user ? user.profileImage : defaultProfilePic} />
+        <Crop photoURL={profileimage}setOpenCrop={setOpenCrop} setPhotoURL={setProfileimage} setFile={setProfileimagefile} aspect={1} originalPhoto={user ? user.profileImage : defaultProfilePic}  />
       </div>
       <div className={` ${opencoverCrop ? "!block" : "!hidden"}  !mt-0`}>
-        <Crop id="CROP-ForCover"  photoURL={coverpage}  setOpenCrop={setOpenCoverCrop} setPhotoURL={setCoverpage} setFile={setCoverimagefile} aspect={2}  />
+        <Crop id="CROP-ForCover"  photoURL={coverpage}  setOpenCrop={setOpenCoverCrop} setPhotoURL={setCoverpage} setFile={setCoverimagefile} aspect={2} originalPhoto={user ? user.banner_image : DefaultCoverPage}  />
       </div>
       </div>
       </Box>
-      </Modal>
+      </Modal>}
+      {!user && <div className="absolute left-[45%] top-[45%] dark:bg-[white] bg-[black] text-white dark-text-[black] rounded-full
+      w-[100px] h-[100px]">
+        <Link to='/signup'>
+        <button className="w-[100%] h-[100%] ">
+          Sign up pls 
+        </button>
+        </Link>
+        </div>}
+      </>
     )
 }
 

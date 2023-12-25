@@ -7,7 +7,7 @@ const FollowButton = (props) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const { token } = useSelector((state) => state.user)
   const mock = false
-  console.log(props);
+  
 
   
   // there should be a conditional rendering by back

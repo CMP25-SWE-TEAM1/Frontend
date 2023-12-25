@@ -9,7 +9,7 @@ function ProfileImage(props) {
     {
         //will open a Modal
     }
-     console.log(props)
+    
   return (
     <div id="profile-image-test" className='relative min-w-[140px] max-w-[140px] w-[calc(100%/3)] min-h-[140px] max-h-[140px]
     left-[1.5%] '> 

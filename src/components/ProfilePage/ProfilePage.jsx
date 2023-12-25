@@ -53,8 +53,8 @@ const ProfilePage = (props) => {
     }
   }, [tag])
 
-  console.log(profilePicURL)
-  console.log(profileres.is_curr_user)
+  
+
   return (
     <div className=" flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
       {user && <div

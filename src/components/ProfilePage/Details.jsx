@@ -24,7 +24,7 @@ const Details = (props) => {
       setnotmuted("hidden")
     }
     if (props.isblocked) {
-      console.log("Hello")
+      
       setblocked("hidden")
       setnotblocked("block")
     } else {
@@ -52,7 +52,7 @@ const Details = (props) => {
       setDisplay("hidden")
     }
   }
-  console.log(props.position)
+  
   return (
     <div
       id="show-details-div"

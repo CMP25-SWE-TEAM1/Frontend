@@ -2,7 +2,7 @@ import axios from "axios"
 import { DefaultCoverPage } from "../../constants"
 class ProfileRequests{
     static  getOtherprofile = (mock,APIs,tag,setProfile,token,setProfilePicURL,setCoverPicURL,setDetailsPos,setButtonstate,setViewPost) => {
-      console.log(APIs);
+      //cl(APIs);
         axios
         .get(mock ? APIs.mock.getProfileAPI + `${tag}` : APIs.actual.getProfileAPI + `${tag}`, {
           headers: {
@@ -30,9 +30,9 @@ class ProfileRequests{
           }
         })
         .catch((err) => {
-          console.log(err)
-          //console.log(tag)
-          //console.log(err)
+          //cl(err)
+          ////cl(tag)
+          ////cl(err)
         })
     }
     static getMyprofile = (mock,APIs,token,setProfile,setProfilePicURL,setCoverPicURL) =>{
@@ -44,10 +44,10 @@ class ProfileRequests{
             })
             .then((res) => {
               if (res.status === 200) {
-                console.log(res)
+                //cl(res)
                 
-                // //console.log(`Bearer ${token}`)
-               // //console.log(res)
+                // ////cl(`Bearer ${token}`)
+               // ////cl(res)
                 setProfilePicURL(res.data.user.profile_image)
                 const banner_image = res.data.user.banner_image ? res.data.user.banner_image : DefaultCoverPage
                 setCoverPicURL(banner_image)
@@ -56,8 +56,8 @@ class ProfileRequests{
               }
             })
             .catch((err) => {
-              //console.log(tag)
-              //console.log(err)
+              ////cl(tag)
+              ////cl(err)
             })
 
     }
@@ -71,11 +71,11 @@ class ProfileRequests{
               },
           }
       ).then((res)=>{
-        console.log(res)
+        //cl(res)
         window.location.reload()
       })
       .catch((err) => {
-        console.log(err)
+        //cl(err)
       })
   }
   static unblock = (mock, APIs, token) => {
@@ -90,12 +90,12 @@ class ProfileRequests{
         }
       )
       .then((res) => {
-        console.log(res)
+        //cl(res)
         window.location.reload()
       })
       .catch((err) => {
-        console.log("hello")
-        console.log(err)
+        //cl("hello")
+        //cl(err)
       })
   }
   static mute = (mock, APIs, token) => {
@@ -110,16 +110,16 @@ class ProfileRequests{
         }
       )
       .then((res) => {
-        console.log(res)
+        //cl(res)
         window.location.reload()
       })
       .catch((err) => {
-        console.log("hello")
-        console.log(err)
+        //cl("hello")
+        //cl(err)
       })
   }
   static unmute = (mock, APIs, token,tag) => {
-    console.log(APIs)
+    //cl(APIs)
     axios
       .patch(
         mock ? APIs.blockmock.Block : `${APIs.unmuteactual.unmute}/${tag}/unmute`,
@@ -131,12 +131,12 @@ class ProfileRequests{
         }
       )
       .then((res) => {
-        console.log(res)
+        //cl(res)
         window.location.reload()
       })
       .catch((err) => {
-        console.log("hello")
-        console.log(err)
+        //cl("hello")
+        //cl(err)
       })
   }
   static follow = (mock, APIs, token, setbuttonstate, setDetailsPos) => {
@@ -157,7 +157,7 @@ class ProfileRequests{
         }
       })
       .catch((err) => {
-        console.log(err)
+        //cl(err)
       })
   }
   static unfollow = (mock, APIs, token, setbuttonstate, setDetailsPos) => {
@@ -178,7 +178,7 @@ class ProfileRequests{
         }
       })
       .catch((err) => {
-        console.log(err)
+        //cl(err)
       })
   }
 }
