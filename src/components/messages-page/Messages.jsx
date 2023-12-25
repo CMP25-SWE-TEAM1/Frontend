@@ -23,7 +23,7 @@ import { Link } from "react-router-dom"
 
 const Messages = (props) => {
   // ==============  Props   ==============
-  const { paramContactId } = useParams()
+  const { contactId: paramContactId } = useParams()
   // Compose message
   const composeModalOpen = props.composeModalOpen
   const handleComposeModalOpen = props.handleComposeModalOpen
