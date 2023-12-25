@@ -91,11 +91,12 @@ const Messages = (props) => {
 
   // ==============  Functions   ==============
   const handleNavNewMessage = (chatId, message) => {
-    const chatContact = contacts.filter((contact) => contact.id === chatId)[0]
+    const chatContact = contacts.filter((contact) => contact.id == chatId)[0]
     if (chatContact) {
+      console.log("test 96")
       setContacts(
         contacts.map((contact) =>
-          contact.id === chatId
+          contact.id == chatId
             ? {
                 ...contact,
                 lastMessage: message.description,
@@ -108,6 +109,7 @@ const Messages = (props) => {
         )
       )
     } else {
+      console.log("test 112")
       handleGetContacts(userToken).then((response) => {
         console.log("GetContacts response", response)
         const newChats = response.data.map((chat) => ({

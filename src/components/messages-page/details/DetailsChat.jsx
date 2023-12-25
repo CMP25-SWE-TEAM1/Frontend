@@ -306,12 +306,6 @@ const DetailsChat = (props) => {
                         <a href="#/username">{contact.name || "Hamza"}</a>
                         <a href="#/username">@{contact.userName || "hamza_xyz"}</a>
                       </div>
-                      {/* Bio */}
-                      <div className="contact-bio">{contact.bio || "I am the real batman"}</div>
-                      {/* Info 1 (Joined + No. of followers) */}
-                      <div className="contact-xdata-1">Joined January 2011 · {contact.followers_num || "268.8K"} Followers</div>
-                      {/* Info 2 (common followers) */}
-                      <div className="contact-xdata-2">Not followed by anyone you're following</div>
                     </div>
                     {/* Messages */}
                     <div className="messages">
