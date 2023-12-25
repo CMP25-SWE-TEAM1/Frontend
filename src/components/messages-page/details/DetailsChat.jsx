@@ -20,6 +20,8 @@ import ListItemText from "@mui/material/ListItemText"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import CheckIcon from "@mui/icons-material/Check"
 
+import debounce from "lodash.debounce"
+
 // Socket.io
 import { SOCKET_ON, BACKEND_ON } from "../constants/MessagesConstants"
 import { useDispatch, useSelector } from "react-redux"
@@ -224,6 +226,7 @@ const DetailsChat = (props) => {
     )
   }
 
+  // Unseen messages
   const [myLastMessageTime, setMyLastMessageTime] = useState(0)
   useEffect(() => {
     const reversedMessages = [...messagesData].reverse()
@@ -232,6 +235,45 @@ const DetailsChat = (props) => {
       setMyLastMessageTime(myLastMessage.time)
     }
   }, [messagesData])
+
+  // Fetch on scroll
+  const componentRef = useRef()
+  useEffect(() => {
+    const component = componentRef.current
+
+    const handleScrollFetch = debounce(() => {
+      const scrolledHeight = component.scrollTop
+
+      if (scrolledHeight <= 50) {
+        if (BACKEND_ON) {
+          console.log("fetching page", chatPage)
+          handleGetChat(contact.id, userToken, chatPage).then((response) => {
+            if (response && response.data) {
+              const newChat = response.data.map((message) => ({
+                id: message._id,
+                messageText: message.description,
+                messageMedia: message.media && message.media.link ? message.media.link : undefined,
+                mediaType: message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined,
+                direction: message.mine ? "R" : "L",
+                seen: message.seen,
+                time: message.sendTime,
+              }))
+              setMessagesData((prevChat) => [...newChat, ...prevChat])
+
+              chatPage++
+            }
+          })
+        }
+      }
+    }, 300)
+
+    component.addEventListener("scroll", handleScrollFetch)
+
+    return () => {
+      component.removeEventListener("scroll", handleScrollFetch)
+      handleScrollFetch.cancel()
+    }
+  }, [])
 
   return (
     <div className="details chat">
@@ -290,7 +332,7 @@ const DetailsChat = (props) => {
             {/* User info + Messages */}
             {!infoVisible && (
               <>
-                <div className="chatbox" onScroll={handleChatScrlBtn}>
+                <div className="chatbox" onScroll={handleChatScrlBtn} ref={componentRef}>
                   {/* (Only If there is messages, show it) User info + Messages */}
                   {two && (
                     <div className="chatbox-content">
