@@ -1,62 +1,63 @@
-import { useNavigate } from "react-router-dom"
+// Components
 import Message from "./message/Message"
 import MessageInput from "./message/MessageInput"
-import { useState, useEffect, useRef } from "react"
+// MUI
 import Divider from "@mui/material/Divider"
 import Chip from "@mui/material/Chip"
-
-import IconButton from "@mui/material/IconButton"
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace"
-
-import useGetChat from "../customHooks/get/useGetChat"
+// Const
 import * as DataInit from "../constants/MessagesInit"
-
-import List from "@mui/material/List"
-import ListItem from "@mui/material/ListItem"
-import ListItemButton from "@mui/material/ListItemButton"
-import ListItemAvatar from "@mui/material/ListItemAvatar"
-import Avatar from "@mui/material/Avatar"
-import ListItemText from "@mui/material/ListItemText"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import CheckIcon from "@mui/icons-material/Check"
-
-import debounce from "lodash.debounce"
-
-// Socket.io
 import { SOCKET_ON, BACKEND_ON } from "../constants/MessagesConstants"
+// Hooks
+import { useNavigate, Link } from "react-router-dom"
+import { useState, useEffect, useRef } from "react"
+import useGetChat from "../customHooks/get/useGetChat"
+import debounce from "lodash.debounce"
+// Redux
 import { useDispatch, useSelector } from "react-redux"
 import { selectSocket } from "../../../store/SocketSlice"
-import { Link } from "react-router-dom"
 
 const DetailsChat = (props) => {
-  const userToken = useSelector((state) => state.user.token)
-  const [messagesData, setMessagesData] = useState(DataInit.DetailsChat_messages)
+  // ==============  Props   ==============
   const handleNavNewMessage = props.handleNavNewMessage
-
-  const dispatch = useDispatch()
-  const socket = useSelector(selectSocket)
-
   const contact = props.contact
   const changeContactBlock = props.changeContactBlock
-  const handleGetChat = useGetChat
 
+  // ==============  Redux   ==============
+  // User
+  const userToken = useSelector((state) => state.user.token)
+  // Socket
+  const socket = useSelector(selectSocket)
+
+  // ==============  Data   ==============
+  let chatPage = 1
   const one = true
   const two = true
-  const navigate = useNavigate()
-  // Messages mapping
-  // const [msgData, setMsgData] = useState(
-  // )
-  // scroll to bottom button
+
+  const [messagesData, setMessagesData] = useState(DataInit.DetailsChat_messages)
+  const [chatBtnDwnAppear, setChatBtnDwnAppear] = useState(false)
+  const [scrollToBottomFlag, setScrollToBottomFlag] = useState(false)
+  // Message not sent!
+  const [isAlertVisible, setIsAlertVisible] = useState(false)
+  const [alertVTimeOut, setAlertVTimeOut] = useState(null)
+  const [alertTxt, setAlertTxt] = useState("")
+  // unseen
+  const [myLastMessageTime, setMyLastMessageTime] = useState(0)
+  // Ref
   const endOfChat = useRef(null)
   const startOfUnseenChat = useRef(null)
+  const componentRef = useRef()
 
-  let chatPage = 1
+  // ==============  Hooks   ==============
+  // -------- Custom --------
+  const handleGetChat = useGetChat
+  const navigate = useNavigate()
+  // -------- useEffect --------
+  // fetch chat messages
   useEffect(() => {
     if (BACKEND_ON) {
       setMessagesData([])
       function fetchChatMessages() {
         console.log("fetching page", chatPage)
-
         handleGetChat(contact.id, userToken, chatPage).then((response) => {
           if (response && response.data) {
             const newChat = response.data.map((message) => ({
@@ -84,52 +85,12 @@ const DetailsChat = (props) => {
       // initial fetch
       fetchChatMessages()
     }
-    scrollToBottom()
-    // scrollToLastSeen()
-    // setScrollToBottomFlag(true)
+    messagesData.filter((msg) => msg.seen === false && msg.time > myLastMessageTime).length !== 0 ? scrollToLastSeen() : scrollToBottom()
   }, [chatPage, contact.id, handleGetChat, userToken])
-  const scrollToBottom = () => {
-    console.log("Bottom Scrolling")
-    // endOfChat?.current?.scrollIntoView({ behavior: "smooth" })
-    endOfChat?.current?.scrollIntoView()
-  }
-  const scrollToLastSeen = () => {
-    console.log("LastSeen Scrolling")
-    if (startOfUnseenChat?.current) {
-      const windowHeight = window.innerHeight
-      const elementHeight = startOfUnseenChat.current.offsetHeight
-
-      // Calculate the offset to position the element at the mid height of the window
-      const offset = Math.max(0, (elementHeight - windowHeight) / 2)
-
-      // Use scrollIntoView with options
-      startOfUnseenChat.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center", // Scroll the element to the center of the view
-        inline: "nearest", // Keep the element aligned to the nearest edge
-        offset: { top: offset },
-      })
-    }
-  }
-  const handleBackToBottom = () => {
-    if (chatBtnDwnAppear) scrollToBottom()
-  }
-  const [chatBtnDwnAppear, setChatBtnDwnAppear] = useState(false)
-  const handleChatScrlBtn = (event) => {
-    event.currentTarget.scrollHeight - event.currentTarget.scrollTop <= event.currentTarget.clientHeight + 44 ? setChatBtnDwnAppear(false) : setChatBtnDwnAppear(true)
-  }
-  const handleSendMessage = (messageText, messageMedia, messageMediaType) => {
-    setScrollToBottomFlag(true)
-    const message = { messageText, messageMedia, messageMediaType }
-    if (SOCKET_ON) sendMessage_toServer(message)
-  }
-
   // Scroll to bottom (with new messages)
-  const [scrollToBottomFlag, setScrollToBottomFlag] = useState(true)
   useEffect(() => {
     if (scrollToBottomFlag) scrollToBottom()
   }, [messagesData, scrollToBottomFlag])
-
   // Connect to Socket.io
   useEffect(() => {
     if (SOCKET_ON) {
@@ -137,7 +98,7 @@ const DetailsChat = (props) => {
         // Update chat
         if (data.chat_ID === contact.id) {
           console.log("received_message:", data)
-          setScrollToBottomFlag(true)
+          // setScrollToBottomFlag(true)
 
           const message = data.message
 
@@ -171,53 +132,7 @@ const DetailsChat = (props) => {
       }
     }
   }, [socket, messagesData, contact.id])
-
-  // Send message to socket sercer
-  const sendMessage_toServer = (message) => {
-    console.log("message sending...", message)
-    console.log("sending to...", contact.id)
-    socket.emit("send_message", {
-      reciever_ID: contact.id,
-      data: {
-        ...(message.messageText && { text: message.messageText }),
-        ...(message.messageMedia && {
-          media: {
-            link: message.messageMedia,
-            type: message.messageMediaType === "GIF" ? "video" : "image",
-          },
-        }),
-      },
-    })
-  }
-
-  const handleMessageMetaCheck = (message, nextMessage) => {
-    if (!nextMessage || message.direction !== nextMessage.direction) return true
-    else {
-      const messageDate = new Date(message.time)
-      const nextMessageDate = new Date(nextMessage.time)
-
-      const timeDiff = (nextMessageDate - messageDate) / 1000
-      return timeDiff >= 60
-    }
-  }
-
-  // Message not sent!
-  const [isAlertVisible, setIsAlertVisible] = useState(false)
-  const [alertVTimeOut, setAlertVTimeOut] = useState(null)
-  const [alertTxt, setAlertTxt] = useState("")
-
-  const handleFailedMessage = () => {
-    clearTimeout(alertVTimeOut)
-    setIsAlertVisible(true)
-    setAlertVTimeOut(
-      setTimeout(() => {
-        setIsAlertVisible(false)
-      }, 2250)
-    )
-  }
-
   // Unseen messages
-  const [myLastMessageTime, setMyLastMessageTime] = useState(0)
   useEffect(() => {
     const reversedMessages = [...messagesData].reverse()
     const myLastMessage = reversedMessages.find((message) => message.direction === "R")
@@ -225,9 +140,7 @@ const DetailsChat = (props) => {
       setMyLastMessageTime(myLastMessage.time)
     }
   }, [messagesData])
-
   // Fetch on scroll
-  const componentRef = useRef()
   useEffect(() => {
     const component = componentRef.current
 
@@ -262,7 +175,81 @@ const DetailsChat = (props) => {
       component.removeEventListener("scroll", handleScrollFetch)
       handleScrollFetch.cancel()
     }
-  }, [])
+  }, [chatPage, contact.id, handleGetChat, userToken])
+
+  // ==============  Functions   ==============
+  // scroll to bottom button
+  const scrollToBottom = () => {
+    console.log("Bottom Scrolling")
+    // endOfChat?.current?.scrollIntoView({ behavior: "smooth" })
+    endOfChat?.current?.scrollIntoView()
+  }
+  const scrollToLastSeen = () => {
+    console.log("LastSeen Scrolling")
+    if (startOfUnseenChat?.current) {
+      const windowHeight = window.innerHeight
+      const elementHeight = startOfUnseenChat.current.offsetHeight
+
+      // Calculate the offset to position the element at the mid height of the window
+      const offset = Math.max(0, (elementHeight - windowHeight) / 2)
+
+      // Use scrollIntoView with options
+      startOfUnseenChat.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center", // Scroll the element to the center of the view
+        inline: "nearest", // Keep the element aligned to the nearest edge
+        offset: { top: offset },
+      })
+    }
+  }
+  const handleBackToBottom = () => {
+    if (chatBtnDwnAppear) scrollToBottom()
+  }
+  const handleChatScrlBtn = (event) => {
+    event.currentTarget.scrollHeight - event.currentTarget.scrollTop <= event.currentTarget.clientHeight + 44 ? setChatBtnDwnAppear(false) : setChatBtnDwnAppear(true)
+  }
+  const handleSendMessage = (messageText, messageMedia, messageMediaType) => {
+    setScrollToBottomFlag(true)
+    const message = { messageText, messageMedia, messageMediaType }
+    if (SOCKET_ON) sendMessage_toServer(message)
+  }
+
+  // Send message to socket sercer
+  const sendMessage_toServer = (message) => {
+    console.log("message sending...", message)
+    console.log("sending to...", contact.id)
+    socket.emit("send_message", {
+      reciever_ID: contact.id,
+      data: {
+        ...(message.messageText && { text: message.messageText }),
+        ...(message.messageMedia && {
+          media: {
+            link: message.messageMedia,
+            type: message.messageMediaType === "GIF" ? "video" : "image",
+          },
+        }),
+      },
+    })
+  }
+  const handleMessageMetaCheck = (message, nextMessage) => {
+    if (!nextMessage || message.direction !== nextMessage.direction) return true
+    else {
+      const messageDate = new Date(message.time)
+      const nextMessageDate = new Date(nextMessage.time)
+
+      const timeDiff = (nextMessageDate - messageDate) / 1000
+      return timeDiff >= 60
+    }
+  }
+  const handleFailedMessage = () => {
+    clearTimeout(alertVTimeOut)
+    setIsAlertVisible(true)
+    setAlertVTimeOut(
+      setTimeout(() => {
+        setIsAlertVisible(false)
+      }, 2250)
+    )
+  }
 
   return (
     <div className="details chat">
