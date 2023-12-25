@@ -50,25 +50,22 @@ const DetailsChat = (props) => {
   let chatPage = 1
   useEffect(() => {
     if (BACKEND_ON) {
-      // setMessagesData([])
+      setMessagesData([])
       function fetchChatMessages() {
         console.log("fetching page", chatPage)
 
         handleGetChat(contact.id, userToken, chatPage).then((response) => {
           if (response && response.data) {
-            newChat = [
-              ...newChat,
-              ...response.data.map((message) => ({
-                id: message._id,
-                messageText: message.description,
-                messageMedia: message.media && message.media.link ? message.media.link : undefined,
-                mediaType: message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined,
-                direction: message.mine ? "R" : "L",
-                seen: message.seen,
-                time: message.sendTime,
-              })),
-            ]
-            // setMessagesData((prevChat) => [...newChat, ...prevChat])
+            const newChat = response.data.map((message) => ({
+              id: message._id,
+              messageText: message.description,
+              messageMedia: message.media && message.media.link ? message.media.link : undefined,
+              mediaType: message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined,
+              direction: message.mine ? "R" : "L",
+              seen: message.seen,
+              time: message.sendTime,
+            }))
+            setMessagesData((prevChat) => [...newChat, ...prevChat])
 
             chatPage++
             console.log("fetch another chat page? ", response.data && response.data.length !== 0 && response.data[0].seen === false)
@@ -82,10 +79,8 @@ const DetailsChat = (props) => {
         })
       }
 
-      let newChat = []
       // initial fetch
       fetchChatMessages()
-      setMessagesData(newChat)
     }
     scrollToBottom()
     // scrollToLastSeen()
@@ -229,6 +224,15 @@ const DetailsChat = (props) => {
     )
   }
 
+  const [myLastMessageTime, setMyLastMessageTime] = useState(0)
+  useEffect(() => {
+    const reversedMessages = [...messagesData].reverse()
+    const myLastMessage = reversedMessages.find((message) => message.direction === "R")
+    if (myLastMessage) {
+      setMyLastMessageTime(myLastMessage.time)
+    }
+  }, [messagesData])
+
   return (
     <div className="details chat">
       <div className="content">
@@ -311,19 +315,19 @@ const DetailsChat = (props) => {
                       {/* Messages */}
                       <div className="messages">
                         {messagesData
-                          .filter((msg) => msg.seen === true)
+                          .filter((msg) => msg.seen === true || msg.time <= myLastMessageTime)
                           .map((msg, index, array) => {
                             const nextMsg = index < array.length - 1 ? array[index + 1] : null
                             const withMeta = handleMessageMetaCheck(msg, nextMsg)
                             return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} />
                           })}
-                        {messagesData.filter((msg) => msg.seen === false).length !== 0 && (
+                        {messagesData.filter((msg) => msg.seen === false && msg.time > myLastMessageTime).length !== 0 && (
                           <Divider sx={{ marginBottom: "24px" }} ref={startOfUnseenChat}>
                             <Chip label="unread messages" />
                           </Divider>
                         )}
                         {messagesData
-                          .filter((msg) => msg.seen === false)
+                          .filter((msg) => msg.seen === false && msg.time > myLastMessageTime)
                           .map((msg, index, array) => {
                             const nextMsg = index < array.length - 1 ? array[index + 1] : null
                             const withMeta = handleMessageMetaCheck(msg, nextMsg)
