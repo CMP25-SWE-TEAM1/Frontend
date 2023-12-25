@@ -38,7 +38,8 @@ import ProfileLikes from "./components/ProfilePage/ProfileLikes"
 import PostEngagement from "./components/PostEngagement/PostEngagement"
 import SearchResults from "./components/Search/SearchResults"
 import Followpage from "./components/ProfilePage/FollowPage/FollowPage"
-
+import Following from "./components/ProfilePage/FollowPage/Following"
+import Followers from "./components/ProfilePage/FollowPage/Followers"
 import "./firebase-config"
 
 import { requestPermission } from "./firebase-config"
@@ -187,7 +188,11 @@ const App = () => {
             <Route path="likes" element={<ProfileLikes />}></Route>
             <Route path="" element={<ProfilePosts />}></Route>
           </Route>
-          <Route path={"/following"} element={<Followpage></Followpage>}></Route>
+          <Route path={"/:tag/"} element={<Followpage></Followpage>}>
+            <Route path={'Following'} element={<Following></Following>}></Route>
+            <Route path={'Followers'} element={<Followers></Followers>}></Route>
+          </Route>
+          
           <Route path={`settings/profile`} element={<ProfilePageEdit handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
           <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/:tag/status/:id" element={<PostPage post={testPost} />}></Route>
