@@ -104,11 +104,11 @@ const Messages = (props) => {
   }, [])
 
   const [selectedContact, setSelectedContact] = useState()
-  const handleSelectContact = (contacId) => {
-    setSelectedContact(contacId)
+  const handleSelectContact = (contactId) => {
+    setSelectedContact(contactId)
     setContacts(
       contacts.map((contact) =>
-        contact.id === contacId
+        contact.id === contactId
           ? {
               ...contact,
               lastMessageSeen: true,
@@ -117,7 +117,18 @@ const Messages = (props) => {
       )
     )
   }
-
+  const changeContactBlock = (contactId) => {
+    setContacts(
+      contacts.map((contact) =>
+        contact.id === contactId
+          ? {
+              ...contact,
+              isBlocked: !contact.isBlocked,
+            }
+          : contact
+      )
+    )
+  }
   // Sockets
   useEffect(() => {
     if (SOCKET_ON && socket) {
@@ -157,7 +168,7 @@ const Messages = (props) => {
           {contacts.length !== 0 && <InfoChat contacts={contacts} selectedContact={selectedContact} setSelectedContact={handleSelectContact} />}
         </div>
         {(!selectedContact || !contacts.filter((contact) => contact.id === selectedContact)[0]) && <DetailsNoChat handleComposeModalOpen={handleComposeModalOpen} />}
-        {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} handleNavNewMessage={handleNavNewMessage} />}
+        {selectedContact && contacts.filter((contact) => contact.id === selectedContact)[0] && <DetailsChat contact={contacts.filter((contact) => contact.id === selectedContact)[0]} handleNavNewMessage={handleNavNewMessage} changeContactBlock={changeContactBlock} />}
       </div>
 
       <MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} setSelectedContact={setSelectedContact} setContacts={setContacts} contacts={contacts} />

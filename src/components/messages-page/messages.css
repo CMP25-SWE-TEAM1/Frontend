@@ -892,6 +892,7 @@
     z-index: 101;
   }
 
+  .messages-page .details.chat .send-msg-fail-pop,
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-copied-pop {
     position: fixed;
     bottom: 50px;

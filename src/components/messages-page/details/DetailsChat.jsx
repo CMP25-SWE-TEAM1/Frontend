@@ -34,6 +34,7 @@ const DetailsChat = (props) => {
   const socket = useSelector(selectSocket)
 
   const contact = props.contact
+  const changeContactBlock = props.changeContactBlock
   const handleGetChat = useGetChat
 
   const one = true
@@ -171,7 +172,10 @@ const DetailsChat = (props) => {
         }
       })
       socket.on("failed_to_send_message", (response) => {
-        console.log(response.error)
+        // console.log(response.error)
+        setAlertTxt(response.error)
+        handleFailedMessage()
+        changeContactBlock(contact.id)
       })
     }
   }, [socket, messagesData, contact.id])
@@ -209,6 +213,21 @@ const DetailsChat = (props) => {
   // Handle get chat of specific user
   const [infoVisible, setInfoVisible] = useState(false)
   const [isFollowBtnHovered, setIsFollowBtnHovered] = useState(false)
+
+  // Message not sent!
+  const [isAlertVisible, setIsAlertVisible] = useState(false)
+  const [alertVTimeOut, setAlertVTimeOut] = useState(null)
+  const [alertTxt, setAlertTxt] = useState("")
+
+  const handleFailedMessage = () => {
+    clearTimeout(alertVTimeOut)
+    setIsAlertVisible(true)
+    setAlertVTimeOut(
+      setTimeout(() => {
+        setIsAlertVisible(false)
+      }, 2250)
+    )
+  }
 
   return (
     <div className="details chat">
@@ -381,6 +400,7 @@ const DetailsChat = (props) => {
           </div>
         )}
       </div>
+      {isAlertVisible && <div className="send-msg-fail-pop">{alertTxt}</div>}
     </div>
   )
 }
