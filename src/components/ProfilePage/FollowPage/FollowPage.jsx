@@ -33,9 +33,9 @@ const  FollowPage = () => {
       overflow-y-scroll border border-b-0 border-t-0 border-lightBorder 
       dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-[600px]"
       >
-      {(tag === user.username||  profileres) && <Header profilename={user.username=== tag? user.nickname : profileres.nickname} profiletag={user.username=== tag? tag: profileres.nickname}></Header>}
-      <div id="FollowNavbar-div" className={`flex flex-row w-[100%] h-[50px] `}>
-        <HorizontalNavbar urls={FollowNavLinks} originalUrl={`/${tag}`} handlers={[]}/>
+      {(tag === user.username ||  profileres) && <Header profilename={user.username=== tag? user.nickname : profileres.nickname} profiletag={user.username=== tag? tag: profileres.nickname}></Header>}
+      <div id="FollowNavbar-div" className={`flex flex-row w-[100%] h-[50px]  `}>
+      {(tag === user.username ||  profileres) && <HorizontalNavbar urls={FollowNavLinks} originalUrl={`/${tag}`} handlers={[]}/>}
       </div>
       <div>
         <Outlet />

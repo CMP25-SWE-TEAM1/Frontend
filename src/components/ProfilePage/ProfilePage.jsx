@@ -37,9 +37,9 @@ const ProfilePage = (props) => {
   const APIs = {
     mock: { getProfileAPI: `https://localhost:3001/api/profile/` },
     actual: { getProfileAPI: `https://backend.gigachat.cloudns.org/api/user/profile/` },
+    unmuteactual: { unmute: `https://backend.gigachat.cloudns.org/api/user` }
   }
-
- 
+  
   useEffect(() => {
     if (tag) {
       if (user.username !== tag) {
@@ -64,7 +64,7 @@ const ProfilePage = (props) => {
           className="flex h-[100%] flex-col border border-b-0 
         border-t-0 border-lightBorder dark:border-darkBorder md:w-[100%]"
         >
-          <Header profilename={profileres.nickname} text={profileres.num_of_posts} likenum={profileres.num_of_likes}></Header>
+          <Header profilename={profileres.nickname} postsnum={profileres.num_of_posts} likenum={profileres.num_of_likes}></Header>
           <div id="Upperhalf" className="relative m-0 h-[35vh] w-[100%]">
             <CoverImage height={"h-[25vh]"} coverimage={bannerPicURL}></CoverImage>
             <div className="relative top-[-75px] flex h-[25%]  flex-row ">
@@ -78,9 +78,19 @@ const ProfilePage = (props) => {
             </div>
           </div>
           {(profileres.is_curr_user_blocked === false || tag === user.username) && <>
+          
           <ProfileName profilename={profileres.nickname} profiletag={profileres.username}></ProfileName>
+          
           <ProfileBio profilebio={profileres.bio}></ProfileBio>
           <ProfileICons profilelocation={profileres.location} profilewebsite={profileres.website} profilejoindate={profileres.joined_date} profilebirthdate={profileres.birth_date}></ProfileICons>
+          {profileres.is_wanted_user_muted && 
+          <div id="muted" className={`relative ml-[2.5%] w-[100%] mb-[2.5%] `}>
+            <span id="muted" className={`text-[13px] mt-[5px] whitespace-nowrap  text-[rgb(150,150,150)] font-light ` } >
+            You have muted posts from this account. 
+            </span>
+            <button className="whitespace-nowrap before:text-white  bg-transparent
+            hover:underline text-sm font-light text-[rgb(23,129,200)]" onClick={()=>{ProfileRequests.unmute(false, APIs, token,tag)}}> unmute</button>
+          </div>}
           <Followers followers={profileres.followers_num} following={profileres.followings_num}></Followers>
           <ProfilePageEdit openModal={props.openModal} handleCloseModal={props.handleCloseModal}></ProfilePageEdit>
           {(viewpoststate === true || tag === user.username)  && <ProfileMediabuttons></ProfileMediabuttons>}
