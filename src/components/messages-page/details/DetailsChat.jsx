@@ -140,41 +140,45 @@ const DetailsChat = (props) => {
   // Connect to Socket.io
   useEffect(() => {
     if (SOCKET_ON) {
-      socket.on("receive_message", (data) => {
+      const receiveMessageHandler = (data) => {
         // Update chat
-        if (data.chat_ID == contact.id) {
+        if (data.chat_ID === contact.id) {
           console.log("received_message:", data)
           setScrollToBottomFlag(true)
-          // console.log(data)
+
           const message = data.message
 
-          setMessagesData([
-            ...messagesData,
+          setMessagesData((prevMessagesData) => [
+            ...prevMessagesData,
             {
               id: message._id,
               messageText: message.description,
-              // Need some update
               messageMedia: message.media && message.media.link ? message.media.link : undefined,
               mediaType: message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined,
               direction: message.mine ? "R" : "L",
-              // not handled yet! (in FE ): )
               seen: message.seen,
               time: message.sendTime,
             },
           ])
-          // setMessagesData([...messagesData, { id: msgIdCounterS, messageText: message.messageText, messageMedia: message.messageMedia, mediaType: message.messageMediaType }])
-          // setMsgIdCounterS(msgIdCounterS + 1)
-          // scrollToBottom()
         }
-      })
-      socket.on("failed_to_send_message", (response) => {
-        // console.log(response.error)
+      }
+
+      const failedToSendMessageHandler = (response) => {
         setAlertTxt(response.error)
         handleFailedMessage()
         changeContactBlock(contact.id)
-      })
+      }
+
+      socket.on("receive_message", receiveMessageHandler)
+      socket.on("failed_to_send_message", failedToSendMessageHandler)
+
+      return () => {
+        socket.off("receive_message", receiveMessageHandler)
+        socket.off("failed_to_send_message", failedToSendMessageHandler)
+      }
     }
   }, [socket, messagesData, contact.id])
+
   // Send message to socket sercer
   const sendMessage_toServer = (message) => {
     console.log("message sending...", message)
