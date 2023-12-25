@@ -51,7 +51,7 @@ const FollowButton = (props) => {
                       ? `bg-black text-white hover:bg-darkHover dark:hover:bg-lightHover  w-[80px]`
                       :
                        `bg-white text-black hover:bg-lightHover dark:hover:bg-darkHover
-                        bt hover:border-[rgb(244,33,46)]  hover:text-[rgb(244,33,46)]`
+                        bt hover:border-[rgb(244,33,46)]  hover:text-[rgb(244,33,46)] w-[120px]`
                 } 
                 relative h-[40px]  
                 rounded-full border border-lightBorder text-center  font-[500]
