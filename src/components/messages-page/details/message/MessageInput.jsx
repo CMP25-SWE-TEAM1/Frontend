@@ -73,9 +73,15 @@ const MessageInput = (props) => {
       // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
       if (newMessageMedia || messageImg) {
         if (newMessageMediaType === "Img") {
-          handlePostMedia(messageImg, userToken).then((response) => {
-            console.log(response)
-            handleSendMessage(newMessageText, response.data.usls[0], newMessageMediaType)
+          handlePostMedia(messageImg, userToken).then(({ response, error }) => {
+            if (error || !response) {
+              setAlertTxt("Failed, Media size is too large..")
+              handleAlert()
+              handleMediaCancel()
+            } else {
+              console.log(response)
+              handleSendMessage(newMessageText, response.data.usls[0], newMessageMediaType)
+            }
           }) // upload media
           // handleSendMessage(newMessageText, "https://cdn.forumcomm.com/dims4/default/b339688/2147483647/strip/true/crop/800x800+0+0/resize/1066x1066!/quality/90/?url=https%3A%2F%2Ffcc-cue-exports-brightspot.s3.us-west-2.amazonaws.com%2Ffccnn%2Fbinary%2Fpepe_binary_796212.jpg", newMessageMediaType)
         } else handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
@@ -109,7 +115,7 @@ const MessageInput = (props) => {
     setMessageImgURL(URL.createObjectURL(file))
 
     // Validate if file is an image file
-    if (file && isImageFile(file)) {
+    if (file && validMediaFile(file)) {
       // Change state
       setNewMessageMedia(file)
       setNewMessageMediaType(MediaType)
@@ -135,7 +141,7 @@ const MessageInput = (props) => {
     setOpenCrop(true)
   }
 
-  const isImageFile = (file) => {
+  const validMediaFile = (file) => {
     // Get the file's MIME type
     const mimeType = file.type
 
