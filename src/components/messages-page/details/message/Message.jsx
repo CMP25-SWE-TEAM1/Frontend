@@ -30,7 +30,6 @@ const Message = (props) => {
   const messageText = props.messageText
   const messageMedia = props.messageMedia
   const mediaType = props.mediaType
-  const deleteMessage = props.deleteMessage
   const messageId = props.messageId
   const messageMeta = props.messageMeta
 
@@ -154,7 +153,7 @@ const Message = (props) => {
                 }}
                 style={{ display: msgToolsVisibiltyStyle }}
               ></div>
-              <MessageTools messageMedia={messageMedia} messageText={messageText} hideMsgTools={handleMsgToolsVisibilty} msgToolsPositionX={msgToolsPositionX} msgToolsPositionY={msgToolsPositionY} visibiltyStyle={msgToolsVisibiltyStyle} deleteMessage={deleteMessage} messageId={messageId} />
+              <MessageTools messageMedia={messageMedia} messageText={messageText} hideMsgTools={handleMsgToolsVisibilty} msgToolsPositionX={msgToolsPositionX} msgToolsPositionY={msgToolsPositionY} visibiltyStyle={msgToolsVisibiltyStyle} messageId={messageId} />
               <div
                 className="message-more"
                 title="More"

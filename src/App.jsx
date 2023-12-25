@@ -50,7 +50,6 @@ import axios from "axios"
 
 import { APIs } from "./constants/signupConstants"
 
-
 const App = () => {
   const userToken = useSelector((state) => state.user.token)
 
@@ -191,7 +190,7 @@ const App = () => {
             <Route path="mentions" element={<Mentions />}></Route>
             <Route path="" element={<All />}></Route>
           </Route>
-          <Route path="/messages" element={<Messages composeModalOpen={composeModalOpen} handleComposeModalOpen={handleComposeModalOpen} handleComposeModalClose={handleComposeModalClose} />}></Route>
+          <Route path="/messages/:contactId?" element={<Messages composeModalOpen={composeModalOpen} handleComposeModalOpen={handleComposeModalOpen} handleComposeModalClose={handleComposeModalClose} />} />
           {/* <Route path="/messages/compose" element={<MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} />}></Route> */}
           <Route path="/settings" element={<Settings />}>
             <Route path="" element={<MobileSettings />}></Route>
@@ -215,10 +214,10 @@ const App = () => {
             <Route path="" element={<ProfilePosts />}></Route>
           </Route>
           <Route path={"/:tag/"} element={<Followpage></Followpage>}>
-            <Route path={'Following'} element={<Following></Following>}></Route>
-            <Route path={'Followers'} element={<Followers></Followers>}></Route>
+            <Route path={"Following"} element={<Following></Following>}></Route>
+            <Route path={"Followers"} element={<Followers></Followers>}></Route>
           </Route>
-          
+
           <Route path={`settings/profile`} element={<ProfilePageEdit handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
           <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/:tag/status/:id" element={<PostPage post={testPost} />}></Route>

@@ -39,6 +39,7 @@
     /* flex: 1; */
     border-right: 1px solid #eee;
     border-left: 1px solid #eee;
+    max-width: 500px;
   }
 
   @media (max-width: 997px) {
@@ -299,6 +300,16 @@
     padding-right: 16px;
     /* Extra Temp */
     /* height: 1200px; */
+  }
+
+
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .blocked-text {
+    color: rgb(83, 100, 113);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: center;
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info {
@@ -882,6 +893,7 @@
     z-index: 101;
   }
 
+  .messages-page .details.chat .send-msg-fail-pop,
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-copied-pop {
     position: fixed;
     bottom: 50px;

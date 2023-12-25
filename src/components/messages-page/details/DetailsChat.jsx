@@ -20,6 +20,8 @@ import ListItemText from "@mui/material/ListItemText"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import CheckIcon from "@mui/icons-material/Check"
 
+import debounce from "lodash.debounce"
+
 // Socket.io
 import { SOCKET_ON, BACKEND_ON } from "../constants/MessagesConstants"
 import { useDispatch, useSelector } from "react-redux"
@@ -34,6 +36,7 @@ const DetailsChat = (props) => {
   const socket = useSelector(selectSocket)
 
   const contact = props.contact
+  const changeContactBlock = props.changeContactBlock
   const handleGetChat = useGetChat
 
   const one = true
@@ -65,8 +68,7 @@ const DetailsChat = (props) => {
               time: message.sendTime,
             }))
             setMessagesData((prevChat) => [...newChat, ...prevChat])
-
-            chatPage++
+            if (response.data.length !== 0) chatPage++
             console.log("fetch another chat page? ", response.data && response.data.length !== 0 && response.data[0].seen === false)
             if (response.data && response.data.length !== 0 && response.data[0].seen === false) {
               // 5-second - Plz no infinite again :(
@@ -128,11 +130,6 @@ const DetailsChat = (props) => {
     // console.log("message will be sent", message)
     if (SOCKET_ON) sendMessage_toServer(message)
   }
-  const handleDeleteMsg = (msgId) => {
-    setScrollToBottomFlag(false)
-    let newMessagesData = messagesData.filter((msg) => msg.id !== msgId)
-    setMessagesData(newMessagesData)
-  }
 
   // Scroll to bottom (with new messages)
   const [scrollToBottomFlag, setScrollToBottomFlag] = useState(true)
@@ -170,6 +167,12 @@ const DetailsChat = (props) => {
           // scrollToBottom()
         }
       })
+      socket.on("failed_to_send_message", (response) => {
+        // console.log(response.error)
+        setAlertTxt(response.error)
+        handleFailedMessage()
+        changeContactBlock(contact.id)
+      })
     }
   }, [socket, messagesData, contact.id])
   // Send message to socket sercer
@@ -206,6 +209,69 @@ const DetailsChat = (props) => {
   // Handle get chat of specific user
   const [infoVisible, setInfoVisible] = useState(false)
   const [isFollowBtnHovered, setIsFollowBtnHovered] = useState(false)
+
+  // Message not sent!
+  const [isAlertVisible, setIsAlertVisible] = useState(false)
+  const [alertVTimeOut, setAlertVTimeOut] = useState(null)
+  const [alertTxt, setAlertTxt] = useState("")
+
+  const handleFailedMessage = () => {
+    clearTimeout(alertVTimeOut)
+    setIsAlertVisible(true)
+    setAlertVTimeOut(
+      setTimeout(() => {
+        setIsAlertVisible(false)
+      }, 2250)
+    )
+  }
+
+  // Unseen messages
+  const [myLastMessageTime, setMyLastMessageTime] = useState(0)
+  useEffect(() => {
+    const reversedMessages = [...messagesData].reverse()
+    const myLastMessage = reversedMessages.find((message) => message.direction === "R")
+    if (myLastMessage) {
+      setMyLastMessageTime(myLastMessage.time)
+    }
+  }, [messagesData])
+
+  // Fetch on scroll
+  const componentRef = useRef()
+  useEffect(() => {
+    const component = componentRef.current
+
+    const handleScrollFetch = debounce(() => {
+      const scrolledHeight = component.scrollTop
+
+      if (scrolledHeight <= 50) {
+        if (BACKEND_ON) {
+          console.log("fetching page", chatPage)
+          handleGetChat(contact.id, userToken, chatPage).then((response) => {
+            if (response && response.data) {
+              const newChat = response.data.map((message) => ({
+                id: message._id,
+                messageText: message.description,
+                messageMedia: message.media && message.media.link ? message.media.link : undefined,
+                mediaType: message.media && message.media.type ? (message.media.type === "image" ? "Img" : "GIF") : undefined,
+                direction: message.mine ? "R" : "L",
+                seen: message.seen,
+                time: message.sendTime,
+              }))
+              setMessagesData((prevChat) => [...newChat, ...prevChat])
+              if (response.data.length !== 0) chatPage++
+            }
+          })
+        }
+      }
+    }, 300)
+
+    component.addEventListener("scroll", handleScrollFetch)
+
+    return () => {
+      component.removeEventListener("scroll", handleScrollFetch)
+      handleScrollFetch.cancel()
+    }
+  }, [])
 
   return (
     <div className="details chat">
@@ -264,7 +330,7 @@ const DetailsChat = (props) => {
             {/* User info + Messages */}
             {!infoVisible && (
               <>
-                <div className="chatbox" onScroll={handleChatScrlBtn}>
+                <div className="chatbox" onScroll={handleChatScrlBtn} ref={componentRef}>
                   {/* (Only If there is messages, show it) User info + Messages */}
                   {two && (
                     <div className="chatbox-content">
@@ -289,25 +355,26 @@ const DetailsChat = (props) => {
                       {/* Messages */}
                       <div className="messages">
                         {messagesData
-                          .filter((msg) => msg.seen === true)
+                          .filter((msg) => msg.seen === true || msg.time <= myLastMessageTime)
                           .map((msg, index, array) => {
                             const nextMsg = index < array.length - 1 ? array[index + 1] : null
                             const withMeta = handleMessageMetaCheck(msg, nextMsg)
-                            return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
+                            return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} />
                           })}
-                        {messagesData.filter((msg) => msg.seen === false).length !== 0 && (
+                        {messagesData.filter((msg) => msg.seen === false && msg.time > myLastMessageTime).length !== 0 && (
                           <Divider sx={{ marginBottom: "24px" }} ref={startOfUnseenChat}>
                             <Chip label="unread messages" />
                           </Divider>
                         )}
                         {messagesData
-                          .filter((msg) => msg.seen === false)
+                          .filter((msg) => msg.seen === false && msg.time > myLastMessageTime)
                           .map((msg, index, array) => {
                             const nextMsg = index < array.length - 1 ? array[index + 1] : null
                             const withMeta = handleMessageMetaCheck(msg, nextMsg)
-                            return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
+                            return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} />
                           })}
                       </div>
+                      {contact.isBlocked && <div className="blocked-text">You can no longer send messages to this person.</div>}
                       <div ref={endOfChat}></div>
                     </div>
                   )}
@@ -322,7 +389,7 @@ const DetailsChat = (props) => {
                     </div>
                   </div>
                 </div>
-                <MessageInput handleSendMessage={handleSendMessage} />
+                {!contact.isBlocked && <MessageInput handleSendMessage={handleSendMessage} />}
               </>
             )}
             {infoVisible && (
@@ -377,6 +444,7 @@ const DetailsChat = (props) => {
           </div>
         )}
       </div>
+      {isAlertVisible && <div className="send-msg-fail-pop">{alertTxt}</div>}
     </div>
   )
 }
