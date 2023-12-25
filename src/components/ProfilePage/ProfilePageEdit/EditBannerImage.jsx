@@ -8,7 +8,7 @@ const EditBannerImage = ({coverpage,handlecoverPictureChange,handlecoverPictureC
     const {darkMode} = useSelector((state)=>state.theme)
     console.log({coverpage,handlecoverPictureChange,handlecoverPictureClick,hiddencoverFileInput,setCoverpage})
   return (
-    <div id="CoverimageDiv-test" className="relative h-[135px]  w-[100%]">
+    <div id="edit-cover-image-test" className="relative h-[135px]  w-[100%]">
     <CoverImage  coverimage={coverpage} height="h-[200px]" ></CoverImage>
     <button id="AddImage-test" type="button" className={`absolute ${coverpage === DefaultCoverPage || coverpage === undefined? `left-[50%]`:`left-[40%] `} m-auto h-[47px] w-[47px] 
     top-[100px] -translate-x-[50%] -translate-y-[50%]

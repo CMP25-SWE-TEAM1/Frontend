@@ -2,7 +2,7 @@ import React from 'react'
 
 function Blocked({tag,setViewPost}) {
   return (
-    <div className="absolute top-[70%] left-[33%] w-[30%]">
+    <div id="blocked" className="absolute top-[70%] left-[33%] w-[30%]">
     <h1  className="text-3xl font-bold">
       @{tag} is Blocked
     </h1>

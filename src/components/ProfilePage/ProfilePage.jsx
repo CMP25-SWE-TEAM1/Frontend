@@ -11,7 +11,7 @@ import Followers from "./Followers"
 import { useEffect } from "react"
 import { useState } from "react"
 
-import Header from "./Header"
+import Header from "./ProfileHeader"
 import ProfilePageEdit from "./ProfilePageEdit/ProfilePageEdit"
 import { useParams } from "react-router-dom"
 import Details from "./Details"

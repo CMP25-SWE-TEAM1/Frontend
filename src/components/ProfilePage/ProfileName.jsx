@@ -3,12 +3,12 @@ import React from 'react'
 function ProfileName(props) {
   return (
     <div id="name" className="relative flex flex-col left-[2.5%] w-[50%]">
-    <div className="">
+    <div id="profile-nickname-test" className="">
         <h1 className={`font-bold text-lg `}>
             {props.profilename}
         </h1>
     </div>
-    <div className="">
+    <div id="profile-username-test" className="">
         <p className={`text-sm font-light text-[gray] `}>
         {props.profiletag}
         </p>

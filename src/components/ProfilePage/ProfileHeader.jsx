@@ -10,7 +10,7 @@ function Header(props) {
   const {user} = useSelector((state)=>state.user)
   return (
     <div
-      id="header"
+      id="Profile-header"
       className={`sticky top-0 z-10 flex  h-fit  flex-row  
                   py-[8px] ${darkMode ? `bg-black` : `bg-white`} 
                  border border-b-0 border-t-0 backdrop-blur-md border-lightBorder dark:border-darkBorder`}
