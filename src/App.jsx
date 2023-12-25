@@ -125,15 +125,11 @@ const App = () => {
 
   // Compose message
   const [composeModalOpen, setComposeModalOpen] = useState(false)
-  // const [composeModalURL, setComposeModalURL] = useState("") // location before ComposeModalOpen
   const handleComposeModalOpen = () => {
     setComposeModalOpen(true)
-    // setComposeModalURL(window.location.pathname)
-    // setLocation("/messages/compose")
   }
   const handleComposeModalClose = () => {
     setComposeModalOpen(false)
-    // setLocation(composeModalURL)
   }
 
   const user = useSelector((state) => state.user.user)

@@ -24,8 +24,10 @@ import "./message-compose.css"
 import useGetUsersSearch from "../customHooks/get/useGetUsersSearch"
 import { useSelector } from "react-redux"
 import { BACKEND_ON } from "../constants/MessagesConstants"
+import { useNavigate } from "react-router-dom"
 
 const MessageCompose = (props) => {
+  const navigate = useNavigate()
   const userToken = useSelector((state) => state.user.token)
   const handleUsersSearch = useGetUsersSearch
   const setChatSelectedContact = props.setSelectedContact
@@ -150,11 +152,25 @@ const MessageCompose = (props) => {
   }
 
   return (
-    <Modal open={composeModalOpen} onClose={handleComposeModalClose} aria-labelledby="compose message">
+    <Modal
+      open={composeModalOpen}
+      onClose={() => {
+        navigate(-1)
+        handleComposeModalClose()
+      }}
+      aria-labelledby="compose message"
+    >
       <Box sx={modalStyle}>
         <div id="message-compose" className="message-compose">
           <div className="message-compose-header">
-            <div onClick={handleComposeModalClose} className="message-compose-close" title="Close">
+            <div
+              onClick={() => {
+                navigate(-1)
+                handleComposeModalClose()
+              }}
+              className="message-compose-close"
+              title="Close"
+            >
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <g>
                   <path d="M10.59 12L4.54 5.96l1.42-1.42L12 10.59l6.04-6.05 1.42 1.42L13.41 12l6.05 6.04-1.42 1.42L12 13.41l-6.04 6.05-1.42-1.42L10.59 12z"></path>
