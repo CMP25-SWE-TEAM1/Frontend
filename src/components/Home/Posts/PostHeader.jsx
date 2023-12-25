@@ -22,7 +22,7 @@ import axios from "axios"
 import { getColor } from "../../../constants"
 import ProfileRequests from "../../ProfilePage/profilerequests.js"
 
-function PostHeader({ pathname, postType, userTag, bio, userProfilePicture, userName, finalDate, id, isVisible, handleMouseEnter, handleMouseLeave, hoveredProfile, openMenu, anchorPostMenu, handleMenuClose, htmlElement, handleMenuButtonClick, followingUser, setPosts, posts }) {
+function PostHeader({ pathname, postType, isFollowed, userTag, bio, userProfilePicture, userName, finalDate, id, isVisible, handleMouseEnter, handleMouseLeave, hoveredProfile, openMenu, anchorPostMenu, handleMenuClose, htmlElement, handleMenuButtonClick, followingUser, setPosts, posts }) {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const user = useSelector((state) => state.user.user)
 
@@ -50,7 +50,7 @@ function PostHeader({ pathname, postType, userTag, bio, userProfilePicture, user
     blockactual: { Block: `https://backend.gigachat.cloudns.org/api/user/${userTag}/block` },
     
   }
-  const handlefollow = () => {
+  const handleFollow = () => {
     axios
       .post(
         false ? APIs.followmock.postfollowProfileAPI : APIs.followactual.postfollowProfileAPI,
@@ -68,7 +68,24 @@ function PostHeader({ pathname, postType, userTag, bio, userProfilePicture, user
         console.log(err)
       })
   }
-
+  const handleUnfollow = () => {
+    axios
+      .post(
+        false ? APIs.unfollowmock.postfollowProfileAPI : APIs.unfollowactual.postfollowProfileAPI,
+        {},
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        window.location.reload()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
   const handleDeletePost = () => {
     axios
       .delete(APIs.actual.delete, {
@@ -187,12 +204,12 @@ function PostHeader({ pathname, postType, userTag, bio, userProfilePicture, user
                 <span className="text-[15px] dark:text-white">Not interested in this post</span>
               </MenuItem>
               <MenuItem onClick={()=>{
-              handlefollow()
+              isFollowed?handleUnfollow():handleFollow()
               handleMenuClose() }}
               className={`${userTag !== user.username ? "" : "hidden"}`}
               >
                 <PersonAddAltIcon className="mr-3 text-base dark:text-white" />
-                <span className="text-[15px] dark:text-white">Follow @{userTag}</span>
+                <span className="text-[15px] dark:text-white">{isFollowed?"Unfollow":"Follow"} @{userTag}</span>
               </MenuItem>
               <MenuItem onClick={
                 ()=>{
