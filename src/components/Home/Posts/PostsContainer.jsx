@@ -27,6 +27,7 @@ const PostsContainer = ({ posts, setPosts }) => {
               isReposted={p.tweetDetails ? p.tweetDetails.isRtweeted : p.isRtweeted}
               key={p.tweetDetails ? p.tweetDetails.id : p.id}
               followingUser={p.tweetDetails ? p.followingUser : p.repostingUser}
+              bio={p.tweetDetails ? p.tweetDetails.tweet_owner.bio : p.bio}
               setPosts={setPosts}
               posts={posts}
             />

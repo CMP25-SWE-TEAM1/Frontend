@@ -47,29 +47,28 @@ const Sidebar = () => {
 
   const user = useSelector((state) => state.user.user)
   const userToken = useSelector((state) => state.user.token)
-  const pathname = useLocation().pathname
+  const darkMode = useSelector((state) => state.theme.darkMode)
+
+  const pathname = useLocation().pathname;
   const userTag = user.username
   const optionsNames = ["Home", "Explore", "Notifications", "Messages", "Lists", "Bookmarks", "Profile", "Settings"]
   const optionsIcons = [
-    [<HomeOutlinedIcon />, <HomeIcon />],
-    [<SearchRoundedIcon />, <SearchIcon sx={{ color: "#000000" }} />],
-    [
-      <Badge badgeContent={unseenCount} color="primary">
-        <NotificationsNoneRoundedIcon />
-      </Badge>,
-      <Badge badgeContent={unseenCount} color="primary">
-        <NotificationsIcon />
-      </Badge>,
-    ],
-    [<MailOutlineRoundedIcon />, <EmailIcon />],
-    [<ListAltRoundedIco />, <ListAltIcon sx={{ color: "#000000" }} />],
-    [<PeopleOutlinedIcon />, <PeopleIcon />],
-    [<PersonOutlinedIcon />, <PersonIcon />],
-    [<SettingsOutlinedIcon />, <SettingsIcon />],
+    [<HomeOutlinedIcon />,<HomeIcon />],
+    [<SearchRoundedIcon sx={{color:darkMode?"#d9d9d9":"#1f1f1f"}}/>,<SearchIcon sx={{color:darkMode?"#ffffff":"#000000"}}/>],
+    [<Badge badgeContent={unseenCount} color="primary">
+      <NotificationsNoneRoundedIcon />
+    </Badge>,
+    <Badge badgeContent={unseenCount} color="primary">
+      <NotificationsIcon/>
+    </Badge>],
+    [<MailOutlineRoundedIcon />,<EmailIcon/>],
+    [<ListAltRoundedIco sx={{color:darkMode?"#d9d9d9":"#1f1f1f"}}/>,<ListAltIcon sx={{color:darkMode?"#ffffff":"#000000"}}/>],
+    [<PeopleOutlinedIcon />,<PeopleIcon/>],
+    [<PersonOutlinedIcon />,<PersonIcon/>],
+    [<SettingsOutlinedIcon />,<SettingsIcon/>],
   ]
   const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}`, "/settings/account"]
-
-  const darkMode = useSelector((state) => state.theme.darkMode)
+  
   const [shrink, setShrink] = useState(window.innerWidth < 1278)
   const [selected, setSelected] = useState(optionLinks.indexOf(pathname))
   const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} alt="sidebarOption" select={selected === index ? true : false} />)
