@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 
 const EditBannerImage = ({coverpage,handlecoverPictureChange,handlecoverPictureClick,hiddencoverFileInput,setCoverpage}) => {
     const {darkMode} = useSelector((state)=>state.theme)
+    console.log({coverpage,handlecoverPictureChange,handlecoverPictureClick,hiddencoverFileInput,setCoverpage})
   return (
     <div id="CoverimageDiv-test" className="relative h-[135px]  w-[100%]">
     <CoverImage  coverimage={coverpage} height="h-[200px]" ></CoverImage>
