@@ -20,8 +20,8 @@ import Header from "./Header.jsx"
 import BioEdit from "./BioEdit.jsx"
 const ProfilePageEdit = (props)=>{
   const APIds = {
-    mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
-    actual: { EditProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/` },
+    mock: { getProfileAPI: `https://localhost:3001/api/profile/` },
+    actual: { EditProfileAPI: `https://backend.gigachat.cloudns.org/api/user/profile/` },
   }
  
 
@@ -136,7 +136,7 @@ const ProfilePageEdit = (props)=>{
     {
       //delete the image
       axios.delete(
-        "http://backend.gigachat.cloudns.org/api/user/profile/banner",
+        "https://backend.gigachat.cloudns.org/api/user/profile/banner",
       {
           headers: {
           authorization: "Bearer "+ token,
@@ -166,7 +166,7 @@ const ProfilePageEdit = (props)=>{
         newUser.banner_image =  res.data.data.usls[0];
         dispatch(changeUser(newUser))
         axios.patch(
-          "http://backend.gigachat.cloudns.org/api/user/profile/banner",
+          "https://backend.gigachat.cloudns.org/api/user/profile/banner",
           { profile_banner: res.data.data.usls[0] },
           {
             headers: {

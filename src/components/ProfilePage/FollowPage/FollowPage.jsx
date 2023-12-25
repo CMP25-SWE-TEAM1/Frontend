@@ -15,8 +15,8 @@ const  FollowPage = () => {
   const {token} = useSelector((state)=>state.user)
   const [profileres,setProfile]=useState()
   const APIs = {
-    mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
-    actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/` },
+    mock: { getProfileAPI: `https://localhost:3001/api/profile/` },
+    actual: { getProfileAPI: `https://backend.gigachat.cloudns.org/api/user/profile/` },
   }
   const {tag} = useParams()
   const {user} = useSelector((state)=>(state.user))

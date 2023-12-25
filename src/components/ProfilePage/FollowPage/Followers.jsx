@@ -13,10 +13,10 @@ const  Followers = ()=> {
   const darkMode = useSelector((state)=>(state.theme.darkMode))
   const [followers,setFollowers] =useState([])
   const APIs = {
-    mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
-    actual: { getFollowers: `http://backend.gigachat.cloudns.org/api/user/profile/${tag}/followers` },
-    followactual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/` },
-    unfollowactual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/` },
+    mock: { getProfileAPI: `https://localhost:3001/api/profile/` },
+    actual: { getFollowers: `https://backend.gigachat.cloudns.org/api/user/profile/${tag}/followers` },
+    followactual: { postfollowProfileAPI: `https://backend.gigachat.cloudns.org/api/user/` },
+    unfollowactual: { postfollowProfileAPI: `https://backend.gigachat.cloudns.org/api/user/` },
   }
   useEffect(()=>{
     followPagerequests.getfollowers(false,APIs,token,setFollowers)
