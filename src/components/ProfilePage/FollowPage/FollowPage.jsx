@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import { Outlet } from "react-router"
 import HorizontalNavbar from '../../General/HorizontalNavbar'
 import { useSelector } from "react-redux"
-import Header from '../Header'
+import Header from '../ProfileHeader'
 import { useState, useEffect } from "react"
 import ProfileRequests from '../profilerequests'
 
@@ -27,7 +27,7 @@ const  FollowPage = () => {
   }, [tag])
 
   return (
-    <div className=" flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
+    <div id="followers-following-page-test" className=" flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
       <div
         className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow 
       overflow-y-scroll border border-b-0 border-t-0 border-lightBorder 
@@ -38,7 +38,7 @@ const  FollowPage = () => {
       {(tag === user.username ||  profileres) && <HorizontalNavbar urls={FollowNavLinks} originalUrl={`/${tag}`} handlers={[]}/>}
       </div>
       <div>
-        <Outlet />
+      {(tag === user.username ||  profileres) && <Outlet />}
       </div>
       </div>
     </div>

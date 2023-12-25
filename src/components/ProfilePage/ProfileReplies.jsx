@@ -70,7 +70,7 @@ const ProfileReplies = () => {
         })
   }, [root])
   return (
-    <div className="">
+    <div id="Profile-Replies-test" className="">
       <PostsContainer posts={posts} setPosts={setPosts} />
     </div>
   )

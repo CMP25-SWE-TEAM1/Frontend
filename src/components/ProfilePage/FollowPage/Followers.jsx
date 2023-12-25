@@ -44,7 +44,7 @@ const  Followers = ()=> {
 return (
   <div>
   {followers.map((user) => (
-    <div key={user.id} className="flex h-[85px] w-[100%] hover:bg-lightHover dark:hover:bg-darkHover">
+    <div id={user.id} key={user.id} className="flex h-[85px] w-[100%] hover:bg-lightHover dark:hover:bg-darkHover">
       <div className="w-[10%] pl-2">
         <Link to={`/${user.username}`}>
           <img src={user.profile_image} alt="Profile Image" className="mt-1 h-10 w-10 rounded-3xl" />

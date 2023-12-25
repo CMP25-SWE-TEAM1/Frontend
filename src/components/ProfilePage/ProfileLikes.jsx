@@ -70,7 +70,7 @@ const ProfileLikes = () => {
         })
   }, [root])
   return (
-    <div className="">
+    <div id="profile-Likes" className="">
       <PostsContainer posts={posts} setPosts={setPosts} />
     </div>
   )
