@@ -37,7 +37,7 @@ const SearchResults = () => {
 
   const APIs = {
     mock: {},
-    actual: { searchUsers: "http://backend.gigachat.cloudns.org/api/user/search", searchTweets: "http://backend.gigachat.cloudns.org/api/tweets/search", searchTrends: "http://backend.gigachat.cloudns.org/api/trends/" },
+    actual: { searchUsers: "https://backend.gigachat.cloudns.org/api/user/search", searchTweets: "https://backend.gigachat.cloudns.org/api/tweets/search", searchTrends: "https://backend.gigachat.cloudns.org/api/trends/" },
   }
 
   const handleChangeTabValue = (event, newValue) => {

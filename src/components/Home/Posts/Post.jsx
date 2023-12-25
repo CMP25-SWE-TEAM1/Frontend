@@ -34,12 +34,12 @@ console.log("post type is : ",postType  )
       deleteRepost: `/api/tweets/${id}`,
     },
     actual: {
-      like: `http://backend.gigachat.cloudns.org/api/tweets/like/${id}`,
-      unlike: `http://backend.gigachat.cloudns.org/api/tweets/unlike/${id}`,
-      repost: `http://backend.gigachat.cloudns.org/api/tweets/retweet/${id}`,
-      unrepost: `http://backend.gigachat.cloudns.org/api/tweets/unretweet/${id}`,
-      delete: `http://backend.gigachat.cloudns.org/api/tweets/${id}`,
-      getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/`,
+      like: `https://backend.gigachat.cloudns.org/api/tweets/like/${id}`,
+      unlike: `https://backend.gigachat.cloudns.org/api/tweets/unlike/${id}`,
+      repost: `https://backend.gigachat.cloudns.org/api/tweets/retweet/${id}`,
+      unrepost: `https://backend.gigachat.cloudns.org/api/tweets/unretweet/${id}`,
+      delete: `https://backend.gigachat.cloudns.org/api/tweets/${id}`,
+      getProfileAPI: `https://backend.gigachat.cloudns.org/api/user/profile/`,
     },
   }
 

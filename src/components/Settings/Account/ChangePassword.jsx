@@ -44,8 +44,8 @@ const ChangePassword = () => {
   }
 
   const APIs = {
-    mock: { changePasswordAPI: "http://localhost:3001/changePassword" },
-    actual: { changePasswordAPI: "http://backend.gigachat.cloudns.org/api/user/updatePassword" },
+    mock: { changePasswordAPI: "https://localhost:3001/changePassword" },
+    actual: { changePasswordAPI: "https://backend.gigachat.cloudns.org/api/user/updatePassword" },
   }
 
   const handlePasswordChange = () => {

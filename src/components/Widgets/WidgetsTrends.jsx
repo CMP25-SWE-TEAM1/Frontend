@@ -13,7 +13,7 @@ const WidgetsTrends = () => {
   const [trends, setTrends] = useState([])
   useEffect(() => {
     axios
-      .get("http://backend.gigachat.cloudns.org/api/trends/all", {
+      .get("https://backend.gigachat.cloudns.org/api/trends/all", {
         params: {
           page: 1,
           count: 5,

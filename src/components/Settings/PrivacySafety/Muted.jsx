@@ -10,8 +10,8 @@ const Muted = () => {
   const { token } = useSelector((state) => state.user)
 
   const APIs = {
-    mock: { mutedAccountsAPI: "http://localhost:3001/blockedAccounts", UnmuteUserAPI: "http://localhost:3001/unblockUser", muteUserAPI: "http://localhost:3001/blockUser" },
-    actual: { mutedAccountsAPI: "http://backend.gigachat.cloudns.org/api/user/mutedList", UnmuteUserAPI: `http://backend.gigachat.cloudns.org/api/user/`, muteUserAPI: `http://backend.gigachat.cloudns.org/api/user/` },
+    mock: { mutedAccountsAPI: "https://localhost:3001/blockedAccounts", UnmuteUserAPI: "https://localhost:3001/unblockUser", muteUserAPI: "https://localhost:3001/blockUser" },
+    actual: { mutedAccountsAPI: "https://backend.gigachat.cloudns.org/api/user/mutedList", UnmuteUserAPI: `https://backend.gigachat.cloudns.org/api/user/`, muteUserAPI: `https://backend.gigachat.cloudns.org/api/user/` },
   }
 
   useEffect(() => {

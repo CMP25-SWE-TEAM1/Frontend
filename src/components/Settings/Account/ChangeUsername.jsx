@@ -12,8 +12,8 @@ const ChangeUsername = () => {
   const [successMsg, setSuccessMsg] = useState("")
 
   const APIs = {
-    mock: { ChangeUsernameAPI: "http://localhost:3001/changeUsername" },
-    actual: { ChangeUsernameAPI: "http://backend.gigachat.cloudns.org/api/user/updateusername" },
+    mock: { ChangeUsernameAPI: "https://localhost:3001/changeUsername" },
+    actual: { ChangeUsernameAPI: "https://backend.gigachat.cloudns.org/api/user/updateusername" },
   }
 
   const dispatch = useDispatch()

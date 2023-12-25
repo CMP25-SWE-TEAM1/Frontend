@@ -10,8 +10,8 @@ const Blocked = () => {
   const { token } = useSelector((state) => state.user)
 
   const APIs = {
-    mock: { BlockedAccountsAPI: "http://localhost:3001/blockedAccounts", UnblockUserAPI: "http://localhost:3001/unblockUser", blockUserAPI: "http://localhost:3001/blockUser" },
-    actual: { BlockedAccountsAPI: "http://backend.gigachat.cloudns.org/api/user/blockList", UnblockUserAPI: `http://backend.gigachat.cloudns.org/api/user/`, blockUserAPI: `http://backend.gigachat.cloudns.org/api/user/` },
+    mock: { BlockedAccountsAPI: "https://localhost:3001/blockedAccounts", UnblockUserAPI: "https://localhost:3001/unblockUser", blockUserAPI: "https://localhost:3001/blockUser" },
+    actual: { BlockedAccountsAPI: "https://backend.gigachat.cloudns.org/api/user/blockList", UnblockUserAPI: `https://backend.gigachat.cloudns.org/api/user/`, blockUserAPI: `https://backend.gigachat.cloudns.org/api/user/` },
   }
 
   useEffect(() => {

@@ -24,8 +24,8 @@ function PostPage() {
   const APIs = {
     mock: {},
     actual: {
-      getPost: `http://backend.gigachat.cloudns.org/api/tweets/${postId}`,
-      getPostReplies: `http://backend.gigachat.cloudns.org/api/tweets/replies/${postId}`,
+      getPost: `https://backend.gigachat.cloudns.org/api/tweets/${postId}`,
+      getPostReplies: `https://backend.gigachat.cloudns.org/api/tweets/replies/${postId}`,
     },
   }
   useEffect(() => {
