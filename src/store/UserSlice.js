@@ -18,6 +18,10 @@ export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredent
     google = true
     console.log(userCredentials)
     response = userCredentials
+    userCredentials.data.user = {
+      banner_image: userCredentials.data.user.bannerImage,
+      ...response.data.user,
+    }
     localStorage.setItem("user", JSON.stringify(userCredentials.data.user))
     localStorage.setItem("token", JSON.stringify(userCredentials.token))
   } else {
@@ -26,6 +30,10 @@ export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredent
 
     const request = await axios.post(APIs.actual.loginAPI, userCredentials)
     response = await request.data
+    response.data.user = {
+      banner_image: response.data.user.bannerImage,
+      ...response.data.user,
+    }
     localStorage.setItem("user", JSON.stringify(response.data.user))
     localStorage.setItem("token", JSON.stringify(response.token))
   }
