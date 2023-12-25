@@ -11,7 +11,7 @@ import { useLocation } from "react-router-dom"
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
 import ReplyingTo from "../../General/ReplyingTo"
 
-const Post = ({ userProfilePicture, postType, userName, userTag, bio,id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, followingUser, setPosts, posts }) => {
+const Post = ({ userProfilePicture, postType, isFollowed, replyReferredTweetId, userName, userTag, bio,id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, followingUser, setPosts, posts }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
   const [mediaUrls, setMediaUrls] = useState([])
   const [mediaTypes, setMediaTypes] = useState([])
@@ -19,7 +19,7 @@ const Post = ({ userProfilePicture, postType, userName, userTag, bio,id, date, r
   const [likesNum, setLikesNum] = useState(likeCount)
   const [reposted, setReposted] = useState(isReposted)
   const [repostsNum, setRepostsNum] = useState(repostCount)
-console.log("post type is : ",postType  )
+  const [replyingToUsername, setReplyingToUsername] = useState(null);
   const [isVisible, setIsVisible] = useState(false)
   const [timeoutRef, setTimeoutRef] = useState(null)
 
@@ -40,6 +40,7 @@ console.log("post type is : ",postType  )
       unrepost: `https://backend.gigachat.cloudns.org/api/tweets/unretweet/${id}`,
       delete: `https://backend.gigachat.cloudns.org/api/tweets/${id}`,
       getProfileAPI: `https://backend.gigachat.cloudns.org/api/user/profile/`,
+      getPost: `https://backend.gigachat.cloudns.org/api/tweets/${replyReferredTweetId}`,
     },
   }
 
@@ -66,10 +67,26 @@ console.log("post type is : ",postType  )
       }
     }, 100)
   }, [userTag])
-
-  // useEffect(() => {
-  //   console.log(isLiked)
-  // }, [isLiked])
+  
+  useEffect(() => {
+    if(replyReferredTweetId){
+      axios
+            .get(APIs.actual.getPost, {
+              headers: {
+                authorization: `Bearer ${userToken}`,
+              },
+            })
+            .then((res) => {
+              if (res.status === 200) {
+                // console.log("replyReferredTweetId : ",res.data.data.tweet_owner.username)
+                setReplyingToUsername(res.data.data.tweet_owner.username);
+              }
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+    }
+  }, [])
 
   const handleMouseEnter = () => {
     clearTimeout(timeoutRef)
@@ -236,8 +253,8 @@ console.log("post type is : ",postType  )
             </Link>
           </div>
           <div className=" w-full sm:mr-2">
-            <PostHeader pathname={pathname} postType={postType} userTag={userTag} bio={bio} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={followingUser} setPosts={setPosts} posts={posts} />
-            {postType==="reply"&&<ReplyingTo username="ismail" leftMargin="7"/>}
+            <PostHeader pathname={pathname} postType={postType} isFollowed={isFollowed} userTag={userTag} bio={bio} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={followingUser} setPosts={setPosts} posts={posts} />
+            {postType==="reply"&&<ReplyingTo username={replyingToUsername} leftMargin="7"/>}
           </div>
         </div>
         <PostBody descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes} />

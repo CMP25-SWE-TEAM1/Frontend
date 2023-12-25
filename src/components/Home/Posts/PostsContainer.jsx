@@ -13,6 +13,8 @@ const PostsContainer = ({ posts, setPosts }) => {
             <Post
               userProfilePicture={p.tweetDetails ? p.tweetDetails.tweet_owner.profile_image : p.tweet_owner.profile_image}
               postType={p.type ? p.type : p.type}
+              isFollowed={p.isFollowed?p.isFollowed:p.isFollowed}
+              replyReferredTweetId={p.tweetDetails.referredTweetId?p.tweetDetails.referredTweetId:undefined}
               userName={p.tweetDetails ? p.tweetDetails.tweet_owner.nickname : p.tweet_owner.nickname}
               userTag={p.tweetDetails ? p.tweetDetails.tweet_owner.username : p.tweet_owner.username}
               id={p.tweetDetails ? (p.tweetDetails._id ? p.tweetDetails._id : p.tweetDetails.id) : p._id ? p._id : p.id}

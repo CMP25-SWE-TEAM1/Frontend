@@ -41,7 +41,7 @@ const Details = (props) => {
     mutemock: { mute: `https://localhost:3001/api/profile/` },
     muteactual: { mute: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/mute` },
     unmutemock: { mute: `https://localhost:3001/api/profile/` },
-    unmuteactual: { unmute: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/unmute` },
+    unmuteactual: { unmute: `https://backend.gigachat.cloudns.org/api/user` },
   }
   document.onclick = (event) => {
     // console.log(event.target)
@@ -98,7 +98,7 @@ const Details = (props) => {
           id="unmute"
           className={`Detailsbt relative left-[6.5%] ${notmuted}`}
           onClick={() => {
-            ProfileRequests.unmute(false, APIs, token)
+            ProfileRequests.unmute(false, APIs, token,props.tag)
           }}
         >
           <VolumeMuteOutlinedIcon/> <span>Unmute This User </span>
