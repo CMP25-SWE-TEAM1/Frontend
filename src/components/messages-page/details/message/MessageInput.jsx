@@ -67,41 +67,7 @@ const MessageInput = (props) => {
       }, 2250)
     )
   }
-  // -------- Submission --------
-  const handleSndMsg = () => {
-    if (newMessageText !== "" || newMessageMedia !== undefined) {
-      // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
-      if (newMessageMedia || messageImg) {
-        if (newMessageMediaType === "Img") {
-          handlePostMedia(messageImg, userToken).then(({ response, error }) => {
-            if (error || !response) {
-              setAlertTxt("Failed, Media size is too large..")
-              handleAlert()
-              handleMediaCancel()
-            } else {
-              console.log(response)
-              handleSendMessage(newMessageText, response.data.usls[0], newMessageMediaType)
-            }
-          }) // upload media
-          // handleSendMessage(newMessageText, "https://cdn.forumcomm.com/dims4/default/b339688/2147483647/strip/true/crop/800x800+0+0/resize/1066x1066!/quality/90/?url=https%3A%2F%2Ffcc-cue-exports-brightspot.s3.us-west-2.amazonaws.com%2Ffccnn%2Fbinary%2Fpepe_binary_796212.jpg", newMessageMediaType)
-        } else handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
-      } else handleSendMessage(newMessageText)
-    }
-    // Reset values
-    setNewMessageText("")
-    setSndMsgActv("")
-    setNewMessageMedia()
-    setNewMessageMediaType()
-    setMessageImg()
-    setMessageImgURL()
-  }
 
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault()
-      handleSndMsg()
-    }
-  }
   // -------- Text --------
   const handleTextChange = (event) => {
     setNewMessageText(event.target.value)
@@ -184,6 +150,41 @@ const MessageInput = (props) => {
   const handleEmojiPickerVisibilty = () => {
     !emojiPickerVisible ? setEmojiPickerVisibiltyStyle("block") : setEmojiPickerVisibiltyStyle("none")
     setEmojiPickerVisible(!emojiPickerVisible)
+  }
+  // -------- Submission --------
+  const handleSndMsg = () => {
+    if (newMessageText !== "" || newMessageMedia !== undefined) {
+      // handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
+      if (newMessageMedia || messageImg) {
+        if (newMessageMediaType === "Img") {
+          handlePostMedia(messageImg, userToken).then(({ response, error }) => {
+            if (error || !response) {
+              setAlertTxt("Failed, Media size is too large..")
+              handleAlert()
+              handleMediaCancel()
+            } else {
+              console.log(response)
+              handleSendMessage(newMessageText, response.data.usls[0], newMessageMediaType)
+            }
+          }) // upload media
+          // handleSendMessage(newMessageText, "https://cdn.forumcomm.com/dims4/default/b339688/2147483647/strip/true/crop/800x800+0+0/resize/1066x1066!/quality/90/?url=https%3A%2F%2Ffcc-cue-exports-brightspot.s3.us-west-2.amazonaws.com%2Ffccnn%2Fbinary%2Fpepe_binary_796212.jpg", newMessageMediaType)
+        } else handleSendMessage(newMessageText, newMessageMedia, newMessageMediaType)
+      } else handleSendMessage(newMessageText)
+    }
+    // Reset values
+    setNewMessageText("")
+    setSndMsgActv("")
+    setNewMessageMedia()
+    setNewMessageMediaType()
+    setMessageImg()
+    setMessageImgURL()
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault()
+      handleSndMsg()
+    }
   }
 
   return (
