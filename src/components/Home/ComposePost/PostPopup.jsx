@@ -5,22 +5,24 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import ComposePost from './ComposePost'
 import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
 
-function PostPopup({open}) {
-    const navigate = useNavigate();
+function PostPopup({open,setOpen}) {
+    const darkMode = useSelector((state) => state.theme.darkMode);
+    // const navigate = useNavigate();
     const handleClose = () =>{
-      navigate('/home');
+      setOpen(false);
     } 
     const style = {
         position: 'absolute',
         top: '20%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        bgcolor: 'background.paper',
+        bgcolor: darkMode?'black':'background.paper',
         borderRadius: '20px',
-        border: '0px',
         width: 600,
-        boxShadow: 24,
+        boxShadow: darkMode?"0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #333435":"0 0 #0000, 0 0 #0000, 0px 0px 10px 1px #767C86",
+        border: darkMode?"solid 1px #333435":"",
         p: 1,
       };
   return (
@@ -28,7 +30,7 @@ function PostPopup({open}) {
       <Modal
         open={open}
         onClose={handleClose}
-        sx={{ borderRadius: "20px" }}
+        sx={{ borderRadius: "20px"}}
       >
         <Box sx={style}>
           <ComposePost buttonName="Post"  postType="tweet" handleClosePopup={handleClose}/>

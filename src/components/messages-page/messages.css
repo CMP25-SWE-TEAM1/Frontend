@@ -39,7 +39,7 @@
     /* flex: 1; */
     border-right: 1px solid #eee;
     border-left: 1px solid #eee;
-    max-width: 500px;
+    width: 470px;
   }
 
   @media (max-width: 997px) {
@@ -57,7 +57,7 @@
     align-items: center;
     color: black;
     background-color: white;
-    max-width: 450px
+    /* max-width: 450px */
   }
 
   .messages-page .navigation .header h2 {
@@ -317,7 +317,7 @@
     border-bottom: 1px solid #eee;
     text-align: center;
     background-color: white;
-    height: 340px;
+    height: 250px;
     padding: 20px 16px;
     margin-bottom: 16px;
     display: flex;

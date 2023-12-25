@@ -1,4 +1,6 @@
-#message-compose {}
+#message-compose {
+    height: 80vh;
+}
 
 #message-compose .message-compose-header {
     display: flex;
