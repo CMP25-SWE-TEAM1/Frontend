@@ -208,10 +208,21 @@
     font-weight: 400;
   }
 
+
   .messages-page .details.no-chat .content .info a,
-  .messages-page .navigation .info.no-chat a {
+  .messages-page .navigation .info.no-chat a,
+  .messages-page .details.chat .body.allowed .change-follow {
     display: block;
     width: fit-content;
+    background-color: #1d9bf0;
+    color: white;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.218s;
+  }
+
+  .messages-page .details.no-chat .content .info a,
+  .messages-page .navigation .info.no-chat a {
     min-height: 52px;
     padding-left: 32px;
     padding-right: 32px;
@@ -220,15 +231,45 @@
     border-top-left-radius: 32px;
     border-top-right-radius: 32px;
     font-weight: 700;
-    background-color: #1d9bf0;
+  }
+
+  .messages-page .details.chat .body.allowed .change-follow {
+    min-height: 32px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 16px;
+    font-size: 15px;
+    font-weight: 600;
+
+    border: 1px solid #ddd;
+  }
+
+  .messages-page .details.chat .body.allowed .change-follow.blocked,
+  .messages-page .details.chat .body.allowed .change-follow.followed {
+    width: 100px;
+    justify-content: center;
+    background-color: #F4212E;
     color: white;
-    display: flex;
-    align-items: center;
-    transition: background-color 0.218s;
+  }
+
+  .messages-page .details.chat .body.allowed .change-follow.followed {
+    background-color: white;
+    color: black;
+  }
+
+  .messages-page .details.chat .body.allowed .change-follow.blocked:hover {
+    background-color: #DC1E29;
+  }
+
+  .messages-page .details.chat .body.allowed .change-follow.followed:hover {
+    color: #F4212E;
+    background-color: white;
+    border-color: #F4212E;
   }
 
   .messages-page .details.no-chat .content .info a:hover,
-  .messages-page .navigation .info.no-chat a:hover {
+  .messages-page .navigation .info.no-chat a:hover,
+  .messages-page .details.chat .body.allowed .change-follow:hover {
     background-color: #1a8cd8;
   }
 
@@ -436,7 +477,7 @@
     padding-left: 12px;
   }
 
-  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-data {
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-data {
     max-width: 100%;
   }
 
@@ -510,6 +551,7 @@
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-media+.message-text {
+    max-width: 100%;
     width: fit-content;
     margin-top: 4px;
   }
@@ -811,11 +853,11 @@
   }
 
   /* ================== Chat - Message - More (Copy/Reply/Delte) ================== */
-  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-interaction .message-tools {
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools.to-right {
     left: 0;
   }
 
-  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-box .message-interaction .message-tools {
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools.to-left {
     right: 0;
   }
 

@@ -10,7 +10,7 @@ const store = configureStore({
     user: userReducer,
     theme: themeReducer,
     socket: socketReducer,
-    notificationSocket: notificationSocketReducer,
+    notification: notificationSocketReducer,
     preferences: PreferencesSlice,
   },
 })

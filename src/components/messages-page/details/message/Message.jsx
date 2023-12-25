@@ -3,15 +3,29 @@ import MessageTools from "./MessageTools"
 
 const Message = (props) => {
   const msgToolsRef = useRef(null)
-  const [msgToolsPosition, setMsgToolsPosition] = useState("T")
+  const msgContentRef = useRef(null)
+  const [msgToolsPositionY, setMsgToolsPositionY] = useState("T")
+  const [msgToolsPositionX, setMsgToolsPositionX] = useState("T")
   const [msgToolsVisibile, setMsgToolsVisibile] = useState(false)
   const [msgToolsVisibiltyStyle, setMsgToolsVisibiltyStyle] = useState("none")
   const handleMsgToolsVisibilty = () => {
-    setMsgToolsVisibile(!msgToolsVisibile)
     const rectMsgTools = msgToolsRef.current.getBoundingClientRect()
-    if (rectMsgTools.bottom >= window.innerHeight - rectMsgTools.bottom) setMsgToolsPosition("T")
-    else setMsgToolsPosition("B")
-    msgToolsVisibile ? setMsgToolsVisibiltyStyle("block") : setMsgToolsVisibiltyStyle("none")
+    const rectMsgContent = msgContentRef.current.getBoundingClientRect()
+    // Top Bottom
+    if (rectMsgTools.bottom >= window.innerHeight - rectMsgTools.bottom) setMsgToolsPositionY("T")
+    else setMsgToolsPositionY("B")
+
+    // Left Right
+    if (props.direction === "R") {
+      if (rectMsgContent.right - rectMsgTools.left >= 180) setMsgToolsPositionX("R")
+      else setMsgToolsPositionX("L")
+    } else {
+      if (rectMsgTools.right - rectMsgContent.left >= 180) setMsgToolsPositionX("L")
+      else setMsgToolsPositionX("R")
+    }
+
+    !msgToolsVisibile ? setMsgToolsVisibiltyStyle("block") : setMsgToolsVisibiltyStyle("none")
+    setMsgToolsVisibile(!msgToolsVisibile)
   }
   const messageText = props.messageText
   const messageMedia = props.messageMedia
@@ -20,14 +34,44 @@ const Message = (props) => {
   const messageId = props.messageId
   const messageMeta = props.messageMeta
 
-  const formattedDate = new Date(messageMeta).toLocaleString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  })
+  const getMessageTime = (messageTime) => {
+    const messageDate = new Date(messageTime)
+    const currentDate = new Date()
+
+    const isSameDay = messageDate.getDate() === currentDate.getDate()
+    const isYesterday = messageDate.getDate() === currentDate.getDate() - 1
+    const isSameWeek = messageDate.getFullYear() === currentDate.getFullYear() && messageDate.getMonth() === currentDate.getMonth() && messageDate.getDate() >= currentDate.getDate() - currentDate.getDay()
+
+    if (isSameDay) {
+      return messageDate.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      })
+    } else if (isYesterday) {
+      return `Yesterday, ${messageDate.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      })}`
+    } else if (isSameWeek) {
+      return messageDate.toLocaleString("en-US", {
+        weekday: "short",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      })
+    } else {
+      return messageDate.toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      })
+    }
+  }
 
   const [gifPaused, setGifPaused] = useState(false)
   const gifRef = useRef(null)
@@ -45,7 +89,7 @@ const Message = (props) => {
   return (
     <div className={`message ${props.direction === "R" ? "right" : "left"}`}>
       {/* Message-content */}
-      <div className="message-content">
+      <div className="message-content" ref={msgContentRef}>
         {/* Message-text + Message-interact */}
         <div className="message-box">
           <div className="message-data">
@@ -110,7 +154,7 @@ const Message = (props) => {
                 }}
                 style={{ display: msgToolsVisibiltyStyle }}
               ></div>
-              <MessageTools messageMedia={messageMedia} messageText={messageText} hideMsgTools={handleMsgToolsVisibilty} msgToolsPosition={msgToolsPosition} visibiltyStyle={msgToolsVisibiltyStyle} deleteMessage={deleteMessage} messageId={messageId} />
+              <MessageTools messageMedia={messageMedia} messageText={messageText} hideMsgTools={handleMsgToolsVisibilty} msgToolsPositionX={msgToolsPositionX} msgToolsPositionY={msgToolsPositionY} visibiltyStyle={msgToolsVisibiltyStyle} deleteMessage={deleteMessage} messageId={messageId} />
               <div
                 className="message-more"
                 title="More"
@@ -131,7 +175,7 @@ const Message = (props) => {
       </div>
       {messageMeta && (
         <div className="message-meta">
-          <span>{formattedDate}</span>
+          <span>{getMessageTime(messageMeta)}</span>
         </div>
       )}
     </div>

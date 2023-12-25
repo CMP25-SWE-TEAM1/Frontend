@@ -96,6 +96,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
     let userCredentials = {
       query: userName,
       password: password,
+      push_token: FCMToken,
     }
     // axios
     //   .post(APIs.actual.loginAPI, userCredentials)
@@ -155,6 +156,8 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
 
   const themeColor = useSelector((state) => state.theme.color)
 
+  const FCMToken = useSelector((state) => state.notification.FCMToken)
+
   return (
     <>
       <Modal open={openModal} onClose={handleCloseModal} data-testid="loginModal" disableEscapeKeyDown disablePortal>
@@ -184,7 +187,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                     Phone, email or username
                   </label>
                 </div>
-                <button type="button" id="next" className="btn mt-2 dark:bg-white bg-black" onClick={handleEmailCheck} disabled={userName === ""}>
+                <button type="button" id="next" className="btn mt-2 bg-black dark:bg-white" onClick={handleEmailCheck} disabled={userName === ""}>
                   Next
                 </button>
                 <Link
@@ -198,7 +201,10 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                   </button>
                 </Link>
                 <span className="mt-5 text-slate-400">
-                  Don't have an account? <Link to={"/Signup"} className={`text-${getColor(themeColor)}`}>Sign Up</Link>{" "}
+                  Don't have an account?{" "}
+                  <Link to={"/Signup"} className={`text-${getColor(themeColor)}`}>
+                    Sign Up
+                  </Link>{" "}
                 </span>
                 <Alert severity="error" data-testid="emailExistError" className={`${emailExistError ? "" : "hidden"}`}>
                   sorry we couldn't find your email
@@ -242,7 +248,7 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
                   >
                     Forgot password?
                   </Link>
-                  <button id="login" type="submit" className="btn -mb-4 mt-36 h-14 rounded-3xl dark:bg-white bg-black" disabled={password === ""}>
+                  <button id="login" type="submit" className="btn -mb-4 mt-36 h-14 rounded-3xl bg-black dark:bg-white" disabled={password === ""}>
                     {loading ? "Loading..." : "Log In"}
                   </button>
                 </form>

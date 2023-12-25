@@ -12,8 +12,8 @@ import HorizontalNavbar from "../General/HorizontalNavbar"
 
 import { useNavigate } from "react-router-dom"
 
-import { initializeSocket } from "./notificationSocketService"
 import { setNotificationSocket } from "../../store/NotificationSocketSlice"
+
 
 const notificationsNavLinks = [
   { title: "All", location: "all" },

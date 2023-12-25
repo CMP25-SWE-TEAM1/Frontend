@@ -56,7 +56,7 @@ const Details = (props) => {
   return (
     <div
       id="show-details-div"
-      className={`absolute ${props.position}  top-[80px]
+      className={`absolute ${props.position}  top-[77.5px]
     ${props.display} h-[40px] w-[40px] 
     ${darkmode ? `bg-black text-white` : `bg-white text-black`} 
     border-t- mt-[2%] rounded-[50%] border border-b-2 border-lightBorder 

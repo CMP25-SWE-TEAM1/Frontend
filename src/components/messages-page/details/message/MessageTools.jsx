@@ -8,7 +8,8 @@ const MessageTools = (props) => {
   const messageMedia = props.messageMedia
   const messageText = props.messageText
   const hideMsgTools = props.hideMsgTools
-  const msgToolsPosition = props.msgToolsPosition
+  const msgToolsPositionX = props.msgToolsPositionX
+  const msgToolsPositionY = props.msgToolsPositionY
   const visibiltyStyle = props.visibiltyStyle
   const deleteMessage = props.deleteMessage
   const [isAlertVisible, setIsAlertVisible] = useState(false)
@@ -45,7 +46,7 @@ const MessageTools = (props) => {
   }
   return (
     <>
-      <div className={`message-tools ${msgToolsPosition === "T" ? "to-top" : "to-bottom"}`} style={{ display: visibiltyStyle }}>
+      <div className={`message-tools ${msgToolsPositionY === "T" ? "to-top" : "to-bottom"} ${msgToolsPositionX === "L" ? "to-left" : "to-right"}`} style={{ display: visibiltyStyle }}>
         <ul>
           {/* <li className="reply-tool" onClick={handleReply}>
             <div className="tool-content">

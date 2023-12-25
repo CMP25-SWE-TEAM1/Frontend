@@ -22,6 +22,8 @@ export const loginUser = createAsyncThunk("user/loginUser", async ({ userCredent
     localStorage.setItem("token", JSON.stringify(userCredentials.token))
   } else {
     google = false
+    // console.log(userCredentials)
+
     const request = await axios.post(APIs.actual.loginAPI, userCredentials)
     response = await request.data
     localStorage.setItem("user", JSON.stringify(response.data.user))
@@ -85,14 +87,13 @@ const userSlice = createSlice({
       temp_user.email = action.payload
       localStorage.setItem("user", JSON.stringify(temp_user))
     },
-    changeUser: (state,action) =>
-    {
+    changeUser: (state, action) => {
       const newuser = {
-        profileImage : state.user.profileImage,
+        profileImage: state.user.profileImage,
         ...action.payload,
       }
-      state.user= newuser
-      localStorage.setItem("user",JSON.stringify(newuser))
+      state.user = newuser
+      localStorage.setItem("user", JSON.stringify(newuser))
     },
   },
   extraReducers: (builder) => {
@@ -131,5 +132,5 @@ export const signupUser = userSlice.actions.signupUser
 export const changeProfilePicture = userSlice.actions.changeProfilePicture
 export const changeUsername = userSlice.actions.changeUsername
 export const changeEmail = userSlice.actions.changeEmail
-export const changeUser  = userSlice.actions.changeUser
+export const changeUser = userSlice.actions.changeUser
 export default userSlice.reducer
