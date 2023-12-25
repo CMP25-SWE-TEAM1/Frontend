@@ -36,7 +36,7 @@ function Header(props) {
           </p>}
           {location.pathname.split('/')[2] && (location.pathname.split('/')[2].toLowerCase() === 'following'||location.pathname.split('/')[2].toLowerCase() === 'followers')  &&
           <p className={`text-xs text-[gray] `}>
-            @{user.username} 
+            @{props.profiletag} 
             {/*here the count should be updated by user posts number*/}
           </p>}
         </div>

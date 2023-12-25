@@ -11,19 +11,26 @@ class ProfileRequests{
         })
         .then((res) => {
           if (res.status === 200) {
-            console.log(res)
+            if(setDetailsPos !== undefined)
+            {
             res.data.user.is_wanted_user_followed? setDetailsPos(`right-[140px]`):setDetailsPos(`right-[100px]`)
-            if(res.data.user.is_curr_user_blocked) setDetailsPos('right-[25px]') 
+            if(res.data.user.is_curr_user_blocked) setDetailsPos('right-[25px]')
+            }
+          if(setViewPost !== undefined) 
             res.data.user.is_wanted_user_blocked? setViewPost(false) : setViewPost(true)
+          if(setProfilePicURL !== undefined)
             setProfilePicURL(res.data.user.profile_image)
             const banner_image = res.data.user.banner_image ? res.data.user.banner_image : DefaultCoverPage
+            if(setCoverPicURL !== undefined)
             setCoverPicURL(banner_image)
-            const newUser = {...res.data.user, banner_image:banner_image }   
+            const newUser = {...res.data.user, banner_image:banner_image }
+            if(setButtonstate !== undefined)   
             setButtonstate(res.data.user.is_wanted_user_followed? `Following`:`Follow`)
             setProfile(newUser)
           }
         })
         .catch((err) => {
+          console.log(err)
           //console.log(tag)
           //console.log(err)
         })
