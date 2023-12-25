@@ -35,7 +35,7 @@ const  FollowPage = () => {
       >
       {(tag === user.username||  profileres) && <Header profilename={user.username=== tag? user.nickname : profileres.nickname} profiletag={user.username=== tag? tag: profileres.nickname}></Header>}
       <div id="FollowNavbar-div" className={`flex flex-row w-[100%] h-[50px] `}>
-        <HorizontalNavbar urls={FollowNavLinks} originalUrl={`/${tag}`} handlers={[]}/>
+      {profileres && <HorizontalNavbar urls={FollowNavLinks} originalUrl={`/${tag}`} handlers={[]}/>}
       </div>
       <div>
         <Outlet />

@@ -6,7 +6,7 @@ export const SOCKET_ON = true
 
 export const SOCKET_IO = {
   mock: "http://localhost:3001",
-  actual: "http://51.116.199.56:5750",
+  actual: " https://websocket.gigachat.cloudns.org/",
 }
 
 // APIs
