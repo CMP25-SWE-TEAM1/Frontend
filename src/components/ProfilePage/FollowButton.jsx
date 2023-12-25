@@ -19,6 +19,7 @@ const FollowButton = (props) => {
     unfollowactual: { postfollowProfileAPI: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
     unblockmock: { unBlock:   `https://localhost:3001/api/profile/` },
     unblockactual: { unBlock: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/unblock` },
+    muteactual: { mute: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/mute` },
   }
   function HandleClick() {
   if (props.buttonName === "Follow") {

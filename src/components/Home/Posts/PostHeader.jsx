@@ -18,7 +18,9 @@ import { useLocation } from "react-router-dom"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import axios from "axios"
 
+
 import { getColor } from "../../../constants"
+import ProfileRequests from "../../ProfilePage/profilerequests.js"
 
 function PostHeader({ pathname, postType, userTag, bio, userProfilePicture, userName, finalDate, id, isVisible, handleMouseEnter, handleMouseLeave, hoveredProfile, openMenu, anchorPostMenu, handleMenuClose, htmlElement, handleMenuButtonClick, followingUser, setPosts, posts }) {
   const darkMode = useSelector((state) => state.theme.darkMode)
@@ -40,7 +42,31 @@ function PostHeader({ pathname, postType, userTag, bio, userProfilePicture, user
       unrepost: `https://backend.gigachat.cloudns.org/api/tweets/unretweet/${id}`,
       delete: `https://backend.gigachat.cloudns.org/api/tweets/${id}`,
       getProfileAPI: `https://backend.gigachat.cloudns.org/api/user/profile/`,
+
     },
+    followactual: { postfollowProfileAPI: `https://backend.gigachat.cloudns.org/api/user/${userTag}/follow` },
+    unfollowactual: { postfollowProfileAPI: `https://backend.gigachat.cloudns.org/api/user/${userTag}/unfollow` },
+    muteactual: { mute: `https://backend.gigachat.cloudns.org/api/user/${userTag}/mute` },
+    blockactual: { Block: `https://backend.gigachat.cloudns.org/api/user/${userTag}/block` },
+    
+  }
+  const handlefollow = () => {
+    axios
+      .post(
+        false ? APIs.followmock.postfollowProfileAPI : APIs.followactual.postfollowProfileAPI,
+        {},
+        {
+          headers: {
+            authorization: `Bearer ${userToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        window.location.reload()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   const handleDeletePost = () => {
@@ -69,7 +95,7 @@ function PostHeader({ pathname, postType, userTag, bio, userProfilePicture, user
   // }, [finalDate])
 
   const themeColor = useSelector((state) => state.theme.color)
-
+ 
   return (
     <>
       <div className="post-header flex items-center justify-between">
@@ -160,19 +186,29 @@ function PostHeader({ pathname, postType, userTag, bio, userProfilePicture, user
                 <SentimentVeryDissatisfiedIcon className="mr-3 text-base dark:text-white" />
                 <span className="text-[15px] dark:text-white">Not interested in this post</span>
               </MenuItem>
-              <MenuItem onClick={handleMenuClose}
+              <MenuItem onClick={()=>{
+              handlefollow()
+              handleMenuClose() }}
               className={`${userTag !== user.username ? "" : "hidden"}`}
               >
                 <PersonAddAltIcon className="mr-3 text-base dark:text-white" />
                 <span className="text-[15px] dark:text-white">Follow @{userTag}</span>
               </MenuItem>
-              <MenuItem onClick={handleMenuClose}
+              <MenuItem onClick={
+                ()=>{
+                  ProfileRequests.mute(false,APIs,userToken)
+                  handleMenuClose()
+                }}
               className={`${userTag !== user.username ? "" : "hidden"}`}
               >
                 <VolumeOffOutlinedIcon className="mr-3 text-base dark:text-white" />
                 <span className="text-[15px] dark:text-white">Mute @{userTag}</span>
               </MenuItem>
-              <MenuItem onClick={handleMenuClose}
+              <MenuItem onClick={
+                ()=>{
+                  ProfileRequests.block(false,APIs,userToken)
+                  handleMenuClose()
+                }}
               className={`${userTag !== user.username ? "" : "hidden"}`}
               >
                 <BlockOutlinedIcon className="mr-3 text-base dark:text-white" />
