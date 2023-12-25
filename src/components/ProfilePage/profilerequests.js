@@ -51,7 +51,7 @@ class ProfileRequests{
                 setProfilePicURL(res.data.user.profile_image)
                 const banner_image = res.data.user.banner_image ? res.data.user.banner_image : DefaultCoverPage
                 setCoverPicURL(banner_image)
-                const newUser = {...res.data.user, banner_image:banner_image }   
+                const newUser = {...res.data.user, banner_image:banner_image,is_curr_user:true }   
                 setProfile(newUser)
               }
             })
