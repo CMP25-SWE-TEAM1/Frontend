@@ -9,6 +9,7 @@ import { useSelector } from "react-redux"
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt"
 import { useLocation } from "react-router-dom"
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
+import ReplyingTo from "../../General/ReplyingTo"
 
 const Post = ({ userProfilePicture, postType, userName, userTag, bio,id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, followingUser, setPosts, posts }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
@@ -18,7 +19,7 @@ const Post = ({ userProfilePicture, postType, userName, userTag, bio,id, date, r
   const [likesNum, setLikesNum] = useState(likeCount)
   const [reposted, setReposted] = useState(isReposted)
   const [repostsNum, setRepostsNum] = useState(repostCount)
-
+console.log("post type is : ",postType  )
   const [isVisible, setIsVisible] = useState(false)
   const [timeoutRef, setTimeoutRef] = useState(null)
 
@@ -236,6 +237,7 @@ const Post = ({ userProfilePicture, postType, userName, userTag, bio,id, date, r
           </div>
           <div className=" w-full sm:mr-2">
             <PostHeader pathname={pathname} postType={postType} userTag={userTag} bio={bio} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={followingUser} setPosts={setPosts} posts={posts} />
+            {postType==="reply"&&<ReplyingTo username="ismail" leftMargin="7"/>}
           </div>
         </div>
         <PostBody descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes} />

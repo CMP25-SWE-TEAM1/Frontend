@@ -44,7 +44,7 @@ const Home = ({composePostPopup}) => {
         },
       })
       .then((response) => {
-        // console.log(response)
+        console.log(response.data.tweetList)
         if (response.status === 200) {
           // console.log("in then ");
           if (response.data.tweetList) {

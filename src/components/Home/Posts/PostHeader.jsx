@@ -94,9 +94,10 @@ function PostHeader({ pathname, postType, userTag, bio, userProfilePicture, user
               </Box>
             )}
             <div className="pointer-events-auto flex items-center">
-            <div className="hover:underline font-semibold">{userName}
+            <Link className="hover:underline font-semibold" to={`/${userTag}`}>
+            {userName}
             <VerifiedIcon className={`pl-1 ${"text-" + getColor(themeColor)}`} sx={{ fontSize: "22px" }} />
-            </div>
+            </Link>
             <Link className={`${pathname.search(id) === -1 ? "" : "hidden"} pointer-events-auto ml-1 text-sm text-ternairy dark:text-secondary`} to={`/${userTag}`}>
               @{userTag}
             </Link>
@@ -153,19 +154,27 @@ function PostHeader({ pathname, postType, userTag, bio, userProfilePicture, user
                 <DeleteOutlineIcon className="mr-3 text-base text-red-600" />
                 <span className="text-[15px] text-red-600">Delete Tweet</span>
               </MenuItem>
-              <MenuItem onClick={handleMenuClose} className="flex items-center">
+              <MenuItem onClick={handleMenuClose} 
+              className={`flex items-center ${userTag !== user.username ? "" : "hidden"}`}
+              >
                 <SentimentVeryDissatisfiedIcon className="mr-3 text-base dark:text-white" />
                 <span className="text-[15px] dark:text-white">Not interested in this post</span>
               </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
+              <MenuItem onClick={handleMenuClose}
+              className={`${userTag !== user.username ? "" : "hidden"}`}
+              >
                 <PersonAddAltIcon className="mr-3 text-base dark:text-white" />
                 <span className="text-[15px] dark:text-white">Follow @{userTag}</span>
               </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
+              <MenuItem onClick={handleMenuClose}
+              className={`${userTag !== user.username ? "" : "hidden"}`}
+              >
                 <VolumeOffOutlinedIcon className="mr-3 text-base dark:text-white" />
                 <span className="text-[15px] dark:text-white">Mute @{userTag}</span>
               </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
+              <MenuItem onClick={handleMenuClose}
+              className={`${userTag !== user.username ? "" : "hidden"}`}
+              >
                 <BlockOutlinedIcon className="mr-3 text-base dark:text-white" />
                 <span className="text-[15px] dark:text-white">Block @{userTag}</span>
               </MenuItem>
