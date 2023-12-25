@@ -13,12 +13,12 @@ const FollowButton = (props) => {
   // there should be a conditional rendering by back
  
   const APIs = {
-    followmock: { postfollowProfileAPI: `http://localhost:3001/api/user/${props.tag}/follow` },
-    followactual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
-    unfollowmock: { postfollowProfileAPI: `http://localhost:3001/api/user/${props.tag}/unfollow` },
-    unfollowactual: { postfollowProfileAPI: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
-    unblockmock: { unBlock:   `http://localhost:3001/api/profile/` },
-    unblockactual: { unBlock: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unblock` },
+    followmock: { postfollowProfileAPI: `https://localhost:3001/api/user/${props.tag}/follow` },
+    followactual: { postfollowProfileAPI: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/follow` },
+    unfollowmock: { postfollowProfileAPI: `https://localhost:3001/api/user/${props.tag}/unfollow` },
+    unfollowactual: { postfollowProfileAPI: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/unfollow` },
+    unblockmock: { unBlock:   `https://localhost:3001/api/profile/` },
+    unblockactual: { unBlock: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/unblock` },
   }
   function HandleClick() {
   if (props.buttonName === "Follow") {

@@ -35,8 +35,8 @@ const ProfilePage = (props) => {
   const [viewpoststate,setViewPost] = useState()
   const { tag } = useParams()
   const APIs = {
-    mock: { getProfileAPI: `http://localhost:3001/api/profile/` },
-    actual: { getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/` },
+    mock: { getProfileAPI: `https://localhost:3001/api/profile/` },
+    actual: { getProfileAPI: `https://backend.gigachat.cloudns.org/api/user/profile/` },
   }
 
  

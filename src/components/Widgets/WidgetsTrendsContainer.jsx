@@ -14,7 +14,7 @@ const WidgetsTrendsContainer = ({ data, loading, type }) => {
 
   const fetchTrendTweets = (trend) => {
     axios
-      .get(`http://backend.gigachat.cloudns.org/api/trends/${trend}`, {
+      .get(`https://backend.gigachat.cloudns.org/api/trends/${trend}`, {
         headers: {
           authorization: "Bearer " + userToken,
         },

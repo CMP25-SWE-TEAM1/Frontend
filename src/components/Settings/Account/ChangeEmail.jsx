@@ -24,8 +24,8 @@ const ChangeEmail = () => {
   const dispatch = useDispatch()
 
   const APIs = {
-    mock: { ChangeEmailAPI: "http://localhost:3001/changeEmail", VerifyEmailAPI: "http://localhost:3001/verifyEmail" },
-    actual: { ChangeEmailAPI: "http://backend.gigachat.cloudns.org/api/user/updateEmail", VerifyEmailAPI: "http://backend.gigachat.cloudns.org/api/user/verifyEmail" },
+    mock: { ChangeEmailAPI: "https://localhost:3001/changeEmail", VerifyEmailAPI: "https://localhost:3001/verifyEmail" },
+    actual: { ChangeEmailAPI: "https://backend.gigachat.cloudns.org/api/user/updateEmail", VerifyEmailAPI: "https://backend.gigachat.cloudns.org/api/user/verifyEmail" },
   }
 
   const handleChangeEmail = () => {
