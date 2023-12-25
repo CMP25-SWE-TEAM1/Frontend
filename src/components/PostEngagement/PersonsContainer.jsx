@@ -17,8 +17,8 @@ function PersonsContainer({ postId, userTag, navbarActiveLink }) {
       reposters: `/api/tweets/retweeters/${postId}`,
     },
     actual: {
-      likers: `http://backend.gigachat.cloudns.org/api/tweets/likers/${postId}`,
-      reposters: `http://backend.gigachat.cloudns.org/api/tweets/retweeters/${postId}`,
+      likers: `https://backend.gigachat.cloudns.org/api/tweets/likers/${postId}`,
+      reposters: `https://backend.gigachat.cloudns.org/api/tweets/retweeters/${postId}`,
     },
   }
   useEffect(() => {

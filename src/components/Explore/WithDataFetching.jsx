@@ -18,7 +18,7 @@ const useDataFetching = (type) => {
 
   const fetchTrends = () => {
     axios
-      .get("http://backend.gigachat.cloudns.org/api/trends/all", {
+      .get("https://backend.gigachat.cloudns.org/api/trends/all", {
         params: {
           page: 1,
           count: 1000,

@@ -22,10 +22,10 @@ const Home = ({composePostPopup}) => {
     { title: "Following", location: "following" },
   ]
   const APIs = {
-    mock: { getAllTweetsAPI: "https://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/posts" },
+    mock: { getAllTweetsAPI: "httpss://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/posts" },
     actual: {
-      getAllTweetsAPI: "http://backend.gigachat.cloudns.org/api/homepage/following",
-      getUserTweets: `http://backend.gigachat.cloudns.org/api/profile/${user.username}/tweets`,
+      getAllTweetsAPI: "https://backend.gigachat.cloudns.org/api/homepage/following",
+      getUserTweets: `https://backend.gigachat.cloudns.org/api/profile/${user.username}/tweets`,
     },
   }
   const [pageNumber, setPageNumber] = useState(1)
@@ -44,7 +44,7 @@ const Home = ({composePostPopup}) => {
         },
       })
       .then((response) => {
-        // console.log(response)
+        console.log(response.data.tweetList)
         if (response.status === 200) {
           // console.log("in then ");
           if (response.data.tweetList) {

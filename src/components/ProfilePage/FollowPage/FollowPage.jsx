@@ -1,56 +1,48 @@
-import React from "react"
-import Button from "../../Sidebar/Button"
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import { Link } from "react-router-dom"
+import React from 'react'
+import { useParams } from "react-router-dom"
+import { Outlet } from "react-router"
+import HorizontalNavbar from '../../General/HorizontalNavbar'
 import { useSelector } from "react-redux"
-import { Avatar } from "@mui/material"
-import FollowButton from "./SmallComponents/FollowButton"
-import Selector from "./Selector"
-const FollowPage = (props) =>{
-  const DarkMode = useSelector((state) => state.theme.darkMode)
-  const User     = useSelector((state) => state.user.user)
-  let type  = props;
-  type = true;
+import Header from '../Header'
+import { useState, useEffect } from "react"
+import ProfileRequests from '../profilerequests'
 
-    return (
-        <div className="flex justify-normal flex-col ">
+const  FollowPage = () => {
+  const FollowNavLinks = [
+    { title: "Following", location: "Following" },
+    { title: "Followers", location: "Followers" },
+  ]
+  const {token} = useSelector((state)=>state.user)
+  const [profileres,setProfile]=useState()
+  const APIs = {
+    mock: { getProfileAPI: `https://localhost:3001/api/profile/` },
+    actual: { getProfileAPI: `https://backend.gigachat.cloudns.org/api/user/profile/` },
+  }
+  const {tag} = useParams()
+  const {user} = useSelector((state)=>(state.user))
+  useEffect(() => {
+    if(tag !== user.username)
+    ProfileRequests.getOtherprofile(false,APIs,tag,setProfile,token)
+    
+  }, [tag])
 
-            <div  className={`sticky top-0 z-50 mb-0 border-[1px] border-lightBorder dark:border-darkBorder bg-white bg-opacity-[87%] 
-            backdrop-blur-sm dark:bg-inherit dark:bg-opacity-[99%] w-[40vw] h-[100px] min-w-full    `}>
-                <div id="Arrow-Button" className="  ">
-                <Link to={`/${User.name}`}>
-                <ArrowBackIcon className="hover:bg-lightHover dark:hover:bg-darkHover h-[20px] w-[20px] opacity-80 rounded-[50%] 
-                mt-[3%] ml-[2%] z-100  " ></ArrowBackIcon>
-                </Link>
-                </div>
-                <div className="flex flex-col mt-[-30px] ml-[70px] min-w-full  ">
-                    <div id="UserName">
-                        <p className={`text-xl opacity-100 font-bold `}>
-                            {User.name}
-                        </p>
-                    </div>
-                    <div id="UserTag">
-                        <p className="text-[rgba(150,150,150,50)] text-[80%] ">
-                           {`@` + User.name}
-                        </p>
-                    </div>
-                </div>
-                <div className="flex flex-row justify-center min-w-[100%] " >
-                <Link to={``}>
-                    <div className="flex ">
-                        <FollowButton name="Followers" classname={'mt-[2%] w-[20vw] h-[40px] hover:bg-lightHover dark:hover:bg-darkHover'}>
-                        </FollowButton>
-
-                    </div>
-                </Link>
-                    <div className="flex ">
-                    <FollowButton name="Following" classname={'mt-[2%] w-[20vw] h-[40px]  hover:bg-lightHover dark:hover:bg-darkHover'}>
-                        </FollowButton>
-                    </div>
-                </div>
-            </div>
-            <Selector type></Selector>
-        </div>
-    )
+  return (
+    <div className=" flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
+      <div
+        className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow 
+      overflow-y-scroll border border-b-0 border-t-0 border-lightBorder 
+      dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] sm:w-[600px]"
+      >
+      {(tag === user.username||  profileres) && <Header profilename={user.username=== tag? user.nickname : profileres.nickname} profiletag={user.username=== tag? tag: profileres.nickname}></Header>}
+      <div id="FollowNavbar-div" className={`flex flex-row w-[100%] h-[50px] `}>
+        <HorizontalNavbar urls={FollowNavLinks} originalUrl={`/${tag}`} handlers={[]}/>
+      </div>
+      <div>
+        <Outlet />
+      </div>
+      </div>
+    </div>
+  )
 }
+
 export default FollowPage

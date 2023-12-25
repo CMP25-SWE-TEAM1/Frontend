@@ -34,14 +34,14 @@ const Details = (props) => {
   }, [props])
   // console.log(props)
   const APIs = {
-    blockmock: { Block: `http://localhost:3001/api/profile/` },
-    blockactual: { Block: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/block` },
-    unblockmock: { unBlock: `http://localhost:3001/api/profile/` },
-    unblockactual: { unBlock: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unblock` },
-    mutemock: { mute: `http://localhost:3001/api/profile/` },
-    muteactual: { mute: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/mute` },
-    unmutemock: { mute: `http://localhost:3001/api/profile/` },
-    unmuteactual: { unmute: `http://backend.gigachat.cloudns.org/api/user/${props.tag}/unmute` },
+    blockmock: { Block: `https://localhost:3001/api/profile/` },
+    blockactual: { Block: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/block` },
+    unblockmock: { unBlock: `https://localhost:3001/api/profile/` },
+    unblockactual: { unBlock: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/unblock` },
+    mutemock: { mute: `https://localhost:3001/api/profile/` },
+    muteactual: { mute: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/mute` },
+    unmutemock: { mute: `https://localhost:3001/api/profile/` },
+    unmuteactual: { unmute: `https://backend.gigachat.cloudns.org/api/user/${props.tag}/unmute` },
   }
   document.onclick = (event) => {
     // console.log(event.target)
@@ -56,7 +56,7 @@ const Details = (props) => {
   return (
     <div
       id="show-details-div"
-      className={`absolute ${props.position}  top-[80px]
+      className={`absolute ${props.position}  top-[77.5px]
     ${props.display} h-[40px] w-[40px] 
     ${darkmode ? `bg-black text-white` : `bg-white text-black`} 
     border-t- mt-[2%] rounded-[50%] border border-b-2 border-lightBorder 

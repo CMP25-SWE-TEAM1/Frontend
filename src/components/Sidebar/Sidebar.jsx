@@ -40,34 +40,35 @@ import { APIs } from "../../constants/signupConstants"
 
 import { styles } from "../../styles"
 import { getColor } from "../../constants"
+import { setUnseenCount } from "../../store/NotificationSocketSlice"
 
 const Sidebar = () => {
+  const unseenCount = useSelector((state) => state.notification.unseenCount)
+
   const user = useSelector((state) => state.user.user)
   const userToken = useSelector((state) => state.user.token)
-  const pathname = useLocation().pathname
+  const darkMode = useSelector((state) => state.theme.darkMode)
+
+  const pathname = useLocation().pathname;
   const userTag = user.username
-  const [unseenCount, setUnseenCount] = useState(0)
   const optionsNames = ["Home", "Explore", "Notifications", "Messages", "Lists", "Bookmarks", "Profile", "Settings"]
   const optionsIcons = [
-    [<HomeOutlinedIcon />, <HomeIcon />],
-    [<SearchRoundedIcon />, <SearchIcon sx={{ color: "#000000" }} />],
-    [
-      <Badge badgeContent={unseenCount} color="primary">
-        <NotificationsNoneRoundedIcon />
-      </Badge>,
-      <Badge badgeContent={unseenCount} color="primary">
-        <NotificationsIcon />
-      </Badge>,
-    ],
-    [<MailOutlineRoundedIcon />, <EmailIcon />],
-    [<ListAltRoundedIco />, <ListAltIcon sx={{ color: "#000000" }} />],
-    [<PeopleOutlinedIcon />, <PeopleIcon />],
-    [<PersonOutlinedIcon />, <PersonIcon />],
-    [<SettingsOutlinedIcon />, <SettingsIcon />],
+    [<HomeOutlinedIcon />,<HomeIcon />],
+    [<SearchRoundedIcon sx={{color:darkMode?"#d9d9d9":"#1f1f1f"}}/>,<SearchIcon sx={{color:darkMode?"#ffffff":"#000000"}}/>],
+    [<Badge badgeContent={unseenCount} color="primary">
+      <NotificationsNoneRoundedIcon />
+    </Badge>,
+    <Badge badgeContent={unseenCount} color="primary">
+      <NotificationsIcon/>
+    </Badge>],
+    [<MailOutlineRoundedIcon />,<EmailIcon/>],
+    [<ListAltRoundedIco sx={{color:darkMode?"#d9d9d9":"#1f1f1f"}}/>,<ListAltIcon sx={{color:darkMode?"#ffffff":"#000000"}}/>],
+    [<PeopleOutlinedIcon />,<PeopleIcon/>],
+    [<PersonOutlinedIcon />,<PersonIcon/>],
+    [<SettingsOutlinedIcon />,<SettingsIcon/>],
   ]
   const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}`, "/settings/account"]
-
-  const darkMode = useSelector((state) => state.theme.darkMode)
+  
   const [shrink, setShrink] = useState(window.innerWidth < 1278)
   const [selected, setSelected] = useState(optionLinks.indexOf(pathname))
   const options = optionsNames.map((optionName, index) => <SidebarOption key={optionName} icon={optionsIcons[index]} name={optionName} link={optionLinks[index]} alt="sidebarOption" select={selected === index ? true : false} />)
@@ -96,7 +97,8 @@ const Sidebar = () => {
       })
       .then((res) => {
         // console.log(res.data.data.notificationsCount)
-        setUnseenCount(res.data.data.notificationsCount)
+        dispatch(setUnseenCount(res.data.data.notificationsCount))
+        // setUnseenCount(res.data.data.notificationsCount)
       })
       .catch((err) => {
         console.log(err)
@@ -243,8 +245,8 @@ const Sidebar = () => {
           <SwitchAccount handleLogout={handleLogout} openMenu={openMenu} anchorMenu={anchorMenu} handleCloseMenu={handleCloseMenu} handleClickMenu={handleClickMenu} />
         )}
       </div>
-      <Modal open={openModal} onClose={handleCloseModal}  disableEscapeKeyDown disablePortal>
-        <Box >
+      <Modal open={openModal} onClose={handleCloseModal} disableEscapeKeyDown disablePortal>
+        <Box>
           <div className="pop-up relative m-auto min-w-[350px] bg-white dark:bg-black md:rounded-2xl">
             <button className=" absolute left-0 top-4 h-10 w-10 rounded-3xl bg-transparent bg-white text-2xl text-black no-underline hover:bg-lightHover dark:bg-black dark:text-white dark:hover:bg-darkHover" onClick={handleCloseModal}>
               x

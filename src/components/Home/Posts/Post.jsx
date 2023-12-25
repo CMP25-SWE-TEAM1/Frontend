@@ -9,8 +9,9 @@ import { useSelector } from "react-redux"
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt"
 import { useLocation } from "react-router-dom"
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
+import ReplyingTo from "../../General/ReplyingTo"
 
-const Post = ({ userProfilePicture, postType, userName, userTag, id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, followingUser, setPosts, posts }) => {
+const Post = ({ userProfilePicture, postType, userName, userTag, bio,id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, followingUser, setPosts, posts }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
   const [mediaUrls, setMediaUrls] = useState([])
   const [mediaTypes, setMediaTypes] = useState([])
@@ -18,7 +19,7 @@ const Post = ({ userProfilePicture, postType, userName, userTag, id, date, reply
   const [likesNum, setLikesNum] = useState(likeCount)
   const [reposted, setReposted] = useState(isReposted)
   const [repostsNum, setRepostsNum] = useState(repostCount)
-
+console.log("post type is : ",postType  )
   const [isVisible, setIsVisible] = useState(false)
   const [timeoutRef, setTimeoutRef] = useState(null)
 
@@ -33,12 +34,12 @@ const Post = ({ userProfilePicture, postType, userName, userTag, id, date, reply
       deleteRepost: `/api/tweets/${id}`,
     },
     actual: {
-      like: `http://backend.gigachat.cloudns.org/api/tweets/like/${id}`,
-      unlike: `http://backend.gigachat.cloudns.org/api/tweets/unlike/${id}`,
-      repost: `http://backend.gigachat.cloudns.org/api/tweets/retweet/${id}`,
-      unrepost: `http://backend.gigachat.cloudns.org/api/tweets/unretweet/${id}`,
-      delete: `http://backend.gigachat.cloudns.org/api/tweets/${id}`,
-      getProfileAPI: `http://backend.gigachat.cloudns.org/api/user/profile/`,
+      like: `https://backend.gigachat.cloudns.org/api/tweets/like/${id}`,
+      unlike: `https://backend.gigachat.cloudns.org/api/tweets/unlike/${id}`,
+      repost: `https://backend.gigachat.cloudns.org/api/tweets/retweet/${id}`,
+      unrepost: `https://backend.gigachat.cloudns.org/api/tweets/unretweet/${id}`,
+      delete: `https://backend.gigachat.cloudns.org/api/tweets/${id}`,
+      getProfileAPI: `https://backend.gigachat.cloudns.org/api/user/profile/`,
     },
   }
 
@@ -229,13 +230,14 @@ const Post = ({ userProfilePicture, postType, userName, userTag, id, date, reply
           <span className="ml-2 hover:underline">{followingUser ? (followingUser.username === user.username ? "You" : followingUser.username) : ""} reposted</span>
         </div>
         <div className="flex">
-          <div className=" h-fit w-10 sm:mr-3">
+          <div className=" h-fit w-10 sm:mr-3" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <Link className="pointer-events-auto hover:brightness-90" to={`/${userTag}`}>
               <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
             </Link>
           </div>
           <div className=" w-full sm:mr-2">
-            <PostHeader pathname={pathname} postType={postType} userTag={userTag} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={followingUser} setPosts={setPosts} posts={posts} />
+            <PostHeader pathname={pathname} postType={postType} userTag={userTag} bio={bio} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={followingUser} setPosts={setPosts} posts={posts} />
+            {postType==="reply"&&<ReplyingTo username="ismail" leftMargin="7"/>}
           </div>
         </div>
         <PostBody descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes} />

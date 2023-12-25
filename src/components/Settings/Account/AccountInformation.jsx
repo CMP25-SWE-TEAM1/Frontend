@@ -49,8 +49,8 @@ const AccountInformation = () => {
     const [successMsg, setSuccessMsg] = useState("")
 
     const APIs = {
-      mock: { confirmPasswordAPI: "http://localhost:3001/checkPassword" },
-      actual: { confirmPasswordAPI: "http://backend.gigachat.cloudns.org/api/user/confirmPassword" },
+      mock: { confirmPasswordAPI: "https://localhost:3001/checkPassword" },
+      actual: { confirmPasswordAPI: "https://backend.gigachat.cloudns.org/api/user/confirmPassword" },
     }
 
     const handleConfirmPassword = () => {
