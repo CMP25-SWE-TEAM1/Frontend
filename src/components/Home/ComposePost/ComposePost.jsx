@@ -48,7 +48,10 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId, han
 
   const APIs = {
     mock: { postTweetAPI: "httpss://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/post/addPost" },
-    actual: { postTweetAPI: "https://backend.gigachat.cloudns.org/api/tweets/", uploadMedia: "https://backend.gigachat.cloudns.org/api/media", deleteMedia: "https://backend.gigachat.cloudns.org/api/media" },
+    actual: { postTweetAPI: "https://backend.gigachat.cloudns.org/api/tweets/", 
+              uploadMedia: "https://backend.gigachat.cloudns.org/api/media", 
+              deleteMedia: "https://backend.gigachat.cloudns.org/api/media" 
+  },
   }
   const getComposeTweet = () => {
     return {

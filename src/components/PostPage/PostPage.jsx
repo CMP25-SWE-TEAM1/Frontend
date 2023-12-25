@@ -29,6 +29,7 @@ function PostPage() {
     },
   }
   useEffect(() => {
+    setPostLoaded(false); 
     console.log(userToken)
     axios
       .get(APIs.actual.getPost, {
@@ -61,7 +62,7 @@ function PostPage() {
       .catch((error) => {
         console.log("get post replies fail", error)
       })
-  }, [])
+  }, [postId])
 
   const replies = [
     {
@@ -94,6 +95,7 @@ function PostPage() {
             <ReplyingTo username={post.tweet_owner.username} leftMargin="14"/>
             <ComposeReply buttonName="Reply" handleNewPost={(newReply) => handleNewReply(newReply)} postType="reply" referredTweetId={post.id} />
             <RepliesContainer replies={postReplies} />
+            
           </>
         )}
       </div>
