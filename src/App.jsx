@@ -128,7 +128,7 @@ const App = () => {
             <Route path="mentions" element={<Mentions />}></Route>
             <Route path="" element={<All />}></Route>
           </Route>
-          <Route path="/messages" element={<Messages composeModalOpen={composeModalOpen} handleComposeModalOpen={handleComposeModalOpen} handleComposeModalClose={handleComposeModalClose} />}></Route>
+          <Route path="/messages/:contactId?" element={<Messages composeModalOpen={composeModalOpen} handleComposeModalOpen={handleComposeModalOpen} handleComposeModalClose={handleComposeModalClose} />} />
           {/* <Route path="/messages/compose" element={<MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} />}></Route> */}
           <Route path="/settings" element={<Settings />}>
             <Route path="" element={<MobileSettings />}></Route>
@@ -146,17 +146,17 @@ const App = () => {
             <Route path="display" element={<Display />}></Route>
           </Route>
           <Route path={`/:tag`} element={<ProfilePage handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal} />}>
-            <Route  element={<ProfilePosts />}></Route>
+            <Route element={<ProfilePosts />}></Route>
             <Route path="with_replies" element={<ProfileReplies />}></Route>
             <Route path="likes" element={<ProfileLikes />}></Route>
             <Route path="" element={<ProfilePosts />}></Route>
           </Route>
-          <Route path={"/following"} element ={<Followpage></Followpage>}></Route>
+          <Route path={"/following"} element={<Followpage></Followpage>}></Route>
           <Route path={`settings/profile`} element={<ProfilePageEdit handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
           <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
           <Route path="/:tag/status/:id" element={<PostPage post={testPost} />}></Route>
           <Route path="/:tag/status/:id/:NavbarLink" element={<PostEngagement />}></Route>
-          <Route path="/compose/tweet" element={<Home composePostPopup={true}/>}></Route>
+          <Route path="/compose/tweet" element={<Home composePostPopup={true} />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>

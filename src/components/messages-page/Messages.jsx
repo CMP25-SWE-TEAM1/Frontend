@@ -11,6 +11,7 @@ import DetailsNoChat from "./details/DetailsNoChat"
 import { BACKEND_ON, SOCKET_ON } from "./constants/MessagesConstants"
 // Hooks
 import { useState, useEffect } from "react"
+import { useParams, useNavigate } from "react-router-dom"
 import useGetContacts from "./customHooks/get/useGetContacts"
 // Functions
 import { initializeSocket } from "./customHooks/socketService"
@@ -21,6 +22,7 @@ import { setSocket } from "../../store/SocketSlice"
 
 const Messages = (props) => {
   // ==============  Props   ==============
+  const { paramContactId } = useParams()
   // Compose message
   const composeModalOpen = props.composeModalOpen
   const handleComposeModalOpen = props.handleComposeModalOpen
@@ -38,9 +40,10 @@ const Messages = (props) => {
 
   // ==============  Data   ==============
   const [contacts, setContacts] = useState([])
-  const [selectedContact, setSelectedContact] = useState()
+  const [selectedContact, setSelectedContact] = useState(paramContactId)
 
   // ==============  Hooks   ==============
+  const navigate = useNavigate()
   // -------- useEffect --------
   // Initialize socket and store it
   useEffect(() => {
@@ -129,6 +132,7 @@ const Messages = (props) => {
   }
   const handleSelectContact = (contactId) => {
     setSelectedContact(contactId)
+    navigate(`/messages/${contactId}`)
     setContacts(
       contacts.map((contact) =>
         contact.id === contactId
