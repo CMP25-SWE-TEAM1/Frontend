@@ -223,6 +223,7 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId, han
           placeholder={`${buttonName === "Post" ? "What is happening?!" : "Post your reply"}`}
           onChange={(e) => handleDescriptionChange(e)}
           multiline
+          value={description}
           fullWidth
           maxRows={23}
           sx={{
@@ -232,8 +233,9 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId, han
             },
           }}
         >
-          <span className="bg-[#f4212e]">{description.slice(0, 280)}</span>
-          <span className="text-[#f4212e]">{description.slice(280, description.length)}</span>
+          {/* {description} */}
+          {/* <span className="bg-[#f4212e]">{description.slice(0, 280)}</span>
+          <span className="text-[#f4212e]">{description.slice(280, description.length)}</span> */}
         </TextField>
         <DisplayMedia mediaUrls={mediaUrls} mediaTypes={getMediaTypes()} margin={1.5} handleDeleteMedia={handleDeleteMedia} showCancelButton={true} />
         <div className={`replyPermission ${buttonName === "Post" ? "" : "hidden"}`}>

@@ -11,7 +11,7 @@ import { useLocation } from "react-router-dom"
 import CachedOutlinedIcon from "@mui/icons-material/CachedOutlined"
 import ReplyingTo from "../../General/ReplyingTo"
 
-const Post = ({ userProfilePicture, postType, replyReferredTweetId, userName, userTag, bio,id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, followingUser, setPosts, posts }) => {
+const Post = ({ userProfilePicture, postType, isFollowed, replyReferredTweetId, userName, userTag, bio,id, date, replyCount, repostCount, likeCount, viewCount, description, media, isLiked, isReposted, followingUser, setPosts, posts }) => {
   const [anchorPostMenu, setAnchorPostMenu] = useState(null)
   const [mediaUrls, setMediaUrls] = useState([])
   const [mediaTypes, setMediaTypes] = useState([])
@@ -253,7 +253,7 @@ const Post = ({ userProfilePicture, postType, replyReferredTweetId, userName, us
             </Link>
           </div>
           <div className=" w-full sm:mr-2">
-            <PostHeader pathname={pathname} postType={postType} userTag={userTag} bio={bio} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={followingUser} setPosts={setPosts} posts={posts} />
+            <PostHeader pathname={pathname} postType={postType} isFollowed={isFollowed} userTag={userTag} bio={bio} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={followingUser} setPosts={setPosts} posts={posts} />
             {postType==="reply"&&<ReplyingTo username={replyingToUsername} leftMargin="7"/>}
           </div>
         </div>

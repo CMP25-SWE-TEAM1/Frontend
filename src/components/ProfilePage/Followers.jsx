@@ -11,7 +11,7 @@ import { Link } from "react-router-dom"
     </Link>
     <Link to='followers ' className='w-[calc(95%/2)]'>
     <button id="Followers-button" className="whitespace-nowrap before:text-white w-[100%]  bg-transparent hover:underline text-sm font-light text-[rgb(150,150,150)] ">
-        {props.followers? props.followers: 0} followers
+        {props.followers? props.followers: 0} Followers
     </button>
     </Link>
     </div>
