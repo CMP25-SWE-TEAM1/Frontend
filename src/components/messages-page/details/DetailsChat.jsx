@@ -129,11 +129,6 @@ const DetailsChat = (props) => {
     // console.log("message will be sent", message)
     if (SOCKET_ON) sendMessage_toServer(message)
   }
-  const handleDeleteMsg = (msgId) => {
-    setScrollToBottomFlag(false)
-    let newMessagesData = messagesData.filter((msg) => msg.id !== msgId)
-    setMessagesData(newMessagesData)
-  }
 
   // Scroll to bottom (with new messages)
   const [scrollToBottomFlag, setScrollToBottomFlag] = useState(true)
@@ -315,7 +310,7 @@ const DetailsChat = (props) => {
                           .map((msg, index, array) => {
                             const nextMsg = index < array.length - 1 ? array[index + 1] : null
                             const withMeta = handleMessageMetaCheck(msg, nextMsg)
-                            return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
+                            return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} />
                           })}
                         {messagesData.filter((msg) => msg.seen === false).length !== 0 && (
                           <Divider sx={{ marginBottom: "24px" }} ref={startOfUnseenChat}>
@@ -327,7 +322,7 @@ const DetailsChat = (props) => {
                           .map((msg, index, array) => {
                             const nextMsg = index < array.length - 1 ? array[index + 1] : null
                             const withMeta = handleMessageMetaCheck(msg, nextMsg)
-                            return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} deleteMessage={handleDeleteMsg} />
+                            return <Message messageMeta={withMeta ? msg.time : undefined} messageMedia={msg.messageMedia} mediaType={msg.mediaType} direction={msg.direction} messageText={msg.messageText} key={msg.id} messageId={msg.id} />
                           })}
                       </div>
                       {contact.isBlocked && <div className="blocked-text">You can no longer send messages to this person.</div>}
