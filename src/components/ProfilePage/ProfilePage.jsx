@@ -64,7 +64,7 @@ const ProfilePage = (props) => {
           className="flex h-[100%] flex-col border border-b-0 
         border-t-0 border-lightBorder dark:border-darkBorder md:w-[100%]"
         >
-          <Header profilename={profileres.nickname} text={profileres.num_of_posts} likenum={profileres.num_of_likes}></Header>
+          <Header profilename={profileres.nickname} postsnum={profileres.num_of_posts} likenum={profileres.num_of_likes}></Header>
           <div id="Upperhalf" className="relative m-0 h-[35vh] w-[100%]">
             <CoverImage height={"h-[25vh]"} coverimage={bannerPicURL}></CoverImage>
             <div className="relative top-[-75px] flex h-[25%]  flex-row ">
