@@ -23,6 +23,8 @@ import EditProfileButton from "./EditProfileButton"
 import BlockedBy from "./BlockedBy"
 import Blocked from "./Blocked"
 
+import { useNavigate } from "react-router-dom"
+
 const ProfilePage = (props) => {
   const { user } = useSelector((state) => state.user)
   const { token } = useSelector((state) => state.user)
@@ -53,8 +55,15 @@ const ProfilePage = (props) => {
     }
   }, [tag])
 
-  console.log(profilePicURL)
-  console.log(profileres.is_curr_user)
+   const navigate = useNavigate()
+   useEffect(() => {
+     if (!user) {
+       navigate("/")
+     }
+   }, [])
+
+  // console.log(profilePicURL)
+  // console.log(profileres.is_curr_user)
   return (
     <div className=" flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
       {user && <div

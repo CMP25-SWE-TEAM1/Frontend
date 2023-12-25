@@ -7,6 +7,8 @@ import Header from '../ProfileHeader'
 import { useState, useEffect } from "react"
 import ProfileRequests from '../profilerequests'
 
+import { useNavigate } from 'react-router-dom'
+
 const  FollowPage = () => {
   const FollowNavLinks = [
     { title: "Following", location: "Following" },
@@ -25,6 +27,13 @@ const  FollowPage = () => {
     ProfileRequests.getOtherprofile(false,APIs,tag,setProfile,token)
     
   }, [tag])
+
+   const navigate = useNavigate()
+   useEffect(() => {
+     if (!user) {
+       navigate("/")
+     }
+   }, [])
 
   return (
     <div id="followers-following-page-test" className=" flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">

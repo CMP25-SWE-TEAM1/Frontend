@@ -26,6 +26,12 @@ const Notifications = () => {
   const userToken = useSelector((state) => state.user.token)
 
   const navigate = useNavigate()
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [])
+
 
   const dispatch = useDispatch()
 

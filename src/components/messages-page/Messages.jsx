@@ -20,6 +20,7 @@ import { selectSocket } from "../../store/SocketSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { setSocket } from "../../store/SocketSlice"
 
+
 const Messages = (props) => {
   // ==============  Props   ==============
   const { paramContactId } = useParams()
@@ -65,6 +66,12 @@ const Messages = (props) => {
       }
     }
   }, [socket])
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [])
 
   // Fetch data
   useEffect(() => {

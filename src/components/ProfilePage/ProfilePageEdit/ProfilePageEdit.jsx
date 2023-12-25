@@ -234,6 +234,12 @@ const ProfilePageEdit = (props)=>{
     setOpenCrop(true)
     
   }
+
+   useEffect(() => {
+     if (!user) {
+       navigate("/")
+     }
+   }, [])
     return(
       <Modal open={props.openModal} onClose={()=>{props.handleCloseModal()
         navigate(`/${user.username}`)}} data-testid="loginModal"  disableEscapeKeyDown disablePortal>

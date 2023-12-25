@@ -13,6 +13,8 @@ import ComposeReply from "../Home/ComposePost/ComposePost"
 import { getColor } from "../../constants"
 import ReplyingTo from "../General/ReplyingTo"
 
+import { useNavigate } from "react-router-dom"
+
 function PostPage() {
   const [postLoaded, setPostLoaded] = useState(false)
   const [post, setPost] = useState({})
@@ -82,6 +84,13 @@ function PostPage() {
   }
 
   const themeColor = useSelector((state) => state.theme.color)
+
+   const navigate = useNavigate()
+   useEffect(() => {
+     if (!user) {
+       navigate("/")
+     }
+   }, [])
 
   return (
     <div className="flex flex-1">

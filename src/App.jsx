@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom"
+import { Routes, Route, BrowserRouter, useNavigate } from "react-router-dom"
 import Sidebar from "./components/Sidebar/Sidebar"
 import Home from "./components/Home/Home"
 import Login from "./components/Login/Login"
@@ -147,6 +147,8 @@ const App = () => {
     likeCount: "64K",
     viewCount: "1M",
   }
+
+  
 
   const [open, setOpen] = useState(false)
 
