@@ -44,7 +44,7 @@ const ProfilePosts = () => {
           params: {
             page: 1,
             count: 150,
-            username: user.username,
+            username: root,
           },
           headers: {
             authorization: "Bearer " + token,

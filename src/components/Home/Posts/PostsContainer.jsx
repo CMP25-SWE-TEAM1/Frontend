@@ -8,7 +8,6 @@ const PostsContainer = ({ posts, setPosts }) => {
   useEffect(() => {
     console.log(posts)
   },[posts])
-
   return (
     <div className="post-container">
       {posts.map((p, index) => {
