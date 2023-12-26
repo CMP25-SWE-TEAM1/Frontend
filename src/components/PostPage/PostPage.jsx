@@ -65,19 +65,7 @@ function PostPage() {
         console.log("get post replies fail", error)
       })
   }, [postId])
-
-  const replies = [
-    {
-      userName: "Mohamed Samir",
-      userTag: "MSamir245",
-      date: "Thu Oct 26 2023 2:28:01 GMT+0200 (Eastern European Standard Time)",
-      replyCount: "23K",
-      repostCount: "45K",
-      likeCount: "64K",
-      viewCount: "1M",
-    },
-    { userName: "Ismail Shaheen", userTag: "IShaheen02", date: "Thu Oct 26 2023 2:28:01 GMT+0200 (Eastern European Standard Time)", replyCount: "23K", repostCount: "45K", likeCount: "64K", viewCount: "1M" },
-  ]
+  
   const handleNewReply = (newReply) => {
     console.log("from handleNewReply", newReply)
     setPostReplies([newReply.data, ...postReplies])
@@ -100,11 +88,10 @@ function PostPage() {
         </div>
         {postLoaded && (
           <>
-            <Post userProfilePicture={post.tweet_owner.profile_image} userName={post.tweet_owner.nickname} userTag={post.tweet_owner.username} id={post.id} date={post.creation_time} media={post.media} description={post.description} replyCount={post.repliesNum} repostCount={post.repostsNum} likeCount={post.likesNum} viewCount={post.viewsNum} isLiked={post.isLiked} isReposted={post.isRetweeted} key={post.id} />
+            <Post inPostPage={true} userProfilePicture={post.tweet_owner.profile_image} userName={post.tweet_owner.nickname} userTag={post.tweet_owner.username} id={post.id} date={post.creation_time} media={post.media} description={post.description} replyCount={post.repliesNum} repostCount={post.repostsNum} likeCount={post.likesNum} viewCount={post.viewsNum} isLiked={post.isLiked} isReposted={post.isRetweeted} key={post.id} />
             <ReplyingTo username={post.tweet_owner.username} leftMargin="14"/>
             <ComposeReply buttonName="Reply" handleNewPost={(newReply) => handleNewReply(newReply)} postType="reply" referredTweetId={post.id} />
             <RepliesContainer replies={postReplies} />
-            
           </>
         )}
       </div>
