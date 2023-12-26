@@ -1,10 +1,10 @@
-import {useState, useEffect } from 'react';
-import Post from '../Home/Posts/Post';
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react"
+import Post from "../Home/Posts/Post"
+import { useSelector } from "react-redux"
 import axios from "axios"
 
-function Reply({reply}) {
-  const [cascading, setCascading] = useState([reply]);
+function Reply({ reply }) {
+  const [cascading, setCascading] = useState([reply])
   const [replyLoaded, setReplyLoaded] = useState(false)
   const APIs = {
     mock: {},
@@ -15,7 +15,7 @@ function Reply({reply}) {
   }
   const userToken = useSelector((state) => state.user.token)
 
-  useEffect(()=>{
+  useEffect(() => {
     axios
       .get(APIs.actual.getPostReplies, {
         params: { page: 1, count: 1 },
@@ -25,40 +25,25 @@ function Reply({reply}) {
       })
       .then((response) => {
         console.log("get reply reply success", response)
-        setCascading([...cascading,...response.data.data])
+        setCascading([...cascading, ...response.data.data])
         // console.log(postReplies)
-        setReplyLoaded(true);
+        setReplyLoaded(true)
       })
       .catch((error) => {
         console.log("get reply reply fail", error)
       })
-  },[])
+  }, [])
   return (
     <>
-    {replyLoaded&&cascading.map((reply,index)=>{
-      console.log("in cascading index: ",index)
-      return(<div className="w-full">
-      <Post
-      cascade={cascading.length>1?true:false}
-      inPostPage={false}
-      userProfilePicture={reply.tweet_owner.profile_image}
-      userName={reply.tweet_owner.nickname}            
-      userTag={reply.tweet_owner.username}
-      id={reply.id}
-      date={reply.creation_time}
-      media={reply.media}
-      description={reply.description}
-      replyCount={reply.repliesNum}
-      repostCount={reply.repostsNum}
-      likeCount={reply.likesNum}
-      viewCount={reply.viewsNum}
-      isLiked={reply.isLiked}
-      isReposted={reply.isRetweeted}
-      key={reply.id}
-      />
-    </div>)}
-      )
-    }
+      {replyLoaded &&
+        cascading.map((reply, index) => {
+          console.log("in cascading index: ", index)
+          return (
+            <div key={reply.id} className="w-full">
+              <Post cascade={cascading.length > 1 && index === 0 ? true : false} inPostPage={false} userProfilePicture={reply.tweet_owner.profile_image} userName={reply.tweet_owner.nickname} userTag={reply.tweet_owner.username} id={reply.id} date={reply.creation_time} media={reply.media} description={reply.description} replyCount={reply.repliesNum} repostCount={reply.repostsNum} likeCount={reply.likesNum} viewCount={reply.viewsNum} isLiked={reply.isLiked} isReposted={reply.isRetweeted} key={reply.id} />
+            </div>
+          )
+        })}
     </>
   )
 }
