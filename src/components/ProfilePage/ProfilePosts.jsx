@@ -17,7 +17,6 @@ const ProfilePosts = () => {
   const location = useLocation()
   const [root, setRoot] = useState("")
   useEffect(() => {
-   
     setRoot(location.pathname.split("/")[1])
   }, [location])
 
@@ -51,27 +50,25 @@ const ProfilePosts = () => {
           },
         })
         .then((res) => {
-          
           if (res.status === 200) {
             if (res.data.posts) {
-             
               setPosts(
-                res.data.posts.map((post) => ({
-                  isFollowed: post.isFollowed,
-                  isFollowingMe: post.isFollowingMe,
-                  isLiked: post.isLiked,
-                  isRtweeted:post.isRetweeted,
-                  tweetDetails: post,
-                  type:post.type,
-                  followingUser: { username: root },
-                }))
+                res.data.posts
+                  .map((post) => ({
+                    isFollowed: post.isFollowed,
+                    isFollowingMe: post.isFollowingMe,
+                    isLiked: post.isLiked,
+                    isRtweeted: post.isRetweeted,
+                    tweetDetails: post,
+                    type: post.type,
+                    followingUser: { username: root },
+                  }))
+                  .filter((post) => post.type !== "reply")
               )
             }
           }
         })
-        .catch((error) => {
-          
-        })
+        .catch((error) => {})
   }, [root])
   return (
     <div id="Profile-Posts-test" className="">

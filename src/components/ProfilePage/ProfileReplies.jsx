@@ -17,7 +17,6 @@ const ProfileReplies = () => {
   const location = useLocation()
   const [root, setRoot] = useState("")
   useEffect(() => {
-    
     setRoot(location.pathname.split("/")[1])
   }, [location])
 
@@ -32,8 +31,7 @@ const ProfileReplies = () => {
 
   const [profile, setProfile] = useState()
   useEffect(() => {
-    if (root !== "" && root !== user.username)
-    ProfileRequests.getOtherprofile(false,APIs,root,setProfile,token)
+    if (root !== "" && root !== user.username) ProfileRequests.getOtherprofile(false, APIs, root, setProfile, token)
   }, [root])
 
   const [posts, setPosts] = useState([])
@@ -45,29 +43,32 @@ const ProfileReplies = () => {
           params: {
             page: 1,
             count: 150,
-            username:root ,
+            username: root,
           },
           headers: {
             authorization: "Bearer " + token,
           },
         })
         .then((res) => {
-         
           if (res.status === 200) {
             if (res.data.posts) {
-             
               setPosts(
-                res.data.posts.map((post) => ({
-                  tweetDetails: post,
-                  followingUser: { username: root },
-                }))
+                res.data.posts
+                  .map((post) => ({
+                    isFollowed: post.isFollowed,
+                    isFollowingMe: post.isFollowingMe,
+                    isLiked: post.isLiked,
+                    isRtweeted: post.isRetweeted,
+                    tweetDetails: post,
+                    type: post.type,
+                    followingUser: { username: root },
+                  }))
+                  .filter((post) => post.type === "reply")
               )
             }
           }
         })
-        .catch((error) => {
-          
-        })
+        .catch((error) => {})
   }, [root])
   return (
     <div id="Profile-Replies-test" className="">
@@ -76,4 +77,4 @@ const ProfileReplies = () => {
   )
 }
 
-export default ProfileReplies;
+export default ProfileReplies
