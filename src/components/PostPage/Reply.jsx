@@ -5,6 +5,7 @@ import axios from "axios"
 
 function Reply({reply}) {
   const [cascading, setCascading] = useState([reply]);
+  const [replyLoaded, setReplyLoaded] = useState(false)
   const APIs = {
     mock: {},
     actual: {
@@ -24,8 +25,9 @@ function Reply({reply}) {
       })
       .then((response) => {
         console.log("get reply reply success", response)
-        setCascading([...cascading,response.data.data])
+        setCascading([...cascading,...response.data.data])
         // console.log(postReplies)
+        setReplyLoaded(true);
       })
       .catch((error) => {
         console.log("get reply reply fail", error)
@@ -33,10 +35,12 @@ function Reply({reply}) {
   },[])
   return (
     <>
-    {cascading.map((reply,index)=>{
+    {replyLoaded&&cascading.map((reply,index)=>{
+      console.log("in cascading index: ",index)
       return(<div className="w-full">
       <Post
-      cascade={index===0?true:false}
+      cascade={cascading.length>1?true:false}
+      inPostPage={false}
       userProfilePicture={reply.tweet_owner.profile_image}
       userName={reply.tweet_owner.nickname}            
       userTag={reply.tweet_owner.username}

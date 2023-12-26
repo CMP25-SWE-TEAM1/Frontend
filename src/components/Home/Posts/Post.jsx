@@ -247,17 +247,21 @@ const Post = ({ cascade, inPostPage, userProfilePicture, postType, isFollowed, r
           <span className="ml-2 hover:underline">{followingUser ? (followingUser.username === user.username ? "You" : followingUser.username) : ""} reposted</span>
         </div>
         <div className="flex">
+          <div className="flex flex-col items-center">
           <div className=" h-fit w-10 sm:mr-3" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <Link className="pointer-events-auto hover:brightness-90" to={`/${userTag}`}>
               <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
             </Link>
           </div>
+          {cascade&&<div className="h-full w-[2px] sm:mr-3 bg-ternairy dark:bg-secondary"></div>}
+          </div>
           <div className=" w-full sm:mr-2">
             <PostHeader pathname={pathname} postType={postType} replyingToUsername={replyingToUsername} isFollowed={isFollowed} userTag={userTag} bio={bio} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={followingUser} setPosts={setPosts} posts={posts} />
-        {!inPostPage&&<PostBody descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes} />}
+        {!inPostPage&&<><PostBody descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes} />
+        <PostFooter id={id} pathname={pathname} replyCount={replyCount} reposted={reposted} repostsNum={repostsNum} liked={liked} likesNum={likesNum} viewCount={viewCount} handleRepostClick={handleRepostClick} handleLikeClick={handleLikeClick} /></>}
           </div>
         </div>
-        {inPostPage&&<PostBody cascade={cascade} descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes} />}
+        {inPostPage&&<PostBody descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes} />}
         <div className={`${pathname.search(id) !== -1 ? "" : "hidden"}`}>
           <Link className={`pointer-events-auto`} to={`/${userTag}/status/${id}/retweets`}>
             <div className="flex h-14 items-center border-b border-t border-lightBorder text-sm text-ternairy dark:border-lightBorder dark:text-secondary">
@@ -272,7 +276,7 @@ const Post = ({ cascade, inPostPage, userProfilePicture, postType, isFollowed, r
             </div>
           </Link>
         </div>
-        <PostFooter id={id} pathname={pathname} replyCount={replyCount} reposted={reposted} repostsNum={repostsNum} liked={liked} likesNum={likesNum} viewCount={viewCount} handleRepostClick={handleRepostClick} handleLikeClick={handleLikeClick} />
+        {inPostPage&&<PostFooter id={id} pathname={pathname} replyCount={replyCount} reposted={reposted} repostsNum={repostsNum} liked={liked} likesNum={likesNum} viewCount={viewCount} handleRepostClick={handleRepostClick} handleLikeClick={handleLikeClick} />}
       </div>
     </Link>
   )

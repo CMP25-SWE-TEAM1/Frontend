@@ -43,7 +43,6 @@ function PostPage() {
         console.log("get post success", response)
         setPost(response.data.data)
         setPostLoaded(true)
-        console.log(post)
       })
       .catch((error) => {
         console.log("get post fail", error)
@@ -59,7 +58,6 @@ function PostPage() {
       .then((response) => {
         console.log("get post replies success", response)
         setPostReplies(response.data.data)
-        console.log(postReplies)
       })
       .catch((error) => {
         console.log("get post replies fail", error)
@@ -90,7 +88,7 @@ function PostPage() {
           <>
             <Post inPostPage={true} userProfilePicture={post.tweet_owner.profile_image} userName={post.tweet_owner.nickname} userTag={post.tweet_owner.username} id={post.id} date={post.creation_time} media={post.media} description={post.description} replyCount={post.repliesNum} repostCount={post.repostsNum} likeCount={post.likesNum} viewCount={post.viewsNum} isLiked={post.isLiked} isReposted={post.isRetweeted} key={post.id} />
             <ReplyingTo username={post.tweet_owner.username} leftMargin="14"/>
-            <ComposeReply buttonName="Reply" handleNewPost={(newReply) => handleNewReply(newReply)} postType="reply" referredTweetId={post.id} />
+            <ComposeReply buttonName="Reply" handleNewPost={handleNewReply} postType="reply" referredTweetId={post.id} />
             <RepliesContainer replies={postReplies} />
           </>
         )}

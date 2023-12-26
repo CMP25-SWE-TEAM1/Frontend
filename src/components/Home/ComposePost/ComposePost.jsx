@@ -15,7 +15,6 @@ import Button from "@mui/material/Button"
 import GeneralButton from "../../Sidebar/Button"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
-import Popup from "../Popup"
 import ComposePostFooter from "./ComposePostFooter"
 import { getColor } from "../../../constants"
 
