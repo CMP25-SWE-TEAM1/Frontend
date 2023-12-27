@@ -3,6 +3,12 @@ import MessageTools from "./MessageTools"
 // Hooks
 import { useState, useRef } from "react"
 
+/**
+ * Renders a message component with the given props.
+ *
+ * @param {object} props - The props object containing the messageId, messageText, messageMedia, messageMeta, mediaType, and messageDirection.
+ * @return {JSX.Element} The rendered message component.
+ */
 const Message = (props) => {
   // ==============  Props   ==============
   const messageId = props.messageId

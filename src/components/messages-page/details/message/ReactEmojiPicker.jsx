@@ -3,6 +3,12 @@ import EmojiPicker from "emoji-picker-react"
 // Redux
 import { useSelector } from "react-redux"
 
+/**
+ * Generates a React component for an emoji picker.
+ *
+ * @param {Object} props - The props object containing the handleAddEmoji and visibiltyStyle properties.
+ * @return {ReactNode} The rendered EmojiPicker component.
+ */
 const ReactEmojiPicker = (props) => {
   // ==============  Props   ==============
   const handleAddEmoji = props.handleAddEmoji
