@@ -125,7 +125,6 @@ const Home = () => {
     console.log(posts)
   }
 
-  
   const feedRef = useRef()
 
   useEffect(() => {
@@ -153,8 +152,8 @@ const Home = () => {
   }, [])
 
   return (
-    <div className="flex flex-1 flex-grow-[8] w-full  max-xs:max-w-[475]">
-      <div ref={feedRef} id="homeFeed" className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] max-xs:border-l-0 max-xs:border-r-0 sm:w-[600px]">
+    <div className="flex w-full flex-1 flex-grow-[8] ">
+      <div ref={feedRef} id="homeFeed" className="home ml-0 mr-1 w-full max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder  max-xs:border-l-0 max-xs:border-r-0 sm:w-[600px]">
         {/* <div className="sticky top-0 z-50 mb-0 border-0 border-b border-lightBorder bg-white backdrop-blur-md dark:border-darkBorder dark:bg-inherit dark:backdrop-brightness-[40%]"> */}
         {/* <div className="h-[53px] flex justify-start items-center">
           <h2 className="font-semibold text-xl text-gray-800 pl-6 dark:text-white">
