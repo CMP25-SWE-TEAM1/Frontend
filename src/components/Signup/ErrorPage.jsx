@@ -44,7 +44,7 @@ const ErrorPage = ({ setDay, setMonth, setYear, setNickName, setEmail, openBirth
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Can't complete your signup right now.
             </Typography>
-            <button className="btn mt-3 w-[100px] dark:text-white" onClick={handleCloseBirthdateError}>
+            <button className="btn mt-3 w-[100px] dark:!text-white" onClick={handleCloseBirthdateError}>
               Close
             </button>
           </Box>
