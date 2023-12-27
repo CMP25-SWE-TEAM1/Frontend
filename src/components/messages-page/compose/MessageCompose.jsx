@@ -1,7 +1,8 @@
+// Style
+import "./message-compose.css"
+// MUI
 import Box from "@mui/material/Box"
 import Modal from "@mui/material/Modal"
-import { useState, cloneElement, useEffect } from "react"
-
 import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import ListItemButton from "@mui/material/ListItemButton"
@@ -9,75 +10,50 @@ import ListItemAvatar from "@mui/material/ListItemAvatar"
 import Avatar from "@mui/material/Avatar"
 import ListItemText from "@mui/material/ListItemText"
 import ListItemIcon from "@mui/material/ListItemIcon"
-import FaceIcon from "@mui/icons-material/Face"
 import CheckIcon from "@mui/icons-material/Check"
-import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined"
-
 import InputBase from "@mui/material/InputBase"
 import SearchIcon from "@mui/icons-material/Search"
-
-import Paper from "@mui/material/Paper"
-import TagFacesIcon from "@mui/icons-material/TagFaces"
 import Chip from "@mui/material/Chip"
-
-import "./message-compose.css"
-import useGetUsersSearch from "../customHooks/get/useGetUsersSearch"
-import { useSelector } from "react-redux"
+// Const
 import { BACKEND_ON } from "../constants/MessagesConstants"
+// Hooks
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import useGetUsersSearch from "../customHooks/get/useGetUsersSearch"
+// Redux
+import { useSelector } from "react-redux"
 
 const MessageCompose = (props) => {
-  const navigate = useNavigate()
-  const userToken = useSelector((state) => state.user.token)
-  const handleUsersSearch = useGetUsersSearch
+  // ==============  Props   ==============
+  // Contacts
   const setChatSelectedContact = props.setSelectedContact
   const setChatContacts = props.setContacts
   const chatContacts = props.contacts
-
+  // Modla
   const composeModalOpen = props.composeModalOpen
   const handleComposeModalClose = props.handleComposeModalClose
+  // ==============  Redux   ==============
+  // User
+  const userToken = useSelector((state) => state.user.token)
 
+  // ==============  Data   ==============
   const [contacts, setContacts] = useState(chatContacts)
+  const [selectedContacts, setSelectedContacts] = useState([])
+  const [searchIconColor, setSearchIconColor] = useState("")
+  const [activeNextBtn, setActiveNextBtn] = useState("")
+  const [searchValue, setSearchValue] = useState("")
+
+  // ==============  Hooks   ==============
+  const navigate = useNavigate()
+  // -------- useEffect --------
   useEffect(() => {
     setContacts(chatContacts)
   }, [chatContacts])
-  // const [contacts, setContacts] = useState([
-  //   {
-  //     avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-  //     userName: "U74",
-  //     name: "Khaled",
-  //     id: 3,
-  //     selected: false,
-  //   },
-  //   {
-  //     avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-  //     userName: "U66",
-  //     name: "Moaz",
-  //     id: 6,
-  //     selected: false,
-  //   },
-  //   {
-  //     avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-  //     userName: "U55",
-  //     name: "Ali",
-  //     id: 5,
-  //     selected: false,
-  //   },
-  //   {
-  //     avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-  //     userName: "U44",
-  //     name: "Hamza",
-  //     id: 4,
-  //     selected: false,
-  //   },
-  //   {
-  //     avatarLink: "https://64.media.tumblr.com/avatar_f71055191601_128.pnj",
-  //     userName: "U77",
-  //     name: "Abd El-Rahman",
-  //     id: 7,
-  //     selected: false,
-  //   },
-  // ])
+
+  // -------- Custom --------
+  const handleUsersSearch = useGetUsersSearch
+
+  // ==============  Functions   ==============
   const handleContactSelection = (choosenContact) => {
     const nextContacts = contacts.map((contact) => {
       if (choosenContact.id === contact.id) {
@@ -100,8 +76,6 @@ const MessageCompose = (props) => {
     })
     setContacts(nextContacts)
   }
-
-  const [selectedContacts, setSelectedContacts] = useState([])
   const handleDelete = (chipToDelete) => () => {
     setSelectedContacts((chips) => chips.filter((chip) => chip.id !== chipToDelete.id))
     if (selectedContacts.length === 0) setActiveNextBtn("")
@@ -118,16 +92,10 @@ const MessageCompose = (props) => {
     })
     setContacts(nextContacts)
   }
-
-  const [searchIconColor, setSearchIconColor] = useState("")
   const handleSearchIcon = (focused) => {
     if (focused) setSearchIconColor("primary")
     else setSearchIconColor("")
   }
-
-  const [activeNextBtn, setActiveNextBtn] = useState("")
-
-  const [searchValue, setSearchValue] = useState("")
   const handleSearchValueChange = (event) => {
     setSearchValue(event.target.value)
 
@@ -247,9 +215,6 @@ const MessageCompose = (props) => {
                         }}
                       >
                         <ListItemAvatar>
-                          {/* <Avatar>
-                        <FaceIcon color="secondary" />
-                      </Avatar> */}
                           <Avatar alt={contact.name} src={contact.avatarLink} />
                         </ListItemAvatar>
                         <ListItemText primary={contact.name} secondary={`@${contact.userName}`} />
