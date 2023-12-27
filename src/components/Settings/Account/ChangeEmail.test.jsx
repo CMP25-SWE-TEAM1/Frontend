@@ -6,6 +6,11 @@ import user from "@testing-library/user-event"
 import { Provider } from "react-redux"
 import store from "../../../store"
 
+
+/**
+* Allows the user to change thier email after code verification
+**/
+
 describe("Content", () => {
   test("main header", () => {
     render(

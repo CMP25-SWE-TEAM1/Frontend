@@ -47,7 +47,7 @@ const ChangeEmail = () => {
         }
       })
       .catch((err) => {
-        if (err.response.data.message) setErrorMsg(err.response.data.message)
+        if (err.response && err.response.data && err.response.data.message) setErrorMsg(err.response.data.message)
         else setErrorMsg("Internal server error, please try again later")
         console.log(err)
       })
@@ -75,7 +75,7 @@ const ChangeEmail = () => {
         }
       })
       .catch((err) => {
-        if (err.response.data.message) setErrorMsg(err.response.data.message)
+        if (err.response && err.response.data && err.response.data.message) setErrorMsg(err.response.data.message)
         else setErrorMsg("Internal server error, please try again later")
         console.log(err)
       })
@@ -102,7 +102,7 @@ const ChangeEmail = () => {
 
       <div className="flex flex-col p-5">
         <div className="input-container">
-          <input className={email === "" ? "form-input" : "form-input filled-input"} type="text" id="newEmail" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input maxLength={50} className={email === "" ? "form-input" : "form-input filled-input"} type="text" id="newEmail" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} />
           <label className="input-label" htmlFor="password">
             New email
           </label>
@@ -114,7 +114,7 @@ const ChangeEmail = () => {
 
       <div className="flex flex-col p-5">
         <div className="input-container mb-4">
-          <input disabled={!emailChosen} className={verificationCode === "" ? "form-input" : "form-input filled-input"} type="text" id="newEmail" autoComplete="off" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} />
+          <input maxLength={50} disabled={!emailChosen} className={verificationCode === "" ? "form-input" : "form-input filled-input"} type="text" id="newEmail" autoComplete="off" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} />
           <label className="input-label" htmlFor="password">
             Verification code
           </label>

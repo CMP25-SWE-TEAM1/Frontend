@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
+/**
+* Includes all account changes that could be made by the user
+* Change username, email, password
+**/
+
 const Account = () => {
   return (
     <div>
