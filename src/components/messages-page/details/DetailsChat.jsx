@@ -16,7 +16,16 @@ import debounce from "lodash.debounce"
 import { useSelector } from "react-redux"
 import { selectSocket } from "../../../store/SocketSlice"
 
-
+/**
+ * Generates DetailsChat component which represents the chat details, including user information,
+ * chat messages, and the message input area.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {Object} props.contact - Contact information for the chat
+ * @param {Function} props.changeContactBlock - Function to change contact block status (block/unblock)
+ * @returns {JSX.Element} JSX element representing the DetailsChat component
+ */
 const DetailsChat = (props) => {
   // ==============  Props   ==============
   const contact = props.contact
