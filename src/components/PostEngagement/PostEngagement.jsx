@@ -36,27 +36,29 @@ function PostEngagement() {
    }, [])
  
   return (
-    <div className="flex flex-1">
-    <div className="ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder sm:w-[600px]">
-      <div className="sticky top-0 z-50 mb-3 border-0 border-b border-lightBorder dark:border-darkBorder bg-white bg-opacity-[87%] backdrop-blur-sm dark:bg-inherit dark:bg-opacity-[99%] ">
+    <div className="flex w-full flex-1 flex-grow-[8]  max-xs:max-w-[475]">
+      <div className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] max-xs:border-l-0 max-xs:border-r-0 sm:w-[600px]">
+        <div className="sticky top-0 z-50 mb-3 border-0 border-b border-lightBorder bg-white bg-opacity-[87%] backdrop-blur-sm dark:border-darkBorder dark:bg-inherit dark:bg-opacity-[99%] ">
           <HashLink smooth to="#top">
-        <div id="top" className="flex h-[53px] items-center">
-          <Link to="/home">
-        <div className="ml-2 mr-5 flex h-8 w-8 items-center justify-center rounded-full hover:bg-lightHover dark:hover:bg-darkHover">
-        <WestIcon/> 
+            <div id="top" className="flex h-[53px] items-center">
+              <Link to="/home">
+                <div className="ml-2 mr-5 flex h-8 w-8 items-center justify-center rounded-full hover:bg-lightHover dark:hover:bg-darkHover">
+                  <WestIcon />
+                </div>
+              </Link>
+              <div>
+                <b>Post engagements</b>
+              </div>
+            </div>
+          </HashLink>
+          <div className="flex h-[53px] items-center">
+            <HorizontalNavbar urls={engagementNavLinks} originalUrl={`/${userTag}/status/${postId}`} handlers={[repostsHandler, likesHandler]} />
+          </div>
         </div>
-        </Link>
-        <div><b>Post engagements</b></div>
-        </div>
-        </HashLink>
-        <div className="flex h-[53px] items-center">
-        <HorizontalNavbar urls={engagementNavLinks} originalUrl={`/${userTag}/status/${postId}`} handlers={[repostsHandler,likesHandler]}/>
-        </div>
+        <PersonsContainer postId={postId} userTag={userTag} navbarActiveLink={navbarActiveLink} />
       </div>
-      <PersonsContainer postId={postId} userTag={userTag} navbarActiveLink={navbarActiveLink} />
-      </div>
-    <Widgets />
-  </div>
+      <Widgets />
+    </div>
   )
 }
 
