@@ -1,12 +1,17 @@
+// Components
 import EmojiPicker from "emoji-picker-react"
+// Redux
 import { useSelector } from "react-redux"
 
 const ReactEmojiPicker = (props) => {
+  // ==============  Props   ==============
   const handleAddEmoji = props.handleAddEmoji
   const visibiltyStyle = props.visibiltyStyle
 
+  // ==============  Redux   ==============
   const darkMode = useSelector((state) => state.theme.darkMode)
 
+  // ==============  Functions   ==============
   const onEmojiClick = (emojiData) => {
     handleAddEmoji(emojiData.emoji)
   }

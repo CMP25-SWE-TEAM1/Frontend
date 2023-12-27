@@ -1,8 +1,12 @@
+// Functions
 import copyToClipboard from "copy-to-clipboard"
+// Hooks
 import { useState } from "react"
+// Constants
 import { BACKEND_ON } from "../../constants/MessagesConstants"
 
 const MessageTools = (props) => {
+  // ==============  Props   ==============
   const messageId = props.messageId
   const messageMedia = props.messageMedia
   const messageText = props.messageText
@@ -10,9 +14,12 @@ const MessageTools = (props) => {
   const msgToolsPositionX = props.msgToolsPositionX
   const msgToolsPositionY = props.msgToolsPositionY
   const visibiltyStyle = props.visibiltyStyle
+
+  // ==============  Data   ==============
   const [isAlertVisible, setIsAlertVisible] = useState(false)
   const [alertVTimeOut, setAlertVTimeOut] = useState(null)
 
+  // ==============  Functions   ==============
   const handleCopy = () => {
     hideMsgTools()
     copyToClipboard(`${messageText ? messageText : ""}${messageText && messageMedia ? `\n` : ""}${messageMedia ? messageMedia : ""}`)
