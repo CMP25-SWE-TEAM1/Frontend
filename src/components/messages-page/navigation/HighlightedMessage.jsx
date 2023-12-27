@@ -1,6 +1,15 @@
 import React from "react"
 import Typography from "@mui/material/Typography"
 
+/**
+ * HighlightedMessage component displays a highlighted version of the main text with matching subtext.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {string} props.mainText - The main text to be displayed
+ * @param {string} props.subText - The subtext to be highlighted within the main text
+ * @returns {JSX.Element} JSX element representing the HighlightedMessage component
+ */
 const HighlightedMessage = ({ mainText, subText }) => {
   return (
     <Typography
