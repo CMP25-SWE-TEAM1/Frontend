@@ -127,6 +127,7 @@ const MessageCompose = (props) => {
         handleComposeModalClose()
       }}
       aria-labelledby="compose message"
+      data-testid="compose-message-modal"
     >
       <Box sx={modalStyle}>
         <div id="message-compose" className="message-compose">
