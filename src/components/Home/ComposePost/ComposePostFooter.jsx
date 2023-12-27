@@ -17,7 +17,7 @@ function ComposePostFooter({ buttonName, handleUploadMediaClick, handleUploadMed
   const themeColor = useSelector((state) => state.theme.color)
 
   return (
-    <div className="flex items-center justify-between pt-3">
+    <div data-testid="ComposePostFooter" className="flex items-center justify-between pt-3">
       <div className="flex bg-transparent">
         <button onClick={handleUploadMediaClick}>
           <GeneralButton name={<InsertPhotoOutlinedIcon fontSize="small" />} title="Media" color={"text-" + getColor(themeColor)} hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="" disabled={mediaDisabled} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]" />
@@ -30,7 +30,7 @@ function ComposePostFooter({ buttonName, handleUploadMediaClick, handleUploadMed
         <GeneralButton name={<LocationOnOutlinedIcon fontSize="small" />} title="Location" color={"text-" + getColor(themeColor)} hoverBgColor="bg-[#e7f5fd]" darkHoverBgColor="bg-[#031018]" height="h-8" width="w-8" link="" disabled={true} disabledColor="text-[#b0dbf9] dark:text-[#0D4A73]" />
       </div>
       <div className="flex items-center">
-        <div className={`circleProgress-addIcon flex items-center `}>
+        <div data-testid="circleProgress-addIcon" className={` flex items-center `}>
           <Box sx={{ position: "relative", top: "4px", border: "1.5px", mr: "12px" }}>
             <CircularProgress variant="determinate" className="text-lightBorder dark:text-darkBorder" size={progressCircleSize} value={charsCount < 100 ? 100 : 0} />
             <CircularProgress variant="determinate" sx={{ position: "absolute", left: 0, color: charsProgressColor }} size={progressCircleSize} value={charsCount < 100 ? charsCount : charsCount < 2900 / 28 ? 100 : 0} />

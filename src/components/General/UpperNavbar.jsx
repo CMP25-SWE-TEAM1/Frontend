@@ -8,11 +8,9 @@ function UpperNavbar({name}){
     return(
             <Link to="#top">
         <div className="flex h-[53px] items-center">
-          {/* <Link to="/home"> */}
-        <div onClick={()=>navigate(-1)} className="ml-2 mr-5 flex h-8 w-8 items-center justify-center rounded-full hover:bg-lightHover dark:hover:bg-darkHover">
+        <div data-testid="backArrow" onClick={()=>navigate(-1)} className="ml-2 mr-5 flex h-8 w-8 items-center justify-center rounded-full hover:bg-lightHover dark:hover:bg-darkHover">
         <WestIcon/> 
         </div>
-        {/* </Link> */}
         <div><b>{name}</b></div>
         </div>
         </Link>

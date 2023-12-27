@@ -207,7 +207,7 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId, han
 
   return (
     <div className={`ComposePost flex h-fit border-b ${buttonName === "Post" ? "border-t" : ""} !w-full border-lightBorder p-3 text-black dark:border-darkBorder dark:text-white`} data-testid="postId">
-      <div className=" h-10 w-10 sm:mr-3">
+      <div data-testid="profileImage" className=" h-10 w-10 sm:mr-3">
         <Link className="hover:underline" to={`/${user.username}`}>
           <Avatar alt={user.username} src={user.profileImage} sx={{ width: 40, height: 40 }} />
         </Link>
@@ -232,12 +232,9 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId, han
             },
           }}
         >
-          {/* {description} */}
-          {/* <span className="bg-[#f4212e]">{description.slice(0, 280)}</span>
-          <span className="text-[#f4212e]">{description.slice(280, description.length)}</span> */}
         </TextField>
         <DisplayMedia mediaUrls={mediaUrls} mediaTypes={getMediaTypes()} margin={1.5} handleDeleteMedia={handleDeleteMedia} showCancelButton={true} />
-        <div className={`replyPermission ${buttonName === "Post" ? "" : "hidden"}`}>
+        <div data-testid="replyPermission" className={`${buttonName === "Post" ? "" : "hidden"}`}>
           <Button target={"_blank"} color={"text-secondColor"} size="sm" variant="plain" id="basic-button" data-testid="menu-button" aria-controls={openMenu ? "basic-menu" : undefined} aria-haspopup="true" aria-expanded={openMenu ? "true" : undefined} onClick={handleMenuButtonClick} className="my-3 rounded-full bg-transparent py-0 hover:bg-[#e7f5fd] dark:bg-transparent dark:hover:bg-[#031018]">
             <GeneralButton name={permissionOptions[replyPermissionIndex].icon2} color={"text-" + getColor(themeColor)} backgroundColor="bg-transparent" height="h-6" width="w-6"></GeneralButton>
             <div className={`ml-0.5 text-[14px] normal-case ${"text-" + getColor(themeColor)}`}>{permissionOptions[replyPermissionIndex].name} can reply</div>

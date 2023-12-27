@@ -1,9 +1,19 @@
 import { screen, render} from "@testing-library/react";
 import Sidebar from "../../../components/Sidebar/Sidebar";
+import { Provider } from "react-redux"
+import store from "../../../store"
+import { BrowserRouter } from "react-router-dom"
+
 
 describe('testing Sidebar component',()=>{
     test('rendering elements correctly',()=>{
-        render(<Sidebar />);
+        render(
+        <BrowserRouter>
+        <Provider store={store}>
+        <Sidebar />
+        </Provider>
+        </BrowserRouter>
+        );
 
         const gigaChatIcon = screen.getByAltText("gigaChatIcon");
         expect(gigaChatIcon).toBeInTheDocument();
