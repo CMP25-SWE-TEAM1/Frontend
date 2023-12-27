@@ -156,7 +156,6 @@ class ProfileRequests {
           if (setbuttonstate !== undefined) setbuttonstate("Following")
           if (setDetailsPos !== undefined) setDetailsPos("right-[140px]")
           if (setFollowersnum !== undefined) setFollowersnum(followersnum + 1)
-
         }
       })
       .catch((err) => {

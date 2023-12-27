@@ -11,7 +11,6 @@ describe("Text", () => {
       </BrowserRouter>
     )
     expect(screen.getByRole("heading", { name: /your account/i })).toBeInTheDocument()
-   
   })
   test("main paragragh", () => {
     render(
@@ -19,7 +18,7 @@ describe("Text", () => {
         <Account />
       </BrowserRouter>
     )
-    expect(screen.getByText(  /see information about your account, download an archive of your data, or learn about your account deactivation options/i  )).toBeInTheDocument()
+    expect(screen.getByText(/see information about your account, download an archive of your data, or learn about your account deactivation options/i)).toBeInTheDocument()
   })
   test("choice headers", () => {
     render(
@@ -36,36 +35,36 @@ describe("Text", () => {
         <Account />
       </BrowserRouter>
     )
-    expect(screen.getByText(  /view and update your account information, like your username and email address\./i  )).toBeInTheDocument()
+    expect(screen.getByText(/view and update your account information, like your username and email address\./i)).toBeInTheDocument()
     expect(screen.getByText(/change your password at anytime\./i)).toBeInTheDocument()
   })
 })
 
 describe("Links", () => {
-    test("account information link", async () => {
-        user.setup();
-        render(
-          <BrowserRouter>
-            <Account />
-          </BrowserRouter>
-        )
-        const link = screen.getByText("Account information")
-        await act(async () => {
-          await user.click(link)
-        })
-        expect(window.location.pathname).toBe('/settings/account_information');
+  test("account information link", async () => {
+    user.setup()
+    render(
+      <BrowserRouter>
+        <Account />
+      </BrowserRouter>
+    )
+    const link = screen.getByText("Account information")
+    await act(async () => {
+      await user.click(link)
     })
-    test("change password link", async () => {
-        user.setup();
-        render(
-          <BrowserRouter>
-            <Account />
-          </BrowserRouter>
-        )
-        const link = screen.getByText("Change your password")
-        await act(async () => {
-          await user.click(link)
-        })
-        expect(window.location.pathname).toBe('/settings/change_password');
-    })
+    expect(window.location.pathname).toBe("/settings/account_information")
   })
+  test("change password link", async () => {
+    user.setup()
+    render(
+      <BrowserRouter>
+        <Account />
+      </BrowserRouter>
+    )
+    const link = screen.getByText("Change your password")
+    await act(async () => {
+      await user.click(link)
+    })
+    expect(window.location.pathname).toBe("/settings/change_password")
+  })
+})

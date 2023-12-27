@@ -1,8 +1,7 @@
 .reactEasyCrop_Image {
-    margin: "auto" !important;
-  }
-  
-.reactEasyCrop_CropArea {
-    overflow: hidden !important;
+  margin: "auto" !important;
 }
-   
+
+.reactEasyCrop_CropArea {
+  overflow: hidden !important;
+}

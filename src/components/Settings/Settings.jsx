@@ -7,6 +7,10 @@ import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
 
+/**
+* The main settings component, it defines the layout and includes the rest of the components
+**/
+
 const Settings = () => {
   const [selectedSettings, setSelectedSettings] = useState("")
   const [search, setSearch] = useState("")

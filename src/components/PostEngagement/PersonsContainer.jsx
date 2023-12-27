@@ -51,10 +51,6 @@ function PersonsContainer({ postId, userTag, navbarActiveLink }) {
       })
   }, [])
 
-  return (
-    <>
-      {navbarActiveLink === "Reposts" ? reposters.length !== 0 ? reposters.map((person) => <Person nickname={person.nickname} username={person.username} profile_image={person.profile_image} bio={person.bio ? person.bio : null} isFollowed={person.isFollowed} key={person._id} />) : <NoReposts /> : likers.length !== 0 ? likers.map((person) => <Person nickname={person.nickname} username={person.username} profile_image={person.profile_image} bio={person.bio ? person.bio : null} isFollowed={person.isFollowed} key={person._id} />) : <NoLikes />}
-    </>
-  )
+  return <>{navbarActiveLink === "Reposts" ? reposters.length !== 0 ? reposters.map((person) => <Person nickname={person.nickname} username={person.username} profile_image={person.profile_image} bio={person.bio ? person.bio : null} isFollowed={person.isFollowed} key={person._id} />) : <NoReposts /> : likers.length !== 0 ? likers.map((person) => <Person nickname={person.nickname} username={person.username} profile_image={person.profile_image} bio={person.bio ? person.bio : null} isFollowed={person.isFollowed} key={person._id} />) : <NoLikes />}</>
 }
 export default PersonsContainer

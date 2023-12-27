@@ -1,4 +1,3 @@
-
 const variable = {
   test: {
     globals: true,

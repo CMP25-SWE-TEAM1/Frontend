@@ -34,7 +34,7 @@ const Blocked = () => {
     const element = e.currentTarget
     const username = element.dataset.username
     const blocked = element.dataset.blocked
-   
+
     if (blocked == "true") {
       axios
         .patch(

@@ -79,7 +79,7 @@ const ForthStep = ({ setUserTag, setOriginalUsername, setUser, setUserToken, nex
     }
 
     return () => clearTimeout(timer)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countdown, isResending])
 
   const themeColor = useSelector((state) => state.theme.color)

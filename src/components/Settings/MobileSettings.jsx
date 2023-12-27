@@ -3,6 +3,10 @@ import { Link } from "react-router-dom"
 import SearchIcon from "@mui/icons-material/Search"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
+/**
+* Same as settings page but appears only on mobile phones.
+**/
+
 const MobileSettings = () => {
   const [selectedSettings, setSelectedSettings] = useState("")
   const [search, setSearch] = useState("")

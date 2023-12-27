@@ -4,10 +4,8 @@ import GoogleLoginButton from "../General/GoogleLoginButton"
 
 import { Link } from "react-router-dom"
 
-
 const PreStep = ({ handleCloseModal, nextShow }) => {
-  
-  const themeColor=useSelector((state)=>state.theme.color)
+  const themeColor = useSelector((state) => state.theme.color)
 
   return (
     <div id="Join GigaChat">

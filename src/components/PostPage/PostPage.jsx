@@ -31,7 +31,7 @@ function PostPage() {
     },
   }
   useEffect(() => {
-    setPostLoaded(false); 
+    setPostLoaded(false)
     console.log(userToken)
     axios
       .get(APIs.actual.getPost, {
@@ -63,7 +63,7 @@ function PostPage() {
         console.log("get post replies fail", error)
       })
   }, [postId])
-  
+
   const handleNewReply = (newReply) => {
     console.log("from handleNewReply", newReply)
     setPostReplies([newReply.data, ...postReplies])
@@ -71,23 +71,23 @@ function PostPage() {
 
   const themeColor = useSelector((state) => state.theme.color)
 
-   const navigate = useNavigate()
-   useEffect(() => {
-     if (!user) {
-       navigate("/")
-     }
-   }, [])
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [])
 
   return (
     <div className="flex flex-1 ">
-      <div className="ml-0 mr-1 max-w-[620px] max-xs:w-fit shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder sm:w-[600px]">
+      <div className="ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit sm:w-[600px]">
         <div className="sticky top-0 z-50 mb-3 border-0 border-b border-lightBorder bg-white bg-opacity-[87%] backdrop-blur-sm dark:border-darkBorder dark:bg-inherit dark:bg-opacity-[99%] ">
           <UpperNavbar name="Post" />
         </div>
         {postLoaded && (
           <>
             <Post inPostPage={true} userProfilePicture={post.tweet_owner.profile_image} userName={post.tweet_owner.nickname} userTag={post.tweet_owner.username} id={post.id} date={post.creation_time} media={post.media} description={post.description} replyCount={post.repliesNum} repostCount={post.repostsNum} likeCount={post.likesNum} viewCount={post.viewsNum} isLiked={post.isLiked} isReposted={post.isRetweeted} key={post.id} />
-            <ReplyingTo username={post.tweet_owner.username} leftMargin="14"/>
+            <ReplyingTo username={post.tweet_owner.username} leftMargin="14" />
             <ComposeReply buttonName="Reply" handleNewPost={handleNewReply} postType="reply" referredTweetId={post.id} />
             <RepliesContainer replies={postReplies} />
           </>

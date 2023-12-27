@@ -36,7 +36,7 @@ const ChangeUsername = () => {
           setSuccessMsg(res.data.data.message)
           setTimeout(() => {
             //window.location.href = "/settings/account"
-          }, 2000);
+          }, 2000)
         }
       })
       .catch((err) => {

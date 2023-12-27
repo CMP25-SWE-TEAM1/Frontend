@@ -1,11 +1,11 @@
 import { Cancel } from "@mui/icons-material"
 import CropIcon from "@mui/icons-material/Crop"
 import { Box, Button, DialogActions, DialogContent, Slider } from "@mui/material"
-import React, {  useState } from "react"
+import React, { useState } from "react"
 import Cropper from "react-easy-crop"
 import getCroppedImg from "./utils/CropImage"
 
-const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect,originalPhoto }) => {
+const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect, originalPhoto }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [rotation, setRotation] = useState(0)
@@ -79,7 +79,7 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect,originalPhot
             >
               Cancel
             </Button>
-            <Button variant="outlined" startIcon={<CropIcon />} onClick={handleCropImage} >
+            <Button variant="outlined" startIcon={<CropIcon />} onClick={handleCropImage}>
               Crop
             </Button>
           </Box>

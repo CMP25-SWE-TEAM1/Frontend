@@ -117,7 +117,7 @@ const ProfilePage = (props) => {
                   )}
                   <Followers followers={followersnum} following={followingnum}></Followers>
                   <ProfilePageEdit openModal={props.openModal} handleCloseModal={props.handleCloseModal}></ProfilePageEdit>
-                  {(viewpoststate === true || profileres.is_curr_user) && <ProfileMediabuttons root= {tag} ></ProfileMediabuttons>}
+                  {(viewpoststate === true || profileres.is_curr_user) && <ProfileMediabuttons root={tag}></ProfileMediabuttons>}
                 </>
               )}
               {profileres.is_curr_user_blocked && <BlockedBy tag={tag}></BlockedBy>}

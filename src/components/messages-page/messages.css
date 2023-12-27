@@ -2,19 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer components {
-
   /* Color palette-dark */
   .messages-page.dark {
     --bg-color: #000;
     --bg-color-light: rgb(0 0 0 / 0.85);
-    --bg-color-hover: #16181C;
-    --main-color: #E7E9EA;
+    --bg-color-hover: #16181c;
+    --main-color: #e7e9ea;
     --second-color: #1d9bf0;
-    --second-color-alt: #1A8CD8;
+    --second-color-alt: #1a8cd8;
     --border-color: #333;
-    --message-color-2: #2F3336;
+    --message-color-2: #2f3336;
   }
 
   /* Color palette-light */
@@ -24,7 +22,7 @@
     --bg-color-hover: #f7f9f9;
     --main-color: #000;
     --second-color: #1d9bf0;
-    --second-color-alt: #1A8CD8;
+    --second-color-alt: #1a8cd8;
     --border-color: #eee;
     --message-color-2: #eff3f4;
   }
@@ -35,7 +33,7 @@
     background-color: var(--bg-color);
   }
 
-  @media(max-width:1275px) {
+  @media (max-width: 1275px) {
     .messages-page {
       flex-grow: 1;
     }
@@ -81,15 +79,15 @@
   .messages-page .navigation .header h2 {
     font-size: 20px;
     font-weight: 600;
-    color: var(--main-color)
+    color: var(--main-color);
   }
 
-  .messages-page .navigation .header>div {
+  .messages-page .navigation .header > div {
     display: flex;
   }
 
-  .messages-page .navigation .header>div a,
-  .messages-page .details.chat .content .head>a {
+  .messages-page .navigation .header > div a,
+  .messages-page .details.chat .content .head > a {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -102,8 +100,8 @@
     background-color: var(--bg-color);
   }
 
-  .messages-page .navigation .header>div a:hover,
-  .messages-page .details.chat .content .head>a:hover {
+  .messages-page .navigation .header > div a:hover,
+  .messages-page .details.chat .content .head > a:hover {
     background-color: var(--bg-color-hover);
   }
 
@@ -127,7 +125,6 @@
   }
 
   @media (min-width: 768px) {
-
     /* .messages-page {
             flex: 999 1;
         } */
@@ -148,7 +145,7 @@
     flex: 1;
     color: black;
 
-    max-width: 100%
+    max-width: 100%;
   }
 
   .messages-page .details.chat .content .head {
@@ -165,12 +162,12 @@
     backdrop-filter: blur(7px);
   }
 
-  .messages-page .details.chat .content .head>div {
+  .messages-page .details.chat .content .head > div {
     display: flex;
     align-items: center;
   }
 
-  .messages-page .details.chat .content .head>div>a {
+  .messages-page .details.chat .content .head > div > a {
     margin-right: 10px;
   }
 
@@ -193,7 +190,7 @@
     justify-content: center;
   }
 
-  .messages-page .details.chat .content .body.not-allowed>div {
+  .messages-page .details.chat .content .body.not-allowed > div {
     color: rgb(83, 100, 113);
     font-size: 13px;
     font-weight: 400;
@@ -231,7 +228,6 @@
     line-height: 16px;
     font-weight: 400;
   }
-
 
   .messages-page .details.no-chat .content .info a,
   .messages-page .navigation .info.no-chat a,
@@ -272,7 +268,7 @@
   .messages-page .details.chat .body.allowed .change-follow.followed {
     width: 100px;
     justify-content: center;
-    background-color: #F4212E;
+    background-color: #f4212e;
     color: white;
   }
 
@@ -282,13 +278,13 @@
   }
 
   .messages-page .details.chat .body.allowed .change-follow.blocked:hover {
-    background-color: #DC1E29;
+    background-color: #dc1e29;
   }
 
   .messages-page .details.chat .body.allowed .change-follow.followed:hover {
-    color: #F4212E;
+    color: #f4212e;
     background-color: white;
-    border-color: #F4212E;
+    border-color: #f4212e;
   }
 
   .messages-page .details.no-chat .content .info a:hover,
@@ -326,7 +322,6 @@
     /* Extra Temp */
     /* height: 1200px; */
   }
-
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .blocked-text {
     color: rgb(83, 100, 113);
@@ -424,7 +419,6 @@
     right: 15px;
     opacity: 100%;
     transition: opacity 0.2s;
-
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chat-scroll-down.hide {
@@ -458,8 +452,9 @@
   }
 
   .messages-page.dark .details.chat .content .body.allowed .chatbox .chat-scroll-down div {
-    box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 8px, rgba(255, 255, 255, 0.15) 0px 1px 3px 1px;
-
+    box-shadow:
+      rgba(255, 255, 255, 0.2) 0px 0px 8px,
+      rgba(255, 255, 255, 0.15) 0px 1px 3px 1px;
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chat-scroll-down.hide div {
@@ -483,7 +478,6 @@
     display: flex;
     flex-direction: column;
   }
-
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message:not(:has(.message-meta)) {
     padding-bottom: 4px;
@@ -590,17 +584,17 @@
         cursor: pointer; */
   }
 
-  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-media+.message-text {
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-media + .message-text {
     max-width: 100%;
     width: fit-content;
     margin-top: 4px;
   }
 
-  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-media+.message-text {
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-media + .message-text {
     margin-left: auto;
   }
 
-  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-box .message-media+.message-text {
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-box .message-media + .message-text {
     margin-right: auto;
   }
 
@@ -612,7 +606,6 @@
     transition: background-color 0.218s;
     word-wrap: break-word;
   }
-
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-text {
     background-color: var(--second-color);
@@ -640,7 +633,8 @@
         */
   }
 
-  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-text:hover {}
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-text:hover {
+  }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-text:hover {
     background-color: var(--second-color-alt);
@@ -772,14 +766,14 @@
   .messages-page.dark .details.chat .content .body.allowed .keyboard .content .icons .gif-icon:hover,
   .messages-page.dark .details.chat .content .body.allowed .keyboard .content .icons .emoji-icon:hover,
   .messages-page.dark .details.chat .content .body.allowed .keyboard .content .send-message.active .send-icon:hover {
-    background-color: #202F3B;
+    background-color: #202f3b;
   }
 
   .messages-page .details.chat .content .body.allowed .keyboard .content .icons .media-icon {
     position: relative;
   }
 
-  .messages-page .details.chat .content .body.allowed .keyboard .content .icons .media-icon>input {
+  .messages-page .details.chat .content .body.allowed .keyboard .content .icons .media-icon > input {
     opacity: 0;
     position: absolute;
     top: 0;
@@ -802,7 +796,7 @@
     margin: 12px;
   }
 
-  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div {
+  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach > div {
     width: fit-content;
     height: 150px;
     border-radius: 12px;
@@ -810,8 +804,8 @@
     position: relative;
   }
 
-  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div .cancel-btn,
-  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div .edit-btn {
+  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach > div .cancel-btn,
+  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach > div .edit-btn {
     position: absolute;
     background-color: #4a4b49;
     width: 32px;
@@ -825,25 +819,25 @@
     z-index: 400;
   }
 
-  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div .cancel-btn {
+  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach > div .cancel-btn {
     top: 0;
     right: 0;
     transform: translate(-5px, 5px);
   }
 
-  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div .edit-btn {
+  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach > div .edit-btn {
     bottom: 0;
     right: 0;
     transform: translate(-5px, -5px);
   }
 
-  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div .cancel-btn:hover,
-  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div .edit-btn:hover {
+  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach > div .cancel-btn:hover,
+  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach > div .edit-btn:hover {
     background-color: #5b5c5a;
   }
 
-  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div>img,
-  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach>div>video {
+  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach > div > img,
+  .messages-page .details.chat .content .body.allowed .keyboard .content .message-text .new-message-media-attach > div > video {
     max-width: 100%;
     max-height: 100%;
   }
@@ -932,7 +926,9 @@
   }
 
   .messages-page.dark .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools {
-    box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 15px, rgba(255, 255, 255, 0.15) 0px 0px 3px 1px;
+    box-shadow:
+      rgba(255, 255, 255, 0.2) 0px 0px 15px,
+      rgba(255, 255, 255, 0.15) 0px 0px 3px 1px;
   }
 
   .messages-page .details.chat .send-msg-fail-pop,
@@ -990,7 +986,8 @@
     margin-top: 24px;
   }
 
-  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-delete-pop .delete-pop-content .delete-pop-choices ul {}
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-delete-pop .delete-pop-content .delete-pop-choices ul {
+  }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-delete-pop .delete-pop-content .delete-pop-choices ul li {
     display: flex;
@@ -1024,7 +1021,8 @@
     background-color: rgb(15 20 25 / 0.1);
   }
 
-  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools ul li {}
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools ul li {
+  }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools ul li .tool-content {
     display: flex;
@@ -1049,5 +1047,6 @@
     fill: var(--main-color);
   }
 
-  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools ul li .tool-content .tool-text {}
+  .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools ul li .tool-content .tool-text {
+  }
 }
