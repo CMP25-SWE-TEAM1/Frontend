@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, act } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import MessageTools from "./MessageTools"
 import copyToClipboard from "copy-to-clipboard"
 
@@ -48,9 +48,6 @@ describe.only("MessageTools testing", () => {
 
     // Assert that copyToClipboard is called with the expected text
     expect(copyToClipboard).toHaveBeenCalledWith("Just find me\nwww.website.com/mediaLink.jpg")
-
-    // wait for the alert to appear
-    act(() => jest.advanceTimersByTime(1))
 
     // Assert that "Copied to clipboard" alert is visible
     expect(screen.getByText("Copied to clipboard")).toBeInTheDocument()
