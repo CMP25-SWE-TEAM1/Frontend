@@ -4,7 +4,7 @@ import DisplayMedia from "../DisplayMedia"
 function PostBody({ descriptionLines, mediaUrls, mediaTypes}) {
   return (
     <>
-      <div className="post-text mt-1">
+      <div className="post-text mt-1 w-[85%]">
           <div className="max-h-[100px] overflow-hidden text-start dark:text-gray-300 break-words" data-testid="post-text-id">
             {descriptionLines.map((line,index) => (
               <p key={index} >
