@@ -1,43 +1,46 @@
-import React, {useState, useEffect} from 'react'
-import HorizontalNavbar from '../General/HorizontalNavbar'
-import Widgets from '../Widgets/Widgets'
-import WestIcon from '@mui/icons-material/West'
+import React, { useState, useEffect } from "react"
+import HorizontalNavbar from "../General/HorizontalNavbar"
+import Widgets from "../Widgets/Widgets"
+import WestIcon from "@mui/icons-material/West"
 import { Link } from "react-router-dom"
 import PersonsContainer from "./PersonsContainer"
 import { useLocation } from "react-router-dom"
-import { HashLink } from 'react-router-hash-link' 
+import { HashLink } from "react-router-hash-link"
 
-import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 function PostEngagement() {
-  const [navbarActiveLink, setNavbarActiveLink] = useState("Reposts");
-  const location = useLocation();
-  const postId = location.pathname.slice(location.pathname.match(/\/status\/.*\//).index+8,location.pathname.match(/\/retweets|\/likes/).index);
-  const userTag = location.pathname.slice(1,location.pathname.match(/\/status\/.*\//).index);
- 
-   // console.log(location.pathname.slice(location.pathname.match(/\/status\/.*\//).index+8,location.pathname.match(/\/retweets|\/likes/).index));
-  
-  const repostsHandler = () =>{
-    setNavbarActiveLink("Reposts");
+  const [navbarActiveLink, setNavbarActiveLink] = useState("Reposts")
+  const location = useLocation()
+  const postId = location.pathname.slice(location.pathname.match(/\/status\/.*\//).index + 8, location.pathname.match(/\/retweets|\/likes/).index)
+  const userTag = location.pathname.slice(1, location.pathname.match(/\/status\/.*\//).index)
+
+  // console.log(location.pathname.slice(location.pathname.match(/\/status\/.*\//).index+8,location.pathname.match(/\/retweets|\/likes/).index));
+
+  const repostsHandler = () => {
+    setNavbarActiveLink("Reposts")
   }
-  const likesHandler = () =>{
-    setNavbarActiveLink("Likes");
+  const likesHandler = () => {
+    setNavbarActiveLink("Likes")
   }
-  
-  const engagementNavLinks = [{ title: "Reposts", location: "retweets" }, { title: "Likes", location: "likes" }];
-  
-  const user=useSelector((state)=>state.user.user)
-   const navigate = useNavigate()
-   useEffect(() => {
-     if (!user) {
-       navigate("/")
-     }
-   }, [])
- 
+
+  const engagementNavLinks = [
+    { title: "Reposts", location: "retweets" },
+    { title: "Likes", location: "likes" },
+  ]
+
+  const user = useSelector((state) => state.user.user)
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [])
+
   return (
     <div className="flex w-full flex-1 flex-grow-[8]  max-xs:max-w-[475]">
-      <div className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] max-xs:border-l-0 max-xs:border-r-0 sm:w-[600px]">
+      <div className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit  max-xs:border-l-0 max-xs:border-r-0 sm:w-[600px]">
         <div className="sticky top-0 z-50 mb-3 border-0 border-b border-lightBorder bg-white bg-opacity-[87%] backdrop-blur-sm dark:border-darkBorder dark:bg-inherit dark:bg-opacity-[99%] ">
           <HashLink smooth to="#top">
             <div id="top" className="flex h-[53px] items-center">
