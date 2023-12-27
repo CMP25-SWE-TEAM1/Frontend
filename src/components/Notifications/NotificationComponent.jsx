@@ -35,7 +35,7 @@ const NotificationComponent = ({ logo, type, text, date, notifier }) => {
       }}
       className="flex min-h-[64px] cursor-pointer flex-col items-center pb-3 pl-4 pr-4 pt-3 hover:bg-lightHover dark:hover:bg-darkHover"
     >
-      <div className="flex items-center gap-3 self-start">
+      <div className="flex items-center gap-3 self-start" data-testid="notification-icon">
         {type === "retweet" && <CachedIcon className="text-4xl text-green-500" />}
         {type === "like" && <FavoriteIcon className="text-4xl text-red-500" />}
         {type === "follow" && <PersonAddIcon className="text-4xl text-blue-500" />}
