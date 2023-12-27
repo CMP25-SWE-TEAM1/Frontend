@@ -3,6 +3,7 @@ const TrendComponent = ({ index, categoray, name, numberOfPosts, fetchTrendTweet
     <div
       className="flex min-h-[100px] w-full cursor-pointer flex-col justify-between p-4 hover:bg-lightHover dark:hover:bg-darkHover"
       onClick={() => {
+        console.log("HH")
         window.location.href = `/search?q=${name.replace(/#/g, "%23")}`
       }}
     >
