@@ -231,7 +231,7 @@ const SearchResults = () => {
             <div className="flex flex-col">
               <h1 className="p-5 text-2xl font-bold">People</h1>
               {userResults.slice(0, 3).map((person) => (
-                <Person nickname={person.nickname} username={person.username} profile_image={person.profile_image} bio={person.bio ? person.bio : null} isFollowed={person.isFollowed} key={person._id} />
+                <Person nickname={person.nickname} username={person.username} profile_image={person.profile_image} bio={person.bio ? person.bio : null} isFollowed={person.isFollowedbyMe} key={person._id} />
               ))}
               <div className={`p-5 ${"text-" + getColor(themeColor)} hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover`} onClick={toPeopleTab}>
                 View all
