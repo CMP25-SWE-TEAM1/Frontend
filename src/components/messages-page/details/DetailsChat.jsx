@@ -13,12 +13,12 @@ import { useState, useEffect, useRef } from "react"
 import useGetChat from "../customHooks/get/useGetChat"
 import debounce from "lodash.debounce"
 // Redux
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { selectSocket } from "../../../store/SocketSlice"
+
 
 const DetailsChat = (props) => {
   // ==============  Props   ==============
-  const handleNavNewMessage = props.handleNavNewMessage
   const contact = props.contact
   const changeContactBlock = props.changeContactBlock
 
