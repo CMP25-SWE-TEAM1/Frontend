@@ -1,4 +1,3 @@
-import React from "react"
 import { render, screen, fireEvent, act } from "@testing-library/react"
 import MessageTools from "./MessageTools"
 import copyToClipboard from "copy-to-clipboard"
