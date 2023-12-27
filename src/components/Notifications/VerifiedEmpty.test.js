@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import VerifiedEmpty from "./VerifiedEmpty"
 
-describe.only("VerifiedEmpty", () => {
+describe("VerifiedEmpty", () => {
   test("renders correctly", () => {
     render(<VerifiedEmpty />)
 
