@@ -5,23 +5,19 @@ import HorizontalNavbar from "../General/HorizontalNavbar"
 import { Outlet } from "react-router"
 import { useLocation } from "react-router"
 
-function ProfileMediabuttons() {
+function ProfileMediabuttons(props) {
 
   const profileNavLinks = [
     { title: "Posts", location: "" },
     { title: "Replies", location: "with_replies" },
     { title: "Likes", location: "Likes" },
   ]
-  const location = useLocation()
-  const [root, setRoot] = useState("")
-  useEffect(() => {
-    setRoot(location.pathname.split("/")[1])
-  }, [])
+
 
   return (
     <div>
       <div id="profile-buttons-div" className={`flex w-[100%] h-[50px] `}>
-        <HorizontalNavbar urls={profileNavLinks} originalUrl={`/${root}`} handlers={[]}/>
+        <HorizontalNavbar urls={profileNavLinks} originalUrl={`/${props.root}`} handlers={[]}/>
       </div>
       <div>
         <Outlet />
