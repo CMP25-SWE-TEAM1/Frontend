@@ -80,10 +80,12 @@ class followPagerequests
                       user.Followstate = user.isFollowed? 'Following' : 'Follow' 
                     })
                     //cl(res.data.users)
+                    console.log("I'm Here")
                     setFollowings(res.data.users)
                   }
                 })
                 .catch((err) => {
+                  console.log("I'm Here")
                   ////cl(tag)
                   ////cl(err)
                 })
