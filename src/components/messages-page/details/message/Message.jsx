@@ -1,13 +1,30 @@
-import { useState, useRef } from "react"
+// Components
 import MessageTools from "./MessageTools"
+// Hooks
+import { useState, useRef } from "react"
 
 const Message = (props) => {
+  // ==============  Props   ==============
+  const messageId = props.messageId
+  const messageText = props.messageText
+  const messageMedia = props.messageMedia
+  const messageMeta = props.messageMeta
+  const mediaType = props.mediaType
+  const messageDirection = props.direction
+
+  // ==============  Data   ==============
   const msgToolsRef = useRef(null)
   const msgContentRef = useRef(null)
+  const gifRef = useRef(null)
+
   const [msgToolsPositionY, setMsgToolsPositionY] = useState("T")
   const [msgToolsPositionX, setMsgToolsPositionX] = useState("T")
   const [msgToolsVisibile, setMsgToolsVisibile] = useState(false)
   const [msgToolsVisibiltyStyle, setMsgToolsVisibiltyStyle] = useState("none")
+
+  const [gifPaused, setGifPaused] = useState(false)
+
+  // ==============  Functions   ==============
   const handleMsgToolsVisibilty = () => {
     const rectMsgTools = msgToolsRef.current.getBoundingClientRect()
     const rectMsgContent = msgContentRef.current.getBoundingClientRect()
@@ -16,7 +33,7 @@ const Message = (props) => {
     else setMsgToolsPositionY("B")
 
     // Left Right
-    if (props.direction === "R") {
+    if (messageDirection === "R") {
       if (rectMsgContent.right - rectMsgTools.left >= 180) setMsgToolsPositionX("R")
       else setMsgToolsPositionX("L")
     } else {
@@ -27,12 +44,6 @@ const Message = (props) => {
     !msgToolsVisibile ? setMsgToolsVisibiltyStyle("block") : setMsgToolsVisibiltyStyle("none")
     setMsgToolsVisibile(!msgToolsVisibile)
   }
-  const messageText = props.messageText
-  const messageMedia = props.messageMedia
-  const mediaType = props.mediaType
-  const messageId = props.messageId
-  const messageMeta = props.messageMeta
-
   const getMessageTime = (messageTime) => {
     const messageDate = new Date(messageTime)
     const currentDate = new Date()
@@ -71,9 +82,6 @@ const Message = (props) => {
       })
     }
   }
-
-  const [gifPaused, setGifPaused] = useState(false)
-  const gifRef = useRef(null)
   const handleGIFPress = () => {
     if (!gifPaused) {
       gifRef.current.pause()
@@ -86,7 +94,7 @@ const Message = (props) => {
 
   // {/* [Message Received] Message-content + message-info */}
   return (
-    <div className={`message ${props.direction === "R" ? "right" : "left"}`}>
+    <div className={`message ${messageDirection === "R" ? "right" : "left"}`} role="message">
       {/* Message-content */}
       <div className="message-content" ref={msgContentRef}>
         {/* Message-text + Message-interact */}
@@ -96,7 +104,6 @@ const Message = (props) => {
             {messageMedia && (
               <div className="message-media">
                 {mediaType === "Img" && <img src={messageMedia} alt="attachment" />}
-                {/* {mediaType === "GIF" && <video src="{messageMedia}" alt="attachment" type="video/mp4" preload="auto"></video>} */}
                 {mediaType === "GIF" && (
                   <div
                     className="message-media-gif"
@@ -138,13 +145,6 @@ const Message = (props) => {
           </div>
           {/* Message Interaction */}
           <div className="message-interaction">
-            {/* <div className="message-react" title="React">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <g>
-                  <path d="M17 12v3h-2.998v2h3v3h2v-3h3v-2h-3.001v-3H17zm-5 6.839c-3.871-2.34-6.053-4.639-7.127-6.609-1.112-2.04-1.031-3.7-.479-4.82.561-1.13 1.667-1.84 2.91-1.91 1.222-.06 2.68.51 3.892 2.16l.806 1.09.805-1.09c1.211-1.65 2.668-2.22 3.89-2.16 1.242.07 2.347.78 2.908 1.91.334.677.49 1.554.321 2.59h2.011c.153-1.283-.039-2.469-.539-3.48-.887-1.79-2.647-2.91-4.601-3.01-1.65-.09-3.367.56-4.796 2.01-1.43-1.45-3.147-2.1-4.798-2.01-1.954.1-3.714 1.22-4.601 3.01-.896 1.81-.846 4.17.514 6.67 1.353 2.48 4.003 5.12 8.382 7.67l.502.299v-2.32z"></path>
-                </g>
-              </svg>
-            </div> */}
             <div style={{ position: "relative" }}>
               <div
                 className="giga-bglock"
@@ -173,7 +173,7 @@ const Message = (props) => {
         </div>
       </div>
       {messageMeta && (
-        <div className="message-meta">
+        <div className="message-meta" role="message-metadata">
           <span>{getMessageTime(messageMeta)}</span>
         </div>
       )}
