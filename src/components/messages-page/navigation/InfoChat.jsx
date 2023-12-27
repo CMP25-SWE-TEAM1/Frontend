@@ -19,6 +19,16 @@ import useGetChatSearch from "../customHooks/get/useGetChatSearch"
 // Redux
 import { useSelector } from "react-redux"
 
+/**
+ * Generates InfoChat component which displays contacts information and search results for chats in the Messages page.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {Object[]} props.contacts - List of contacts
+ * @param {number} props.selectedContact - ID of the selected contact
+ * @param {Function} props.setSelectedContact - Function to set the selected contact
+ * @returns {JSX.Element} JSX element representing the InfoChat component
+ */
 const InfoChat = (props) => {
   // ==============  Props   ==============
   const contacts = props.contacts

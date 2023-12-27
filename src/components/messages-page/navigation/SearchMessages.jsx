@@ -8,6 +8,18 @@ import ListItemText from "@mui/material/ListItemText"
 
 import HighlightedMessage from "./HighlightedMessage"
 
+/**
+ * SearchMessages component displays filtered messages based on the search value.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {Array} props.messages - Array of messages to be filtered
+ * @param {string} props.searchValue - The search value used for filtering messages
+ * @param {string} props.tabValue - The active tab value (e.g., "all", "people", "messages")
+ * @param {string} props.selectedContact - The ID of the selected contact
+ * @param {Function} props.setSelectedContact - Function to set the selected contact
+ * @returns {JSX.Element} JSX element representing the SearchMessages component
+ */
 const SearchMessages = (props) => {
   const messages = props.messages
   const searchValue = props.searchValue

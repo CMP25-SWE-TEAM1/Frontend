@@ -6,6 +6,18 @@ import ListItemText from "@mui/material/ListItemText"
 
 import PersonIcon from "@mui/icons-material/Person"
 
+/**
+ * SearchPeople component displays filtered contacts based on the search value.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {Array} props.contacts - Array of contacts to be filtered
+ * @param {string} props.searchValue - The search value used for filtering contacts
+ * @param {string} props.tabValue - The active tab value (e.g., "all", "people", "messages")
+ * @param {string} props.selectedContact - The ID of the selected contact
+ * @param {Function} props.setSelectedContact - Function to set the selected contact
+ * @returns {JSX.Element} JSX element representing the SearchPeople component
+ */
 const SearchPeople = (props) => {
   const contacts = props.contacts
   const searchValue = props.searchValue
