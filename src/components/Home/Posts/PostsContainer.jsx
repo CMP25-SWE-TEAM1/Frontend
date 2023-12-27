@@ -9,7 +9,7 @@ const PostsContainer = ({ posts, setPosts }) => {
     console.log(posts)
   },[posts])
   return (
-    <div className="post-container">
+    <div className="post-container w-full">
       {posts.map((p, index) => {
         return (
           <div key={index}>
