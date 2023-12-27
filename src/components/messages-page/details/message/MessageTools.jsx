@@ -2,9 +2,20 @@
 import copyToClipboard from "copy-to-clipboard"
 // Hooks
 import { useState } from "react"
-// Constants
-import { BACKEND_ON } from "../../constants/MessagesConstants"
 
+/**
+ * Renders a set of message tools for a given message.
+ *
+ * @param {Object} props - The props object containing the following properties:
+ *   - messageId: The ID of the message.
+ *   - messageMedia: The media content of the message.
+ *   - messageText: The text content of the message.
+ *   - hideMsgTools: A function to hide the message tools.
+ *   - msgToolsPositionX: The X position of the message tools (toRight/toLeft) to avoid overflow.
+ *   - msgToolsPositionY: The Y position of the message tools (toTop/toBottom) to avoid overflow.
+ *   - visibiltyStyle: The visibility style of the message tools (visible or hidden).
+ * @return {JSX.Element} The rendered message tools.
+ */
 const MessageTools = (props) => {
   // ==============  Props   ==============
   const messageId = props.messageId
@@ -20,11 +31,24 @@ const MessageTools = (props) => {
   const [alertVTimeOut, setAlertVTimeOut] = useState(null)
 
   // ==============  Functions   ==============
+  // Function to handle copying message text and media to clipboard
   const handleCopy = () => {
+    // Hide message tools
     hideMsgTools()
-    copyToClipboard(`${messageText ? messageText : ""}${messageText && messageMedia ? `\n` : ""}${messageMedia ? messageMedia : ""}`)
+
+    // Create clipboard text with message text and media
+    const clipboardText = `${messageText ? messageText : ""}${messageText && messageMedia ? `\n` : ""}${messageMedia ? messageMedia : ""}`
+
+    // Copy clipboard text to clipboard
+    copyToClipboard(clipboardText)
+
+    // Clear timeout for alert visibility
     clearTimeout(alertVTimeOut)
+
+    // Show alert
     setIsAlertVisible(true)
+
+    // Set timeout to hide alert after 2250 milliseconds
     setAlertVTimeOut(
       setTimeout(() => {
         setIsAlertVisible(false)
@@ -34,7 +58,7 @@ const MessageTools = (props) => {
 
   return (
     <>
-      <div className={`message-tools ${msgToolsPositionY === "T" ? "to-top" : "to-bottom"} ${msgToolsPositionX === "L" ? "to-left" : "to-right"}`} style={{ display: visibiltyStyle }}>
+      <div data-testid="message-tools" className={`message-tools ${msgToolsPositionY === "T" ? "to-top" : "to-bottom"} ${msgToolsPositionX === "L" ? "to-left" : "to-right"}`} style={{ display: visibiltyStyle }}>
         <ul>
           <li className="copy-tool" onClick={handleCopy}>
             <div className="tool-content">

@@ -21,6 +21,17 @@ import { useDispatch, useSelector } from "react-redux"
 import { setSocket } from "../../store/SocketSlice"
 import { Link } from "react-router-dom"
 
+/**
+ * Messages component represents the main messaging page, displaying the list of
+ * contacts, selected contact details, and a compose message modal.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {boolean} props.composeModalOpen - Flag to indicate if the compose message modal is open
+ * @param {Function} props.handleComposeModalOpen - Function to handle opening the compose message modal
+ * @param {Function} props.handleComposeModalClose - Function to handle closing the compose message modal
+ * @returns {JSX.Element} JSX element representing the Messages component
+ */
 const Messages = (props) => {
   // ==============  Props   ==============
   const { contactId: paramContactId } = useParams()

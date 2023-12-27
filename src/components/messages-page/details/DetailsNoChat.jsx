@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom"
 
+/**
+ * Renders a DetailsNoChat component with the given props when user has no chat opened.
+ * @param {Object} props - the props passed to the component
+ * @param {Function} props.handleComposeModalOpen - a function to handle opening the compose modal
+ * @return {JSX.Element} the rendered component
+ */
 const DetailsNoChat = (props) => {
   const handleComposeModalOpen = props.handleComposeModalOpen
   return (

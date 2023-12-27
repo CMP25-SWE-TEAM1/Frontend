@@ -171,11 +171,7 @@ const App = () => {
           <Routes>
             <Route
               path="/"
-              element={
-                <>
-                  <Landing openLoginModal={openLoginModal} handleOpenLoginModal={handleOpenLoginModal} handleCloseLoginModal={handleCloseLoginModal} openSignupModal={openSignupModal} handleOpenSignupModal={handleOpenSignupModal} handleCloseSignupModal={handleCloseSignupModal} location={location} setLocation={setLocation} />
-                </>
-              }
+              element={<Home />}
             ></Route>
             <Route path="login" element={<Login openModal={true} handleCloseModal={handleCloseLoginModal} setLocation={setLocation} />}></Route>
             <Route path="password_reset" element={<PasswordReset />}></Route>
