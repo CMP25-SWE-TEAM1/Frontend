@@ -14,7 +14,7 @@ import EmptyProfileReplies from "./EmptyProfileReplies"
 const ProfilePosts = () => {
   const user = useSelector((state) => state.user.user)
   const { token } = useSelector((state) => state.user)
-  const [noposts,setNoposts]=useState(false)
+  const [noposts, setNoposts] = useState(false)
   const location = useLocation()
   const [root, setRoot] = useState("")
 
@@ -65,7 +65,7 @@ const ProfilePosts = () => {
                     type: post.type,
                     followingUser: { username: root },
                   }))
-                  
+                  .filter((post) => post.type !== "reply")
               )
             }
           }
@@ -76,10 +76,12 @@ const ProfilePosts = () => {
   }, [root])
   return (
     <>
-    {!noposts && <div id="Profile-Posts-test" className="">
-      <PostsContainer posts={posts} setPosts={setPosts} />
-    </div>}
-    {noposts && <EmptyProfileReplies type = {1} tag={root} />}
+      {!noposts && (
+        <div id="Profile-Posts-test" className="">
+          <PostsContainer posts={posts} setPosts={setPosts} />
+        </div>
+      )}
+      {noposts && <EmptyProfileReplies type={1} tag={root} />}
     </>
   )
 }
