@@ -9,6 +9,7 @@ import PostsContainer from "../Home/Posts/PostsContainer"
 
 import { useLocation } from "react-router"
 import ProfileRequests from "./profilerequests"
+import EmptyProfileReplies from "./EmptyProfileReplies"
 
 const ProfileReplies = () => {
   const user = useSelector((state) => state.user.user)
@@ -16,7 +17,9 @@ const ProfileReplies = () => {
 
   const location = useLocation()
   const [root, setRoot] = useState("")
+  const [noposts,setNoposts]=useState(false)
   useEffect(() => {
+    console.log(location.pathname);
     setRoot(location.pathname.split("/")[1])
   }, [location])
 
@@ -31,9 +34,9 @@ const ProfileReplies = () => {
 
   const [profile, setProfile] = useState()
   useEffect(() => {
-    if (root !== "" && root !== user.username) ProfileRequests.getOtherprofile(false, APIs, root, setProfile, token)
+    if (root !== "" && root !== user.username ) ProfileRequests.getOtherprofile(false, APIs, root, setProfile, token)
   }, [root])
-
+console.log(root)
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
@@ -51,6 +54,7 @@ const ProfileReplies = () => {
         })
         .then((res) => {
           if (res.status === 200) {
+            console.log(res.data.posts);
             if (res.data.posts) {
               setPosts(
                 res.data.posts
@@ -65,15 +69,23 @@ const ProfileReplies = () => {
                   }))
                   .filter((post) => post.type === "reply")
               )
+            }else
+            {
+              setNoposts(true)
             }
           }
         })
-        .catch((error) => {})
+        .catch((error) => {
+          setNoposts(true)
+        })
   }, [root])
   return (
-    <div id="Profile-Replies-test" className="">
+    <>
+    {!noposts &&<div id="Profile-Replies-test" className="">
       <PostsContainer posts={posts} setPosts={setPosts} />
-    </div>
+    </div>}
+    {noposts&& <EmptyProfileReplies type = {1} tag={root} /> }
+    </>
   )
 }
 

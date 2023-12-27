@@ -9,11 +9,12 @@ import PostsContainer from "../Home/Posts/PostsContainer"
 
 import { useLocation } from "react-router"
 import ProfileRequests from "./profilerequests"
+import EmptyProfileReplies from "./EmptyProfileReplies"
 
 const ProfileLikes = () => {
   const user = useSelector((state) => state.user.user)
   const { token } = useSelector((state) => state.user)
-
+  const [noposts,setNoposts]= useState(false)
   const location = useLocation()
   const [root, setRoot] = useState("")
   useEffect(() => {
@@ -71,13 +72,17 @@ const ProfileLikes = () => {
           }
         })
         .catch((error) => {
+          setNoposts(true)
           
         })
   }, [root])
   return (
-    <div id="profile-Likes" className="">
+    <>
+    {!noposts && <div id="Profile-Likes" className="">
       <PostsContainer posts={posts} setPosts={setPosts} />
-    </div>
+    </div>}
+    {noposts && <EmptyProfileReplies type = {0} tag={root} />}
+    </>
   )
 }
 
