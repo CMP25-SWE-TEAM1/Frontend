@@ -166,60 +166,63 @@ const App = () => {
         {user && location !== "/password_reset" && <Sidebar />}
         {/* {location !== "/login" && location !== "/password_reset" && <Sidebar />} */}
         {/* true will be replaced by authorization*/}
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <Landing openLoginModal={openLoginModal} handleOpenLoginModal={handleOpenLoginModal} handleCloseLoginModal={handleCloseLoginModal} openSignupModal={openSignupModal} handleOpenSignupModal={handleOpenSignupModal} handleCloseSignupModal={handleCloseSignupModal} location={location} setLocation={setLocation} />
-              </>
-            }
-          ></Route>
-          <Route path="login" element={<Login openModal={true} handleCloseModal={handleCloseLoginModal} setLocation={setLocation} />}></Route>
-          <Route path="password_reset" element={<PasswordReset />}></Route>
-          <Route path="/home" element={<Home />}></Route>
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/search/*" element={<SearchResults />}></Route>
-          <Route path="/notifications" element={<Notifications />}>
-            <Route path="all" element={<All />}></Route>
-            <Route path="verified" element={<Verified />}></Route>
-            <Route path="mentions" element={<Mentions />}></Route>
-            <Route path="" element={<All />}></Route>
-          </Route>
-          <Route path="/messages/:contactId?" element={<Messages composeModalOpen={composeModalOpen} handleComposeModalOpen={handleComposeModalOpen} handleComposeModalClose={handleComposeModalClose} />} />
-          {/* <Route path="/messages/compose" element={<MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} />}></Route> */}
-          <Route path="/settings" element={<Settings />}>
-            <Route path="" element={<MobileSettings />}></Route>
-            <Route path="account" element={<Account />}></Route>
-            <Route path="account_information" element={<AccountInformation />}></Route>
-            {passwordIsConfirmed === "true" && <Route path="change_username" element={<ChangeUsername />}></Route>}
-            {passwordIsConfirmed === "true" && <Route path="change_email" element={<ChangeEmail />}></Route>}
-            <Route path="change_password" element={<ChangePassword />}></Route>
+        {!user && <Landing openLoginModal={openLoginModal} handleOpenLoginModal={handleOpenLoginModal} handleCloseLoginModal={handleCloseLoginModal} openSignupModal={openSignupModal} handleOpenSignupModal={handleOpenSignupModal} handleCloseSignupModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}
+        {user && (
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Landing openLoginModal={openLoginModal} handleOpenLoginModal={handleOpenLoginModal} handleCloseLoginModal={handleCloseLoginModal} openSignupModal={openSignupModal} handleOpenSignupModal={handleOpenSignupModal} handleCloseSignupModal={handleCloseSignupModal} location={location} setLocation={setLocation} />
+                </>
+              }
+            ></Route>
+            <Route path="login" element={<Login openModal={true} handleCloseModal={handleCloseLoginModal} setLocation={setLocation} />}></Route>
+            <Route path="password_reset" element={<PasswordReset />}></Route>
+            <Route path="/home" element={<Home />}></Route>
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/search/*" element={<SearchResults />}></Route>
+            <Route path="/notifications" element={<Notifications />}>
+              <Route path="all" element={<All />}></Route>
+              <Route path="verified" element={<Verified />}></Route>
+              <Route path="mentions" element={<Mentions />}></Route>
+              <Route path="" element={<All />}></Route>
+            </Route>
+            <Route path="/messages/:contactId?" element={<Messages composeModalOpen={composeModalOpen} handleComposeModalOpen={handleComposeModalOpen} handleComposeModalClose={handleComposeModalClose} />} />
+            {/* <Route path="/messages/compose" element={<MessageCompose composeModalOpen={composeModalOpen} handleComposeModalClose={handleComposeModalClose} />}></Route> */}
+            <Route path="/settings" element={<Settings />}>
+              <Route path="" element={<MobileSettings />}></Route>
+              <Route path="account" element={<Account />}></Route>
+              <Route path="account_information" element={<AccountInformation />}></Route>
+              {passwordIsConfirmed === "true" && <Route path="change_username" element={<ChangeUsername />}></Route>}
+              {passwordIsConfirmed === "true" && <Route path="change_email" element={<ChangeEmail />}></Route>}
+              <Route path="change_password" element={<ChangePassword />}></Route>
 
-            <Route path="privacy_and_safety" element={<PrivacySafety />}></Route>
-            <Route path="blocked" element={<Blocked />}></Route>
-            <Route path="muted" element={<Muted />}></Route>
+              <Route path="privacy_and_safety" element={<PrivacySafety />}></Route>
+              <Route path="blocked" element={<Blocked />}></Route>
+              <Route path="muted" element={<Muted />}></Route>
 
-            <Route path="accessibility_display_and_languages" element={<AccessibilityDisplayLanguages />}></Route>
-            <Route path="display" element={<Display />}></Route>
-          </Route>
-          <Route path={`/:tag`} element={<ProfilePage handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal} />}>
-            <Route element={<ProfilePosts />}></Route>
-            <Route path="with_replies" element={<ProfileReplies />}></Route>
-            <Route path="likes" element={<ProfileLikes />}></Route>
-            <Route path="" element={<ProfilePosts />}></Route>
-          </Route>
-          <Route path={"/:tag/"} element={<Followpage></Followpage>}>
-            <Route path={"Following"} element={<Following></Following>}></Route>
-            <Route path={"Followers"} element={<Followers></Followers>}></Route>
-          </Route>
+              <Route path="accessibility_display_and_languages" element={<AccessibilityDisplayLanguages />}></Route>
+              <Route path="display" element={<Display />}></Route>
+            </Route>
+            <Route path={`/:tag`} element={<ProfilePage handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal} />}>
+              <Route element={<ProfilePosts />}></Route>
+              <Route path="with_replies" element={<ProfileReplies />}></Route>
+              <Route path="likes" element={<ProfileLikes />}></Route>
+              <Route path="" element={<ProfilePosts />}></Route>
+            </Route>
+            <Route path={"/:tag/"} element={<Followpage></Followpage>}>
+              <Route path={"Following"} element={<Following></Following>}></Route>
+              <Route path={"Followers"} element={<Followers></Followers>}></Route>
+            </Route>
 
-          <Route path={`settings/profile`} element={<ProfilePageEdit handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
-          <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
-          <Route path="/:tag/status/:id" element={<PostPage post={testPost} />}></Route>
-          <Route path="/:tag/status/:id/:NavbarLink" element={<PostEngagement />}></Route>
-          <Route path="*" element={<NotFound />}></Route>
-        </Routes>
+            <Route path={`settings/profile`} element={<ProfilePageEdit handleOpenProfileEditModal={handleOpenProfileEditModal} openModal={openProfileEditModal} handleCloseModal={handleCloseProfileModal}></ProfilePageEdit>}></Route>
+            <Route path="/signup" element={<SignUp openModal={true} handleCloseModal={handleCloseSignupModal} location={location} setLocation={setLocation} />}></Route>
+            <Route path="/:tag/status/:id" element={<PostPage post={testPost} />}></Route>
+            <Route path="/:tag/status/:id/:NavbarLink" element={<PostEngagement />}></Route>
+            <Route path="*" element={<NotFound />}></Route>
+          </Routes>
+        )}
       </BrowserRouter>
       {/* {user && <Widgets />} */}
       {/* true will be replaced by authorization*/}
