@@ -5,6 +5,10 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 
+/**
+* Displays a list blocked users and allows the user to unblock or block them again
+**/
+
 const Blocked = () => {
   const [userData, setUserData] = useState([])
   const { token } = useSelector((state) => state.user)

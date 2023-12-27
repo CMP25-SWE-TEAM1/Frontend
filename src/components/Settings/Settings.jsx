@@ -17,8 +17,8 @@ const Settings = () => {
   const [passwordIsConfirmed] = useState(sessionStorage.getItem("passwordIsConfirmed"))
 
   function handleSelect(e) {
-    if (selectedSettings !== "") selectedSettings.classList.remove("border-r-[3px]", "border-primary", "bg-lightHover", "dark:bg-darkHover")
-    e.currentTarget.classList.add("border-r-[3px]", "border-primary", "bg-lightHover", "dark:bg-darkHover")
+    if (selectedSettings !== "") selectedSettings.classList.remove("border-r-[3px]", "border-secondColor", "bg-lightHover", "dark:bg-darkHover")
+    e.currentTarget.classList.add("border-r-[3px]", "border-secondColor", "bg-lightHover", "dark:bg-darkHover")
     setSelectedSettings(e.currentTarget)
   }
 

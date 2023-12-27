@@ -6,6 +6,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { changeColor, setDarkMode, setLightMode } from "../../../store/ThemeSlice"
 import CheckIcon from "@mui/icons-material/Check"
 
+/**
+* Allows the user to change their theme and the primary color of the website
+**/
+
 const Display = () => {
   const dispatch = useDispatch()
   const darkMode = useSelector((state) => state.theme.darkMode)

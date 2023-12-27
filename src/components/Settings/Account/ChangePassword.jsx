@@ -148,7 +148,7 @@ const ChangePassword = () => {
       <div className="flex p-5">
         <div className="text-red-600">{errorMsg}</div>
         <div className="text-green-600">{successMsg}</div>
-        <button id="changePasswordBtn" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handlePasswordChange} disabled={currentPassword === "" || newPassword === "" || confirmPassword === "" || checkPassword(newPassword)}>
+        <button id="changePasswordBtn" className="btn ml-auto mt-6 w-20 !bg-secondColor !text-white hover:brightness-90" onClick={handlePasswordChange} disabled={currentPassword === "" || newPassword === "" || confirmPassword === "" || checkPassword(newPassword)}>
           Save
         </button>
       </div>

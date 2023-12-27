@@ -125,11 +125,11 @@ const ChangeEmail = () => {
       <div className="flex p-5">
         <div className="text-red-600">{errorMsg}</div>
         <div className="text-green-600">{successMsg}</div>
-        <button id="changeEmailBtn" hidden={emailChosen} className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleChangeEmail} disabled={email === "" || !validEmail(email)}>
-          Save
-        </button>
-        <button id="verifyEmailBtn" hidden={!emailChosen} className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleVerifyEmail} disabled={verificationCode === ""}>
+        <button id="changeEmailBtn" hidden={emailChosen} className="btn ml-auto mt-6 w-20 !bg-secondColor !text-white hover:brightness-90" onClick={handleChangeEmail} disabled={email === "" || !validEmail(email)}>
           Verify
+        </button>
+        <button id="verifyEmailBtn" hidden={!emailChosen} className="btn ml-auto mt-6 w-20 !bg-secondColor !text-white hover:brightness-90" onClick={handleVerifyEmail} disabled={verificationCode === ""}>
+          Save
         </button>
       </div>
     </div>
