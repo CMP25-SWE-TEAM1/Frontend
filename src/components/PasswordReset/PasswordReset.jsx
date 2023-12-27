@@ -185,7 +185,7 @@ const PasswordReset = () => {
                 Phone, email or username
               </label>
             </div>
-            <button type="button" id="next1" className="btn " onClick={handleEmailExistCheck} disabled={email === ""}>
+            <button type="button" id="next1" className="btn  dark:!bg-white" onClick={handleEmailExistCheck} disabled={email === ""}>
               Next
             </button>
             <Alert severity="error" data-testid="emailExistError" className={`${emailExistError ? "" : "hidden"}`}>
@@ -240,7 +240,7 @@ const PasswordReset = () => {
             <button
               type="button"
               id="next3"
-              className="btn"
+              className="btn dark:!bg-white"
               onClick={() => {
                 handleForgotPassword()
                 // nextShow(2)
@@ -294,7 +294,7 @@ const PasswordReset = () => {
               <Alert severity="success" className={`${changedSuccessfully ? "" : "hidden"} -mb-9 mt-2 text-xs`}>
                 Password Changed Successfully, Navigating to Login...
               </Alert>
-              <button className="btn mt-16" disabled={checkPassword(password) || code === ""} onClick={handleResetPassword}>
+              <button className="btn mt-16 dark:!bg-white" disabled={checkPassword(password) || code === ""} onClick={handleResetPassword}>
                 Confirm
               </button>
             </div>
