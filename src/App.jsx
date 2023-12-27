@@ -144,8 +144,6 @@ const App = () => {
     viewCount: "1M",
   }
 
-  
-
   const [open, setOpen] = useState(false)
 
   const handleClick = () => {
@@ -161,7 +159,7 @@ const App = () => {
   }
 
   return (
-    <div className="app relative flex min-h-[100vh] flex-col-reverse bg-white text-black dark:bg-black dark:text-white max-xs:max-w-[475px] xs:h-[100vh] xs:w-full xs:flex-row">
+    <div className="app relative flex  min-h-[100vh]  flex-col-reverse bg-white text-black dark:bg-black dark:text-white  xs:h-[100vh] xs:w-full xs:flex-row">
       <BrowserRouter>
         <NotificationPopup notification={not} open={open} handleClick={handleClick} handleClose={handleClose} />
 

@@ -51,7 +51,7 @@ const Sidebar = () => {
 
   const pathname = useLocation().pathname;
   const userTag = user.username
-  const optionsNames = ["Home", "Explore", "Notifications", "Messages", "Lists", "Bookmarks", "Profile", "Settings"]
+  const optionsNames = ["Home", "Explore", "Notifications", "Messages",  "Profile", "Settings"]
   const optionsIcons = [
     [<HomeOutlinedIcon />,<HomeIcon />],
     [<SearchRoundedIcon sx={{color:darkMode?"#d9d9d9":"#1f1f1f"}}/>,<SearchIcon sx={{color:darkMode?"#ffffff":"#000000"}}/>],
@@ -62,12 +62,12 @@ const Sidebar = () => {
       <NotificationsIcon/>
     </Badge>],
     [<MailOutlineRoundedIcon />,<EmailIcon/>],
-    [<ListAltRoundedIco sx={{color:darkMode?"#d9d9d9":"#1f1f1f"}}/>,<ListAltIcon sx={{color:darkMode?"#ffffff":"#000000"}}/>],
-    [<PeopleOutlinedIcon />,<PeopleIcon/>],
+    // [<ListAltRoundedIco sx={{color:darkMode?"#d9d9d9":"#1f1f1f"}}/>,<ListAltIcon sx={{color:darkMode?"#ffffff":"#000000"}}/>],
+    // [<PeopleOutlinedIcon />,<PeopleIcon/>],
     [<PersonOutlinedIcon />,<PersonIcon/>],
     [<SettingsOutlinedIcon />,<SettingsIcon/>],
   ]
-  const optionLinks = ["/home", "/explore", "/notifications", "/messages", `/${userTag}/lists`, "/i/bookmarks", `/${userTag}`, "/settings/account"]
+  const optionLinks = ["/home", "/explore", "/notifications", "/messages",  `/${userTag}`, "/settings/account"]
   
   const [shrink, setShrink] = useState(window.innerWidth < 1278)
   const [selected, setSelected] = useState(optionLinks.indexOf(pathname))
@@ -178,8 +178,8 @@ const Sidebar = () => {
   }
 
   return (
-    <div className=" flex items-center justify-between  border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white max-xs:!sticky max-xs:bottom-0 max-xs:z-10 max-xs:backdrop-brightness-[90%] dark:max-xs:bg-black dark:max-xs:bg-opacity-50 dark:max-xs:backdrop-blur-sm dark:max-xs:backdrop-brightness-[30%] xs:max-w-[400px] xs:justify-end md:flex-grow">
-      <div className={`flex h-full w-full flex-row  max-[1278px]:items-end max-xs:!items-center xs:flex-col xs:pl-[30%]`} id="mahmoud_navigate_pre">
+    <div className=" flex items-center justify-between  border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white max-xs:!sticky max-xs:!bottom-0 max-xs:z-10 max-xs:backdrop-brightness-[90%] dark:max-xs:bg-black dark:max-xs:bg-opacity-50  dark:max-xs:backdrop-blur-sm dark:max-xs:backdrop-brightness-[30%] xs:max-w-[400px] xs:justify-end md:flex-grow">
+      <div className={`flex h-full w-full flex-row  max-[1278px]:items-end max-xs:!items-center xs:flex-col xs:pl-[30%] max-xs:w-full max-xs:justify-around`} id="mahmoud_navigate_pre">
         <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" alt="gigaChatIcon" other={`${shrink ? "mr-3" : ""} mt-0.5`} />
 
         {options}

@@ -1,11 +1,15 @@
-import React from 'react';
-import Reply from './Reply';
+import React from "react"
+import Reply from "./Reply"
 
-function RepliesContainer({replies}) {
- 
+function RepliesContainer({ replies }) {
   return (
     <div className="replies-container">
-      {replies&&replies.map(reply=><Reply reply={reply}/>)}
+      {replies &&
+        replies.map((reply) => (
+          <div key={reply.id}>
+            <Reply reply={reply} />
+          </div>
+        ))}
     </div>
   )
 }

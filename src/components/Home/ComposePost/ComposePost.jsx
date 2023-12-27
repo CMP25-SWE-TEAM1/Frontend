@@ -15,7 +15,6 @@ import Button from "@mui/material/Button"
 import GeneralButton from "../../Sidebar/Button"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
-import Popup from "../Popup"
 import ComposePostFooter from "./ComposePostFooter"
 import { getColor } from "../../../constants"
 
@@ -48,10 +47,7 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId, han
 
   const APIs = {
     mock: { postTweetAPI: "httpss://aa80e208-6b14-409e-8ca1-1155aaa93e81.mock.pstmn.io/post/addPost" },
-    actual: { postTweetAPI: "https://backend.gigachat.cloudns.org/api/tweets/", 
-              uploadMedia: "https://backend.gigachat.cloudns.org/api/media", 
-              deleteMedia: "https://backend.gigachat.cloudns.org/api/media" 
-  },
+    actual: { postTweetAPI: "https://backend.gigachat.cloudns.org/api/tweets/", uploadMedia: "https://backend.gigachat.cloudns.org/api/media", deleteMedia: "https://backend.gigachat.cloudns.org/api/media" },
   }
   const getComposeTweet = () => {
     return {
@@ -210,7 +206,7 @@ function ComposePost({ buttonName, handleNewPost, postType, referredTweetId, han
   const themeColor = useSelector((state) => state.theme.color)
 
   return (
-    <div className={`ComposePost flex h-fit border-b ${buttonName === "Post" ? "border-t" : ""} border-lightBorder p-3 text-black dark:border-darkBorder dark:text-white`} data-testid="postId">
+    <div className={`ComposePost flex h-fit border-b ${buttonName === "Post" ? "border-t" : ""} !w-full border-lightBorder p-3 text-black dark:border-darkBorder dark:text-white`} data-testid="postId">
       <div className=" h-10 w-10 sm:mr-3">
         <Link className="hover:underline" to={`/${user.username}`}>
           <Avatar alt={user.username} src={user.profileImage} sx={{ width: 40, height: 40 }} />

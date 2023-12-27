@@ -17,12 +17,13 @@ import { useSelector } from "react-redux"
 import { useLocation } from "react-router-dom"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import axios from "axios"
+import ReplyingTo from "../../General/ReplyingTo"
 
 
 import { getColor } from "../../../constants"
 import ProfileRequests from "../../ProfilePage/profilerequests.js"
 
-function PostHeader({ pathname, postType, isFollowed, userTag, bio, userProfilePicture, userName, finalDate, id, isVisible, handleMouseEnter, handleMouseLeave, hoveredProfile, openMenu, anchorPostMenu, handleMenuClose, htmlElement, handleMenuButtonClick, followingUser, setPosts, posts }) {
+function PostHeader({ pathname, postType, replyingToUsername, isFollowed, userTag, bio, userProfilePicture, userName, finalDate, id, isVisible, handleMouseEnter, handleMouseLeave, hoveredProfile, openMenu, anchorPostMenu, handleMenuClose, htmlElement, handleMenuButtonClick, followingUser, setPosts, posts }) {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const user = useSelector((state) => state.user.user)
 
@@ -115,7 +116,7 @@ function PostHeader({ pathname, postType, isFollowed, userTag, bio, userProfileP
  
   return (
     <>
-      <div className="post-header flex items-center justify-between">
+      <div className="post-header flex items-center justify-between mb-0">
           <div className=" relative flex items-center" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             {isVisible && (
               <Box className="cursor-auto transition-all" sx={{ zIndex: 5, position: "absolute", top:"20px", backgroundColor: darkMode ? "black" : "white", color: darkMode ? "white" : "black", padding: "10px", borderRadius: "10px", boxShadow: darkMode ? "0px 0px 1px 1px gray" : "0px 0px 1px 1px black", width: "250px" }}>
@@ -241,6 +242,7 @@ function PostHeader({ pathname, postType, isFollowed, userTag, bio, userProfileP
           </div>
         </Link>
       </div>
+      {postType==="reply"&&<ReplyingTo username={replyingToUsername} leftMargin="7"/>}
     </>
   )
 }

@@ -9,6 +9,8 @@ import { APIs } from "../../constants/signupConstants.js"
 
 import { useState } from "react"
 
+import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+
 const ThirdStep = ({ nickName, email, month, day, year, emailExistError, validEmail, mock, nextShow, handleOpenBirthdateError }) => {
   // eslint-disable-next-line no-unused-vars
   const [birthdateError, setBirthdateError] = useState(false)
@@ -29,11 +31,18 @@ const ThirdStep = ({ nickName, email, month, day, year, emailExistError, validEm
       })
   }
 
+  const handleBack = () => {
+    const SecondStep = document.getElementById("Second Step")
+    const ThirdStep = document.getElementById("Third Step")
+
+    SecondStep.style.display = "block"
+    ThirdStep.style.display = "none"
+  }
+
   const handleCheckBirthdate = () => {
     axios
       .post(mock ? APIs.mock.checkBirthdateAPI : APIs.actual.checkBirthdateAPI, { birthDate: `${month}-${day}-${year}` })
-      .then((res) => {
-      })
+      .then((res) => {})
       .then(() => {
         setBirthdateError(false)
         handleSignup()
@@ -50,6 +59,8 @@ const ThirdStep = ({ nickName, email, month, day, year, emailExistError, validEm
 
   return (
     <div id="Third Step" className="m-auto -mt-10 hidden h-fit w-[320px]">
+      <ArrowBackIcon className="cursor-pointer" onClick={handleBack} />
+
       <div className="!h-fit">
         <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 3 of 5</p>
         <h1 className="">Create your account</h1>

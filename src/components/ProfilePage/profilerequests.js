@@ -26,7 +26,9 @@ class ProfileRequests{
             const newUser = {...res.data.user, banner_image:banner_image }
             if(setButtonstate !== undefined)   
             setButtonstate(res.data.user.is_wanted_user_followed? `Following`:`Follow`)
+          if(setFollowersnum !== undefined)
             setFollowersnum(res.data.user.followers_num)
+          if(setFollowingsnum !== undefined)
             setFollowingsnum(res.data.user.followings_num)
             setProfile(newUser)
           }
@@ -157,8 +159,11 @@ class ProfileRequests{
       .then((res) => {
         if (res.status === 204) {
           console.log(followersnum);
+          if(setbuttonstate !== undefined)
           setbuttonstate("Following")
+        if(setDetailsPos !== undefined)
           setDetailsPos("right-[140px]")
+        if(setFollowersnum !== undefined)
           setFollowersnum(followersnum+1)
           
           
@@ -181,8 +186,11 @@ class ProfileRequests{
       )
       .then((res) => {
         if (res.status === 204) {
+          if(setbuttonstate !== undefined)
           setbuttonstate("Follow")
+        if(setDetailsPos !== undefined)
           setDetailsPos("right-[100px]")
+        if(setFollowersnum !== undefined)
           setFollowersnum(followersnum-1)
         }
       })

@@ -40,8 +40,10 @@ function Person({ nickname, username, profile_image, bio, isFollowed }) {
                 @{username}
               </div>
             </div>
-            <div className="z-100">
+            <div >
+              <Link>
             {user.username !== username && <FollowButton buttonName={buttonstate} setButtonState={setButtonState} tag={username} />}
+            </Link>
             </div>
           </div>
           {bio && <div className="w-full">{bio}</div>}

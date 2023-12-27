@@ -6,6 +6,8 @@ import { APIs } from "../../constants/signupConstants.js"
 import { styles } from "../../styles.js"
 import Birthdate from "./Birthdate.jsx"
 
+import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+
 const FirstStep = ({ nickName, setNickName, email, setEmail, month, setMonth, day, setDay, year, setYear, nextShow, emailExistError, setEmailExistError, validEmail, mock }) => {
   const handleEmailBlur = () => {
     // let emailExist
@@ -29,8 +31,16 @@ const FirstStep = ({ nickName, setNickName, email, setEmail, month, setMonth, da
       })
   }
 
+  const handleBack = () => {
+    const JoinGigaChat = document.getElementById("Join GigaChat")
+    const FirstStep = document.getElementById("First Step")
+
+    JoinGigaChat.style.display = "block"
+    FirstStep.style.display = "none"
+  }
   return (
     <div id="First Step" className=" m-auto -mt-10 hidden w-[320px]">
+      <ArrowBackIcon className="cursor-pointer" onClick={handleBack} />
       <div className="max-w[600px] !h-fit">
         <p className="relative -ml-2 mt-3 text-lg font-semibold">Step 1 of 5</p>
         <h1 className="mt-3">Create your account</h1>

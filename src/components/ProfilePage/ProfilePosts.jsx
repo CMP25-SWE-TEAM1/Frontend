@@ -9,15 +9,16 @@ import PostsContainer from "../Home/Posts/PostsContainer"
 
 import { useLocation } from "react-router"
 import ProfileRequests from "./profilerequests"
+import EmptyProfileReplies from "./EmptyProfileReplies"
 
 const ProfilePosts = () => {
   const user = useSelector((state) => state.user.user)
   const { token } = useSelector((state) => state.user)
-
+  const [noposts,setNoposts]=useState(false)
   const location = useLocation()
   const [root, setRoot] = useState("")
+
   useEffect(() => {
-   
     setRoot(location.pathname.split("/")[1])
   }, [location])
 
@@ -44,39 +45,42 @@ const ProfilePosts = () => {
           params: {
             page: 1,
             count: 150,
-            username: user.username,
+            username: root,
           },
           headers: {
             authorization: "Bearer " + token,
           },
         })
         .then((res) => {
-          
           if (res.status === 200) {
             if (res.data.posts) {
-             
               setPosts(
-                res.data.posts.map((post) => ({
-                  isFollowed: post.isFollowed,
-                  isFollowingMe: post.isFollowingMe,
-                  isLiked: post.isLiked,
-                  isRtweeted:post.isRetweeted,
-                  tweetDetails: post,
-                  type:post.type,
-                  followingUser: { username: root },
-                }))
+                res.data.posts
+                  .map((post) => ({
+                    isFollowed: post.isFollowed,
+                    isFollowingMe: post.isFollowingMe,
+                    isLiked: post.isLiked,
+                    isRtweeted: post.isRetweeted,
+                    tweetDetails: post,
+                    type: post.type,
+                    followingUser: { username: root },
+                  }))
+                  
               )
             }
           }
         })
         .catch((error) => {
-          
+          setNoposts(true)
         })
   }, [root])
   return (
-    <div id="Profile-Posts-test" className="">
+    <>
+    {!noposts && <div id="Profile-Posts-test" className="">
       <PostsContainer posts={posts} setPosts={setPosts} />
-    </div>
+    </div>}
+    {noposts && <EmptyProfileReplies type = {1} tag={root} />}
+    </>
   )
 }
 

@@ -24,7 +24,7 @@ function Header(props) {
           <h1 className={`mt-[-5px] whitespace-nowrap text-lg  font-bold`}>{props.profilename}</h1>
         </div>
         <div>
-          {(location.pathname.split('/')[2] === undefined || location.pathname.split('/')[2] === 'with_replies')  &&
+          {(!location.pathname.split('/')[2]  || location.pathname.split('/')[2] === 'with_replies')  &&
           <p className={`text-xs text-[gray] `}>
             {props.postsnum} posts
             {/*here the count should be updated by user posts number*/}

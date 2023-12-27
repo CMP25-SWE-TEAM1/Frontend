@@ -9,7 +9,6 @@ import { useSelector } from "react-redux"
 
 function PostPopup({open,setOpen}) {
     const darkMode = useSelector((state) => state.theme.darkMode);
-    // const navigate = useNavigate();
     const handleClose = () =>{
       setOpen(false);
     } 

@@ -9,11 +9,12 @@ import PostsContainer from "../Home/Posts/PostsContainer"
 
 import { useLocation } from "react-router"
 import ProfileRequests from "./profilerequests"
+import EmptyProfileReplies from "./EmptyProfileReplies"
 
 const ProfileLikes = () => {
   const user = useSelector((state) => state.user.user)
   const { token } = useSelector((state) => state.user)
-
+  const [noposts,setNoposts]= useState(false)
   const location = useLocation()
   const [root, setRoot] = useState("")
   useEffect(() => {
@@ -45,7 +46,7 @@ const ProfileLikes = () => {
           params: {
             page: 1,
             count: 150,
-            username: user.username,
+            username: root,
           },
           headers: {
             authorization: "Bearer " + token,
@@ -58,7 +59,12 @@ const ProfileLikes = () => {
               
               setPosts(
                 res.data.posts.map((post) => ({
+                  isFollowed: post.isFollowed,
+                  isFollowingMe: post.isFollowingMe,
+                  isLiked: post.isLiked,
+                  isRtweeted: post.isRetweeted,
                   tweetDetails: post,
+                  type: post.type,
                   followingUser: { username: root },
                 }))
               )
@@ -66,13 +72,17 @@ const ProfileLikes = () => {
           }
         })
         .catch((error) => {
+          setNoposts(true)
           
         })
   }, [root])
   return (
-    <div id="profile-Likes" className="">
+    <>
+    {!noposts && <div id="Profile-Likes" className="">
       <PostsContainer posts={posts} setPosts={setPosts} />
-    </div>
+    </div>}
+    {noposts && <EmptyProfileReplies type = {0} tag={root} />}
+    </>
   )
 }
 
