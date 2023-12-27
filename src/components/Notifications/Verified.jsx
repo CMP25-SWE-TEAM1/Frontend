@@ -72,7 +72,7 @@ const Verified = () => {
       logo: darkMode ? logoDark : logoLight,
       text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
     },
-    ]
+  ]
   return (
     <div>
       <NotificationsContainer list={[]} type={"verified"} />

@@ -58,7 +58,7 @@ const ChangeEmail = () => {
     axios
       .post(
         APIs.actual.VerifyEmailAPI,
-        { verifyEmailCode:verificationCode, email: email },
+        { verifyEmailCode: verificationCode, email: email },
         {
           headers: {
             authorization: "Bearer " + token,
@@ -71,7 +71,7 @@ const ChangeEmail = () => {
           setSuccessMsg(res.data.data.message)
           setTimeout(() => {
             //window.location.href = "/settings/account"
-          }, 2000);
+          }, 2000)
         }
       })
       .catch((err) => {
@@ -114,7 +114,7 @@ const ChangeEmail = () => {
 
       <div className="flex flex-col p-5">
         <div className="input-container mb-4">
-          <input disabled={!emailChosen} className={ verificationCode === "" ? "form-input" : "form-input filled-input" } type="text" id="newEmail" autoComplete="off" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} />
+          <input disabled={!emailChosen} className={verificationCode === "" ? "form-input" : "form-input filled-input"} type="text" id="newEmail" autoComplete="off" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} />
           <label className="input-label" htmlFor="password">
             Verification code
           </label>

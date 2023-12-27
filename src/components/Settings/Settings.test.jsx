@@ -10,8 +10,7 @@ describe("Content", () => {
         <Settings />
       </BrowserRouter>
     )
-    expect(screen.getByRole('heading', {  name: /settings/i})).toBeInTheDocument()
-   
+    expect(screen.getByRole("heading", { name: /settings/i })).toBeInTheDocument()
   })
   test("choices", () => {
     render(
@@ -26,58 +25,58 @@ describe("Content", () => {
 })
 
 describe("Interaction", () => {
-    test("account link", async () => {
-        user.setup();
-        render(
-          <BrowserRouter>
-            <Settings />
-          </BrowserRouter>
-        )
-        const link = screen.getByText(/your account/i)
-        await act(async () => {
-          await user.click(link)
-        })
-        expect(window.location.pathname).toBe('/settings/account');
+  test("account link", async () => {
+    user.setup()
+    render(
+      <BrowserRouter>
+        <Settings />
+      </BrowserRouter>
+    )
+    const link = screen.getByText(/your account/i)
+    await act(async () => {
+      await user.click(link)
     })
-    test("privacy and safety link", async () => {
-        user.setup();
-        render(
-          <BrowserRouter>
-            <Settings />
-          </BrowserRouter>
-        )
-        const link = screen.getByText(/privacy and safety/i)
-        await act(async () => {
-          await user.click(link)
-        })
-        expect(window.location.pathname).toBe('/settings/privacy_and_safety');
-    })
-    test("display link", async () => {
-        user.setup();
-        render(
-          <BrowserRouter>
-            <Settings />
-          </BrowserRouter>
-        )
-        const link = screen.getByText(/accessibility, display, and languages/i)
-        await act(async () => {
-          await user.click(link)
-        })
-        expect(window.location.pathname).toBe('/settings/accessibility_display_and_languages');
-    })
-    test("select when already selected", async () => {
-      user.setup()
-      render(
-        <BrowserRouter>
-          <Settings />
-        </BrowserRouter>
-      )
-      const link = screen.getByText(/privacy and safety/i)
-      const link2 = screen.getByText(/accessibility, display, and languages/i)
-      await act(async () => {
-        await user.click(link)
-        await user.click(link2)
-      })
-      expect(window.location.pathname).toBe("/settings/accessibility_display_and_languages")
-    })
+    expect(window.location.pathname).toBe("/settings/account")
   })
+  test("privacy and safety link", async () => {
+    user.setup()
+    render(
+      <BrowserRouter>
+        <Settings />
+      </BrowserRouter>
+    )
+    const link = screen.getByText(/privacy and safety/i)
+    await act(async () => {
+      await user.click(link)
+    })
+    expect(window.location.pathname).toBe("/settings/privacy_and_safety")
+  })
+  test("display link", async () => {
+    user.setup()
+    render(
+      <BrowserRouter>
+        <Settings />
+      </BrowserRouter>
+    )
+    const link = screen.getByText(/accessibility, display, and languages/i)
+    await act(async () => {
+      await user.click(link)
+    })
+    expect(window.location.pathname).toBe("/settings/accessibility_display_and_languages")
+  })
+  test("select when already selected", async () => {
+    user.setup()
+    render(
+      <BrowserRouter>
+        <Settings />
+      </BrowserRouter>
+    )
+    const link = screen.getByText(/privacy and safety/i)
+    const link2 = screen.getByText(/accessibility, display, and languages/i)
+    await act(async () => {
+      await user.click(link)
+      await user.click(link2)
+    })
+    expect(window.location.pathname).toBe("/settings/accessibility_display_and_languages")
+  })
+})

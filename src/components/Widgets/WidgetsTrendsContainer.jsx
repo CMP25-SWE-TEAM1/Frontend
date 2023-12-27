@@ -33,8 +33,6 @@ const WidgetsTrendsContainer = ({ data, loading, type }) => {
       })
   }
 
-
-
   return (
     <div className={`${loading ? "flex justify-center" : ""}`}>
       <Box

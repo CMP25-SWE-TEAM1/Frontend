@@ -1,25 +1,22 @@
-import { Box, Modal } from '@mui/material';
-import {React,useState,useEffect} from 'react'
-import { DefaultCoverPage } from '../../constants';
+import { Box, Modal } from "@mui/material"
+import { React, useState, useEffect } from "react"
+import { DefaultCoverPage } from "../../constants"
 function CoverImage(props) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-    function coverpagehandle()
-    {
-        
+  function coverpagehandle() {}
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
     }
-    useEffect(() => {
-      const handleResize = () => {
-        setWindowWidth(window.innerWidth)
-      }
-  
-      window.addEventListener("resize", handleResize)
-  
-      // Remove the event listener when the component is unmounted
-      return () => {
-        window.removeEventListener("resize", handleResize)
-      }
-    }, [])
-    const modalStyle = {
+
+    window.addEventListener("resize", handleResize)
+
+    // Remove the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+  const modalStyle = {
     position: "absolute",
     backgroundColor: "transparent",
     border: "1px solid #767C86",
@@ -42,7 +39,7 @@ function CoverImage(props) {
     <div id="cover-page" className={`w-[100%]  `}>
       <img
         className={`relative ${props.height}  w-[100%] object-fill`}
-        src={props.coverimage? props.coverimage:DefaultCoverPage}
+        src={props.coverimage ? props.coverimage : DefaultCoverPage}
         alt="cover-page"
         onClick={() => {
           coverpagehandle()
@@ -53,4 +50,4 @@ function CoverImage(props) {
   )
 }
 
-export default CoverImage;
+export default CoverImage

@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react"
 
 function NoReposts() {
   return (
-    <div className="w-full flex flex-col px-[20%]">
-      <div className="text-2xl font-bold mt-3">No Reposts yet</div>
+    <div className="flex w-full flex-col px-[20%]">
+      <div className="mt-3 text-2xl font-bold">No Reposts yet</div>
       <div>Share someone else's post on your timeline by reposting it. When you do, it'll show up here.</div>
     </div>
   )

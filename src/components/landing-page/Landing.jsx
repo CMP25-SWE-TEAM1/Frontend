@@ -28,14 +28,14 @@ const Landing = ({ openLoginModal, handleOpenLoginModal, handleCloseLoginModal, 
     <div className={`landing ${darkMode ? "dark" : "light"}`}>
       <div className="content">
         <div className="logo ">
-          {!darkMode && <img  src={logoImgLight} alt="Logo" />}
-          {darkMode && <img  src={logoImgDark} alt="Logo" />}
+          {!darkMode && <img src={logoImgLight} alt="Logo" />}
+          {darkMode && <img src={logoImgDark} alt="Logo" />}
         </div>
         <div className="info">
           <span className="t1">Happening now</span>
           <span className="t2">Join today.</span>
           <div className="panel">
-            <GoogleLoginButton handleCloseModal={handleCloseLoginModal} message={"Sign in with Google"}/>
+            <GoogleLoginButton handleCloseModal={handleCloseLoginModal} message={"Sign in with Google"} />
             <button className="apple-btn mt-4">
               {/* Apple icon */}
               <svg viewBox="0 0 24 24" aria-hidden="true">

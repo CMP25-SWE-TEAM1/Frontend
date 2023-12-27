@@ -15,7 +15,6 @@ import { useSelector } from "react-redux"
 
 import Crop from "../General/Crop/Crop"
 
-
 import "../../styles/signup.css"
 
 const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleCloseModal, fromSwitch, email, password }) => {
@@ -74,7 +73,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
           })
         })
         .then((res) => {
-           console.log(res.data.data.usls[0])
+          console.log(res.data.data.usls[0])
           // console.log(userToken)
           newuser = {
             ...tmpuser,
@@ -143,7 +142,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
       const PictureStep = document.getElementById("Picture Step")
       PictureStep.style.display = "block"
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -156,11 +155,11 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
           <div className="w-fit rounded-full border border-white dark:border-black">
             <img src={profilePicURL ? profilePicURL : defaultProfilePic} alt="profile" className="h-[200px] w-[200px] rounded-full" />
           </div>
-          <button className="absolute left-[50%] top-[50%] m-auto h-[47px] w-[47px] -translate-x-[50%] -translate-y-[50%] rounded-full dark:bg-secondary hover:bg-gray-600 bg-opacity-50 hover:bg-opacity-50 bg-gray-500 dark:hover:bg-darkHover" onClick={handlePictureClick}>
+          <button className="absolute left-[50%] top-[50%] m-auto h-[47px] w-[47px] -translate-x-[50%] -translate-y-[50%] rounded-full bg-gray-500 bg-opacity-50 hover:bg-gray-600 hover:bg-opacity-50 dark:bg-secondary dark:hover:bg-darkHover" onClick={handlePictureClick}>
             <AddAPhotoOutlinedIcon className={`-ml-[3px] -mt-[5px] ${darkMode ? "text-white" : "text-black"}`} />
             <input
               type="file"
-              accept= ""
+              accept=""
               onChange={handlePictureChange}
               ref={hiddenFileInput}
               style={{ display: "none" }} // Make the file input element invisible
@@ -169,7 +168,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
         </div>
 
         <button
-          className="btn mt-3 dark:bg-white bg-black"
+          className="btn mt-3 bg-black dark:bg-white"
           ref={skipForNowButton}
           onClick={() => {
             console.log(userR)
@@ -180,7 +179,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
           Skip for now
         </button>
         <button
-          className="btn mt-3 hidden dark:bg-white bg-black"
+          className="btn mt-3 hidden bg-black dark:bg-white"
           ref={completeSignupButton}
           onClick={() => {
             // console.log({ email, password })
@@ -192,7 +191,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
         </button>
       </div>
       <div className={`${openCrop ? "!block" : "!hidden"}  !mt-0`}>
-        <Crop photoURL={profilePicURL} setOpenCrop={setOpenCrop} setPhotoURL={setProfilePicURL} setFile={setProfilePic} aspect={1} originalPhoto={user? user.profileImage : defaultProfilePic} />
+        <Crop photoURL={profilePicURL} setOpenCrop={setOpenCrop} setPhotoURL={setProfilePicURL} setFile={setProfilePic} aspect={1} originalPhoto={user ? user.profileImage : defaultProfilePic} />
       </div>
     </div>
   )

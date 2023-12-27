@@ -21,7 +21,7 @@ const NotificationPopup = ({ notification, open, handleClick, handleClose }) => 
           "& .MuiSnackbarContent-root": {
             padding: 0,
             backgroundColor: darkmode ? "" : "white",
-            color:darkmode?"": "black",
+            color: darkmode ? "" : "black",
           },
           "& .MuiSnackbarContent-action": {
             padding: 0,

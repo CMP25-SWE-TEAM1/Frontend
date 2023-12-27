@@ -46,16 +46,16 @@
     }
   }
 
-  hr{
-    @apply border-lightBorder dark:border-darkBorder
+  hr {
+    @apply border-lightBorder dark:border-darkBorder;
   }
 
   .btn {
-    @apply mb-2 mt-auto h-[45px] min-h-[45px] w-full border !border-lightHover dark:!border-darkHover rounded-3xl font-semibold !text-white dark:!text-black  disabled:pointer-events-none disabled:brightness-50;
+    @apply mb-2 mt-auto h-[45px] min-h-[45px] w-full rounded-3xl border !border-lightHover font-semibold !text-white disabled:pointer-events-none disabled:brightness-50  dark:!border-darkHover dark:!text-black;
   }
 
   .form-input {
-    @apply h-14 w-full rounded-lg border border-solid border-ternairy p-2 pt-8 bg-white dark:bg-black;
+    @apply h-14 w-full rounded-lg border border-solid border-ternairy bg-white p-2 pt-8 dark:bg-black;
   }
 
   .form-input:focus {

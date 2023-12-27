@@ -71,7 +71,7 @@ const AccountInformation = () => {
             sessionStorage.setItem("passwordIsConfirmed", "true")
             setSuccessMsg(res.data.data.message)
             setTimeout(() => {
-              window.location.reload();
+              window.location.reload()
               setPasswordIsConfirmed("true")
             }, 2000)
           }

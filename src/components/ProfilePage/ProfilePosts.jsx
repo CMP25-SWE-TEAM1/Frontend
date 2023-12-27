@@ -14,7 +14,7 @@ import EmptyProfileReplies from "./EmptyProfileReplies"
 const ProfilePosts = () => {
   const user = useSelector((state) => state.user.user)
   const { token } = useSelector((state) => state.user)
-  const [noposts,setNoposts]=useState(false)
+  const [noposts, setNoposts] = useState(false)
   const location = useLocation()
   const [root, setRoot] = useState("")
 
@@ -55,17 +55,15 @@ const ProfilePosts = () => {
           if (res.status === 200) {
             if (res.data.posts) {
               setPosts(
-                res.data.posts
-                  .map((post) => ({
-                    isFollowed: post.isFollowed,
-                    isFollowingMe: post.isFollowingMe,
-                    isLiked: post.isLiked,
-                    isRtweeted: post.isRetweeted,
-                    tweetDetails: post,
-                    type: post.type,
-                    followingUser: { username: root },
-                  }))
-                  
+                res.data.posts.map((post) => ({
+                  isFollowed: post.isFollowed,
+                  isFollowingMe: post.isFollowingMe,
+                  isLiked: post.isLiked,
+                  isRtweeted: post.isRetweeted,
+                  tweetDetails: post,
+                  type: post.type,
+                  followingUser: { username: root },
+                }))
               )
             }
           }
@@ -76,10 +74,12 @@ const ProfilePosts = () => {
   }, [root])
   return (
     <>
-    {!noposts && <div id="Profile-Posts-test" className="">
-      <PostsContainer posts={posts} setPosts={setPosts} />
-    </div>}
-    {noposts && <EmptyProfileReplies type = {1} tag={root} />}
+      {!noposts && (
+        <div id="Profile-Posts-test" className="">
+          <PostsContainer posts={posts} setPosts={setPosts} />
+        </div>
+      )}
+      {noposts && <EmptyProfileReplies type={1} tag={root} />}
     </>
   )
 }

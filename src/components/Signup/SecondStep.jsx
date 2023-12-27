@@ -4,7 +4,6 @@ import { useState } from "react"
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
-
 const SecondStep = ({ nextShow }) => {
   const [captchaIsDone, setCaptchaIsDone] = useState(false)
   const siteKey = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" //testing

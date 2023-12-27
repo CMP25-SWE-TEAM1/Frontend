@@ -10,8 +10,7 @@ describe("Text", () => {
         <PrivacySafety />
       </BrowserRouter>
     )
-    expect(screen.getByRole('heading', {  name: /privacy and safety/i})).toBeInTheDocument()
-   
+    expect(screen.getByRole("heading", { name: /privacy and safety/i })).toBeInTheDocument()
   })
   test("main paragragh", () => {
     render(
@@ -42,30 +41,30 @@ describe("Text", () => {
 })
 
 describe("Links", () => {
-    test("blocked accounts link", async () => {
-        user.setup();
-        render(
-          <BrowserRouter>
-            <PrivacySafety />
-          </BrowserRouter>
-        )
-        const link = screen.getByText(/blocked accounts/i)
-        await act(async () => {
-          await user.click(link)
-        })
-        expect(window.location.pathname).toBe('/settings/blocked');
+  test("blocked accounts link", async () => {
+    user.setup()
+    render(
+      <BrowserRouter>
+        <PrivacySafety />
+      </BrowserRouter>
+    )
+    const link = screen.getByText(/blocked accounts/i)
+    await act(async () => {
+      await user.click(link)
     })
-    test("muted accounts link", async () => {
-        user.setup();
-        render(
-          <BrowserRouter>
-            <PrivacySafety />
-          </BrowserRouter>
-        )
-        const link = screen.getByText(/muted accounts/i)
-        await act(async () => {
-          await user.click(link)
-        })
-        expect(window.location.pathname).toBe('/settings/muted');
-    })
+    expect(window.location.pathname).toBe("/settings/blocked")
   })
+  test("muted accounts link", async () => {
+    user.setup()
+    render(
+      <BrowserRouter>
+        <PrivacySafety />
+      </BrowserRouter>
+    )
+    const link = screen.getByText(/muted accounts/i)
+    await act(async () => {
+      await user.click(link)
+    })
+    expect(window.location.pathname).toBe("/settings/muted")
+  })
+})
