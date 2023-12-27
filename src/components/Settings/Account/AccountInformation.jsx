@@ -128,7 +128,7 @@ const AccountInformation = () => {
         <div className="flex p-5">
           <div className="text-red-600">{errorMsg}</div>
           <div className="text-green-600">{successMsg}</div>
-          <button id="confirmPassword" className="btn ml-auto mt-6 w-24 !bg-secondColor !text-white hover:brightness-90" onClick={handleConfirmPassword} disabled={password === ""}>
+          <button id="confirmPassword" className="btn ml-auto mt-6 w-24 !bg-primary !text-white hover:brightness-90" onClick={handleConfirmPassword} disabled={password === ""}>
             Confirm
           </button>
         </div>

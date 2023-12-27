@@ -83,7 +83,7 @@ const ChangeUsername = () => {
       <div className="flex p-5">
         <div className="text-red-600">{errorMsg}</div>
         <div className="text-green-600">{successMsg}</div>
-        <button id="changeUsernameBtn" className="btn ml-auto mt-6 w-20 !bg-secondColor !text-white hover:brightness-90" onClick={handleChangeUsername} disabled={userName === ""}>
+        <button id="changeUsernameBtn" className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleChangeUsername} disabled={userName === ""}>
           Save
         </button>
       </div>
