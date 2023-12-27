@@ -1,57 +1,83 @@
-#message-compose {
-    height: 80vh;
-}
+  /* Color palette-dark */
+  .messages-page.dark {
+      --bg-color: #000;
+      --bg-color-light: rgb(0 0 0 / 0.85);
+      --bg-color-hover: #16181C;
+      --main-color: #E7E9EA;
+      --second-color: #1d9bf0;
+      --second-color-alt: #1A8CD8;
+      --border-color: #333;
+      --message-color-2: #2F3336;
+  }
 
-#message-compose .message-compose-header {
-    display: flex;
-    align-items: center;
-    height: 53px;
-    padding: 0 16px;
-}
+  /* Color palette-light */
+  .messages-page.light {
+      --bg-color: #fff;
+      --bg-color-light: rgb(255 255 255 / 0.85);
+      --bg-color-hover: #f7f9f9;
+      --main-color: #000;
+      --second-color: #1d9bf0;
+      --second-color-alt: #1A8CD8;
+      --border-color: #eee;
+      --message-color-2: #eff3f4;
+  }
 
-#message-compose .message-compose-header .message-compose-close {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    transition: 0.2s;
-    margin-right: 20px;
-    cursor: pointer;
-}
+  #message-compose {
+      height: 80vh;
+      background-color: var(--bg-color);
+      color: var(--main-color);
+  }
 
-#message-compose .message-compose-header .message-compose-close:hover {
-    background-color: #E7E7E8;
-}
+  #message-compose .message-compose-header {
+      display: flex;
+      align-items: center;
+      height: 53px;
+      padding: 0 16px;
+  }
 
-#message-compose .message-compose-header .message-compose-close svg {
-    width: 20px;
-    height: 20px;
-}
+  #message-compose .message-compose-header .message-compose-close {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      transition: 0.2s;
+      margin-right: 20px;
+      cursor: pointer;
+  }
 
-#message-compose .message-compose-header .message-compose-title {
-    flex: 1;
-    font-weight: 600;
-    font-size: 19px;
-}
+  #message-compose .message-compose-header .message-compose-close:hover {
+      background-color: var(--bg-color-hover);
+  }
 
-#message-compose .message-compose-header .message-compose-next {
-    background-color: #87898C;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 9999px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: default;
-    user-select: none;
-}
+  #message-compose .message-compose-header .message-compose-close svg {
+      width: 20px;
+      height: 20px;
+  }
 
-#message-compose .message-compose-header .message-compose-next.active {
-    cursor: pointer;
-    background-color: black;
-}
+  #message-compose .message-compose-header .message-compose-title {
+      flex: 1;
+      font-weight: 600;
+      font-size: 19px;
+  }
 
-#message-compose .message-compose-header .message-compose-next.active:hover {
-    background-color: #272C30;
-}
+  #message-compose .message-compose-header .message-compose-next {
+      background-color: #87898C;
+      color: var(--bg-color);
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: default;
+      user-select: none;
+  }
+
+  #message-compose .message-compose-header .message-compose-next.active {
+      cursor: pointer;
+      background-color: var(--main-color);
+  }
+
+  #message-compose .message-compose-header .message-compose-next.active:hover {
+      background-color: var(--message-color-2);
+  }

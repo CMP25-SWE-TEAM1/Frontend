@@ -99,7 +99,16 @@ const SearchResults = () => {
             },
           })
           .then((res) => {
-            setTweetResults((prevResults) => [...prevResults, ...res.data.results])
+            setTweetResults((prevResults) => [
+              ...prevResults,
+              ...res.data.results.map((post) => ({
+                isLiked: post.isLiked,
+                isRtweeted: post.isRtweeted,
+                id: post.referredReplyId,
+                tweetDetails: post,
+                type: post.type,
+              })),
+            ])
             if (res.data.results.length < 10) noMoreTweets = true
           })
           .catch((err) => {

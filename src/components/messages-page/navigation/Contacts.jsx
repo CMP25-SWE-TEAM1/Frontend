@@ -9,6 +9,7 @@ import HighlightedMessage from "./HighlightedMessage"
 
 import MarkUnreadChatAltIcon from "@mui/icons-material/MarkUnreadChatAlt"
 import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction"
+import { useSelector } from "react-redux"
 
 const Contacts = (props) => {
   const contacts = props.contacts.sort((a, b) => new Date(b.lastMessageDate) - new Date(a.lastMessageDate))
@@ -51,11 +52,12 @@ const Contacts = (props) => {
       })
     }
   }
+  const darkMode = useSelector((state) => state.theme.darkMode)
 
   return (
     <>
       {contacts.map((contact, index) => (
-        <ListItem disablePadding key={index} sx={selectedContact === contact.id ? { backgroundColor: "#EFF3F4", borderRight: "2px solid #1D9BF0" } : contact.lastMessageSeen === false ? { backgroundColor: "#F7F9F9" } : {}}>
+        <ListItem disablePadding key={index} sx={selectedContact === contact.id ? { backgroundColor: darkMode ? "#202327" : "#EFF3F4", borderRight: "2px solid #1D9BF0" } : contact.lastMessageSeen === false ? { backgroundColor: darkMode ? "#16181C" : "#F7F9F9" } : {}}>
           <ListItemButton
             onClick={() => {
               console.log("selectedContact", contact.id)

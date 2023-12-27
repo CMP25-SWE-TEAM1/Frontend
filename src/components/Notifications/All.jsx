@@ -104,7 +104,7 @@ const All = () => {
         },
       })
       .then((res) => {
-        // console.log(res.data.data.notifications)
+        console.log(res.data.data.notifications)
         setNewAllNotifications(res.data.data.notifications)
 
         if (res.data.data.notifications.length < 10) setFinished(true)
@@ -155,6 +155,7 @@ const All = () => {
 
     if (feedRef.current) {
       observer.observe(feedRef.current)
+      console.log("H")
     }
 
     return () => {

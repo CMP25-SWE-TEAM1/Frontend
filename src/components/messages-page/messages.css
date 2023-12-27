@@ -4,29 +4,41 @@
 
 
 @layer components {
-  .sidebar {
-    width: 400px;
-    background-color: white;
-    color: black;
-    text-align: center;
+
+  /* Color palette-dark */
+  .messages-page.dark {
+    --bg-color: #000;
+    --bg-color-light: rgb(0 0 0 / 0.85);
+    --bg-color-hover: #16181C;
+    --main-color: #E7E9EA;
+    --second-color: #1d9bf0;
+    --second-color-alt: #1A8CD8;
+    --border-color: #333;
+    --message-color-2: #2F3336;
   }
 
-  @media (max-width: 1024px) {
-    .sidebar {
-      width: 80px;
-    }
-  }
-
-  .messages-page {
-    /* padding-right: 70px; */
+  /* Color palette-light */
+  .messages-page.light {
+    --bg-color: #fff;
+    --bg-color-light: rgb(255 255 255 / 0.85);
+    --bg-color-hover: #f7f9f9;
+    --main-color: #000;
+    --second-color: #1d9bf0;
+    --second-color-alt: #1A8CD8;
+    --border-color: #eee;
+    --message-color-2: #eff3f4;
   }
 
   /* ====== My Style ===== */
   .messages-page {
     display: flex;
-    /* flex: 1; */
-    /* flex-grow: 999; */
-    background-color: white;
+    background-color: var(--bg-color);
+  }
+
+  @media(max-width:1275px) {
+    .messages-page {
+      flex-grow: 1;
+    }
   }
 
   .messages-page svg {
@@ -35,11 +47,17 @@
   }
 
   .messages-page .navigation {
-    background-color: white;
+    background-color: var(--bg-color);
     /* flex: 1; */
-    border-right: 1px solid #eee;
-    border-left: 1px solid #eee;
+    border-right: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
     width: 470px;
+  }
+
+  @media (max-width: 1200px) {
+    .messages-page .navigation {
+      width: 320px;
+    }
   }
 
   @media (max-width: 997px) {
@@ -55,14 +73,15 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: black;
-    background-color: white;
+    color: var(--main-color);
+    background-color: var(--bg-color);
     /* max-width: 450px */
   }
 
   .messages-page .navigation .header h2 {
     font-size: 20px;
     font-weight: 600;
+    color: var(--main-color)
   }
 
   .messages-page .navigation .header>div {
@@ -78,11 +97,14 @@
     height: 36px;
     border-radius: 50%;
     transition: background-color 0.218s;
+
+    fill: var(--main-color);
+    background-color: var(--bg-color);
   }
 
   .messages-page .navigation .header>div a:hover,
   .messages-page .details.chat .content .head>a:hover {
-    background-color: #e7e7e8;
+    background-color: var(--bg-color-hover);
   }
 
   .messages-page .navigation .info.chat {
@@ -94,13 +116,14 @@
     margin: 32px auto;
     padding-left: 32px;
     padding-right: 32px;
-    background-color: white;
+    background-color: var(--bg-color);
   }
 
   .messages-page .details {
-    background-color: white;
+    background-color: var(--bg-color);
+    color: var(--main-color);
     display: flex;
-    border-right: 1px solid #eee;
+    border-right: 1px solid var(--border-color);
   }
 
   @media (min-width: 768px) {
@@ -135,8 +158,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: black;
-    background-color: rgb(255 255 255 / 0.85);
+    color: var(--main-color);
+    background-color: var(--bg-color-light);
     z-index: 2;
     -webkit-backdrop-filter: blur(3px);
     backdrop-filter: blur(7px);
@@ -197,7 +220,7 @@
     font-size: 33px;
     font-weight: 800;
     margin-bottom: 8px;
-    color: black;
+    color: var(--main-color);
   }
 
   .messages-page .details.no-chat .content .info .text,
@@ -215,7 +238,7 @@
   .messages-page .details.chat .body.allowed .change-follow {
     display: block;
     width: fit-content;
-    background-color: #1d9bf0;
+    background-color: var(--second-color);
     color: white;
     display: flex;
     align-items: center;
@@ -242,7 +265,7 @@
     font-size: 15px;
     font-weight: 600;
 
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
   }
 
   .messages-page .details.chat .body.allowed .change-follow.blocked,
@@ -271,7 +294,7 @@
   .messages-page .details.no-chat .content .info a:hover,
   .messages-page .navigation .info.no-chat a:hover,
   .messages-page .details.chat .body.allowed .change-follow:hover {
-    background-color: #1a8cd8;
+    background-color: var(--second-color-alt);
   }
 
   /* ================== Chat Allowed ================== */
@@ -289,7 +312,9 @@
     margin-top: -53px;
     overflow-y: auto;
     scroll-behavior: smooth;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-color);
+
+    background-color: var(--bg-color);
 
     flex: 1;
     position: relative;
@@ -314,9 +339,9 @@
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info {
     cursor: pointer;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #333;
     text-align: center;
-    background-color: white;
+    background-color: var(--bg-color);
     height: 250px;
     padding: 20px 16px;
     margin-bottom: 16px;
@@ -326,7 +351,7 @@
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info:hover {
-    background-color: #f7f9f9;
+    background-color: var(--bg-color-hover);
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info .image {
@@ -356,6 +381,7 @@
     font-size: 15px;
     font-weight: 600;
     transition: text-decoration 0.218s;
+    color: var(--main-color);
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .contact-info .contact-data a:first-child:hover {
@@ -398,6 +424,7 @@
     right: 15px;
     opacity: 100%;
     transition: opacity 0.2s;
+
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chat-scroll-down.hide {
@@ -409,7 +436,7 @@
     cursor: pointer;
     position: fixed;
     transform: translateX(-100%) translateY(-100%);
-    background-color: white;
+    background-color: var(--bg-color);
     min-height: 36px;
     min-width: 36px;
     padding-left: 16px;
@@ -421,10 +448,18 @@
     border-bottom-right-radius: 9999px;
     border-top-left-radius: 9999px;
     border-top-right-radius: 9999px;
+    transition: background-color 0.2s;
+  }
+
+  .messages-page.light .details.chat .content .body.allowed .chatbox .chat-scroll-down div {
     box-shadow:
       0 0 8px rgba(101, 119, 134, 0.2),
       0 1px 3px 1px rgba(101, 119, 134, 0.25);
-    transition: background-color 0.2s;
+  }
+
+  .messages-page.dark .details.chat .content .body.allowed .chatbox .chat-scroll-down div {
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 8px, rgba(255, 255, 255, 0.15) 0px 1px 3px 1px;
+
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chat-scroll-down.hide div {
@@ -432,18 +467,12 @@
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chat-scroll-down div:hover {
-    background-color: #e6e6e6;
+    background-color: var(--bg-color-hover);
   }
 
   .messages-page .details.chat .content .body.allowed .keyboard {
     min-height: 55px;
-    /* max-height: 187px; */
-    /* overflow-y: auto; */
-    /* Temp */
-    /* text-align: center;
-        background-color: #1d9bf0;
-        color: white;
-        line-height: 55px; */
+    background-color: var(--bg-color);
   }
 
   /* ================== Chat - Message ================== */
@@ -586,11 +615,11 @@
 
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-text {
-    background-color: #1d9bf0;
+    background-color: var(--second-color);
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.left .message-content .message-box .message-text {
-    background-color: #eff3f4;
+    background-color: var(--message-color-2);
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message:not(:has(.message-meta)) .message-content .message-box .message-text {
@@ -614,7 +643,7 @@
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-text:hover {}
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message.right .message-content .message-box .message-text:hover {
-    background-color: #1a8cd8;
+    background-color: var(--second-color-alt);
   }
 
   /* No hover left */
@@ -660,13 +689,12 @@
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-react:hover,
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-more:hover {
-    background-color: #e8f5fd;
+    background-color: var(--bg-color-hover);
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-react svg,
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-more svg {
-    /* TODO: Why not working */
-    color: rgb(107, 127, 142);
+    fill: var(--main-color);
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-meta {
@@ -695,7 +723,7 @@
 
   .messages-page .details.chat .content .body.allowed .keyboard .content {
     border-radius: 16px;
-    background-color: rgba(239, 243, 244, 1);
+    background-color: var(--message-color-2);
     padding: 4px;
     margin: 7px 12px 4px;
     display: flex;
@@ -730,14 +758,21 @@
   .messages-page .details.chat .content .body.allowed .keyboard .content .icons .emoji-icon,
   .messages-page .details.chat .content .body.allowed .keyboard .content .send-message.active .send-icon {
     cursor: pointer;
-    fill: #1d9bf0;
+    fill: var(--second-color);
   }
 
-  .messages-page .details.chat .content .body.allowed .keyboard .content .icons .media-icon:hover,
-  .messages-page .details.chat .content .body.allowed .keyboard .content .icons .gif-icon:hover,
-  .messages-page .details.chat .content .body.allowed .keyboard .content .icons .emoji-icon:hover,
-  .messages-page .details.chat .content .body.allowed .keyboard .content .send-message.active .send-icon:hover {
+  .messages-page.light .details.chat .content .body.allowed .keyboard .content .icons .media-icon:hover,
+  .messages-page.light .details.chat .content .body.allowed .keyboard .content .icons .gif-icon:hover,
+  .messages-page.light .details.chat .content .body.allowed .keyboard .content .icons .emoji-icon:hover,
+  .messages-page.light .details.chat .content .body.allowed .keyboard .content .send-message.active .send-icon:hover {
     background-color: #daeaf3;
+  }
+
+  .messages-page.dark .details.chat .content .body.allowed .keyboard .content .icons .media-icon:hover,
+  .messages-page.dark .details.chat .content .body.allowed .keyboard .content .icons .gif-icon:hover,
+  .messages-page.dark .details.chat .content .body.allowed .keyboard .content .icons .emoji-icon:hover,
+  .messages-page.dark .details.chat .content .body.allowed .keyboard .content .send-message.active .send-icon:hover {
+    background-color: #202F3B;
   }
 
   .messages-page .details.chat .content .body.allowed .keyboard .content .icons .media-icon {
@@ -884,13 +919,20 @@
     position: absolute;
     z-index: 2;
     /* max-width: 132px; */
-    background-color: white;
+    background-color: var(--bg-color);
     border-radius: 12px;
     overflow: hidden;
+    z-index: 101;
+  }
+
+  .messages-page.light .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools {
     box-shadow:
       0 0 15px rgba(101, 119, 134, 0.2),
       0 0 3px 1px rgba(101, 119, 134, 0.15);
-    z-index: 101;
+  }
+
+  .messages-page.dark .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools {
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 15px, rgba(255, 255, 255, 0.15) 0px 0px 3px 1px;
   }
 
   .messages-page .details.chat .send-msg-fail-pop,
@@ -899,7 +941,7 @@
     bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #1d9bf0;
+    background-color: var(--second-color);
     color: white;
     font-size: 15px;
     font-weight: 400;
@@ -973,9 +1015,9 @@
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-delete-pop .delete-pop-content .delete-pop-choices ul li.cancel {
-    color: black;
-    background-color: white;
-    border: 1px solid #ddd;
+    color: var(--main-color);
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-delete-pop .delete-pop-content .delete-pop-choices ul li.cancel:hover {
@@ -993,16 +1035,18 @@
     width: 180px;
     font-size: 15px;
     font-weight: 600;
-    background-color: white;
+    background-color: var(--bg-color);
+    color: var(--main-color);
     transition: 0.2s;
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools ul li .tool-content:hover {
-    background-color: #f7f9f9;
+    background-color: var(--bg-color-hover);
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools ul li .tool-content .tool-icon {
     padding-right: 12px;
+    fill: var(--main-color);
   }
 
   .messages-page .details.chat .content .body.allowed .chatbox .chatbox-content .messages .message .message-content .message-box .message-interaction .message-tools ul li .tool-content .tool-text {}
