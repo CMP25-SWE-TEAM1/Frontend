@@ -1,15 +1,13 @@
 import React from "react"
-import { screen, render, within, act } from "@testing-library/react"
+import { screen, render, within, act, fireEvent } from "@testing-library/react"
 import ChangeEmail from "./ChangeEmail"
 import { BrowserRouter } from "react-router-dom"
 import user from "@testing-library/user-event"
 import { Provider } from "react-redux"
 import store from "../../../store"
+import axios from 'axios';
 
 
-/**
-* Allows the user to change thier email after code verification
-**/
 
 describe("Content", () => {
   test("main header", () => {

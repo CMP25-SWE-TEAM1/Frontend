@@ -1,0 +1,104 @@
+[
+  [
+    {
+      "description": "Same as settings page but appears only on mobile phones.",
+      "displayName": "MobileSettings",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "The main settings component, it defines the layout and includes the rest of the components",
+      "displayName": "Settings",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Allows the user to change their theme and the primary color of the website",
+      "displayName": "Display",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Allows the user to change thier password after confirming the previous one",
+      "displayName": "ChangePassword",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Includes all account changes that could be made by the user\nChange username, email, password",
+      "displayName": "Account",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Contains all the display settings",
+      "displayName": "AccessibilityDisplayLanguages",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Allows the user to change thier email after code verification",
+      "displayName": "ChangeEmail",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Shows the username and email of the current user and allows the user to change them \nThe user must confirm their password to see that information\nThe page changes based on whether the user has confirmed their password or not",
+      "displayName": "AccountInformation",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Allows the user to change thier username",
+      "displayName": "ChangeUsername",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Displays a list muted users and allows the user to unmute or mute them again",
+      "displayName": "Muted",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Displays a list blocked users and allows the user to unblock or block them again",
+      "displayName": "Blocked",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Contains block and mute settings",
+      "displayName": "PrivacySafety",
+      "methods": []
+    }
+  ],
+
+
+  [
+    {
+      "description": "Displays the different search results in different tabs\nTop: some people and all posts \nLatest: all posts\nPeaople: all people",
+      "displayName": "SearchResults",
+      "methods": []
+    }
+  ],
+
+  
+  [
+    {
+      "description": "Shows up when the user tries to go to a non existing page or a page they can't access",
+      "displayName": "NotFound",
+      "methods": []
+    }
+  ]
+]

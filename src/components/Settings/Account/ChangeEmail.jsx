@@ -7,6 +7,10 @@ import Alert from "@mui/material/Alert"
 import { styles } from "../../../styles"
 import { changeEmail } from "../../../store/UserSlice"
 
+/**
+* Allows the user to change thier email after code verification
+**/
+
 const ChangeEmail = () => {
   const [email, setEmail] = useState("")
   const { user, token } = useSelector((state) => state.user)
