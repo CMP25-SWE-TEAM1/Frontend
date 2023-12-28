@@ -131,6 +131,43 @@ const MessageCompose = (props) => {
     }
   }
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  // Update the window width when the component mounts
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    // Remove the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+
+  const modalStyle = {
+    position: "absolute",
+
+    backgroundColor: "background.paper",
+    border: "1px solid #767C86",
+    borderRadius: "16px",
+  }
+
+  if (windowWidth < 700) {
+    modalStyle.width = "100vw"
+    modalStyle.height = "100vh"
+    modalStyle.maxWidth = "none" // optional, to remove any max-width constraints
+  } else {
+    modalStyle.width = "601.6px"
+    modalStyle.height = "651.6px"
+    modalStyle.top = "50%"
+    modalStyle.left = "50%"
+    modalStyle.transform = "translate(-50%, -50%)"
+    modalStyle.maxWidth = "none" // optional, to remove any max-width constraints
+  }
+
   return (
     <Modal
       open={composeModalOpen}
@@ -246,20 +283,6 @@ const MessageCompose = (props) => {
       </Box>
     </Modal>
   )
-}
-
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  minWidth: 600,
-  maxWidth: 600,
-  maxHeight: "80vh",
-  borderRadius: "16px",
-  overflowY: "auto",
-  bgcolor: "background.paper",
-  boxShadow: 24,
 }
 
 export default MessageCompose

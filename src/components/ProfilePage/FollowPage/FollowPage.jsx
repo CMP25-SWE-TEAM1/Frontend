@@ -36,12 +36,8 @@ const FollowPage = () => {
   return (
     <>
       {user && (
-        <div id="followers-following-page-test" className=" flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
-          <div
-            className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow 
-      overflow-y-scroll border border-b-0 border-t-0 border-lightBorder 
-      dark:border-darkBorder max-xs:w-fit  sm:w-[600px]"
-          >
+        <div id="followers-following-page-test" className=" flex w-screen flex-1 flex-grow-[8]">
+          <div className="home ml-0 mr-1 w-full max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder  max-xs:border-l-0 max-xs:border-r-0 sm:w-[600px]">
             {(tag === user.username || profileres) && <Header profilename={user.username === tag ? user.nickname : profileres.nickname} profiletag={user.username === tag ? tag : profileres.nickname}></Header>}
             <div id="FollowNavbar-div" className={`flex h-[50px] w-[100%] flex-row  `}>
               {(tag === user.username || profileres) && <HorizontalNavbar urls={FollowNavLinks} originalUrl={`/${tag}`} handlers={[]} />}

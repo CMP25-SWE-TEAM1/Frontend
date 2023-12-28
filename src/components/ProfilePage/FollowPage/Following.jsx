@@ -7,6 +7,7 @@ import { useSelector } from "react-redux"
 import FollowButton from "../FollowButton"
 import { useParams } from "react-router-dom"
 import followPagerequests from "./followPagerequests"
+import { Avatar } from "@mui/material"
 function Following() {
   const userd = useSelector((state) => state.user.user)
   const { token } = useSelector((state) => state.user)
@@ -38,9 +39,10 @@ function Following() {
     <div id="Following">
       {followings.map((user) => (
         <div id={user.id} key={user.id} className="flex h-[85px] w-[100%] hover:bg-lightHover dark:hover:bg-darkHover">
-          <div className="w-[10%] pl-2">
+          <div className=" pl-2 pr-2">
             <Link to={`/${user.username}`}>
-              <img src={user.profile_image} alt="Profile" className="mt-1 h-10 w-10 rounded-3xl" />
+              <Avatar src={ user.profile_image} alt="profile" />
+              {/* <img src={user.profile_image} alt="Profile" className="mt-1 h-10  rounded-3xl" /> */}
             </Link>
           </div>
           <div className="w-[70%] text-ellipsis ">
