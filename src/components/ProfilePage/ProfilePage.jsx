@@ -72,8 +72,8 @@ const ProfilePage = (props) => {
           {profileres && (
             <div
               id="Profile"
-              className="flex h-[100%] flex-col border border-b-0 
-        border-t-0 border-lightBorder dark:border-darkBorder md:w-[100%]"
+              className="flex h-[100%] flex-col border border-b-0 border-t-0 border-lightBorder 
+        dark:border-darkBorder max-xs:border-l-0 max-xs:border-r-0 md:w-[100%]"
             >
               <Header profilename={profileres.nickname} postsnum={profileres.num_of_posts} likenum={profileres.num_of_likes}></Header>
               <div id="Upperhalf" className="relative m-0 h-[35vh] w-[100%]">
