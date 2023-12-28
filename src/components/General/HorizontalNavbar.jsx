@@ -1,6 +1,11 @@
 import { Link, useLocation } from "react-router-dom"
 import React, { useEffect, useState } from "react"
 
+/**
+ * Renders a horizontally-aligned navbar with customizable links, highlighting the active section and optionally executing click handlers.
+ *
+ * @component
+ */
 const HorizontalNavbar = ({ urls, originalUrl, handlers }) => {
   const location = useLocation() // once ready it returns the 'window.location' object
   const [urlLocation, setUrlLocation] = useState(null)
@@ -22,5 +27,25 @@ const HorizontalNavbar = ({ urls, originalUrl, handlers }) => {
     </>
   )
 }
+
+// HorizontalNavbar.propTypes = {
+//   /**
+//    * Array of objects containing URL information for the navbar links
+//    */
+//   urls: React.PropTypes.arrayOf(
+//     React.PropTypes.shape({
+//       title: React.PropTypes.string.isRequired,
+//       location: React.PropTypes.string.isRequired,
+//     })
+//   ).isRequired,
+//   /**
+//    * Base URL for the navbar links
+//    */
+//   originalUrl: React.PropTypes.string.isRequired,
+//   /**
+//    * Array of click handlers for each link (optional)
+//    */
+//   handlers: React.PropTypes.arrayOf(React.PropTypes.func),
+// }
 
 export default HorizontalNavbar

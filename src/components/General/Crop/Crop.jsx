@@ -5,6 +5,11 @@ import React, { useState } from "react"
 import Cropper from "react-easy-crop"
 import getCroppedImg from "./utils/CropImage"
 
+/**
+ * Presents a user interface for cropping images, enabling adjustments to zoom, rotation, and cropping area.
+ *
+ * @component
+ */
 const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect, originalPhoto }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
@@ -88,6 +93,32 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect, originalPho
     </>
   )
 }
+// Crop.propTypes = {
+//   /**
+//    * The URL of the photo to be cropped
+//    */
+//   photoURL: React.PropTypes.string.isRequired,
+//   /**
+//    * Function to close the crop modal
+//    */
+//   setOpenCrop: React.PropTypes.func.isRequired,
+//   /**
+//    * Function to update the photo URL after cropping
+//    */
+//   setPhotoURL: React.PropTypes.func.isRequired,
+//   /**
+//    * Function to set the cropped image file
+//    */
+//   setFile: React.PropTypes.func.isRequired,
+//   /**
+//    * The desired aspect ratio for cropping (e.g., "16:9")
+//    */
+//   aspect: React.PropTypes.string,
+//   /**
+//    * The original photo URL, for resetting if needed
+//    */
+//   originalPhoto: React.PropTypes.string,
+// }
 
 export default Crop
 

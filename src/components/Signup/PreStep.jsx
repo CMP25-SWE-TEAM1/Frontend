@@ -4,6 +4,18 @@ import GoogleLoginButton from "../General/GoogleLoginButton"
 
 import { Link } from "react-router-dom"
 
+import React from "react"
+
+/**
+ * Generates PreStep component which introduces GigaChat and offers initial signup options:
+ * - Displays a welcome message inviting users to join GigaChat.
+ * - Presents a button for Google sign-in using the GoogleLoginButton component.
+ * - Provides a clear "Create Account" button to initiate the signup process.
+ * - Includes links to Terms of Service, Privacy Policy, and Cookie Use.
+ * - Offers a "Log in" link for existing users.
+ *
+ * @component
+ */
 const PreStep = ({ handleCloseModal, nextShow }) => {
   const themeColor = useSelector((state) => state.theme.color)
 
@@ -55,4 +67,15 @@ const PreStep = ({ handleCloseModal, nextShow }) => {
   )
 }
 
+// PreStep.propTypes = {
+//   /**
+//    * Function used to handle the closing of the sign up modal
+//    */
+//   handleCloseModal: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Function to navigate to the next step
+//    */
+//   nextShow: React.PropTypes.func.isRequired,
+// }
 export default PreStep

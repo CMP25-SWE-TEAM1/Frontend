@@ -15,8 +15,16 @@ import axios from "axios"
 
 import { EMAIL_REGEX } from "../../constants/signupConstants.js"
 
+import React from "react"
+
 import { getColor } from "../../constants"
 
+
+/**
+ * Renders a user-friendly login modal, guiding users through identification, authentication, and error handling in a multi-step process. Supports login via email/username/phone number and password, as well as Google authentication.
+ *
+ * @component
+ */
 const Login = ({ openModal, handleCloseModal, setLocation }) => {
   const [userName, setUserName] = useState("")
   const [password, setPassword] = useState("")
@@ -260,5 +268,16 @@ const Login = ({ openModal, handleCloseModal, setLocation }) => {
     </>
   )
 }
+
+// Login.propTypes = {
+//   /**
+//    * Function used to handle the Closing of the Edit profile modal, so it doesn't appear when needed
+//    */
+//   handleCloseModal: React.PropTypes.func,
+//   /**
+//    * The state of the sign up modal, if false then it's not shown else it's shown
+//    */
+//   openModal: React.PropTypes.bool,
+// }
 
 export default Login

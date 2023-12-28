@@ -8,6 +8,13 @@ import { useNavigate } from "react-router"
 import { loginUser } from "../../store/UserSlice"
 import { APIs } from "../../constants/signupConstants"
 
+import React from "react"
+
+/**
+ * Facilitates user authentication via Google, securely retrieving and submitting user information to initiate login and registration processes.
+ *
+ * @component
+ */
 const GoogleLoginButton = ({ handleCloseModal, message }) => {
   const [user, setUser] = useState()
   const [profile, setProfile] = useState()
@@ -127,4 +134,14 @@ const GoogleLoginButton = ({ handleCloseModal, message }) => {
   )
 }
 
+// GoogleLoginButton.propTypes = {
+//   /**
+//    * Function used to handle closing of the modal containing this button
+//    */
+//   handleCloseModal: React.PropTypes.func.isRequired,
+//   /**
+//    * Text message to display on the button
+//    */
+//   message: React.PropTypes.string.isRequired,
+// }
 export default GoogleLoginButton

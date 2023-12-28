@@ -1,0 +1,65 @@
+[
+  [
+    {
+      "description": "Renders a tabbed interface with customizable styling and theme-aware color adjustments, managing tab selection and indicator display.\r\n\r\n@component",
+      "displayName": "CustomTabs",
+      "methods": [],
+      "props": {
+        "tabValue": {
+          "type": {
+            "name": "number"
+          },
+          "required": true,
+          "description": "The index of the currently selected tab"
+        },
+        "handleChangeTabValue": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to handle tab changes"
+        },
+        "tabsNames": {
+          "type": {
+            "name": "arrayOf",
+            "value": {
+              "name": "string"
+            }
+          },
+          "required": true,
+          "description": "Array of tab names"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Renders content for a specific tab panel within a tabbed interface, conditionally displaying based on the selected tab.\r\n\r\n@component",
+      "displayName": "CustomTabPanel",
+      "methods": [],
+      "props": {
+        "children": {
+          "type": {
+            "name": "node"
+          },
+          "required": false,
+          "description": ""
+        },
+        "index": {
+          "type": {
+            "name": "number"
+          },
+          "required": true,
+          "description": ""
+        },
+        "value": {
+          "type": {
+            "name": "number"
+          },
+          "required": true,
+          "description": ""
+        }
+      }
+    }
+  ]
+]

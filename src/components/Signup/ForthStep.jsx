@@ -9,6 +9,18 @@ import { useState, useRef, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { getColor } from "../../constants"
 
+import React from "react"
+
+/**
+ * Generates ForthStep component which verifies the user's email address during signup, offering key features:
+ * - Prompts the user to enter the received verification code.
+ * - Validates the code and progresses to the next step upon success.
+ * - Displays an error message for incorrect codes.
+ * - Provides a button to resend the verification email, managing a countdown timer to prevent excessive resends.
+ * - Updates user data and token upon successful verification.
+ *
+ * @component
+ */
 const ForthStep = ({ setUserTag, setOriginalUsername, setUser, setUserToken, nextShow, handleOpenBirthdateError, mock, email }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
 
@@ -129,5 +141,47 @@ const ForthStep = ({ setUserTag, setOriginalUsername, setUser, setUserToken, nex
     </div>
   )
 }
+
+// ForthStep.propTypes = {
+//   /**
+//    * Function to update the user's tag
+//    */
+//   setUserTag: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Function to update the original username
+//    */
+//   setOriginalUsername: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Function to update the user state
+//    */
+//   setUser: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Function to update the user token
+//    */
+//   setUserToken: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Function to navigate to the next step
+//    */
+//   nextShow: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Function to handle opening the birthdate error modal
+//    */
+//   handleOpenBirthdateError: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Boolean indicating whether to use mock APIs
+//    */
+//   mock: React.PropTypes.bool.isRequired,
+
+//   /**
+//    * User's email address
+//    */
+//   email: React.PropTypes.string.isRequired,
+// }
 
 export default ForthStep

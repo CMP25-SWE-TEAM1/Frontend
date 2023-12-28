@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
+import React from "react"
+
 import { Modal, Box } from "@mui/material"
 
 import { useSelector } from "react-redux"
@@ -22,9 +24,30 @@ import TagStep from "./TagStep.jsx"
 import ErrorPage from "./ErrorPage.jsx"
 import PreStep from "./PreStep.jsx"
 
+/**
+ * Generates SignUp component, orchestrating the multi-step signup process:
+ * - Presents a welcome screen with signup options (PreStep).
+ * - Guides users through email, nickname, birthdate, reCAPTCHA, and password collection (FirstStep, SecondStep, ThirdStep, ForthStep, FifthStep).
+ * - Facilitates user tag creation and profile picture upload (TagStep, UploadProfilePicture).
+ * - Handles signup completion, dispatching relevant actions and navigating to the home page (handleCompleteSignup).
+ * - Manages a mock mode for testing purposes.
+ * - Adapts modal styling to different window widths.
+ * - Manages error scenarios, including invalid emails and birthdates (ErrorPage).
+ * - Integrates with Redux for user state management and signup actions.
+ *
+ * @component
+ */
 const SignUp = ({ openModal, handleCloseModal }) => {
+  /**
+   * @type boolean
+   * @description Flag to enable/disable mock mode for testing.
+   */
   const mock = false
 
+  /**
+   * @type boolean
+   * @description True if the user's preferred theme is dark mode.
+   */
   const darkMode = useSelector((state) => state.theme.darkMode)
 
   const dispatch = useDispatch()
@@ -45,6 +68,11 @@ const SignUp = ({ openModal, handleCloseModal }) => {
   const [emailExistError, setEmailExistError] = useState(false)
   const [openBirthdateErrorModal, setOpenBirthdateErrorModal] = useState(false)
 
+  /**
+   * @description Navigates to the next step of the registration process.
+   * @method
+   * @param {number} position - The position of the step to show.
+   */
   function nextShow(position) {
     const JoinGigaChat = document.getElementById("Join GigaChat")
     const FirstStep = document.getElementById("First Step")
@@ -93,11 +121,28 @@ const SignUp = ({ openModal, handleCloseModal }) => {
     }
   }
 
+  /**
+   * Validates the email format using a regular expression.
+   *
+   * @param {string} emeil - The email to validate.
+   * @returns {boolean} - Whether the email is valid.
+   */
   function validEmail(emeil) {
     return EMAIL_REGEX.test(emeil)
   }
 
+  /**
+   * Handles closing the birthdate error modal.
+   *
+   * @returns {void}
+   */
   const handleCloseBirthdateErrorModal = () => setOpenBirthdateErrorModal(false)
+
+  /**
+   * Handles opening the birthdate error modal.
+   *
+   * @returns {void}
+   */
   const handleOpenBirthdateErrorModal = () => setOpenBirthdateErrorModal(true)
 
   const handleOpenBirthdateError = () => {
@@ -110,6 +155,12 @@ const SignUp = ({ openModal, handleCloseModal }) => {
     handleOpenBirthdateErrorModal()
   }
 
+  /**
+   * Handles the completion of the signup process.
+   *
+   * @param {Object} user - The user object.
+   * @returns {void}
+   */
   const handleCompleteSignup = (user) => {
     handleCloseModal()
 
@@ -134,6 +185,11 @@ const SignUp = ({ openModal, handleCloseModal }) => {
 
   // Update the window width when the component mounts
   useEffect(() => {
+    /**
+     * Handles resizing the window and updating the window width state.
+     *
+     * @returns {void}
+     */
     const handleResize = () => {
       setWindowWidth(window.innerWidth)
     }
@@ -200,4 +256,15 @@ const SignUp = ({ openModal, handleCloseModal }) => {
     </>
   )
 }
+
+// SignUp.propTypes = {
+//   /**
+//    * Function used to handle the Closing of the Edit profile modal, so it doesn't appear when needed
+//    */
+//   handleCloseModal: React.Proptypes.func,
+//   /**
+//    * The state of the sign up modal, if false then it's not shown else it's shown
+//    */
+//   openModal: React.Proptypes.bool,
+// }
 export default SignUp

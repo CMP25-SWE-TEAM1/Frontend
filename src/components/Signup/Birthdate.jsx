@@ -4,10 +4,18 @@ import MenuItem from "@mui/material/MenuItem"
 import FormControl from "@mui/material/FormControl"
 import Select from "@mui/material/Select"
 
+import React from "react"
+
 import { last120Years, days, months } from "../../constants/index.js"
 
 import { useSelector } from "react-redux"
 
+
+/**
+ * Generates Birthdate component which enables users to select their birthdate through separate month, day, and year dropdown fields.
+ *
+ * @component
+ */
 const Birthdate = ({ month, setMonth, day, setDay, year, setYear, yearwidth, monthwidth }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
 
@@ -215,5 +223,47 @@ const Birthdate = ({ month, setMonth, day, setDay, year, setYear, yearwidth, mon
     </div>
   )
 }
+
+// Birthdate.propTypes = {
+//   /**
+//    * Initial selected month
+//    */
+//   month: React.PropTypes.string,
+
+//   /**
+//    * Function to update the selected month
+//    */
+//   setMonth: React.PropTypes.func,
+
+//   /**
+//    * Initial selected day
+//    */
+//   day: React.PropTypes.string,
+
+//   /**
+//    * Function to update the selected day
+//    */
+//   setDay: React.PropTypes.func,
+
+//   /**
+//    * Initial selected year
+//    */
+//   year: React.PropTypes.string,
+
+//   /**
+//    * Function to update the selected year
+//    */
+//   setYear: React.PropTypes.func,
+
+//   /**
+//    * Width of the year select field
+//    */
+//   yearwidth: React.PropTypes.number,
+
+//   /**
+//    * Width of the month select field
+//    */
+//   monthwidth: React.PropTypes.number,
+// }
 
 export default Birthdate

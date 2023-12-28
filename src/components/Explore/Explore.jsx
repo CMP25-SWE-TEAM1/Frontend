@@ -10,6 +10,14 @@ import SearchComponent from "./SearchComponent"
 
 import { useNavigate } from "react-router-dom"
 
+/**
+ * Renders the Explore page, which showcases various content categories and widgets.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {Object} props.user - User object from Redux state
+ * @returns {JSX.Element} JSX element representing the Explore page
+ */
 const Explore = () => {
   const user = useSelector((state) => state.user.user)
 

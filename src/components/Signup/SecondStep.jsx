@@ -4,6 +4,17 @@ import { useState } from "react"
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
+import React from "react"
+
+/**
+ * Generates SecondStep component which integrates reCAPTCHA for security during signup:
+ * - Displays a clear "Step 2 of 5" progress indicator.
+ * - Presents the reCAPTCHA challenge for user verification.
+ * - Enables progression to the next step only upon successful reCAPTCHA completion.
+ * - Provides a back button for returning to the previous step.
+ *
+ * @component
+ */
 const SecondStep = ({ nextShow }) => {
   const [captchaIsDone, setCaptchaIsDone] = useState(false)
   const siteKey = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" //testing
@@ -41,5 +52,12 @@ const SecondStep = ({ nextShow }) => {
     </div>
   )
 }
+
+// SecondStep.propTypes = {
+//   /**
+//    * Function to navigate to the next step
+//    */
+//   nextShow: React.PropTypes.func.isRequired,
+// }
 
 export default SecondStep

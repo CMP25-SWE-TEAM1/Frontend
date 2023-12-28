@@ -1,3 +1,9 @@
+
+/**
+ * Renders a user-friendly placeholder when no notifications are present, providing clear guidance and a link to learn more about verified accounts.
+ *
+ * @component
+ */
 const NotificationEmpty = () => {
   return (
     <div className="mt-10 flex flex-col items-center">
