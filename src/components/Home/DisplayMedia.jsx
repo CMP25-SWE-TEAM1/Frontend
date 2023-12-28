@@ -12,7 +12,7 @@ function DisplayMedia({ mediaUrls, mediaTypes, margin, handleDeleteMedia, showCa
   }
   return (
     <Link>
-      <div data-testid="displayMedia" className={`my-1.5 flex h-fit w-fit flex-wrap  ${mediaUrls.length === 0 ? "hidden" : ""}`}>
+      <div data-testid="displayMedia" className={`my-1.5 flex  flex-wrap  ${mediaUrls.length === 0 ? "hidden" : ""}`}>
         {mediaUrls.map((item, index) => {
           return mediaTypes[index] === "jpg" ? (
             <div key={index} className={`${mediaUrls.length > 1 ? "w-[50%]" : "w-[100%]"} relative h-fit min-h-[50%]  grow`}>
