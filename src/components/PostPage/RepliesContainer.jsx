@@ -3,7 +3,7 @@ import Reply from "./Reply"
 
 function RepliesContainer({ replies }) {
   return (
-    <div className="replies-container">
+    <div className="replies-container max-lg:w-[85vw] max-xs:w-screen">
       {replies &&
         replies.map((reply) => (
           <div key={reply.id}>

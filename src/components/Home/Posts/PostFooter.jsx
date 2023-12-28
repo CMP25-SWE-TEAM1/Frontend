@@ -14,7 +14,7 @@ function PostFooter({ id, pathname, replyCount, reposted, repostsNum, liked, lik
   const themeColor = useSelector((state) => state.theme.color)
 
   return (
-    <div className="post-footer mt-3 flex w-[85%] gap-12 text-ternairy dark:text-secondary">
+    <div className="post-footer mt-3 flex w-[85%] gap-12 max-xs:gap-[6%] text-ternairy dark:text-secondary">
       <Link>
         <div className={`group pointer-events-auto -ml-2 flex cursor-pointer items-center transition-colors  duration-300 hover:${"text-" + getColor(themeColor)}`} title="Reply">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-[#e7f5fd] dark:group-hover:bg-[#031018] ">

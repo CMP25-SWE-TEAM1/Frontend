@@ -9,7 +9,7 @@ const PostsContainer = ({ posts, setPosts }) => {
     console.log(posts)
   }, [posts])
   return (
-    <div className="post-container w-full">
+    <div className="post-container w-full max-lg:w-[85vw] max-xs:w-screen">
       {posts.map((p, index) => {
         return (
           <div key={index}>
