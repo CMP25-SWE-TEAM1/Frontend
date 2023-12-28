@@ -152,8 +152,8 @@ const Home = () => {
   }, [feedRef])
 
   return (
-    <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
-      <div ref={feedRef} id="homeFeed" className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] max-xs:border-l-0 max-xs:border-r-0 sm:w-[600px]">
+    <div className="flex flex-1 flex-grow-[8]  ">
+      <div ref={feedRef} id="homeFeed" className="home ml-0 mr-1 w-full max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder  max-xs:border-l-0 max-xs:border-r-0 sm:w-[600px]">
         <ComposePost buttonName="Post" handleNewPost={(newPost) => handleNewPost(newPost)} postType="tweet" />
         <PostsContainer posts={posts} setPosts={setPosts} />
         {/* .sort(() => Math.random() - 0.5) */}
