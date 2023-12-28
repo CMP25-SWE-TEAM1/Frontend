@@ -5,6 +5,17 @@ import WidgetsTrendsContainer from "./WidgetsTrendsContainer"
 import { useNavigate } from "react-router-dom"
 import { getColor } from "../../constants"
 
+/**
+ * Generates WidgetsTrends component, fetching and displaying trending topics:
+ * - Retrieves trending topics from the server using axios.
+ * - Manages loading state while data is being fetched.
+ * - Passes fetched trends to WidgetsTrendsContainer for visual representation.
+ * - Provides a "Show more" button to navigate users to the Explore page for further exploration.
+ * - Integrates with Redux for user token access and theme color selection.
+ * - Adapts visual styling for light and dark themes.
+ *
+ * @component
+ */
 const WidgetsTrends = () => {
   const userToken = useSelector((state) => state.user.token)
   const [loading, setLoading] = useState(true)

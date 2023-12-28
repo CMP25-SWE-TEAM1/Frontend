@@ -20,6 +20,11 @@ const notificationsNavLinks = [
   { title: "Mentions", location: "mentions" },
 ]
 
+/**
+ * Serves as the central hub for notifications, offering a seamless navigation experience with clear structure and optional widgets for customization.
+ *
+ * @component
+ */
 const Notifications = () => {
   const user = useSelector((state) => state.user.user)
   const userToken = useSelector((state) => state.user.token)

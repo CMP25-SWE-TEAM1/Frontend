@@ -2,6 +2,17 @@ import { Avatar } from "@mui/material"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
+import React from "react"
+
+/**
+ * Renders a single user search option, displaying the user's avatar, nickname, and username, and navigating to the user's profile page when clicked.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {Object} props.option - User data to display
+ * @param {Object} props.props - Additional props passed to the underlying element
+ * @returns {JSX.Element} JSX element representing the user search option
+ */
 const UserSearchComponent = ({ option, ...props }) => {
   const navigate = useNavigate()
 
@@ -15,5 +26,16 @@ const UserSearchComponent = ({ option, ...props }) => {
     </div>
   )
 }
+
+// UserSearchComponent.propTypes = {
+//   /**
+//    * The trend data to display
+//    */
+//   option: React.PropTypes.object.isRequired,
+//   /**
+//    * Additional props passed to the underlying element
+//    */
+//   props: React.PropTypes.object,
+// }
 
 export default UserSearchComponent

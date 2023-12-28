@@ -78,7 +78,7 @@ function PostFooter({ id, pathname, replyCount, reposted, repostsNum, liked, lik
           </div>
         </Link>
       )}
-      <div className={`bookmarkUpload flex ${pathname.search(id) === -1 ? "" : "w-40 justify-between"}`}>
+      {/* <div className={`bookmarkUpload flex ${pathname.search(id) === -1 ? "" : "w-40 justify-between"}`}>
         <Link>
           <div className={`group pointer-events-auto flex cursor-pointer items-center transition-colors duration-300 hover:${"text-" + getColor(themeColor)}`} title="Bookmark">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-inherit group-hover:bg-[#e7f5fd] dark:group-hover:bg-[#031018]">
@@ -103,7 +103,7 @@ function PostFooter({ id, pathname, replyCount, reposted, repostsNum, liked, lik
             </div>
           </div>
         </Link>
-      </div>
+      </div> */}
     </div>
   )
 }

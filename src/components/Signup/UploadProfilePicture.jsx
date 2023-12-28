@@ -13,10 +13,27 @@ import { changeProfilePicture } from "../../store/UserSlice"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 
+import React from "react"
+
 import Crop from "../General/Crop/Crop"
 
 import "../../styles/signup.css"
 
+/**
+ * Generates UploadProfilePicture component, enabling user profile picture selection and upload:
+ * - Displays current profile picture or a default placeholder.
+ * - Provides a button to trigger image selection, visually integrated within the picture display.
+ * - Handles image selection using a hidden file input, updating the preview image.
+ * - Offers a "Skip for now" option for delayed profile picture update.
+ * - Launches a modal for image cropping upon picture selection.
+ * - Uploads the cropped image to the server for final saving.
+ * - Updates the user object with the new profile picture URL.
+ * - Handles different authentication scenarios for signup completion.
+ * - Integrates with Redux store for state management.
+ * - Employs conditional rendering for adapting to different usage contexts (signup vs. profile editing).
+ *
+ * @component
+ */
 const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleCloseModal, fromSwitch, email, password }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const user = useSelector((state) => state.user.user)
@@ -196,4 +213,41 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
     </div>
   )
 }
+
+// UploadProfilePicture.propTypes = {
+//   /**
+//    * User object from signup process
+//    */
+//   userR: React.PropTypes.object.isRequired,
+
+//   /**
+//    * Function to update the user object
+//    */
+//   setUser: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Function to handle completion of signup
+//    */
+//   handleCompleteSignup: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Function to handle closing of the signup modal
+//    */
+//   handleCloseModal: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Boolean indicating if the component is being used for profile editing
+//    */
+//   fromSwitch: React.PropTypes.bool.isRequired,
+
+//   /**
+//    * User's email
+//    */
+//   email: React.PropTypes.string.isRequired,
+
+//   /**
+//    * User's password
+//    */
+//   password: React.PropTypes.string.isRequired,
+// }
 export default UploadProfilePicture

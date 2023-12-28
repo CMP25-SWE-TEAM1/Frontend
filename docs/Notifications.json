@@ -1,0 +1,194 @@
+[
+  [
+    {
+      "description": "Fetches and displays mentions of the current user in a user-friendly format, ensuring seamless integration with the PostsContainer for a unified experience.\r\n\r\n@component",
+      "displayName": "Mentions",
+      "methods": [],
+      "props": {
+        "handleCloseModal": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "Function used to handle the Closing of the Edit profile modal, so it doesn't appear when needed"
+        },
+        "openModal": {
+          "type": {
+            "name": "bool"
+          },
+          "required": false,
+          "description": "The state of the mentions modal, if false then it's not shown else it's shown"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Fetches, renders, and manages a comprehensive list of notifications, integrating user profiles and pagination for seamless viewing.\r\n\r\n@component",
+      "displayName": "All",
+      "methods": [],
+      "props": {
+        "handleCloseModal": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "Function used to handle the Closing of the Edit profile modal, so it doesn't appear when needed"
+        },
+        "openModal": {
+          "type": {
+            "name": "bool"
+          },
+          "required": false,
+          "description": "The state of the notifications modal, if false then it's not shown else it's shown"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Renders individual notifications with informative icons, text, dates, and notifier details, providing clear visual cues and navigation to relevant profiles.\r\n\r\n@component",
+      "displayName": "NotificationComponent",
+      "methods": [],
+      "props": {
+        "logo": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "The logo URL to display"
+        },
+        "type": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "The type of notification"
+        },
+        "text": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "The text content of the notification"
+        },
+        "date": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "The date and time of the notification"
+        },
+        "notifier": {
+          "type": {
+            "name": "object"
+          },
+          "required": false,
+          "description": "Information about the notifier, if applicable"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Renders a user-friendly placeholder when no notifications are present, providing clear guidance and a link to learn more about verified accounts.\r\n\r\n@component",
+      "displayName": "NotificationEmpty",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Serves as the central hub for notifications, offering a seamless navigation experience with clear structure and optional widgets for customization.\r\n\r\n@component",
+      "displayName": "Notifications",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Manages the display of notifications, adapting content based on type and loading state, and rendering placeholders when appropriate.\r\n\r\n@component",
+      "displayName": "NotificationsContainer",
+      "methods": [],
+      "props": {
+        "list": {
+          "type": {
+            "name": "array"
+          },
+          "required": true,
+          "description": "The list of notifications to display"
+        },
+        "type": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "The type of notifications to display (e.g., \"verified\", \"mentions\")"
+        },
+        "feedRef": {
+          "type": {
+            "name": "object"
+          },
+          "required": true,
+          "description": "A ref object to attach to the container for the notification feed"
+        },
+        "loading": {
+          "type": {
+            "name": "bool"
+          },
+          "required": true,
+          "description": "Indicates whether notifications are currently loading"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Renders a placeholder with clear guidance when no notifications are present, encouraging exploration and engagement with verified accounts.\r\n\r\n@component",
+      "displayName": "NotificationPopup",
+      "methods": [],
+      "props": {
+        "notification": {
+          "type": {
+            "name": "object"
+          },
+          "required": false,
+          "description": "The notification object to display"
+        },
+        "open": {
+          "type": {
+            "name": "bool"
+          },
+          "required": true,
+          "description": "Controls whether the popup is open or closed"
+        },
+        "handleClick": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "Function called when the notification content is clicked"
+        },
+        "handleClose": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function used to handle the closing of the popup"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Captures and presents notifications specifically from verified accounts, ensuring users stay informed about important updates and actions.\r\n\r\n@component",
+      "displayName": "Verified",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Displays a visually engaging placeholder when no verified notifications are present, encouraging exploration and engagement with verified accounts.\r\n\r\n@component",
+      "displayName": "VerifiedEmpty",
+      "methods": []
+    }
+  ]
+]

@@ -1,0 +1,152 @@
+[
+  [
+    {
+      "description": "Renders the Explore page, which showcases various content categories and widgets.\r\n\r\n@component\r\n@param {Object} props - Component props\r\n@param {Object} props.user - User object from Redux state\r\n@returns {JSX.Element} JSX element representing the Explore page",
+      "displayName": "Explore",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Renders a search bar for finding users and trends, displaying results as the user types.\r\n\r\n@component\r\n@param {Object} props - Component props\r\n@param {string} props.query - Initial search query to display in the input field\r\n@returns {JSX.Element} JSX element representing the search component",
+      "displayName": "SearchComponent",
+      "methods": [],
+      "props": {
+        "query": {
+          "type": {
+            "name": "string"
+          },
+          "required": false,
+          "description": "The initial search query to be displayed in the input field"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Renders a single trend component with its index, category, name, and number of posts.\r\n\r\n@component\r\n@param {Object} props - Component props\r\n@param {number} props.index - Index of the trend within a list\r\n@param {string} props.category - Category of the trend (e.g., \"Worldwide\", \"Local\")\r\n@param {string} props.name - Name of the trend (e.g., \"#Hashtag\", \"Topic\")\r\n@param {number} props.numberOfPosts - Number of posts associated with the trend\r\n@param {Function} props.fetchTrendTweets - Function to fetch tweets for the trend when clicked (optional)\r\n@returns {JSX.Element} JSX element representing the trend component",
+      "displayName": "TrendComponent",
+      "methods": [],
+      "props": {
+        "index": {
+          "type": {
+            "name": "number"
+          },
+          "required": true,
+          "description": "The index of the trend within a list"
+        },
+        "category": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "The category of the trend (e.g., \"Worldwide\", \"Local\")"
+        },
+        "name": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "The name of the trend (e.g., \"#Hashtag\", \"Topic\")"
+        },
+        "numberOfPosts": {
+          "type": {
+            "name": "number"
+          },
+          "required": true,
+          "description": "The number of posts associated with the trend"
+        },
+        "fetchTrendTweets": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "A function to fetch tweets for the trend when clicked (optional)"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Renders a single trend search option, allowing navigation to the search results page for the selected trend.\r\n\r\n@component\r\n@param {Object} props - Component props\r\n@param {Object} props.option - Trend data to display\r\n@param {Object} props.props - Additional props passed to the underlying element\r\n@returns {JSX.Element} JSX element representing the trend search option",
+      "displayName": "TrendSearchOption",
+      "methods": [],
+      "props": {
+        "option": {
+          "type": {
+            "name": "object"
+          },
+          "required": true,
+          "description": "The trend data to display"
+        },
+        "props": {
+          "type": {
+            "name": "object"
+          },
+          "required": false,
+          "description": "Additional props passed to the underlying element"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Renders a container for displaying a list of trends, handling loading states and fetching tweets for individual trends.\r\n\r\n@component\r\n@param {Object[]} props.data - List of trend objects to display\r\n@param {boolean} props.loading - Indicates whether trends are currently loading\r\n@param {string} props.type - Type of trends being displayed (e.g., \"Worldwide\", \"Local\")\r\n@returns {JSX.Element} JSX element representing the trends container",
+      "displayName": "TrendsContainer",
+      "methods": [],
+      "props": {
+        "data": {
+          "type": {
+            "name": "array"
+          },
+          "required": true,
+          "description": "The list of trends to display"
+        },
+        "loading": {
+          "type": {
+            "name": "bool"
+          },
+          "required": true,
+          "description": "Indicates whether trends are currently loading"
+        },
+        "type": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "The type of trends being displayed (e.g., \"Worldwide\", \"Local\")"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Renders a single user search option, displaying the user's avatar, nickname, and username, and navigating to the user's profile page when clicked.\r\n\r\n@component\r\n@param {Object} props - Component props\r\n@param {Object} props.option - User data to display\r\n@param {Object} props.props - Additional props passed to the underlying element\r\n@returns {JSX.Element} JSX element representing the user search option",
+      "displayName": "UserSearchComponent",
+      "methods": [],
+      "props": {
+        "option": {
+          "type": {
+            "name": "object"
+          },
+          "required": true,
+          "description": "The trend data to display"
+        },
+        "props": {
+          "type": {
+            "name": "object"
+          },
+          "required": false,
+          "description": "Additional props passed to the underlying element"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "",
+      "displayName": "WithConditionalDataFetching",
+      "methods": []
+    }
+  ]
+]

@@ -1,5 +1,10 @@
 import NotificationEmpty from "./NotificationEmpty"
 
+/**
+ * Displays a visually engaging placeholder when no verified notifications are present, encouraging exploration and engagement with verified accounts.
+ *
+ * @component
+ */
 const VerifiedEmpty = () => {
   return (
     <div className="mt-16 flex flex-col items-center">

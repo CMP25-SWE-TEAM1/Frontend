@@ -1,10 +1,22 @@
 import SearchComponent from "../Explore/SearchComponent"
 import WidgetsTrends from "./WidgetsTrends"
+import React from "react"
 
+/**
+ * Generates Widgets component, conditionally rendering widgets and footer links:
+ * - Conditionally displays SearchComponent and WidgetsTrends based on parent component.
+ * - Presents footer content consistently, including:
+    - Links to Terms of Service, Privacy Policy, Cookie Policy, Accessibility, and Ads Info.
+    - Copyright information.
+ * - Uses responsive layout, hiding content on smaller screens and revealing on larger ones.
+ * - Accepts a 'parent' prop to control conditional rendering.
+ *
+ * @component
+ */
 const Widgets = ({ parent }) => {
   return (
     <div className="hidden max-w-[400px] flex-1 text-center lg:block">
-      <div className={`${parent === "explore" ? "hidden" : ""}`}>
+      <div data-testid="searchComp" className={`${parent === "explore" ? "hidden" : ""}`}>
         <SearchComponent query={""} />
       </div>
       <div className={`${parent === "explore" ? "hidden" : ""}`}>
@@ -35,5 +47,12 @@ const Widgets = ({ parent }) => {
     </div>
   )
 }
+
+// Widgets.propTypes = {
+//   /**
+//    * String indicating the parent component of this component
+//    */
+//   parent: React.PropTypes.string.isRequired,
+// }
 
 export default Widgets

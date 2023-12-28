@@ -14,6 +14,13 @@ import { useNavigate } from "react-router-dom"
 
 const Home = () => {
   const user = useSelector((state) => state.user.user)
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [])
   const userToken = useSelector((state) => state.user.token)
   // const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY"
   const [posts, setPosts] = useState([])
@@ -144,16 +151,9 @@ const Home = () => {
     }
   }, [feedRef])
 
-  const navigate = useNavigate()
-  useEffect(() => {
-    if (!user) {
-      navigate("/")
-    }
-  }, [])
-
   return (
-    <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
-      <div ref={feedRef} id="homeFeed" className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit max-xs:max-w-[475px] max-xs:border-l-0 max-xs:border-r-0 sm:w-[600px]">
+    <div className="flex flex-1 flex-grow-[8]  ">
+      <div ref={feedRef} id="homeFeed" className="home ml-0 mr-1 w-full max-w-[620px] shrink-0 flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder  max-xs:border-l-0 max-xs:border-r-0 sm:w-[600px]">
         <ComposePost buttonName="Post" handleNewPost={(newPost) => handleNewPost(newPost)} postType="tweet" />
         <PostsContainer posts={posts} setPosts={setPosts} />
         {/* .sort(() => Math.random() - 0.5) */}

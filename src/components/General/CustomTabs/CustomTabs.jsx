@@ -1,6 +1,7 @@
 import Tabs from "@mui/material/Tabs"
 import Tab from "@mui/material/Tab"
 import Box from "@mui/material/Box"
+import React from "react"
 
 import { useSelector } from "react-redux"
 
@@ -11,6 +12,11 @@ function a11yProps(index) {
   }
 }
 
+/**
+ * Renders a tabbed interface with customizable styling and theme-aware color adjustments, managing tab selection and indicator display.
+ *
+ * @component
+ */
 const CustomTabs = ({ tabValue, handleChangeTabValue, tabsNames }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
 
@@ -87,5 +93,20 @@ const CustomTabs = ({ tabValue, handleChangeTabValue, tabsNames }) => {
     </Box>
   )
 }
+
+// CustomTabs.propTypes = {
+//   /**
+//    * The index of the currently selected tab
+//    */
+//   tabValue: React.PropTypes.number.isRequired,
+//   /**
+//    * Function to handle tab changes
+//    */
+//   handleChangeTabValue: React.PropTypes.func.isRequired,
+//   /**
+//    * Array of tab names
+//    */
+//   tabsNames: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+// }
 
 export default CustomTabs
