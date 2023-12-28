@@ -182,10 +182,13 @@ const Sidebar = () => {
   return (
     <div className=" flex items-center justify-between  border-r border-lightBorder text-center text-black dark:border-darkBorder dark:text-white max-xs:!sticky max-xs:!bottom-0 max-xs:z-10 max-xs:backdrop-brightness-[90%] dark:max-xs:bg-black dark:max-xs:bg-opacity-50  dark:max-xs:backdrop-blur-sm dark:max-xs:backdrop-brightness-[30%] xs:max-w-[400px] xs:justify-end md:flex-grow">
       <div className={`flex h-full w-full flex-row  max-[1278px]:items-end max-xs:w-full max-xs:!items-center max-xs:justify-around xs:flex-col xs:pl-[30%]`} id="mahmoud_navigate_pre">
+        <div className="max-xs:hidden">
+
         <Button name={darkMode ? imageIcon("logo", darkLogo, 12) : imageIcon("logo", lightLogo, 12)} color="text-white" height="h-12" width="w-12" link="/home" alt="gigaChatIcon" other={`${shrink ? "mr-3" : ""} mt-0.5`} />
+        </div>
 
         {options}
-        <div onClick={handlePostClick}>
+        <div className="hidden xs:block" onClick={handlePostClick}>
           <Button name={shrink ? <HistoryEduOutlinedIcon /> : "Post"} color="text-white" backgroundColor={"bg-" + getColor(themeColor)} height={shrink ? "h-14" : "h-12"} width={shrink ? "w-14" : "w-56"} alt="post" title="post" other={shrink ? "mr-2" : ""} />
         </div>
         <PostPopup open={composePostPopup} setOpen={setComposePostPopup} />

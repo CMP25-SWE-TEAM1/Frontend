@@ -13,7 +13,7 @@ function Header(props) {
       id="Profile-header"
       className={`sticky top-0 z-10 flex  h-fit  flex-row  
                   py-[8px] ${darkMode ? `bg-black` : `bg-white`} 
-                 border border-b-0 border-t-0 border-lightBorder backdrop-blur-md dark:border-darkBorder`}
+                 border border-b-0 border-t-0 border-lightBorder backdrop-blur-md dark:border-darkBorder max-xs:border-l-0 max-xs:border-r-0`}
     >
       <div
         id="Arrowback"
