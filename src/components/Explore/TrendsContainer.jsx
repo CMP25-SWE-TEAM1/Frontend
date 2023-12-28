@@ -9,6 +9,8 @@ import PostsContainer from "../Home/Posts/PostsContainer"
 import CircularProgress from "@mui/material/CircularProgress"
 import Box from "@mui/material/Box"
 
+import React from "react"
+
 const tst = [
   {
     categoray: "Egypt",
@@ -17,6 +19,15 @@ const tst = [
   },
 ]
 
+/**
+ * Renders a container for displaying a list of trends, handling loading states and fetching tweets for individual trends.
+ *
+ * @component
+ * @param {Object[]} props.data - List of trend objects to display
+ * @param {boolean} props.loading - Indicates whether trends are currently loading
+ * @param {string} props.type - Type of trends being displayed (e.g., "Worldwide", "Local")
+ * @returns {JSX.Element} JSX element representing the trends container
+ */
 const TrendsContainer = ({ data, loading, type }) => {
   const userToken = useSelector((state) => state.user.token)
   const [trends, setTrends] = useState([])
@@ -68,4 +79,18 @@ const TrendsContainer = ({ data, loading, type }) => {
   )
 }
 
+// TrendsContainer.propTypes = {
+//   /**
+//    * The list of trends to display
+//    */
+//   data: React.PropTypes.array.isRequired,
+//   /**
+//    * Indicates whether trends are currently loading
+//    */
+//   loading: React.PropTypes.bool.isRequired,
+//   /**
+//    * The type of trends being displayed (e.g., "Worldwide", "Local")
+//    */
+//   type: React.PropTypes.string.isRequired,
+// }
 export default TrendsContainer

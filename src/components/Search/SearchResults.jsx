@@ -18,6 +18,13 @@ import { getColor } from "../../constants"
 
 import { useNavigate } from "react-router-dom"
 
+/**
+* Displays the different search results in different tabs
+* Top: some people and all posts 
+* Latest: all posts
+* Peaople: all people
+**/
+
 const SearchResults = () => {
   const { user, token } = useSelector((state) => state.user)
 
@@ -167,7 +174,7 @@ const SearchResults = () => {
 
   return (
     <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">
-      <div id="scrolledElement" className="no-scrollbar ml-0 mr-1 max-w-[620px] flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-fit  sm:w-fit md:shrink-0">
+      <div id="scrolledElement" className="no-scrollbar ml-0 mr-1 max-w-[620px] flex-grow overflow-y-scroll border border-b-0 border-t-0 border-lightBorder dark:border-darkBorder max-xs:w-screen  sm:w-fit md:shrink-0">
         <div className="sticky top-0 z-50 mb-0 border-0 border-b border-lightBorder bg-white bg-opacity-[87%] backdrop-blur-sm dark:border-darkBorder dark:bg-inherit dark:bg-opacity-[99%] dark:backdrop-brightness-[20%] dark:max-xs:bg-black dark:max-xs:bg-opacity-50 dark:max-xs:backdrop-blur-sm dark:max-xs:backdrop-brightness-[30%]">
           <div className="flex w-full items-center justify-around pr-2">
             <SearchComponent query={searchQuery} />

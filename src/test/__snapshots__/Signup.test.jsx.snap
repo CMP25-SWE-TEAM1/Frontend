@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorPage component renders ErrorPage correctly 1`] = `
+<div
+  aria-hidden="true"
+>
+  <div
+    class="m-auto -mt-10 hidden w-[320px]"
+    id="Error Page"
+  >
+    <div
+      class="!h-fit"
+    >
+      <div
+        aria-describedby="modal-modal-description"
+        aria-labelledby="modal-modal-title"
+        class="relative MuiModal-root css-79ws1d-MuiModal-root"
+        role="presentation"
+      >
+        <div
+          aria-hidden="true"
+          class="MuiBackdrop-root MuiModal-backdrop css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop"
+          style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+        />
+        <div
+          data-testid="sentinelStart"
+          tabindex="0"
+        />
+        <div
+          class="MuiBox-root css-1atvuul"
+          tabindex="-1"
+        >
+          <h2
+            class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+            id="modal-modal-title"
+          >
+            Can't complete your signup right now.
+          </h2>
+          <button
+            class="btn mt-3 w-[100px] dark:!bg-white"
+          >
+            Close
+          </button>
+        </div>
+        <div
+          data-testid="sentinelEnd"
+          tabindex="0"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

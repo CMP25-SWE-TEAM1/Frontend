@@ -7,6 +7,20 @@ import { useState } from "react"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import ErrorIcon from "@mui/icons-material/Error"
 
+import React from "react"
+
+/**
+ * Generates TagStep component, enabling users to create their unique username within the signup process:
+ * - Prompts the user to choose a desired username.
+ * - Offers clear instructions and a placeholder for input.
+ * - Validates username availability in real-time using either mock or actual APIs.
+ * - Displays a checkmark icon for valid usernames and an error icon with a message for taken usernames.
+ * - Disables the "Next" button until a valid username is entered.
+ * - Assigns the chosen username to the user's account upon validation success.
+ * - Updates the user object and progresses to the next signup step.
+ *
+ * @component
+ */
 const TagStep = ({ mock, userTag, setUserTag, originalUsername, userToken, user, setUser, nextShow }) => {
   const [usernameError, setUsernameError] = useState(false)
 
@@ -76,5 +90,47 @@ const TagStep = ({ mock, userTag, setUserTag, originalUsername, userToken, user,
     </div>
   )
 }
+
+// TagStep.propTypes = {
+//   /**
+//    * Boolean indicating whether to use mock APIs
+//    */
+//   mock: React.PropTypes.bool.isRequired,
+
+//   /**
+//    * Current user tag value
+//    */
+//   userTag: React.PropTypes.string.isRequired,
+
+//   /**
+//    * Function to update the user's tag
+//    */
+//   setUserTag: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Original suggested username
+//    */
+//   originalUsername: React.PropTypes.string.isRequired,
+
+//   /**
+//    * User's authentication token
+//    */
+//   userToken: React.PropTypes.string.isRequired,
+
+//   /**
+//    * Current user object
+//    */
+//   user: React.PropTypes.object.isRequired,
+
+//   /**
+//    * Function to update the user object
+//    */
+//   setUser: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Function to navigate to the next step
+//    */
+//   nextShow: React.PropTypes.func.isRequired,
+// }
 
 export default TagStep

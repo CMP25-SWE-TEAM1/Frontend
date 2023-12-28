@@ -3,6 +3,14 @@ import axios from "axios"
 import { useSelector } from "react-redux"
 import TrendsContainer from "./TrendsContainer"
 
+/**
+ * Enhances components with data fetching capabilities for specified types, conditionally loading relevant data.
+ *
+ * @higher-order-component
+ * @param {Component} Component - The component to wrap with data fetching functionality
+ * @param {string} type - The type of data to fetch (e.g., "trending", "news", "sports", "entertainment", "foryou")
+ * @returns {Component} The enhanced component with data fetching functionality
+ */
 const useDataFetching = (type) => {
   const [data, setData] = useState([])
   const [sports, setSports] = useState([])
@@ -128,5 +136,16 @@ const WithDataFetching = (Component, type) => {
 const WithConditionalDataFetching = (t) => {
   return WithDataFetching(TrendsContainer, t)
 }
+
+// WithDataFetching.propTypes = {
+//   /**
+//    * The component to wrap with data fetching functionality
+//    */
+//   Component: React.PropTypes.func.isRequired,
+//   /**
+//    * The type of data to fetch
+//    */
+//   type: React.PropTypes.oneOf(["trending", "news", "sports", "entertainment", "foryou"]).isRequired,
+// }
 
 export default WithConditionalDataFetching

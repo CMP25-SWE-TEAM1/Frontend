@@ -13,11 +13,27 @@ import { changeProfilePicture } from "../../store/UserSlice"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 
-import Crop from "../General/Crop/Crop"
+import React from "react"
 
+import Crop from "../General/Crop/Crop"
 
 import "../../styles/signup.css"
 
+/**
+ * Generates UploadProfilePicture component, enabling user profile picture selection and upload:
+ * - Displays current profile picture or a default placeholder.
+ * - Provides a button to trigger image selection, visually integrated within the picture display.
+ * - Handles image selection using a hidden file input, updating the preview image.
+ * - Offers a "Skip for now" option for delayed profile picture update.
+ * - Launches a modal for image cropping upon picture selection.
+ * - Uploads the cropped image to the server for final saving.
+ * - Updates the user object with the new profile picture URL.
+ * - Handles different authentication scenarios for signup completion.
+ * - Integrates with Redux store for state management.
+ * - Employs conditional rendering for adapting to different usage contexts (signup vs. profile editing).
+ *
+ * @component
+ */
 const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleCloseModal, fromSwitch, email, password }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const user = useSelector((state) => state.user.user)
@@ -74,7 +90,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
           })
         })
         .then((res) => {
-           console.log(res.data.data.usls[0])
+          console.log(res.data.data.usls[0])
           // console.log(userToken)
           newuser = {
             ...tmpuser,
@@ -143,7 +159,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
       const PictureStep = document.getElementById("Picture Step")
       PictureStep.style.display = "block"
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -156,11 +172,11 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
           <div className="w-fit rounded-full border border-white dark:border-black">
             <img src={profilePicURL ? profilePicURL : defaultProfilePic} alt="profile" className="h-[200px] w-[200px] rounded-full" />
           </div>
-          <button className="absolute left-[50%] top-[50%] m-auto h-[47px] w-[47px] -translate-x-[50%] -translate-y-[50%] rounded-full dark:bg-secondary hover:bg-gray-600 bg-opacity-50 hover:bg-opacity-50 bg-gray-500 dark:hover:bg-darkHover" onClick={handlePictureClick}>
+          <button className="absolute left-[50%] top-[50%] m-auto h-[47px] w-[47px] -translate-x-[50%] -translate-y-[50%] rounded-full bg-gray-500 bg-opacity-50 hover:bg-gray-600 hover:bg-opacity-50 dark:bg-secondary dark:hover:bg-darkHover" onClick={handlePictureClick}>
             <AddAPhotoOutlinedIcon className={`-ml-[3px] -mt-[5px] ${darkMode ? "text-white" : "text-black"}`} />
             <input
               type="file"
-              accept= ""
+              accept=""
               onChange={handlePictureChange}
               ref={hiddenFileInput}
               style={{ display: "none" }} // Make the file input element invisible
@@ -169,7 +185,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
         </div>
 
         <button
-          className="btn mt-3 dark:bg-white bg-black"
+          className="btn mt-3 bg-black dark:bg-white"
           ref={skipForNowButton}
           onClick={() => {
             console.log(userR)
@@ -180,7 +196,7 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
           Skip for now
         </button>
         <button
-          className="btn mt-3 hidden dark:bg-white bg-black"
+          className="btn mt-3 hidden bg-black dark:bg-white"
           ref={completeSignupButton}
           onClick={() => {
             // console.log({ email, password })
@@ -192,9 +208,46 @@ const UploadProfilePicture = ({ userR, setUser, handleCompleteSignup, handleClos
         </button>
       </div>
       <div className={`${openCrop ? "!block" : "!hidden"}  !mt-0`}>
-        <Crop photoURL={profilePicURL} setOpenCrop={setOpenCrop} setPhotoURL={setProfilePicURL} setFile={setProfilePic} aspect={1} originalPhoto={user? user.profileImage : defaultProfilePic} />
+        <Crop photoURL={profilePicURL} setOpenCrop={setOpenCrop} setPhotoURL={setProfilePicURL} setFile={setProfilePic} aspect={1} originalPhoto={user ? user.profileImage : defaultProfilePic} />
       </div>
     </div>
   )
 }
+
+// UploadProfilePicture.propTypes = {
+//   /**
+//    * User object from signup process
+//    */
+//   userR: React.PropTypes.object.isRequired,
+
+//   /**
+//    * Function to update the user object
+//    */
+//   setUser: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Function to handle completion of signup
+//    */
+//   handleCompleteSignup: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Function to handle closing of the signup modal
+//    */
+//   handleCloseModal: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Boolean indicating if the component is being used for profile editing
+//    */
+//   fromSwitch: React.PropTypes.bool.isRequired,
+
+//   /**
+//    * User's email
+//    */
+//   email: React.PropTypes.string.isRequired,
+
+//   /**
+//    * User's password
+//    */
+//   password: React.PropTypes.string.isRequired,
+// }
 export default UploadProfilePicture

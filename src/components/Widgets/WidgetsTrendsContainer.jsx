@@ -2,38 +2,28 @@ import { useState } from "react"
 import WidgetsTrendComponent from "./WidgetsTrendComponent"
 import axios from "axios"
 
+import React from "react"
+
 import { useSelector } from "react-redux"
 
 import CircularProgress from "@mui/material/CircularProgress"
 import Box from "@mui/material/Box"
 
+/**
+ * Generates WidgetsTrendsContainer component, responsible for visually presenting trending topics:
+ * - Receives trend data, loading state, and type from parent component.
+ * - Displays a loading indicator while data is being fetched.
+ * - Dynamically renders a WidgetsTrendComponent for each trend item.
+ * - Manages its own internal state for potential future features (e.g., trend tweets).
+ * - Integrates with Redux for user token access.
+ * - Accepts props for data, loading, and type.
+ *
+ * @component
+ */
 const WidgetsTrendsContainer = ({ data, loading, type }) => {
   const userToken = useSelector((state) => state.user.token)
   const [trends, setTrends] = useState([])
   const [trendTweets, setTrendTweets] = useState([])
-
-  const fetchTrendTweets = (trend) => {
-    axios
-      .get(`https://backend.gigachat.cloudns.org/api/trends/${trend}`, {
-        headers: {
-          authorization: "Bearer " + userToken,
-        },
-      })
-      .then((res) => {
-        // console.log(res.data.data)
-        setTrendTweets([
-          ...res.data.data.map((post) => ({
-            tweetDetails: post,
-            followingUser: post.tweet_owner,
-          })),
-        ])
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-
 
   return (
     <div className={`${loading ? "flex justify-center" : ""}`}>
@@ -48,7 +38,7 @@ const WidgetsTrendsContainer = ({ data, loading, type }) => {
       {data.map((trend, index) => {
         return (
           <div key={index}>
-            <WidgetsTrendComponent key={index} index={index + 1} categoray={type} name={trend.title} numberOfPosts={trend.count} fetchTrendTweets={fetchTrendTweets} />
+            <WidgetsTrendComponent key={index} index={index + 1} categoray={type} name={trend.title} numberOfPosts={trend.count} />
           </div>
         )
       })}
@@ -56,4 +46,18 @@ const WidgetsTrendsContainer = ({ data, loading, type }) => {
   )
 }
 
+// WidgetsTrendsContainer.propTypes = {
+//   /**
+//    * Array of trend data
+//    */
+//   data: React.PropTypes.array.isRequired,
+//   /**
+//    * Boolean indicating loading state
+//    */
+//   loading: React.PropTypes.bool.isRequired,
+//   /**
+//    * String indicating the type of trends (e.g., "worldwide", "local")
+//    */
+//   type: React.PropTypes.string.isRequired,
+// }
 export default WidgetsTrendsContainer

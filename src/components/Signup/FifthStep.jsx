@@ -1,6 +1,7 @@
 import Alert from "@mui/material/Alert"
 import VisibilityIcon from "@mui/icons-material/Visibility"
 import Stack from "@mui/material/Stack"
+import React from "react"
 
 import { Link } from "react-router-dom"
 
@@ -14,6 +15,15 @@ import { styles } from "../../styles.js"
 import { useSelector } from "react-redux"
 import { getColor } from "../../constants"
 
+/**
+ * Generates FifthStep component which guides users through the final stage of the signup process:
+ * - Prompts them to create a secure password.
+ * - Enforces password strength requirements.
+ * - Submits the chosen password to complete signup.
+ * - Updates user data and navigates to the next step upon success.
+ *
+ * @component
+ */
 const FifthStep = ({ setUser, mock, userToken, userTag, nextShow, password, setPassword }) => {
   const [showPassword, setShowPassword] = useState(false)
 
@@ -132,4 +142,40 @@ const FifthStep = ({ setUser, mock, userToken, userTag, nextShow, password, setP
   )
 }
 
+// FifthStep.propTypes = {
+//   /**
+//    * Function to update the user state
+//    */
+//   setUser: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Boolean indicating whether to use mock APIs
+//    */
+//   mock: React.PropTypes.bool.isRequired,
+
+//   /**
+//    * User authentication token
+//    */
+//   userToken: React.PropTypes.string.isRequired,
+
+//   /**
+//    * User's unique tag
+//    */
+//   userTag: React.PropTypes.string.isRequired,
+
+//   /**
+//    * Function to navigate to the next step
+//    */
+//   nextShow: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Initial password value
+//    */
+//   password: React.PropTypes.string.isRequired,
+
+//   /**
+//    * Function to update the password state
+//    */
+//   setPassword: React.PropTypes.func.isRequired,
+// }
 export default FifthStep

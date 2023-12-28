@@ -1,0 +1,25 @@
+[
+  [
+    {
+      "description": "Renders a user-friendly login modal, guiding users through identification, authentication, and error handling in a multi-step process. Supports login via email/username/phone number and password, as well as Google authentication.\r\n\r\n@component",
+      "displayName": "Login",
+      "methods": [],
+      "props": {
+        "handleCloseModal": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "Function used to handle the Closing of the Edit profile modal, so it doesn't appear when needed"
+        },
+        "openModal": {
+          "type": {
+            "name": "bool"
+          },
+          "required": false,
+          "description": "The state of the sign up modal, if false then it's not shown else it's shown"
+        }
+      }
+    }
+  ]
+]

@@ -14,11 +14,10 @@ import EmptyProfileReplies from "./EmptyProfileReplies"
 const ProfileLikes = () => {
   const user = useSelector((state) => state.user.user)
   const { token } = useSelector((state) => state.user)
-  const [noposts,setNoposts]= useState(false)
+  const [noposts, setNoposts] = useState(false)
   const location = useLocation()
   const [root, setRoot] = useState("")
   useEffect(() => {
-   
     setRoot(location.pathname.split("/")[1])
   }, [location])
 
@@ -33,8 +32,7 @@ const ProfileLikes = () => {
 
   const [profile, setProfile] = useState()
   useEffect(() => {
-    if (root !== "" && root !== user.username)
-    ProfileRequests.getOtherprofile(false,APIs,root,setProfile,token)
+    if (root !== "" && root !== user.username) ProfileRequests.getOtherprofile(false, APIs, root, setProfile, token)
   }, [root])
 
   const [posts, setPosts] = useState([])
@@ -53,10 +51,8 @@ const ProfileLikes = () => {
           },
         })
         .then((res) => {
-         
           if (res.status === 200) {
             if (res.data.posts) {
-              
               setPosts(
                 res.data.posts.map((post) => ({
                   isFollowed: post.isFollowed,
@@ -73,17 +69,18 @@ const ProfileLikes = () => {
         })
         .catch((error) => {
           setNoposts(true)
-          
         })
   }, [root])
   return (
     <>
-    {!noposts && <div id="Profile-Likes" className="">
-      <PostsContainer posts={posts} setPosts={setPosts} />
-    </div>}
-    {noposts && <EmptyProfileReplies type = {0} tag={root} />}
+      {!noposts && (
+        <div id="Profile-Likes" className="">
+          <PostsContainer posts={posts} setPosts={setPosts} />
+        </div>
+      )}
+      {noposts && <EmptyProfileReplies type={0} tag={root} />}
     </>
   )
 }
 
-export default ProfileLikes;
+export default ProfileLikes

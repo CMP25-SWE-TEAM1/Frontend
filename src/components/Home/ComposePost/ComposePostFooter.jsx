@@ -56,7 +56,7 @@ function ComposePostFooter({ buttonName, handleUploadMediaClick, handleUploadMed
           </div>
         </div>
         <button onClick={handleSubmit} className={`rounded-full  p-0 ${postDisabled ? "pointer-events-none" : ""}`}>
-          <GeneralButton name={buttonName} color="text-white" backgroundColor={"bg-"+getColor(themeColor)} height="h-8" width="w-16" disabled={postDisabled} disabledColor="bg-[#b0dbf9] dark:bg-[#0D4A73]" />
+          <GeneralButton name={buttonName} color="text-white" backgroundColor={"bg-" + getColor(themeColor)} height="h-8" width="w-16" disabled={postDisabled} disabledColor="bg-[#b0dbf9] dark:bg-[#0D4A73]" />
         </button>
       </div>
     </div>

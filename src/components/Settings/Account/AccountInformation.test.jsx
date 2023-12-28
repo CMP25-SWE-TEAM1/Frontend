@@ -6,20 +6,6 @@ import user from "@testing-library/user-event"
 import { Provider } from "react-redux"
 import store from "../../../store"
 
-let PassowrdIsConfirmed = "false";
-
-const mockSessionStorage = {
-    getItem: jest.fn(()=>PassowrdIsConfirmed),
-    setItem: jest.fn((value)=>PassowrdIsConfirmed = value)
-  };
-  
-  beforeAll(() => {
-    // Mock the sessionStorage property
-    Object.defineProperty(window, 'sessionStorage', {
-      value: mockSessionStorage,
-    });
-  });
-
 describe("Content", () => {
   test("main header", () => {
     render(
@@ -39,11 +25,11 @@ describe("Content", () => {
         </Provider>
       </BrowserRouter>
     )
-    expect(screen.getByText(  /view and update your account information, like your username and email address\./i  )).toBeInTheDocument()
+    expect(screen.getByText(/view and update your account information, like your username and email address\./i)).toBeInTheDocument()
   })
   test("choice headers", () => {
     render(
-        <BrowserRouter>
+      <BrowserRouter>
         <Provider store={store}>
           <AccountInformation />
         </Provider>
@@ -65,40 +51,40 @@ describe("Content", () => {
 })
 
 describe("Interaction", () => {
-    test("confirm password", async () => {
-        user.setup()
-        render(
-          <BrowserRouter>
-            <Provider store={store}>
-              <AccountInformation />
-            </Provider>
-          </BrowserRouter>
-        )
-        const password = document.querySelector("#password")
-        const btn = document.querySelector("#confirmPassword")
-    
-        expect(btn).toBeDisabled()
-        await act(async () => {
-          await user.type(password, "ahmed")
-        })
-        expect(btn).toBeEnabled()
-        await act(async () => {
-          await user.click(btn)
-        })
-      })
+  test("confirm password", async () => {
+    user.setup()
+    render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <AccountInformation />
+        </Provider>
+      </BrowserRouter>
+    )
+    const password = document.querySelector("#password")
+    const btn = document.querySelector("#confirmPassword")
 
-      test("toggle password visibility", async () => {
-        user.setup()
-        render(
-          <BrowserRouter>
-            <Provider store={store}>
-              <AccountInformation />
-            </Provider>
-          </BrowserRouter>
-        )
-        const btn = screen.getByTestId('VisibilityIcon')
-        await act(async () => {
-          await user.click(btn)
-        })
-      })
+    expect(btn).toBeDisabled()
+    await act(async () => {
+      await user.type(password, "ahmed")
+    })
+    expect(btn).toBeEnabled()
+    await act(async () => {
+      await user.click(btn)
+    })
+  })
+
+  test("toggle password visibility", async () => {
+    user.setup()
+    render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <AccountInformation />
+        </Provider>
+      </BrowserRouter>
+    )
+    const btn = screen.getByTestId("VisibilityIcon")
+    await act(async () => {
+      await user.click(btn)
+    })
+  })
 })

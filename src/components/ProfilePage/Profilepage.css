@@ -2,28 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components{
+@layer components {
+  .bt:hover::before {
+    content: "Unfollow";
+  }
 
-.bt:hover::before{
-    content:"Unfollow"
-}
-
-.bt:hover span{
+  .bt:hover span {
     display: none;
-}
-.blockedbt:hover::before{
-    content:"Unblock"
-}
-.blockedbt:hover span{
+  }
+  .blockedbt:hover::before {
+    content: "Unblock";
+  }
+  .blockedbt:hover span {
     display: none;
-}
-}
-
-.Detailsbt{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    height: calc(100%/2);
-    margin-left: -50px;
+  }
 }
 
+.Detailsbt {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: calc(100% / 2);
+  margin-left: -50px;
+}

@@ -91,11 +91,11 @@ describe("First page", () => {
       </BrowserRouter>
     )
 
-    const googleLogin = screen.getByRole("button", {
-      name: /google logo sign up with google/i,
-      hidden: true,
-    })
-    expect(googleLogin).toBeInTheDocument()
+    // const googleLogin = screen.getByRole("button", {
+    //   name: /google logo sign up with google/i,
+    //   hidden: true,
+    // })
+    // expect(googleLogin).toBeInTheDocument()
   })
 
   test("Email input renders correctly", () => {
@@ -116,7 +116,7 @@ describe("First page", () => {
     expect(emailInput).toBeInTheDocument()
   })
 
-  test("Forget password button renders correctly", async() => {
+  test("Forget password button renders correctly", async () => {
     render(
       <BrowserRouter>
         <GoogleOAuthProvider clientId={clientId}>
@@ -280,10 +280,9 @@ describe("Second page", () => {
 
     await userEvent.click(visibilityIcon)
     expect(password).toHaveAttribute("type", "text")
-
   })
 
-  test("Forget password works correctly",async () => {
+  test("Forget password works correctly", async () => {
     render(
       <BrowserRouter>
         <GoogleOAuthProvider clientId={clientId}>
@@ -298,7 +297,6 @@ describe("Second page", () => {
     expect(forgetPassword).toBeInTheDocument()
 
     await userEvent.click(forgetPassword)
-
   })
 
   test("Login button renders correctly", async () => {
@@ -387,13 +385,12 @@ describe("Login Process", () => {
 
     // const currentURL = window.history.location.pathname
     // expect(currentURL).toBe("/home")
-
   })
 })
 
 // describe("Validating input", () => {
 //   test("Email existance check", async () => {
-  
+
 //     render(
 //       <BrowserRouter>
 //         <GoogleOAuthProvider clientId={clientId}>

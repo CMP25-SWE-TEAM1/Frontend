@@ -6,8 +6,18 @@ import InputAdornment from "@mui/material/InputAdornment"
 
 import IconButton from "@mui/material/IconButton"
 
-import { useState } from "react"
-
+/**
+ * Search component renders a search input for filtering direct messages, Contants.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {string} props.searchValue - The current value of the search input
+ * @param {Function} props.handleSearchValueChange - Function to handle changes in the search input value
+ * @param {Function} props.setSearchValue - Function to set the search input value
+ * @param {boolean} props.searchActive - Flag indicating whether the search is currently active
+ * @param {Function} props.setSearchActive - Function to set the search active state
+ * @returns {JSX.Element} JSX element representing the Search component
+ */
 const Search = (props) => {
   const searchValue = props.searchValue
   const handleSearchValueChange = props.handleSearchValueChange

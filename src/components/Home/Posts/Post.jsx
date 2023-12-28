@@ -246,16 +246,16 @@ const Post = ({ cascade, inPostPage, userProfilePicture, postType, isFollowed, r
           />
           <span className="ml-2 hover:underline">{followingUser ? (followingUser.username === user.username ? "You" : followingUser.username) : ""} reposted</span>
         </div>
-        <div className="flex">
-          <div className="flex flex-col items-center relative">
+        <div className="relative flex">
+          <div className="relative flex flex-col items-center">
             <div className=" h-fit w-10 sm:mr-3" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
               <Link className="pointer-events-auto hover:brightness-90" to={`/${userTag}`}>
                 <Avatar alt="Remy Sharp" src={userProfilePicture} sx={{ width: 40, height: 40 }} />
               </Link>
             </div>
-            {cascade && <div className="h-full absolute top-10  w-[2px] bg-ternairy dark:bg-secondary sm:mr-3"></div>}
+            {cascade && <div className="absolute top-10 h-full  w-[2px] bg-ternairy dark:bg-secondary sm:mr-3"></div>}
           </div>
-          <div className=" w-full sm:mr-2">
+          <div className="  w-full sm:mr-2">
             <PostHeader pathname={pathname} postType={postType} replyingToUsername={replyingToUsername} isFollowed={isFollowed} userTag={userTag} bio={bio} userProfilePicture={userProfilePicture} userName={userName} finalDate={finalDate} id={id} isVisible={isVisible} handleMouseEnter={handleMouseEnter} handleMouseLeave={handleMouseLeave} hoveredProfile={hoveredProfile} openMenu={openMenu} anchorPostMenu={anchorPostMenu} handleMenuClose={handleMenuClose} htmlElement={htmlElement} handleMenuButtonClick={handleMenuButtonClick} followingUser={followingUser} setPosts={setPosts} posts={posts} />
             {!inPostPage && <PostBody descriptionLines={descriptionLines} mediaUrls={mediaUrls} mediaTypes={mediaTypes} />}
             {!inPostPage && <PostFooter id={id} pathname={pathname} replyCount={replyCount} reposted={reposted} repostsNum={repostsNum} liked={liked} likesNum={likesNum} viewCount={viewCount} handleRepostClick={handleRepostClick} handleLikeClick={handleLikeClick} />}

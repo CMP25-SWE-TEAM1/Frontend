@@ -11,6 +11,26 @@ import MarkUnreadChatAltIcon from "@mui/icons-material/MarkUnreadChatAlt"
 import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction"
 import { useSelector } from "react-redux"
 
+/**
+ * Contacts component displays a list of contacts in the messages page. It maps through
+ * the contacts and renders each contact as a list item with relevant information.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {Object[]} props.contacts - An array of contact objects to be displayed
+ * @param {string} props.contacts[].id - The unique identifier for the contact
+ * @param {string} props.contacts[].name - The name of the contact
+ * @param {string} props.contacts[].userName - The username of the contact
+ * @param {string} props.contacts[].avatarLink - The URL of the contact's avatar
+ * @param {string} props.contacts[].lastMessage - The last message sent or received from the contact
+ * @param {string} props.contacts[].lastMessageMediaType - The media type of the last message (e.g., "Img", "GIF")
+ * @param {string} props.contacts[].lastMessageDate - The timestamp of the last message
+ * @param {boolean} props.contacts[].lastMessageSeen - Flag indicating whether the last message is seen
+ * @param {string} props.contacts[].lastMessageSender - The sender of the last message
+ * @param {string} props.selectedContact - The ID of the currently selected contact
+ * @param {Function} props.setSelectedContact - Function to set the selected contact
+ * @returns {JSX.Element} JSX element representing the Contacts component
+ */
 const Contacts = (props) => {
   const contacts = props.contacts.sort((a, b) => new Date(b.lastMessageDate) - new Date(a.lastMessageDate))
 

@@ -71,7 +71,7 @@ const ProfilePage = (props) => {
         <div
           className="home ml-0 mr-1 max-w-[620px] shrink-0 flex-grow 
       overflow-y-scroll border border-b-0 border-t-0 border-lightBorder 
-      dark:border-darkBorder max-xs:w-fit  sm:w-[600px]"
+      dark:border-darkBorder max-xs:w-screen sm:w-[600px]"
         >
           {profileres && (
             <div
@@ -117,7 +117,7 @@ const ProfilePage = (props) => {
                   )}
                   <Followers followers={followersnum} following={followingnum}></Followers>
                   <ProfilePageEdit openModal={props.openModal} handleCloseModal={props.handleCloseModal}></ProfilePageEdit>
-                  {(viewpoststate === true || profileres.is_curr_user) && <ProfileMediabuttons root= {tag} ></ProfileMediabuttons>}
+                  {(viewpoststate === true || profileres.is_curr_user) && <ProfileMediabuttons root={tag}></ProfileMediabuttons>}
                 </>
               )}
               {profileres.is_curr_user_blocked && <BlockedBy tag={tag}></BlockedBy>}

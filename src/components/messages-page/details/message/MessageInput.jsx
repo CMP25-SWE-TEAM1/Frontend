@@ -18,6 +18,14 @@ import usePostMedia from "../../customHooks/post/usePostMedia"
 // Redux
 import { useSelector } from "react-redux"
 
+/**
+ * Generates a component for sending messages, including text, media, GIFs, and emojis.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {Function} props.handleSendMessage - Function to handle sending messages.
+ * @returns {JSX.Element} - The rendered component.
+ */
 const MessageInput = (props) => {
   // ==============  Props   ==============
   const handleSendMessage = props.handleSendMessage

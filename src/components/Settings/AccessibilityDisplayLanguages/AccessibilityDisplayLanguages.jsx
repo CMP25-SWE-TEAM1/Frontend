@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
+/**
+* Contains all the display settings
+**/
+
 const AccessibilityDisplayLanguages = () => {
   return (
     <div>
       <div className="flex items-center pl-4">
         <Link to="/settings">
-          <ArrowBackIcon className="hover:bg-lightHover dark:hover:bg-darkHover h-8 w-8 rounded-2xl p-[6px] lg:hidden"></ArrowBackIcon>
+          <ArrowBackIcon className="h-8 w-8 rounded-2xl p-[6px] hover:bg-lightHover dark:hover:bg-darkHover lg:hidden"></ArrowBackIcon>
         </Link>
         <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Accessibility, display, and languages</h1>
       </div>

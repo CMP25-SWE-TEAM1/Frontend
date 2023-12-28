@@ -18,9 +18,7 @@ import { useSelector } from "react-redux"
 import darkLogo from "../../assets/imgs/gigachatLogoOne_dark-removebg-preview.png"
 import lightLogo from "../../assets/imgs/gigachatLogoOne_light_v2-removebg-preview.png"
 
-function SwitchAccount({ handleLogout,openMenu,anchorMenu,handleCloseMenu,handleClickMenu }) {
-  
-
+function SwitchAccount({ handleLogout, openMenu, anchorMenu, handleCloseMenu, handleClickMenu }) {
   const htmlElement = document.getElementById("htmlid")
 
   const [openModal, setOpenSignupModal] = useState(false)
@@ -39,8 +37,12 @@ function SwitchAccount({ handleLogout,openMenu,anchorMenu,handleCloseMenu,handle
         <div title="Accounts" className=" flex w-full items-center justify-around rounded-full group-hover:bg-lightHover dark:group-hover:bg-darkHover xs:!p-3">
           <Avatar alt={user.nickname} src={user.profileImage} />
           <div>
-            <div className="truncate font-semibold" id="mahmoud_name">{user.nickname}</div>
-            <div className="truncate text-secondary" id="mahmoud_username">@{user.username}</div>
+            <div className="truncate font-semibold" id="mahmoud_name">
+              {user.nickname}
+            </div>
+            <div className="truncate text-secondary" id="mahmoud_username">
+              @{user.username}
+            </div>
           </div>
 
           <div title="moreIcon" className="w-[10%]" id="mahmoud_account_options">

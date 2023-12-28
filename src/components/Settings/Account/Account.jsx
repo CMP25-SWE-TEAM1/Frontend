@@ -1,17 +1,21 @@
 import { Link } from "react-router-dom"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
+/**
+* Includes all account changes that could be made by the user
+* Change username, email, password
+**/
 
 const Account = () => {
   return (
     <div>
       <div className="flex items-center pl-4">
         <Link to="/settings">
-          <ArrowBackIcon className="hover:bg-lightHover dark:hover:bg-darkHover h-8 w-8 rounded-2xl p-[6px] lg:hidden"></ArrowBackIcon>
+          <ArrowBackIcon className="h-8 w-8 rounded-2xl p-[6px] hover:bg-lightHover dark:hover:bg-darkHover lg:hidden"></ArrowBackIcon>
         </Link>
         <h1 className="mb-4 mt-4 pl-4 text-lg font-bold">Your Account</h1>
       </div>
-      
+
       <p className="mb-4 pl-4 pr-10 text-xs text-secondary">See information about your account, download an archive of your data, or learn about your account deactivation options</p>
       <Link to="/settings/account_information">
         <div className="flex p-2 hover:cursor-pointer hover:bg-lightHover dark:hover:bg-darkHover" id="mahmoud_account_information">

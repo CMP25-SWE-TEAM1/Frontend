@@ -24,7 +24,6 @@ const Details = (props) => {
       setnotmuted("hidden")
     }
     if (props.isblocked) {
-      
       setblocked("hidden")
       setnotblocked("block")
     } else {
@@ -52,7 +51,7 @@ const Details = (props) => {
       setDisplay("hidden")
     }
   }
-  
+
   return (
     <div
       id="show-details-div"
@@ -63,15 +62,18 @@ const Details = (props) => {
     
     bg-[white] text-center  `}
     >
-      <button id="show-details-button" className="hover:mt-[0] w-[100%] h-[100%] rounded-full mt-[-7px] text-[25px] hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover ">
+      <button id="show-details-button" className="mt-[-7px] h-[100%] w-[100%] rounded-full text-[25px] hover:mt-[0] hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover ">
         ...
       </button>
 
-      <div id="details-div" className={`absolute 
-      left-[-165px] top-0 z-10 flex h-[100px] w-[200px] flex-col rounded-xl bg-inherit text-inherit   ${detailsdisplay}`}>
+      <div
+        id="details-div"
+        className={`absolute 
+      left-[-165px] top-0 z-10 flex h-[100px] w-[200px] flex-col rounded-xl bg-inherit text-inherit   ${detailsdisplay}`}
+      >
         <button
           id="block"
-          className={`Detailsbt relative hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover left-[6.5%] ${blocked}`}
+          className={`Detailsbt relative left-[6.5%] hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover ${blocked}`}
           onClick={() => {
             ProfileRequests.block(false, APIs, token)
           }}
@@ -80,7 +82,7 @@ const Details = (props) => {
         </button>
         <button
           id="mute"
-          className={`Detailsbt hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover relative left-[6.5%] ${notblocked}`}
+          className={`Detailsbt relative left-[6.5%] hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover ${notblocked}`}
           onClick={() => {
             ProfileRequests.unblock(false, APIs, token)
           }}
@@ -89,7 +91,7 @@ const Details = (props) => {
         </button>
         <button
           id="mute"
-          className={` Detailsbt hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover relative left-[6.5%] ${muted}`}
+          className={` Detailsbt relative left-[6.5%] hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover ${muted}`}
           onClick={() => {
             ProfileRequests.mute(false, APIs, token)
           }}
@@ -98,12 +100,12 @@ const Details = (props) => {
         </button>
         <button
           id="unmute"
-          className={`Detailsbt hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover relative left-[6.5%] ${notmuted}`}
+          className={`Detailsbt relative left-[6.5%] hover:bg-lightHover dark:border-darkBorder dark:hover:bg-darkHover ${notmuted}`}
           onClick={() => {
-            ProfileRequests.unmute(false, APIs, token,props.tag)
+            ProfileRequests.unmute(false, APIs, token, props.tag)
           }}
         >
-          <VolumeMuteOutlinedIcon/> <span>Unmute This User </span>
+          <VolumeMuteOutlinedIcon /> <span>Unmute This User </span>
         </button>
       </div>
     </div>

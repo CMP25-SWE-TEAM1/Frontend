@@ -14,6 +14,8 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import FormControl from "@mui/material/FormControl"
 import FormLabel from "@mui/material/FormLabel"
 
+import React from "react"
+
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router"
 
@@ -27,6 +29,11 @@ import VisibilityIcon from "@mui/icons-material/Visibility"
 import { useSelector } from "react-redux"
 import { getColor } from "../../constants"
 
+/**
+ * Guides users through a multi-step journey to securely reset their passwords, providing clear instructions, validation, and confirmation.
+ *
+ * @component
+ */
 const PasswordReset = () => {
   const mock = false
 
@@ -305,4 +312,14 @@ const PasswordReset = () => {
   )
 }
 
+// PasswordReset.propTypes = {
+//   /**
+//    * Function used to handle the Closing of the Edit profile modal, so it doesn't appear when needed
+//    */
+//   handleCloseModal: React.PropTypes.func,
+//   /**
+//    * The state of the password reset modal, if false then it's not shown else it's shown
+//    */
+//   openModal: React.PropTypes.bool,
+// }
 export default PasswordReset

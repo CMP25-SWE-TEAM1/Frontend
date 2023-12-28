@@ -5,6 +5,10 @@ import { useState } from "react"
 import axios from "axios"
 import { changeUsername } from "../../../store/UserSlice"
 
+/**
+* Allows the user to change thier username
+**/
+
 const ChangeUsername = () => {
   const [userName, setUserName] = useState("")
   const { user, token } = useSelector((state) => state.user)
@@ -36,11 +40,11 @@ const ChangeUsername = () => {
           setSuccessMsg(res.data.data.message)
           setTimeout(() => {
             //window.location.href = "/settings/account"
-          }, 2000);
+          }, 2000)
         }
       })
       .catch((err) => {
-        if (err.response.data.message) setErrorMsg(err.response.data.message)
+        if (err.response && err.response.data && err.response.data.message) setErrorMsg(err.response.data.message)
         else setErrorMsg("Internal server error, please try again later")
         console.log(err)
       })
@@ -67,7 +71,7 @@ const ChangeUsername = () => {
 
       <div className="flex flex-col p-5">
         <div className="input-container mb-4">
-          <input className={userName === "" ? "form-input" : "form-input filled-input"} type="text" id="newUsername" autoComplete="off" value={userName} onChange={(e) => setUserName(e.target.value)} />
+          <input maxLength={50} className={userName === "" ? "form-input" : "form-input filled-input"} type="text" id="newUsername" autoComplete="off" value={userName} onChange={(e) => setUserName(e.target.value)} />
           <label className="input-label" htmlFor="password">
             New Username
           </label>

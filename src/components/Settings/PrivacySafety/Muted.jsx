@@ -5,6 +5,10 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 
+/**
+* Displays a list muted users and allows the user to unmute or mute them again
+**/
+
 const Muted = () => {
   const [userData, setUserData] = useState([])
   const { token } = useSelector((state) => state.user)

@@ -13,6 +13,13 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router"
 
+import React from "react"
+
+/**
+ * Renders individual notifications with informative icons, text, dates, and notifier details, providing clear visual cues and navigation to relevant profiles.
+ *
+ * @component
+ */
 const NotificationComponent = ({ logo, type, text, date, notifier }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
 
@@ -35,7 +42,7 @@ const NotificationComponent = ({ logo, type, text, date, notifier }) => {
       }}
       className="flex min-h-[64px] cursor-pointer flex-col items-center pb-3 pl-4 pr-4 pt-3 hover:bg-lightHover dark:hover:bg-darkHover"
     >
-      <div className="flex items-center gap-3 self-start">
+      <div className="flex items-center gap-3 self-start" data-testid="notification-icon">
         {type === "retweet" && <CachedIcon className="text-4xl text-green-500" />}
         {type === "like" && <FavoriteIcon className="text-4xl text-red-500" />}
         {type === "follow" && <PersonAddIcon className="text-4xl text-blue-500" />}
@@ -57,5 +64,28 @@ const NotificationComponent = ({ logo, type, text, date, notifier }) => {
     </div>
   )
 }
+
+// NotificationComponent.propTypes = {
+//   /**
+//    * The logo URL to display
+//    */
+//   logo: React.PropTypes.string.isRequired,
+//   /**
+//    * The type of notification
+//    */
+//   type: React.PropTypes.string.isRequired,
+//   /**
+//    * The text content of the notification
+//    */
+//   text: React.PropTypes.string.isRequired,
+//   /**
+//    * The date and time of the notification
+//    */
+//   date: React.PropTypes.string.isRequired,
+//   /**
+//    * Information about the notifier, if applicable
+//    */
+//   notifier: React.PropTypes.object, // Optional prop
+// }
 
 export default NotificationComponent

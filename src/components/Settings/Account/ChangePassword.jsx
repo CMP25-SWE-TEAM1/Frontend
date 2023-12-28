@@ -8,6 +8,10 @@ import { styles } from "../../../styles"
 import { useSelector } from "react-redux"
 import { getColor } from "../../../constants"
 
+/**
+ * Allows the user to change thier password after confirming the previous one
+ **/
+
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
@@ -71,7 +75,7 @@ const ChangePassword = () => {
           }
         })
         .catch((err) => {
-          if (err.response.data.message) setErrorMsg(err.response.data.message)
+          if (err.response && err.response.data && err.response.data.message) setErrorMsg(err.response.data.message)
           else setErrorMsg("Internal server error, please try again later")
           console.log(err)
         })
@@ -95,7 +99,7 @@ const ChangePassword = () => {
 
       <div className="flex flex-col p-5">
         <div className="input-container">
-          <input className={currentPassword === "" ? "form-input" : "form-input filled-input"} type="password" name="currentPassword" id="currentPassword" autoComplete="off" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
+          <input maxLength={50} className={currentPassword === "" ? "form-input" : "form-input filled-input"} type="password" name="currentPassword" id="currentPassword" autoComplete="off" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
           <label className="input-label" htmlFor="password">
             Current password
           </label>
@@ -109,13 +113,13 @@ const ChangePassword = () => {
 
       <div className="flex flex-col p-5">
         <div className="input-container mb-4">
-          <input className={newPassword === "" ? "form-input" : "form-input filled-input"} type="password" name="newPassword" id="newPassword" autoComplete="off" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+          <input maxLength={50} className={newPassword === "" ? "form-input" : "form-input filled-input"} type="password" name="newPassword" id="newPassword" autoComplete="off" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
           <label className="input-label" htmlFor="password">
             New password
           </label>
         </div>
         <div className="input-container mb-5">
-          <input className={confirmPassword === "" ? "form-input" : "form-input filled-input"} type="password" name="confirmPassword" id="confirmPassword" autoComplete="off" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+          <input maxLength={50} className={confirmPassword === "" ? "form-input" : "form-input filled-input"} type="password" name="confirmPassword" id="confirmPassword" autoComplete="off" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
           <label className="input-label" htmlFor="password">
             Confirm password
           </label>

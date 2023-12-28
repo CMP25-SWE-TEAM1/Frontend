@@ -23,6 +23,18 @@ import useGetUsersSearch from "../customHooks/get/useGetUsersSearch"
 // Redux
 import { useSelector } from "react-redux"
 
+/**
+ * Component for composing a new message.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {Function} props.setSelectedContact - Function to set the selected contact in the chat.
+ * @param {Function} props.setContacts - Function to set the chat contacts.
+ * @param {Array} props.contacts - List of chat contacts.
+ * @param {boolean} props.composeModalOpen - Indicates whether the compose modal is open.
+ * @param {Function} props.handleComposeModalClose - Function to close the compose modal.
+ * @returns {JSX.Element} - Rendered component.
+ */
 const MessageCompose = (props) => {
   // ==============  Props   ==============
   // Contacts

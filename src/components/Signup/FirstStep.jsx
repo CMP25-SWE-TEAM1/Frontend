@@ -8,6 +8,18 @@ import Birthdate from "./Birthdate.jsx"
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
+import React from "react"
+
+/**
+ * Generates FirstStep component which initiates the signup process with the following features:
+ * - Collects user's nickname, email, and birthdate.
+ * - Verifies email validity and checks for existing accounts.
+ * - Provides clear error messaging for invalid inputs and existing emails.
+ * - Offers a back button for returning to the previous screen.
+ * - Enables navigation to the next signup step upon successful input completion.
+ *
+ * @component
+ */
 const FirstStep = ({ nickName, setNickName, email, setEmail, month, setMonth, day, setDay, year, setYear, nextShow, emailExistError, setEmailExistError, validEmail, mock }) => {
   const handleEmailBlur = () => {
     // let emailExist
@@ -85,5 +97,82 @@ const FirstStep = ({ nickName, setNickName, email, setEmail, month, setMonth, da
     </div>
   )
 }
+
+// FirstStep.propTypes = {
+//   /**
+//    * Initial nickname value
+//    */
+//   nickName: React.PropTypes.string.isRequired,
+
+//   /**
+//    * Function to update the nickname state
+//    */
+//   setNickName: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Initial email value
+//    */
+//   email: React.PropTypes.string.isRequired,
+
+//   /**
+//    * Function to update the email state
+//    */
+//   setEmail: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Initial month value
+//    */
+//   month: React.PropTypes.string.isRequired,
+
+//   /**
+//    * Function to update the month state
+//    */
+//   setMonth: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Initial day value
+//    */
+//   day: React.PropTypes.string.isRequired,
+
+//   /**
+//    * Function to update the day state
+//    */
+//   setDay: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Initial year value
+//    */
+//   year: React.PropTypes.string.isRequired,
+
+//   /**
+//    * Function to update the year state
+//    */
+//   setYear: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Function to navigate to the next step
+//    */
+//   nextShow: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Boolean indicating whether the email already exists
+//    */
+//   emailExistError: React.PropTypes.bool.isRequired,
+
+//   /**
+//    * Function to update the email existence error state
+//    */
+//   setEmailExistError: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Function to validate email addresses
+//    */
+//   validEmail: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Boolean indicating whether to use mock APIs
+//    */
+//   mock: React.PropTypes.bool.isRequired,
+// }
 
 export default FirstStep

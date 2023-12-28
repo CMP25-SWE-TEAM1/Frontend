@@ -4,6 +4,11 @@ import logoLight from "../../assets/imgs/gigachatLogoOne_light_v2-removebg-previ
 
 import NotificationsContainer from "./NotificationsContainer"
 
+/**
+ * Captures and presents notifications specifically from verified accounts, ensuring users stay informed about important updates and actions.
+ *
+ * @component
+ */
 const Verified = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
 
@@ -72,7 +77,7 @@ const Verified = () => {
       logo: darkMode ? logoDark : logoLight,
       text: "There was a login to your account @MSamir245 from a new device on Dec 02, 2023. Review it now",
     },
-    ]
+  ]
   return (
     <div>
       <NotificationsContainer list={[]} type={"verified"} />

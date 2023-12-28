@@ -16,11 +16,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <GoogleOAuthProvider clientId={clientId}>
     {/* <React.StrictMode> */}
-      <StyledEngineProvider injectFirst>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </StyledEngineProvider>
+    <StyledEngineProvider injectFirst>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </StyledEngineProvider>
     {/* </React.StrictMode> */}
   </GoogleOAuthProvider>
 )

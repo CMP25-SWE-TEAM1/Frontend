@@ -13,8 +13,6 @@
   color-scheme: var(--color-theme);
 }
 
-
-
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

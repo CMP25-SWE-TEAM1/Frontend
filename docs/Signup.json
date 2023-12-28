@@ -1,0 +1,626 @@
+[
+  [
+    {
+      "description": "Generates Birthdate component which enables users to select their birthdate through separate month, day, and year dropdown fields.\r\n\r\n@component",
+      "displayName": "Birthdate",
+      "methods": [],
+      "props": {
+        "month": {
+          "type": {
+            "name": "string"
+          },
+          "required": false,
+          "description": "Initial selected month"
+        },
+        "setMonth": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "Function to update the selected month"
+        },
+        "day": {
+          "type": {
+            "name": "string"
+          },
+          "required": false,
+          "description": "Initial selected day"
+        },
+        "setDay": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "Function to update the selected day"
+        },
+        "year": {
+          "type": {
+            "name": "string"
+          },
+          "required": false,
+          "description": "Initial selected year"
+        },
+        "setYear": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "Function to update the selected year"
+        },
+        "yearwidth": {
+          "type": {
+            "name": "number"
+          },
+          "required": false,
+          "description": "Width of the year select field"
+        },
+        "monthwidth": {
+          "type": {
+            "name": "number"
+          },
+          "required": false,
+          "description": "Width of the month select field"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Generates ErrorPage component which displays an error message in a modal when signup issues arise, prompting the user to return to the previous step for correction.\r\n\r\n@component",
+      "displayName": "ErrorPage",
+      "methods": [],
+      "props": {
+        "setDay": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "Function to update the selected day"
+        },
+        "setMonth": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "Function to update the selected month"
+        },
+        "setYear": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "Function to update the selected year"
+        },
+        "setNickName": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "Function to update the nickname"
+        },
+        "setEmail": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "Function to update the email"
+        },
+        "openBirthdateErrorModal": {
+          "type": {
+            "name": "bool"
+          },
+          "required": false,
+          "description": "Bool to open the birthdate error modal"
+        },
+        "handleCloseBirthdateErrorModal": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "Function to handle the closing of the birthdate error modal"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Generates FirstStep component which initiates the signup process with the following features:\r\n- Collects user's nickname, email, and birthdate.\r\n- Verifies email validity and checks for existing accounts.\r\n- Provides clear error messaging for invalid inputs and existing emails.\r\n- Offers a back button for returning to the previous screen.\r\n- Enables navigation to the next signup step upon successful input completion.\r\n\r\n@component",
+      "displayName": "FirstStep",
+      "methods": [],
+      "props": {
+        "nickName": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "Initial nickname value"
+        },
+        "setNickName": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the nickname state"
+        },
+        "email": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "Initial email value"
+        },
+        "setEmail": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the email state"
+        },
+        "month": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "Initial month value"
+        },
+        "setMonth": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the month state"
+        },
+        "day": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "Initial day value"
+        },
+        "setDay": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the day state"
+        },
+        "year": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "Initial year value"
+        },
+        "setYear": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the year state"
+        },
+        "nextShow": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to navigate to the next step"
+        },
+        "emailExistError": {
+          "type": {
+            "name": "bool"
+          },
+          "required": true,
+          "description": "Boolean indicating whether the email already exists"
+        },
+        "setEmailExistError": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the email existence error state"
+        },
+        "validEmail": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to validate email addresses"
+        },
+        "mock": {
+          "type": {
+            "name": "bool"
+          },
+          "required": true,
+          "description": "Boolean indicating whether to use mock APIs"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Generates FifthStep component which guides users through the final stage of the signup process:\r\n- Prompts them to create a secure password.\r\n- Enforces password strength requirements.\r\n- Submits the chosen password to complete signup.\r\n- Updates user data and navigates to the next step upon success.\r\n\r\n@component",
+      "displayName": "FifthStep",
+      "methods": [],
+      "props": {
+        "setUser": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the user state"
+        },
+        "mock": {
+          "type": {
+            "name": "bool"
+          },
+          "required": true,
+          "description": "Boolean indicating whether to use mock APIs"
+        },
+        "userToken": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "User authentication token"
+        },
+        "userTag": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "User's unique tag"
+        },
+        "nextShow": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to navigate to the next step"
+        },
+        "password": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "Initial password value"
+        },
+        "setPassword": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the password state"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Generates PreStep component which introduces GigaChat and offers initial signup options:\r\n- Displays a welcome message inviting users to join GigaChat.\r\n- Presents a button for Google sign-in using the GoogleLoginButton component.\r\n- Provides a clear \"Create Account\" button to initiate the signup process.\r\n- Includes links to Terms of Service, Privacy Policy, and Cookie Use.\r\n- Offers a \"Log in\" link for existing users.\r\n\r\n@component",
+      "displayName": "PreStep",
+      "methods": [],
+      "props": {
+        "handleCloseModal": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function used to handle the closing of the sign up modal"
+        },
+        "nextShow": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to navigate to the next step"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Generates ForthStep component which verifies the user's email address during signup, offering key features:\r\n- Prompts the user to enter the received verification code.\r\n- Validates the code and progresses to the next step upon success.\r\n- Displays an error message for incorrect codes.\r\n- Provides a button to resend the verification email, managing a countdown timer to prevent excessive resends.\r\n- Updates user data and token upon successful verification.\r\n\r\n@component",
+      "displayName": "ForthStep",
+      "methods": [],
+      "props": {
+        "setUserTag": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the user's tag"
+        },
+        "setOriginalUsername": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the original username"
+        },
+        "setUser": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the user state"
+        },
+        "setUserToken": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the user token"
+        },
+        "nextShow": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to navigate to the next step"
+        },
+        "handleOpenBirthdateError": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to handle opening the birthdate error modal"
+        },
+        "mock": {
+          "type": {
+            "name": "bool"
+          },
+          "required": true,
+          "description": "Boolean indicating whether to use mock APIs"
+        },
+        "email": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "User's email address"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Generates SignUp component, orchestrating the multi-step signup process:\r\n- Presents a welcome screen with signup options (PreStep).\r\n- Guides users through email, nickname, birthdate, reCAPTCHA, and password collection (FirstStep, SecondStep, ThirdStep, ForthStep, FifthStep).\r\n- Facilitates user tag creation and profile picture upload (TagStep, UploadProfilePicture).\r\n- Handles signup completion, dispatching relevant actions and navigating to the home page (handleCompleteSignup).\r\n- Manages a mock mode for testing purposes.\r\n- Adapts modal styling to different window widths.\r\n- Manages error scenarios, including invalid emails and birthdates (ErrorPage).\r\n- Integrates with Redux for user state management and signup actions.\r\n\r\n@component",
+      "displayName": "SignUp",
+      "methods": [],
+      "props": {
+        "handleCloseModal": {
+          "type": {
+            "name": "func"
+          },
+          "required": false,
+          "description": "Function used to handle the Closing of the Edit profile modal, so it doesn't appear when needed"
+        },
+        "openModal": {
+          "type": {
+            "name": "bool"
+          },
+          "required": false,
+          "description": "The state of the sign up modal, if false then it's not shown else it's shown"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Generates SecondStep component which integrates reCAPTCHA for security during signup:\r\n- Displays a clear \"Step 2 of 5\" progress indicator.\r\n- Presents the reCAPTCHA challenge for user verification.\r\n- Enables progression to the next step only upon successful reCAPTCHA completion.\r\n- Provides a back button for returning to the previous step.\r\n\r\n@component",
+      "displayName": "SecondStep",
+      "methods": [],
+      "props": {
+        "nextShow": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to navigate to the next step"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Generates TagStep component, enabling users to create their unique username within the signup process:\r\n- Prompts the user to choose a desired username.\r\n- Offers clear instructions and a placeholder for input.\r\n- Validates username availability in real-time using either mock or actual APIs.\r\n- Displays a checkmark icon for valid usernames and an error icon with a message for taken usernames.\r\n- Disables the \"Next\" button until a valid username is entered.\r\n- Assigns the chosen username to the user's account upon validation success.\r\n- Updates the user object and progresses to the next signup step.\r\n\r\n@component",
+      "displayName": "TagStep",
+      "methods": [],
+      "props": {
+        "mock": {
+          "type": {
+            "name": "bool"
+          },
+          "required": true,
+          "description": "Boolean indicating whether to use mock APIs"
+        },
+        "userTag": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "Current user tag value"
+        },
+        "setUserTag": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the user's tag"
+        },
+        "originalUsername": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "Original suggested username"
+        },
+        "userToken": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "User's authentication token"
+        },
+        "user": {
+          "type": {
+            "name": "object"
+          },
+          "required": true,
+          "description": "Current user object"
+        },
+        "setUser": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the user object"
+        },
+        "nextShow": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to navigate to the next step"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Generates ThirdStep component, handling user information review and signup initiation:\r\n- Displays collected user information (nickname, email, birthdate) for confirmation.\r\n- Validates email format and highlights errors, preventing invalid submissions.\r\n- Prompts users to agree to Terms of Service, Privacy Policy, and Cookie Use.\r\n- Disables the \"Sign Up\" button until all fields are complete and valid.\r\n- Initiates signup upon \"Sign Up\" button click, sending data to the server.\r\n- Validates birthdate on the server, handling potential errors.\r\n- Transitions to the next signup step upon successful signup completion.\r\n\r\n@component",
+      "displayName": "ThirdStep",
+      "methods": [],
+      "props": {
+        "nickName": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "User's nickname"
+        },
+        "email": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "User's email address"
+        },
+        "month": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "User's birth month"
+        },
+        "day": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "User's birth day"
+        },
+        "year": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "User's birth year"
+        },
+        "emailExistError": {
+          "type": {
+            "name": "bool"
+          },
+          "required": true,
+          "description": "Boolean indicating whether the email address already exists"
+        },
+        "validEmail": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to validate email addresses"
+        },
+        "mock": {
+          "type": {
+            "name": "bool"
+          },
+          "required": true,
+          "description": "Boolean indicating whether to use mock APIs"
+        },
+        "nextShow": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to navigate to the next step"
+        },
+        "handleOpenBirthdateError": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to handle opening the birthdate error modal"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Generates UploadProfilePicture component, enabling user profile picture selection and upload:\r\n- Displays current profile picture or a default placeholder.\r\n- Provides a button to trigger image selection, visually integrated within the picture display.\r\n- Handles image selection using a hidden file input, updating the preview image.\r\n- Offers a \"Skip for now\" option for delayed profile picture update.\r\n- Launches a modal for image cropping upon picture selection.\r\n- Uploads the cropped image to the server for final saving.\r\n- Updates the user object with the new profile picture URL.\r\n- Handles different authentication scenarios for signup completion.\r\n- Integrates with Redux store for state management.\r\n- Employs conditional rendering for adapting to different usage contexts (signup vs. profile editing).\r\n\r\n@component",
+      "displayName": "UploadProfilePicture",
+      "methods": [],
+      "props": {
+        "userR": {
+          "type": {
+            "name": "object"
+          },
+          "required": true,
+          "description": "User object from signup process"
+        },
+        "setUser": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to update the user object"
+        },
+        "handleCompleteSignup": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to handle completion of signup"
+        },
+        "handleCloseModal": {
+          "type": {
+            "name": "func"
+          },
+          "required": true,
+          "description": "Function to handle closing of the signup modal"
+        },
+        "fromSwitch": {
+          "type": {
+            "name": "bool"
+          },
+          "required": true,
+          "description": "Boolean indicating if the component is being used for profile editing"
+        },
+        "email": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "User's email"
+        },
+        "password": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "User's password"
+        }
+      }
+    }
+  ]
+]

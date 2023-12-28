@@ -2,11 +2,9 @@
 import { initializeApp } from "firebase/app"
 import { getMessaging, getToken, onMessage } from "firebase/messaging"
 
-
 import { getAnalytics } from "firebase/analytics"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -32,7 +30,7 @@ export function requestPermission(callback) {
       //   console.log("Notification permission granted.")
       getToken(messaging, { vapidKey: "BJL6hYmNbSjl7nWRN_DPkHaqkm-Ig9Bu82Q12cHGsxi4kj0Rcihd-9NH3COqxmGKIuo3Fdjliwc03bJSvjjkUrE" }).then((currentToken) => {
         if (currentToken) {
-            console.log("Got FCM registration token:", currentToken)
+          console.log("Got FCM registration token:", currentToken)
           callback(currentToken, app)
           // Send the token to your server and update the UI if necessary
           // ...
@@ -46,7 +44,6 @@ export function requestPermission(callback) {
   })
 }
 
-
 export const onMessageListener = () =>
   new Promise((resolve) => {
     onMessage(messaging, (payload) => {
@@ -55,13 +52,9 @@ export const onMessageListener = () =>
     })
   })
 
-
-
-
 // navigator.serviceWorker.addEventListener("message", (message) => {
 //   console.log(message)
 // })
-
 
 //....
 
@@ -82,4 +75,4 @@ export const requestForToken = (callback) => {
     .catch((err) => {
       console.log("An error occurred while retrieving token. ", err)
     })
-};
+}

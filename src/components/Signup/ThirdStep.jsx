@@ -11,6 +11,20 @@ import { useState } from "react"
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
+import React from "react"
+
+/**
+ * Generates ThirdStep component, handling user information review and signup initiation:
+ * - Displays collected user information (nickname, email, birthdate) for confirmation.
+ * - Validates email format and highlights errors, preventing invalid submissions.
+ * - Prompts users to agree to Terms of Service, Privacy Policy, and Cookie Use.
+ * - Disables the "Sign Up" button until all fields are complete and valid.
+ * - Initiates signup upon "Sign Up" button click, sending data to the server.
+ * - Validates birthdate on the server, handling potential errors.
+ * - Transitions to the next signup step upon successful signup completion.
+ *
+ * @component
+ */
 const ThirdStep = ({ nickName, email, month, day, year, emailExistError, validEmail, mock, nextShow, handleOpenBirthdateError }) => {
   // eslint-disable-next-line no-unused-vars
   const [birthdateError, setBirthdateError] = useState(false)
@@ -107,5 +121,57 @@ const ThirdStep = ({ nickName, email, month, day, year, emailExistError, validEm
     </div>
   )
 }
+
+// ThirdStep.propTypes = {
+//   /**
+//    * User's nickname
+//    */
+//   nickName: React.PropTypes.string.isRequired,
+
+//   /**
+//    * User's email address
+//    */
+//   email: React.PropTypes.string.isRequired,
+
+//   /**
+//    * User's birth month
+//    */
+//   month: React.PropTypes.string.isRequired,
+
+//   /**
+//    * User's birth day
+//    */
+//   day: React.PropTypes.string.isRequired,
+
+//   /**
+//    * User's birth year
+//    */
+//   year: React.PropTypes.string.isRequired,
+
+//   /**
+//    * Boolean indicating whether the email address already exists
+//    */
+//   emailExistError: React.PropTypes.bool.isRequired,
+
+//   /**
+//    * Function to validate email addresses
+//    */
+//   validEmail: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Boolean indicating whether to use mock APIs
+//    */
+//   mock: React.PropTypes.bool.isRequired,
+
+//   /**
+//    * Function to navigate to the next step
+//    */
+//   nextShow: React.PropTypes.func.isRequired,
+
+//   /**
+//    * Function to handle opening the birthdate error modal
+//    */
+//   handleOpenBirthdateError: React.PropTypes.func.isRequired,
+// }
 
 export default ThirdStep

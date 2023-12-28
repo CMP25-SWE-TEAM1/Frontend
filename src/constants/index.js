@@ -47,6 +47,6 @@ export const getColor = (themeColor) => {
     default:
       c = "primary"
   }
-  
+
   return c
 }

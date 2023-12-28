@@ -6,6 +6,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { changeColor, setDarkMode, setLightMode } from "../../../store/ThemeSlice"
 import CheckIcon from "@mui/icons-material/Check"
 
+/**
+* Allows the user to change their theme and the primary color of the website
+**/
+
 const Display = () => {
   const dispatch = useDispatch()
   const darkMode = useSelector((state) => state.theme.darkMode)
@@ -51,7 +55,7 @@ const Display = () => {
             <CheckIcon className={`${colorNum === 1 ? "" : "hidden"}`} />
           </div>
           <div
-            className="bg-secondColor flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border"
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border bg-secondColor"
             onClick={() => {
               handleChangeColor(2)
             }}
@@ -59,7 +63,7 @@ const Display = () => {
             <CheckIcon className={`${colorNum === 2 ? "" : "hidden"}`} />
           </div>
           <div
-            className="bg-thirdColor flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border"
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border bg-thirdColor"
             onClick={() => {
               handleChangeColor(3)
             }}
@@ -67,7 +71,7 @@ const Display = () => {
             <CheckIcon className={`${colorNum === 3 ? "" : "hidden"}`} />
           </div>
           <div
-            className="bg-forthColor flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border"
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border bg-forthColor"
             onClick={() => {
               handleChangeColor(4)
             }}
@@ -75,7 +79,7 @@ const Display = () => {
             <CheckIcon className={`${colorNum === 4 ? "" : "hidden"}`} />
           </div>
           <div
-            className="bg-fifthColor flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border"
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border bg-fifthColor"
             onClick={() => {
               handleChangeColor(5)
             }}
@@ -83,7 +87,7 @@ const Display = () => {
             <CheckIcon className={`${colorNum === 5 ? "" : "hidden"}`} />
           </div>
           <div
-            className="bg-sixthColor flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border"
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border bg-sixthColor"
             onClick={() => {
               handleChangeColor(6)
             }}

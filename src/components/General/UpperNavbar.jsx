@@ -13,7 +13,8 @@ function UpperNavbar({name}){
         </div>
         <div><b>{name}</b></div>
         </div>
-        </Link>
-    )
+      </div>
+    </Link>
+  )
 }
 export default UpperNavbar

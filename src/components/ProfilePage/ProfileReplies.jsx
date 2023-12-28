@@ -17,9 +17,9 @@ const ProfileReplies = () => {
 
   const location = useLocation()
   const [root, setRoot] = useState("")
-  const [noposts,setNoposts]=useState(false)
+  const [noposts, setNoposts] = useState(false)
   useEffect(() => {
-    console.log(location.pathname);
+    console.log(location.pathname)
     setRoot(location.pathname.split("/")[1])
   }, [location])
 
@@ -34,9 +34,9 @@ const ProfileReplies = () => {
 
   const [profile, setProfile] = useState()
   useEffect(() => {
-    if (root !== "" && root !== user.username ) ProfileRequests.getOtherprofile(false, APIs, root, setProfile, token)
+    if (root !== "" && root !== user.username) ProfileRequests.getOtherprofile(false, APIs, root, setProfile, token)
   }, [root])
-console.log(root)
+  console.log(root)
   const [posts, setPosts] = useState([])
 
   useEffect(() => {
@@ -54,7 +54,7 @@ console.log(root)
         })
         .then((res) => {
           if (res.status === 200) {
-            console.log(res.data.posts);
+            console.log(res.data.posts)
             if (res.data.posts) {
               setPosts(
                 res.data.posts
@@ -69,8 +69,7 @@ console.log(root)
                   }))
                   .filter((post) => post.type === "reply")
               )
-            }else
-            {
+            } else {
               setNoposts(true)
             }
           }
@@ -81,10 +80,12 @@ console.log(root)
   }, [root])
   return (
     <>
-    {!noposts &&<div id="Profile-Replies-test" className="">
-      <PostsContainer posts={posts} setPosts={setPosts} />
-    </div>}
-    {noposts&& <EmptyProfileReplies type = {1} tag={root} /> }
+      {!noposts && (
+        <div id="Profile-Replies-test" className="">
+          <PostsContainer posts={posts} setPosts={setPosts} />
+        </div>
+      )}
+      {noposts && <EmptyProfileReplies type={1} tag={root} />}
     </>
   )
 }

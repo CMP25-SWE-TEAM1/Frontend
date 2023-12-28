@@ -5,6 +5,10 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 
+/**
+* Displays a list blocked users and allows the user to unblock or block them again
+**/
+
 const Blocked = () => {
   const [userData, setUserData] = useState([])
   const { token } = useSelector((state) => state.user)
@@ -34,7 +38,7 @@ const Blocked = () => {
     const element = e.currentTarget
     const username = element.dataset.username
     const blocked = element.dataset.blocked
-   
+
     if (blocked == "true") {
       axios
         .patch(

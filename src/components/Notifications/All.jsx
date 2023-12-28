@@ -11,6 +11,14 @@ import { APIs } from "../../constants/signupConstants"
 import { setUnseenCount } from "../../store/NotificationSocketSlice"
 import { CircularProgress } from "@mui/material"
 
+import React from "react"
+
+
+/**
+ * Fetches, renders, and manages a comprehensive list of notifications, integrating user profiles and pagination for seamless viewing.
+ *
+ * @component
+ */
 const All = () => {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const userToken = useSelector((state) => state.user.token)
@@ -200,4 +208,14 @@ const All = () => {
   )
 }
 
+// All.propTypes = {
+//   /**
+//    * Function used to handle the Closing of the Edit profile modal, so it doesn't appear when needed
+//    */
+//   handleCloseModal: React.PropTypes.func,
+//   /**
+//    * The state of the notifications modal, if false then it's not shown else it's shown
+//    */
+//   openModal: React.PropTypes.bool,
+// }
 export default All

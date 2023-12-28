@@ -1,0 +1,92 @@
+[
+  [
+    {
+      "description": "Generates Widgets component, conditionally rendering widgets and footer links:\r\n- Conditionally displays SearchComponent and WidgetsTrends based on parent component.\r\n- Presents footer content consistently, including:\r\n    - Links to Terms of Service, Privacy Policy, Cookie Policy, Accessibility, and Ads Info.\r\n    - Copyright information.\r\n- Uses responsive layout, hiding content on smaller screens and revealing on larger ones.\r\n- Accepts a 'parent' prop to control conditional rendering.\r\n\r\n@component",
+      "displayName": "Widgets",
+      "methods": [],
+      "props": {
+        "parent": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "String indicating the parent component of this component"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Generates WidgetsTrendComponent, visually representing a single trend item:\r\n- Displays trend information in a clear, concise format:\r\n    - Index number\r\n    - Trend category\r\n    - Trend name (emphasized visually)\r\n    - Number of associated posts\r\n- Uses hover effects to visually indicate interactivity.\r\n- Implements click functionality to initiate a search for the trend name.\r\n- Accepts props for index, category, name, and numberOfPosts.\r\n\r\n@component",
+      "displayName": "WidgetsTrendComponent",
+      "methods": [],
+      "props": {
+        "index": {
+          "type": {
+            "name": "number"
+          },
+          "required": true,
+          "description": "The numerical index of the trend"
+        },
+        "category": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "The category of the trend"
+        },
+        "name": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "The name of the trend"
+        },
+        "numberOfPosts": {
+          "type": {
+            "name": "number"
+          },
+          "required": true,
+          "description": "The number of posts associated with the trend"
+        }
+      }
+    }
+  ],
+  [
+    {
+      "description": "Generates WidgetsTrends component, fetching and displaying trending topics:\r\n- Retrieves trending topics from the server using axios.\r\n- Manages loading state while data is being fetched.\r\n- Passes fetched trends to WidgetsTrendsContainer for visual representation.\r\n- Provides a \"Show more\" button to navigate users to the Explore page for further exploration.\r\n- Integrates with Redux for user token access and theme color selection.\r\n- Adapts visual styling for light and dark themes.\r\n\r\n@component",
+      "displayName": "WidgetsTrends",
+      "methods": []
+    }
+  ],
+  [
+    {
+      "description": "Generates WidgetsTrendsContainer component, responsible for visually presenting trending topics:\r\n- Receives trend data, loading state, and type from parent component.\r\n- Displays a loading indicator while data is being fetched.\r\n- Dynamically renders a WidgetsTrendComponent for each trend item.\r\n- Manages its own internal state for potential future features (e.g., trend tweets).\r\n- Integrates with Redux for user token access.\r\n- Accepts props for data, loading, and type.\r\n\r\n@component",
+      "displayName": "WidgetsTrendsContainer",
+      "methods": [],
+      "props": {
+        "data": {
+          "type": {
+            "name": "array"
+          },
+          "required": true,
+          "description": "Array of trend data"
+        },
+        "loading": {
+          "type": {
+            "name": "bool"
+          },
+          "required": true,
+          "description": "Boolean indicating loading state"
+        },
+        "type": {
+          "type": {
+            "name": "string"
+          },
+          "required": true,
+          "description": "String indicating the type of trends (e.g., \"worldwide\", \"local\")"
+        }
+      }
+    }
+  ]
+]

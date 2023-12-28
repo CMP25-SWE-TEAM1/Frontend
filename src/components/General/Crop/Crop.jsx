@@ -1,11 +1,16 @@
 import { Cancel } from "@mui/icons-material"
 import CropIcon from "@mui/icons-material/Crop"
 import { Box, Button, DialogActions, DialogContent, Slider } from "@mui/material"
-import React, {  useState } from "react"
+import React, { useState } from "react"
 import Cropper from "react-easy-crop"
 import getCroppedImg from "./utils/CropImage"
 
-const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect,originalPhoto }) => {
+/**
+ * Presents a user interface for cropping images, enabling adjustments to zoom, rotation, and cropping area.
+ *
+ * @component
+ */
+const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect, originalPhoto }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [rotation, setRotation] = useState(0)
@@ -79,7 +84,7 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect,originalPhot
             >
               Cancel
             </Button>
-            <Button variant="outlined" startIcon={<CropIcon />} onClick={handleCropImage} >
+            <Button variant="outlined" startIcon={<CropIcon />} onClick={handleCropImage}>
               Crop
             </Button>
           </Box>
@@ -88,6 +93,32 @@ const Crop = ({ photoURL, setOpenCrop, setPhotoURL, setFile, aspect,originalPhot
     </>
   )
 }
+// Crop.propTypes = {
+//   /**
+//    * The URL of the photo to be cropped
+//    */
+//   photoURL: React.PropTypes.string.isRequired,
+//   /**
+//    * Function to close the crop modal
+//    */
+//   setOpenCrop: React.PropTypes.func.isRequired,
+//   /**
+//    * Function to update the photo URL after cropping
+//    */
+//   setPhotoURL: React.PropTypes.func.isRequired,
+//   /**
+//    * Function to set the cropped image file
+//    */
+//   setFile: React.PropTypes.func.isRequired,
+//   /**
+//    * The desired aspect ratio for cropping (e.g., "16:9")
+//    */
+//   aspect: React.PropTypes.string,
+//   /**
+//    * The original photo URL, for resetting if needed
+//    */
+//   originalPhoto: React.PropTypes.string,
+// }
 
 export default Crop
 

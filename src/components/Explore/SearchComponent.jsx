@@ -13,6 +13,16 @@ import axios from "axios"
 import { APIs } from "../../constants/signupConstants"
 import TrendSearchOption from "./TrendSearchOption"
 
+import React from "react"
+
+/**
+ * Renders a search bar for finding users and trends, displaying results as the user types.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {string} props.query - Initial search query to display in the input field
+ * @returns {JSX.Element} JSX element representing the search component
+ */
 const SearchComponent = ({ query }) => {
   const darkMode = useSelector((state) => state.theme.darkMode)
   const userToken = useSelector((state) => state.user.token)
@@ -220,4 +230,10 @@ const SearchComponent = ({ query }) => {
   )
 }
 
+// SearchComponent.propTypes = {
+//   /**
+//    * The initial search query to be displayed in the input field
+//    */
+//   query: React.PropTypes.string,
+// }
 export default SearchComponent

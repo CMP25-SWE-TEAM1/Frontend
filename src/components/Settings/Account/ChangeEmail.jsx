@@ -7,6 +7,10 @@ import Alert from "@mui/material/Alert"
 import { styles } from "../../../styles"
 import { changeEmail } from "../../../store/UserSlice"
 
+/**
+* Allows the user to change thier email after code verification
+**/
+
 const ChangeEmail = () => {
   const [email, setEmail] = useState("")
   const { user, token } = useSelector((state) => state.user)
@@ -47,7 +51,7 @@ const ChangeEmail = () => {
         }
       })
       .catch((err) => {
-        if (err.response.data.message) setErrorMsg(err.response.data.message)
+        if (err.response && err.response.data && err.response.data.message) setErrorMsg(err.response.data.message)
         else setErrorMsg("Internal server error, please try again later")
         console.log(err)
       })
@@ -58,7 +62,7 @@ const ChangeEmail = () => {
     axios
       .post(
         APIs.actual.VerifyEmailAPI,
-        { verifyEmailCode:verificationCode, email: email },
+        { verifyEmailCode: verificationCode, email: email },
         {
           headers: {
             authorization: "Bearer " + token,
@@ -71,11 +75,11 @@ const ChangeEmail = () => {
           setSuccessMsg(res.data.data.message)
           setTimeout(() => {
             //window.location.href = "/settings/account"
-          }, 2000);
+          }, 2000)
         }
       })
       .catch((err) => {
-        if (err.response.data.message) setErrorMsg(err.response.data.message)
+        if (err.response && err.response.data && err.response.data.message) setErrorMsg(err.response.data.message)
         else setErrorMsg("Internal server error, please try again later")
         console.log(err)
       })
@@ -102,7 +106,7 @@ const ChangeEmail = () => {
 
       <div className="flex flex-col p-5">
         <div className="input-container">
-          <input className={email === "" ? "form-input" : "form-input filled-input"} type="text" id="newEmail" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input maxLength={50} className={email === "" ? "form-input" : "form-input filled-input"} type="text" id="newEmail" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} />
           <label className="input-label" htmlFor="password">
             New email
           </label>
@@ -114,7 +118,7 @@ const ChangeEmail = () => {
 
       <div className="flex flex-col p-5">
         <div className="input-container mb-4">
-          <input disabled={!emailChosen} className={ verificationCode === "" ? "form-input" : "form-input filled-input" } type="text" id="newEmail" autoComplete="off" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} />
+          <input maxLength={50} disabled={!emailChosen} className={verificationCode === "" ? "form-input" : "form-input filled-input"} type="text" id="newEmail" autoComplete="off" value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} />
           <label className="input-label" htmlFor="password">
             Verification code
           </label>
@@ -126,10 +130,10 @@ const ChangeEmail = () => {
         <div className="text-red-600">{errorMsg}</div>
         <div className="text-green-600">{successMsg}</div>
         <button id="changeEmailBtn" hidden={emailChosen} className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleChangeEmail} disabled={email === "" || !validEmail(email)}>
-          Save
+          Verify
         </button>
         <button id="verifyEmailBtn" hidden={!emailChosen} className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleVerifyEmail} disabled={verificationCode === ""}>
-          Verify
+          Save
         </button>
       </div>
     </div>

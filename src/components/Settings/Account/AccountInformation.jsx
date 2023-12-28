@@ -6,6 +6,13 @@ import axios from "axios"
 import { useSelector } from "react-redux"
 import { getColor } from "../../../constants"
 
+
+/**
+* Shows the username and email of the current user and allows the user to change them 
+* The user must confirm their password to see that information
+* The page changes based on whether the user has confirmed their password or not 
+**/
+
 const AccountInformation = () => {
   const [passwordIsConfirmed, setPasswordIsConfirmed] = useState(sessionStorage.getItem("passwordIsConfirmed"))
   const { user, token } = useSelector((state) => state.user)
@@ -68,16 +75,17 @@ const AccountInformation = () => {
         )
         .then((res) => {
           if (res.status === 200) {
+            console.log(res)
             sessionStorage.setItem("passwordIsConfirmed", "true")
             setSuccessMsg(res.data.data.message)
             setTimeout(() => {
-              window.location.reload();
+              window.location.reload()
               setPasswordIsConfirmed("true")
             }, 2000)
           }
         })
         .catch((err) => {
-          if (err.response.data.message) setErrorMsg(err.response.data.message)
+          if (err.response && err.response.data && err.response.data.message) setErrorMsg(err.response.data.message)
           else setErrorMsg("Internal server error, please try again later")
           console.log(err)
         })
@@ -102,7 +110,7 @@ const AccountInformation = () => {
         <div className="flex flex-col p-5">
           <div className="relative">
             <div className="input-container">
-              <input className={password === "" ? "form-input" : "form-input filled-input"} type={showPassword ? "text" : "password"} name="password" id="password" autoComplete="off" value={password} onChange={(e) => setPassword(e.target.value)} />
+              <input maxLength={50} className={password === "" ? "form-input" : "form-input filled-input"} type={showPassword ? "text" : "password"} name="password" id="password" autoComplete="off" value={password} onChange={(e) => setPassword(e.target.value)} />
               <label className="input-label" htmlFor="password">
                 Password
               </label>
