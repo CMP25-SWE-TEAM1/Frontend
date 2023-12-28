@@ -25,7 +25,7 @@ function PostPopup({ open, setOpen }) {
     p: 1,
   }
   return (
-    <div>
+    <div >
       <Modal open={open} onClose={handleClose} sx={{ borderRadius: "20px" }}>
         <Box sx={style}>
           <ComposePost buttonName="Post" postType="tweet" handleClosePopup={handleClose} />
