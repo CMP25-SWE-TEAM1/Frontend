@@ -4,6 +4,10 @@ import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 
+/**
+* Shows up when the user tries to go to a non existing page or a page they can't access
+**/
+
 const NotFound = () => {
   const themeColor = useSelector((state) => state.theme.color)
   const user = useSelector((state) => state.user.user)

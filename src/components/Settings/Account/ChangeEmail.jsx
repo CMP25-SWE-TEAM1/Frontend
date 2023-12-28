@@ -7,6 +7,10 @@ import Alert from "@mui/material/Alert"
 import { styles } from "../../../styles"
 import { changeEmail } from "../../../store/UserSlice"
 
+/**
+* Allows the user to change thier email after code verification
+**/
+
 const ChangeEmail = () => {
   const [email, setEmail] = useState("")
   const { user, token } = useSelector((state) => state.user)
@@ -126,10 +130,10 @@ const ChangeEmail = () => {
         <div className="text-red-600">{errorMsg}</div>
         <div className="text-green-600">{successMsg}</div>
         <button id="changeEmailBtn" hidden={emailChosen} className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleChangeEmail} disabled={email === "" || !validEmail(email)}>
-          Save
+          Verify
         </button>
         <button id="verifyEmailBtn" hidden={!emailChosen} className="btn ml-auto mt-6 w-20 !bg-primary !text-white hover:brightness-90" onClick={handleVerifyEmail} disabled={verificationCode === ""}>
-          Verify
+          Save
         </button>
       </div>
     </div>

@@ -18,6 +18,13 @@ import { getColor } from "../../constants"
 
 import { useNavigate } from "react-router-dom"
 
+/**
+* Displays the different search results in different tabs
+* Top: some people and all posts 
+* Latest: all posts
+* Peaople: all people
+**/
+
 const SearchResults = () => {
   const { user, token } = useSelector((state) => state.user)
 

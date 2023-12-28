@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
+/**
+* Contains all the display settings
+**/
+
 const AccessibilityDisplayLanguages = () => {
   return (
     <div>
