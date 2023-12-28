@@ -55,15 +55,17 @@ const ProfilePosts = () => {
           if (res.status === 200) {
             if (res.data.posts) {
               setPosts(
-                res.data.posts.map((post) => ({
-                  isFollowed: post.isFollowed,
-                  isFollowingMe: post.isFollowingMe,
-                  isLiked: post.isLiked,
-                  isRtweeted: post.isRetweeted,
-                  tweetDetails: post,
-                  type: post.type,
-                  followingUser: { username: root },
-                }))
+                res.data.posts
+                  .map((post) => ({
+                    isFollowed: post.isFollowed,
+                    isFollowingMe: post.isFollowingMe,
+                    isLiked: post.isLiked,
+                    isRtweeted: post.isRetweeted,
+                    tweetDetails: post,
+                    type: post.type,
+                    followingUser: { username: root },
+                  }))
+                  .filter((post) => post.type !== "reply")
               )
             }
           }

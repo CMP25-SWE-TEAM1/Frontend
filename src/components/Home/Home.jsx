@@ -14,6 +14,13 @@ import { useNavigate } from "react-router-dom"
 
 const Home = () => {
   const user = useSelector((state) => state.user.user)
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+    }
+  }, [])
   const userToken = useSelector((state) => state.user.token)
   // const userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA4ZDJhNGZkNGQ4MmE3OTcwZDgxZSIsImlhdCI6MTcwMTQ1NDQxMiwiZXhwIjoxNzA5MjMwNDEyfQ.AXj2UJzw8YGxajhtFrywNKWDvZmIF7yo1WSe3hXoUdY"
   const [posts, setPosts] = useState([])
@@ -143,13 +150,6 @@ const Home = () => {
       container.removeEventListener("scroll", handleScroll)
     }
   }, [feedRef])
-
-  const navigate = useNavigate()
-  useEffect(() => {
-    if (!user) {
-      navigate("/")
-    }
-  }, [])
 
   return (
     <div className="flex flex-1 flex-grow-[8]  max-xs:max-w-[475]">

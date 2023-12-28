@@ -1,4 +1,4 @@
-FROM node:15 as base
+FROM node:18 as base
 
 
 FROM base as development
@@ -11,6 +11,6 @@ COPY . .
 
 EXPOSE ${3000}
 
-RUN npm install
+RUN npm install --force
 
 CMD [ "npm","start" ]
