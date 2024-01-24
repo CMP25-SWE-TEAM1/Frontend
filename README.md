@@ -159,28 +159,17 @@ This will launch the development server, and you can view the application at htt
 
 The social media platform front-end project is built using the following frameworks, technologies, tools, and libraries:
 
-- **ReactJS:**
+- **ReactJS:** JavaScript library for building user interfaces, providing a robust and efficient foundation for the project.
 
-  - A JavaScript library for building user interfaces, providing a robust and efficient foundation for the project.
+- **Tailwind CSS:** A utility-first CSS framework that facilitates the development of a responsive and customizable user interface.
 
-- **Tailwind CSS:**
+- **NPM (Node Package Manager):** The package manager for JavaScript, used to manage and install project dependencies efficiently.
 
-  - A utility-first CSS framework that facilitates the development of a responsive and customizable user interface.
+- **Jest:** A JavaScript testing framework, ensuring the reliability and functionality of the codebase through automated tests.
 
-- **NPM (Node Package Manager):**
+- **React Docgen:** A documentation generator specifically designed for React components, aiding in the documentation process.
 
-  - The package manager for JavaScript, used to manage and install project dependencies efficiently.
-
-- **Jest:**
-
-  - A JavaScript testing framework, ensuring the reliability and functionality of the codebase through automated tests.
-
-- **React Docgen:**
-
-  - A documentation generator specifically designed for React components, aiding in the documentation process.
-
-- **Material-UI:**
-  - A popular React UI framework that provides pre-built, customizable components for creating a consistent and modern user interface.
+- **Material-UI:** A popular React UI framework that provides pre-built, customizable components for creating a consistent and modern user interface.
 
 These technologies collectively contribute to the development, testing, and documentation aspects of the social media platform, ensuring a scalable, maintainable, and feature-rich front-end application.
 
