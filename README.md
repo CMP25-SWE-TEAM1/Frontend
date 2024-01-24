@@ -1,70 +1,318 @@
-# Getting Started with Create React App
+# GigaChat
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project entailed the development of a comprehensive Twitter clone, meticulously replicating core functionalities and incorporating additional features to enhance user experience. The project was executed through a collaborative team effort, spanning both front-end, cross platform, testing, DevObs and back-end development.
 
-## Available Scripts
+# Table of Contents
 
-In the project directory, you can run:
+- [GigaChat](#gigachat)
+- [Table of Contents](#table-of-contents)
+- [Features](#features)
+- [Demo Video](#demo-video)
+- [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Create React App](#create-react-app)
+  - [Material-UI and Tailwind CSS](#material-ui-and-tailwind-css)
+- [Getting Started](#getting-started)
+- [Technologies Used](#technologies-used)
+- [Folder Structure](#folder-structure)
+- [Contributors](#contributors)
 
-### `npm start`
+# Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<details>
+  <summary><span style="font-size: larger;">Authentication and Registration</span></summary>
+  - Robust login and registration processes with CAPTCHA implementation for security
+  - Email confirmation and password reset mechanisms
+  - Integration of third-party sign-in options: Google, Facebook, GitHub
+  - Functionalities for updating usernames, passwords, and email addresses
+</details>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<details>
+  <summary><span style="font-size: larger;">User Profiles</span></summary>
+  - Comprehensive profile management, including customizable profile pictures and banners
+  - User search capabilities based on usernames or screen names
+  - View and update individual user profiles
+</details>
 
-### `npm test`
+<details>
+  <summary><span style="font-size: larger;">User Interactions</span></summary>
+  - Follow/unfollow actions to establish connections
+  - Blocking and muting features for managing interactions
+  - Ability to view followers, following lists, and muted users
+</details>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<details>
+  <summary><span style="font-size: larger;">Tweets</span></summary>
+  - Creation, deletion, and retrieval of tweets
+  - Viewing tweet replies
+  - Retweeting and liking capabilities
+  - Display of retweeters and likers lists
+</details>
 
-### `npm run build`
+<details>
+  <summary><span style="font-size: larger;">Timeline and Trends</span></summary>
+  - Personalized home timelines showcasing tweets from followed users
+  - Access to user-specific tweet profiles
+  - Filtering tweets based on mentions and likes
+  - Trend exploration, including tweet displays for specific trends
+</details>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<details>
+  <summary><span style="font-size: larger;">Direct Messages</span></summary>
+  - Private messaging system for direct communication
+  - Message retrieval and conversation management
+  - Unread message count display
+</details>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<details>
+  <summary><span style="font-size: larger;">Media</span></summary>
+  - Integration of media (images, videos) within tweets
+</details>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<details>
+  <summary><span style="font-size: larger;">Notifications</span></summary>
+  - Notification center for keeping users informed
+  - Push notification functionality for real-time updates
+  - Unseen notification count display
+</details>
 
-### `npm run eject`
+# Demo Video
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+For a comprehensive overview of our social media platform and its features, we have prepared a demo video. Watch the video to explore the user interface, functionalities, and the overall user experience.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<iframe title="vimeo-player" src="https://player.vimeo.com/video/899189177?h=88de55e379" width="640" height="360" frameborder="0"    allowfullscreen></iframe>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+We hope you enjoy the demonstration and find it helpful in understanding the capabilities of our social media platform.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# Installation
 
-## Learn More
+## Prerequisites
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Before you begin, ensure you have the following prerequisites installed:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [Node.js](https://nodejs.org/en/): The project is built with JavaScript, and Node.js is required to run the development environment.
 
-### Code Splitting
+## Create React App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+This project is bootstrapped with [Create React App](https://create-react-app.dev/). If you don't have it installed, you can set it up globally using:
 
-### Analyzing the Bundle Size
+```bash
+npm install -g create-react-app
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Material-UI and Tailwind CSS
 
-### Making a Progressive Web App
+The project utilizes [Material-UI](https://material-ui.com/) for UI components and [Tailwind CSS](https://tailwindcss.com/) for utility-first CSS. The Tailwind CSS configuration file (`tailwind.config.js`) is included with the repository, so there is no need to initialize Tailwind CSS separately.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Install the dependencies by running the following commands:
 
-### Advanced Configuration
+```bash
+# Install Material-UI
+npm install @mui/material @emotion/react @emotion/styled
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+# Install Tailwind CSS and necessary dependencies
+npm install -D tailwindcss postcss autoprefixer
+```
 
-### Deployment
+Now you're ready to run the project locally. Refer to the [Getting Started](#getting-started) section for more information.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+# Getting Started
 
-### `npm run build` fails to minify
+Follow these steps to set up and run the project locally:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. **Clone the Repository:**
+
+```bash
+   git clone https://github.com/CMP25-SWE-TEAM1/Frontend.git
+```
+
+2. **Navigate to the Project Directory:**
+
+```bash
+cd Frontend
+```
+
+3. **Install Dependencies:**
+
+```bash
+npm install
+```
+
+4. **Start the Development Server:**
+
+```bash
+npm start
+```
+
+This will launch the development server, and you can view the application at http://localhost:3000 in your web browser.
+
+5. **Explore the Social Media Platform:**
+
+   - Open the provided URL in your browser.
+   - Sign up or log in using the authentication features.
+   - Explore user profiles, interact with tweets, and experience the various features of the platform.
+
+6. **Shut Down the Development Server:**
+   Once you are done, stop the development server by pressing `Ctrl + C` in the terminal where it is running.
+
+# Technologies Used
+
+The social media platform front-end project is built using the following frameworks, technologies, tools, and libraries:
+
+- **ReactJS:**
+
+  - A JavaScript library for building user interfaces, providing a robust and efficient foundation for the project.
+
+- **Tailwind CSS:**
+
+  - A utility-first CSS framework that facilitates the development of a responsive and customizable user interface.
+
+- **NPM (Node Package Manager):**
+
+  - The package manager for JavaScript, used to manage and install project dependencies efficiently.
+
+- **Jest:**
+
+  - A JavaScript testing framework, ensuring the reliability and functionality of the codebase through automated tests.
+
+- **React Docgen:**
+
+  - A documentation generator specifically designed for React components, aiding in the documentation process.
+
+- **Material-UI:**
+  - A popular React UI framework that provides pre-built, customizable components for creating a consistent and modern user interface.
+
+These technologies collectively contribute to the development, testing, and documentation aspects of the social media platform, ensuring a scalable, maintainable, and feature-rich front-end application.
+
+# Folder Structure
+
+```bash
+├──coverage
+│   └──lcov-report
+│       └──src
+│           ├──components
+│           │   ├──Explore
+│           │   ├──General
+│           │   │   ├──Crop
+│           │   │   │   └──utils
+│           │   │   └──CustomTabs
+│           │   ├──Home
+│           │   │   ├──ComposePost
+│           │   │   └──Posts
+│           │   ├──landing-page
+│           │   ├──Login
+│           │   ├──messages-page
+│           │   │   ├──compose
+│           │   │   ├──constants
+│           │   │   ├──customHooks
+│           │   │   │   ├──get
+│           │   │   │   └──post
+│           │   │   ├──details
+│           │   │   │   └──message
+│           │   │   └──navigation
+│           │   ├──Notifications
+│           │   ├──PasswordReset
+│           │   ├──PostEngagement
+│           │   ├──PostPage
+│           │   ├──ProfilePage
+│           │   │   ├──FollowPage
+│           │   │   └──ProfilePageEdit
+│           │   ├──Search
+│           │   ├──Settings
+│           │   │   ├──AccessibilityDisplayLanguages
+│           │   │   ├──Account
+│           │   │   └──PrivacySafety
+│           │   ├──Sidebar
+│           │   ├──Signup
+│           │   └──Widgets
+│           ├──constants
+│           ├──mocks
+│           ├──store
+│           └──utils
+├──docs
+├──nginx
+├──public
+└──src
+    ├──assets
+    │   └──imgs
+    ├──components
+    │   ├──assets
+    │   ├──Explore
+    │   ├──General
+    │   │   ├──Crop
+    │   │   │   └──utils
+    │   │   └──CustomTabs
+    │   ├──Home
+    │   │   ├──ComposePost
+    │   │   └──Posts
+    │   ├──landing-page
+    │   ├──Login
+    │   ├──messages-page
+    │   │   ├──compose
+    │   │   ├──constants
+    │   │   ├──customHooks
+    │   │   │   ├──get
+    │   │   │   └──post
+    │   │   ├──details
+    │   │   │   └──message
+    │   │   └──navigation
+    │   ├──Notifications
+    │   ├──PasswordReset
+    │   ├──PostEngagement
+    │   ├──PostPage
+    │   ├──ProfilePage
+    │   │   ├──FollowPage
+    │   │   └──ProfilePageEdit
+    │   ├──Search
+    │   ├──Settings
+    │   │   ├──AccessibilityDisplayLanguages
+    │   │   ├──Account
+    │   │   └──PrivacySafety
+    │   ├──Sidebar
+    │   ├──Signup
+    │   └──Widgets
+    ├──constants
+    ├──mocks
+    ├──store
+    ├──styles
+    ├──test
+    │   ├──General
+    │   ├──Home
+    │   │   ├──ComposePost
+    │   │   └──Sidebar
+    │   └──__snapshots__
+    └──utils
+```
+
+# Contributors
+
+A big thank you to the [contributors](https://github.com/CMP25-SWE-TEAM1/Frontend/graphs/contributors) who have helped make this project possible! 🙌
+
+<table>
+  <tr>
+<td align="center">
+<a href="https://github.com/MohamedSamir245" target="_black">
+<img src="https://avatars.githubusercontent.com/u/96524821?v=4" width="150px;" alt="Mohamed Samir"/><br /><sub><b>Mohamed Samir</b></sub></a><br />
+</td>
+
+<td align="center">
+<a href="https://github.com/Mohamed0x3" target="_black">
+<img src="https://avatars.githubusercontent.com/u/96536944?v=4" width="150px;" alt="Mohamed Taher"/><br /><sub><b>Mohamed Taher</b></sub></a><br />
+</td>
+
+<td align="center">
+<a href="https://github.com/Hefney" target="_black">
+<img src="https://avatars.githubusercontent.com/u/96011550?v=4" width="150px;" alt="Abdulrahman Mohamed"/><br /><sub><b>Abdulrahman Mohamed</b></sub></a><br />
+</td>
+
+<td align="center">
+<a href="https://github.com/Youssef-Hagag" target="_black">
+<img src="https://avatars.githubusercontent.com/u/94843229?v=4" width="150px;" alt="Youssef Mohamed"/><br /><sub><b>Youssef Mohamed</b></sub></a><br />
+</td>
+
+<td align="center">
+<a href="https://github.com/Ismail-Ramadan-Shaheen" target="_black">
+<img src="https://avatars.githubusercontent.com/u/114364925?v=4" width="150px;" alt="Ismail Ramadan"/><br /><sub><b>Ismail Ramadan</b></sub></a><br />
+</td>
+</tr>
+ </table>
