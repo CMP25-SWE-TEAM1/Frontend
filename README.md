@@ -80,7 +80,7 @@ This project entailed the development of a comprehensive Twitter clone, meticulo
 
 For a comprehensive overview of our social media platform and its features, we have prepared a demo video. Watch the video to explore the user interface, functionalities, and the overall user experience.
 
-[![Demo Video](src\assets\thumpnail.png)](https://vimeo.com/899189177)
+[![Demo Video](https://github.com/CMP25-SWE-TEAM1/Frontend/blob/main/src/assets/thumpnail.png)](https://vimeo.com/899189177)
 
 We hope you enjoy the demonstration and find it helpful in understanding the capabilities of our social media platform.
 
