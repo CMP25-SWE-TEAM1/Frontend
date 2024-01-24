@@ -7,6 +7,14 @@ This project entailed the development of a comprehensive Twitter clone, meticulo
 - [GigaChat](#gigachat)
 - [Table of Contents](#table-of-contents)
 - [Features](#features)
+  - [Authentication and Registration](#authentication-and-registration)
+  - [User Profiles](#user-profiles)
+  - [User Interactions](#user-interactions)
+  - [Tweets](#tweets)
+  - [Timeline and Trends](#timeline-and-trends)
+  - [Direct Messages](#direct-messages)
+  - [Media](#media)
+  - [Notifications](#notifications)
 - [Demo Video](#demo-video)
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
@@ -19,62 +27,54 @@ This project entailed the development of a comprehensive Twitter clone, meticulo
 
 # Features
 
-<details>
-  <summary><span style="font-size: larger;">Authentication and Registration</span></summary>
-  - Robust login and registration processes with CAPTCHA implementation for security
-  - Email confirmation and password reset mechanisms
-  - Integration of third-party sign-in options: Google, Facebook, GitHub
-  - Functionalities for updating usernames, passwords, and email addresses
-</details>
+### Authentication and Registration
 
-<details>
-  <summary><span style="font-size: larger;">User Profiles</span></summary>
-  - Comprehensive profile management, including customizable profile pictures and banners
-  - User search capabilities based on usernames or screen names
-  - View and update individual user profiles
-</details>
+- Robust login and registration processes with CAPTCHA implementation for security
+- Email confirmation and password reset mechanisms
+- Integration of third-party sign-in options: Google, Facebook, GitHub
+- Functionalities for updating usernames, passwords, and email addresses
 
-<details>
-  <summary><span style="font-size: larger;">User Interactions</span></summary>
-  - Follow/unfollow actions to establish connections
-  - Blocking and muting features for managing interactions
-  - Ability to view followers, following lists, and muted users
-</details>
+### User Profiles
 
-<details>
-  <summary><span style="font-size: larger;">Tweets</span></summary>
-  - Creation, deletion, and retrieval of tweets
-  - Viewing tweet replies
-  - Retweeting and liking capabilities
-  - Display of retweeters and likers lists
-</details>
+- Comprehensive profile management, including customizable profile pictures and banners
+- User search capabilities based on usernames or screen names
+- View and update individual user profiles
 
-<details>
-  <summary><span style="font-size: larger;">Timeline and Trends</span></summary>
-  - Personalized home timelines showcasing tweets from followed users
-  - Access to user-specific tweet profiles
-  - Filtering tweets based on mentions and likes
-  - Trend exploration, including tweet displays for specific trends
-</details>
+### User Interactions
 
-<details>
-  <summary><span style="font-size: larger;">Direct Messages</span></summary>
-  - Private messaging system for direct communication
-  - Message retrieval and conversation management
-  - Unread message count display
-</details>
+- Follow/unfollow actions to establish connections
+- Blocking and muting features for managing interactions
+- Ability to view followers, following lists, and muted users
 
-<details>
-  <summary><span style="font-size: larger;">Media</span></summary>
-  - Integration of media (images, videos) within tweets
-</details>
+### Tweets
 
-<details>
-  <summary><span style="font-size: larger;">Notifications</span></summary>
-  - Notification center for keeping users informed
-  - Push notification functionality for real-time updates
-  - Unseen notification count display
-</details>
+- Creation, deletion, and retrieval of tweets
+- Viewing tweet replies
+- Retweeting and liking capabilities
+- Display of retweeters and likers lists
+
+### Timeline and Trends
+
+- Personalized home timelines showcasing tweets from followed users
+- Access to user-specific tweet profiles
+- Filtering tweets based on mentions and likes
+- Trend exploration, including tweet displays for specific trends
+
+### Direct Messages
+
+- Private messaging system for direct communication
+- Message retrieval and conversation management
+- Unread message count display
+
+### Media
+
+- Integration of media (images, videos) within tweets
+
+### Notifications
+
+- Notification center for keeping users informed
+- Push notification functionality for real-time updates
+- Unseen notification count display
 
 # Demo Video
 
